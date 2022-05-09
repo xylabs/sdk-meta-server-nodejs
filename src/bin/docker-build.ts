@@ -2,8 +2,9 @@ import { execSync } from 'child_process'
 import { safeExit } from './safeExit'
 import { getFlagsString } from './getFlags'
 
-safeExit(() => {
+safeExit(async () => {
   console.log(`Docker build [${process.cwd()}]`)
+  const flagString = await getFlagsString()
   // This is the path to the Dockerfile for any project which depends on this
   // library relative to the root of the dependent
   const command = [
@@ -11,7 +12,7 @@ safeExit(() => {
     'build',
     '-f',
     './node_modules/@xylabs/meta-server/Dockerfile',
-    getFlagsString(),
+    flagString,
     '.',
   ].join(' ')
   console.log(command)

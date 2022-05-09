@@ -3627,9 +3627,9 @@ __metadata:
     typedoc:
       optional: true
   bin:
-    docker-build: bin/docker-build.js
-    generate-dotenv: bin/generate-dotenv.js
-    start-meta: bin/start-meta.js
+    docker-build: dist/cjs/bin/docker-build.js
+    generate-dotenv: dist/cjs/bin/generate-dotenv.js
+    start-meta: dist/cjs/bin/start-meta.js
   languageName: unknown
   linkType: soft
 

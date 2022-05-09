@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "jsx": "react-jsx",
     "outDir": "./bin",
     "sourceMap": true,
     "typeRoots": ["./node_modules/@types"],

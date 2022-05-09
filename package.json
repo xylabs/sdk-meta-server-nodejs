@@ -9,9 +9,9 @@
     "url": "https://github.com/xylabs/sdk-meta-server-nodejs/issues"
   },
   "bin": {
-    "docker-build": "bin/docker-build.js",
-    "generate-dotenv": "bin/generate-dotenv.js",
-    "start-meta": "bin/start-meta.js"
+    "docker-build": "dist/cjs/bin/docker-build.js",
+    "generate-dotenv": "dist/cjs/bin/generate-dotenv.js",
+    "start-meta": "dist/cjs/bin/start-meta.js"
   },
   "dependencies": {
     "@xylabs/sdk-api-express-ecs": "^1.1.4",

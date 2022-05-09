@@ -61,9 +61,9 @@ See the [LICENSE](LICENSE) file for license details
 [npm-link]: https://www.npmjs.com/package/@xylabs/meta-server
 [bch-badge]: https://bettercodehub.com/edge/badge/xylabs/sdk-meta-server-nodejs?branch=main
 [bch-link]: https://bettercodehub.com/results/xylabs/sdk-meta-server-nodejs
-[codacy-badge]: https://app.codacy.com/project/badge/Grade/TDB
+[codacy-badge]: https://app.codacy.com/project/badge/Grade/7ca145c4ea064ced8d10e1c5841b36b3
 [codacy-link]: https://www.codacy.com/gh/xylabs/sdk-meta-server-nodejs/dashboard?utm_source=github.com&utm_medium=referral&utm_content=xylabs/sdk-meta-server-nodejs&utm_campaign=Badge_Grade
-[codeclimate-badge]: https://api.codeclimate.com/v1/badges/TBD/maintainability
+[codeclimate-badge]: https://api.codeclimate.com/v1/badges/c8c1d92fc4d69d19adfd/maintainability
 [codeclimate-link]: https://codeclimate.com/github/xylabs/sdk-meta-server-nodejs/maintainability
 [snyk-badge]: https://snyk.io/test/github/xylabs/sdk-meta-server-nodejs/badge.svg?targetFile=package.json
 [snyk-link]: https://snyk.io/test/github/xylabs/sdk-meta-server-nodejs?targetFile=package.json

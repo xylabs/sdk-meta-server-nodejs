@@ -47,10 +47,6 @@
         "import": "./dist/esm/index.js",
         "require": "./dist/cjs/index.js"
       },
-      "browser": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
-      },
       "default": "./dist/esm/index.js"
     },
     "./dist/docs.json": {

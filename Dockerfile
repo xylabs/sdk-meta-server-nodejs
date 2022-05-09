@@ -32,8 +32,6 @@ RUN SDK_META_SERVER_DIST_DIR_RELATIVE=$(node -p "path.dirname(require('${SDK_MET
   # Copy over the node build files
   && cp -r ${SDK_META_SERVER_DIST_DIR}/. ${SDK_META_SERVER_DIST_DIR_RELATIVE}/
 
-COPY --from=dependencies /app/node_modules/@xylabs/meta-server/dist/cjs/bin/start-meta.js ./bin/start-meta.js
-
 # Copy over the compiled static app
 ARG BUILD_OUTPUT_DIR=build
 COPY --from=builder /app/${BUILD_OUTPUT_DIR} ./bin/build
@@ -41,4 +39,4 @@ COPY --from=builder /app/${BUILD_OUTPUT_DIR} ./bin/build
 WORKDIR /app/bin
 
 # Start the meta-server pointed to the static app
-CMD ["node", "start-meta.js"]
+CMD ["node", "/app/node_modules/@xylabs/meta-server/dist/cjs/bin/start-meta.js"]

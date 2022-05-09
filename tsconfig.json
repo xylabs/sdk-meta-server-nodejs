@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "outDir": "./bin",
+    "sourceMap": true,
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["jest", "@types/jest", "jest-sorted"]
+  },
+  "exclude": [".yarn/**/*", "dist", "bin", "node_modules"],
+  "extends": "@xylabs/tsconfig"
+}

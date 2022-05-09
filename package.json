@@ -1,0 +1,104 @@
+{
+  "author": {
+    "email": "support@xylabs.com",
+    "name": "XY Labs Development Team",
+    "url": "https://xylabs.com"
+  },
+  "bugs": {
+    "email": "support@xyo.network",
+    "url": "https://github.com/xylabs/sdk-meta-server-nodejs/issues"
+  },
+  "bin": {
+    "docker-build": "bin/docker-build.js",
+    "generate-dotenv": "bin/generate-dotenv.js",
+    "start-meta": "bin/start-meta.js"
+  },
+  "dependencies": {
+    "@xylabs/sdk-api-express-ecs": "^1.1.4",
+    "@xyo-network/sdk-meta": "^2.6.16",
+    "@xyo-network/sdk-xyo-client-js": "^2.20.10",
+    "express": "^4.18.1",
+    "lodash": "^4.17.21",
+    "serve-static": "^1.15.0",
+    "typedoc": "^0.22.15"
+  },
+  "description": "Meta Server - adjusts meta data on index.html for served static site",
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@types/express": "^4.17.13",
+    "@types/lodash": "^4.14.182",
+    "@types/node": "^17.0.31",
+    "@types/serve-static": "^1.13.10",
+    "@types/supertest": "^2.0.12",
+    "@xylabs/eslint-config-react": "^2.1.5",
+    "@xylabs/rollup-config": "^1.1.17",
+    "@xylabs/ts-scripts": "^1.0.66",
+    "@xylabs/tsconfig": "^1.0.13",
+    "axios": "^0.27.2",
+    "supertest": "^6.2.3",
+    "typescript": "^4.6.4"
+  },
+  "browser": "dist/esm/index.js",
+  "docs": "dist/docs.json",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
+      },
+      "browser": {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
+      },
+      "default": "./dist/esm/index.js"
+    },
+    "./dist/docs.json": {
+      "default": "./dist/docs.json"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "homepage": "https://xylabs.com",
+  "keywords": [
+    "xylabs",
+    "nodejs",
+    "static",
+    "utility",
+    "typescript",
+    "react"
+  ],
+  "license": "LGPL-3.0",
+  "name": "@xylabs/sdk-meta-server-nodejs",
+  "peerDependencies": {
+    "axios": ">0.26",
+    "typedoc": "^0.22.13"
+  },
+  "peerDependenciesMeta": {
+    "typedoc": {
+      "optional": true
+    }
+  },
+  "resolutions": {
+    "bn.js": "^5.2.0",
+    "webpack": "^5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xylabs/sdk-meta-server-nodejs.git"
+  },
+  "scripts": {
+    "lint-pkg": "npmPkgJsonLint .",
+    "start": "node ./bin/start-meta.js",
+    "build": "yarn clean && tsc -p tsconfig.build.cjs.json && tsc -p tsconfig.build.esm.json && yarn gen:docs",
+    "gen:docs": "typedoc ./src/index.ts --json ./dist/docs.json --tsconfig ./tsconfig.json"
+  },
+  "sideEffects": false,
+  "types": "dist/esm/index.d.ts",
+  "version": "1.0.0",
+  "packageManager": "yarn@3.1.1"
+}

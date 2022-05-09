@@ -70,7 +70,7 @@
     "react"
   ],
   "license": "LGPL-3.0",
-  "name": "@xylabs/sdk-meta-server-nodejs",
+  "name": "@xylabs/meta-server",
   "peerDependencies": {
     "axios": ">0.26",
     "typedoc": "^0.22.13"

@@ -36,7 +36,7 @@ const getHandler = (baseDir: string) => {
       const html = await readFile(join(baseDir, 'index.html'), { encoding: 'utf-8' })
       const uri = getUriBehindProxy(req)
       const updatedHtml = await setHtmlMetaData(uri, html, defaultHtmlMeta)
-      res.header('cacheControl', 'true').header('maxAge', `${tenSecondsInMs}`).send(updatedHtml)
+      res.set('Cache-Control', `public, max-age=${tenSecondsInMs}`).send(updatedHtml)
     } else {
       next()
     }

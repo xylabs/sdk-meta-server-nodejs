@@ -16,6 +16,8 @@ const defaultHtmlMeta: Meta = {
   twitter: {},
 }
 
+const tenSecondsInMs = 10000
+
 const getHandler = (baseDir: string) => {
   // TODO: statFileSync, if file containing standard HTML meta
   // exists use it otherwise use defaults here
@@ -34,7 +36,7 @@ const getHandler = (baseDir: string) => {
       const html = await readFile(join(baseDir, 'index.html'), { encoding: 'utf-8' })
       const uri = getUriBehindProxy(req)
       const updatedHtml = await setHtmlMetaData(uri, html, defaultHtmlMeta)
-      res.send(updatedHtml)
+      res.header('cacheControl', 'true').header('maxAge', `${tenSecondsInMs}`).send(updatedHtml)
     } else {
       next()
     }

@@ -1,5 +1,6 @@
+import { XyoArchivistApi } from '@xyo-network/api'
+import { XyoPayloadWrapper } from '@xyo-network/core'
 import { Meta, metaBuilder } from '@xyo-network/sdk-meta'
-import { XyoArchivistApi, XyoPayloadWrapper } from '@xyo-network/sdk-xyo-client-js'
 import cloneDeep from 'lodash/cloneDeep'
 
 import { getArchiveFromUri, getArchivistDomainFromExploreUri, getHashFromUri } from '../../lib'

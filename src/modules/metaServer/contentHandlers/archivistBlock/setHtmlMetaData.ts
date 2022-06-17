@@ -17,7 +17,7 @@ export const setHtmlMetaData = async (path: string, html: string, config: Meta):
       const blocks = await api.archive(archive).payload.hash(hash).get()
       if (blocks && blocks.length > 0) {
         const wrapper = new XyoPayloadWrapper(blocks[0])
-        const hash = wrapper.sortedHash()
+        const hash = wrapper.hash
         meta.title = `XYO 2.0: Block | ${hash}`
         meta.description = `A XYO 2.0 ${wrapper.body.schema} block with the hash ${hash}.`
       }

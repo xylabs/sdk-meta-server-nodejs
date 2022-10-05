@@ -96,7 +96,7 @@
   },
   "scripts": {
     "lint-pkg": "npmPkgJsonLint .",
-    "start": "node ./bin/start-meta.js",
+    "start": "node dist/cjs/bin/start-meta.js",
     "build": "yarn clean && tsc -p tsconfig.build.cjs.json && tsc -p tsconfig.build.esm.json && yarn gen:docs",
     "gen:docs": "typedoc ./src/index.ts --json ./dist/docs.json --tsconfig ./tsconfig.json"
   },

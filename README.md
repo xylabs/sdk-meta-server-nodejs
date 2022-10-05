@@ -1,6 +1,6 @@
 [![logo][]][logo-link]
 
-# @xyo-network/sdk-xyo-react-js
+# @xylabs/meta-server
 
 [![main-build][]][main-build-link]
 [![beta-build][]][beta-build-link]
@@ -10,38 +10,41 @@
 [![codeclimate-badge][]][codeclimate-link]
 [![snyk-badge][]][snyk-link]
 
-> The XYO Foundation provides this source code available in our efforts to advance the understanding of the XYO Procotol and its possible uses.
+> The XYO Foundation provides this source code available in our efforts to advance the understanding of the XYO Protocol and its possible uses.
 
 ## Table of Contents
 
--   [Description](#description)
--   [Install](#install)
--   [Maintainers](#maintainers)
--   [License](#license)
--   [Credits](#credits)
+- [@xylabs/meta-server](#xylabsmeta-server)
+- [Table of Contents](#table-of-contents)
+- [Description](#description)
+- [Install](#install)
+- [Maintainers](#maintainers)
+- [License](#license)
+- [Credits](#credits)
 
 ## Description
 
-Common React code that is used throughtout XYO projects that use React.
+Server for augmenting HTML Metadata for used throughout XYO projects that use React.
 
 ## Install
 
 Using npm:
 
 ```sh
-npm i --save @xyo-network/sdk-xyo-react-js
+npm i --save @xylabs/meta-server
 ```
 
 Using yarn:
 
 ```sh
-yarn add @xyo-network/sdk-xyo-react-js
+yarn add @xylabs/meta-server
 ```
 
 ## Maintainers
 
--   [Arie Trouw](https://github.com/arietrouw) (<https://arietrouw.com>)
--   [Matt Jones](https://github.com/jonesmac)
+- [Arie Trouw](https://github.com/arietrouw) (<https://arietrouw.com>)
+- [Matt Jones](https://github.com/jonesmac)
+- [Joel Carter](https://github.com/joelbcarter)
 
 ## License
 

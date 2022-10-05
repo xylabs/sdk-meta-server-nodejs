@@ -3,8 +3,13 @@ ignorePaths: []
 dictionaryDefinitions: []
 dictionaries: []
 words:
+  - Arie
+  - codacy
+  - codeclimate
   - proxied
+  - snyk
   - templating
+  - Trouw
   - xylabs
   - XYO
 ignoreWords: []

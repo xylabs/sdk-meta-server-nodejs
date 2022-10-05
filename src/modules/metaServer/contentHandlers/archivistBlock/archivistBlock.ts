@@ -49,4 +49,7 @@ const getHandler = (baseDir: string) => {
 /**
  * Middleware for augmenting HTML metadata for Archivist Blocks
  */
-export const configureArchivistBlock = <T extends ApplicationMiddlewareOptions>(opts: T): MountPathAndMiddleware => ['get', ['*', getHandler(opts.baseDir)]]
+export const configureArchivistBlock = <T extends ApplicationMiddlewareOptions>(opts: T): MountPathAndMiddleware => [
+  'get',
+  ['*', getHandler(opts.baseDir)],
+]

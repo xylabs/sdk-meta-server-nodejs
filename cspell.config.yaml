@@ -6,6 +6,7 @@ words:
   - Arie
   - codacy
   - codeclimate
+  - printenv
   - proxied
   - snyk
   - templating

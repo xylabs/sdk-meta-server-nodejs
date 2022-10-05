@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Debug",
-      "program": "${workspaceFolder}/dist/cjs/bin/start-meta.js",
+      "program": "${workspaceFolder}/src/bin/start-meta.ts",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "runtimeArgs": [
         "--experimental-specifier-resolution=node",
@@ -16,7 +16,6 @@
       ],
       "sourceMaps": true,
       "resolveSourceMapLocations": [
-        "${workspaceFolder}/src/**",
         "!**/node_modules/**"
       ],
       "pauseForSourceMap": true,
@@ -41,7 +40,6 @@
       },
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "port": 9229,
       "cwd": "${workspaceFolder}",
       "envFile": "${workspaceFolder}/.env"
     }

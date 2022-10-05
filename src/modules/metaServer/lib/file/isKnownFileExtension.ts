@@ -4,5 +4,6 @@ import { knownFileExtensions } from './knownFileExtensions'
 
 export const isKnownFileExtension = (filePath: string): boolean => {
   const extension = extname(filePath)
+  console.log(extension)
   return knownFileExtensions[extension] ?? false
 }

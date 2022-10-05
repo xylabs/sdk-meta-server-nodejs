@@ -1,10 +1,15 @@
+import { config } from 'dotenv'
+config()
+
 import express, { Express } from 'express'
 
 import { ApplicationMiddlewareOptions } from '../types'
 import { addContentHandlers } from './addContentHandlers'
 import { addMiddleware } from './addMiddleware'
 
-export const getApp = (directory = './build'): Express => {
+const defaultDirectory = process.env.SERVE_DIRECTORY || './build'
+
+export const getApp = (directory = defaultDirectory): Express => {
   const opts: ApplicationMiddlewareOptions = { baseDir: directory }
   const app = express()
   addMiddleware(app)
@@ -12,7 +17,7 @@ export const getApp = (directory = './build'): Express => {
   return app
 }
 
-export const server = (port = 80, directory = './build') => {
+export const server = (port = 80, directory = defaultDirectory) => {
   const app = getApp(directory)
   const server = app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`)

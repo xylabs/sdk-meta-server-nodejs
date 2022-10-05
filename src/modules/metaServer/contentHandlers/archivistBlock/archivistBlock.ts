@@ -1,3 +1,4 @@
+import { assertEx } from '@xylabs/assert'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { Meta } from '@xyo-network/sdk-meta'
 import { existsSync, readFileSync } from 'fs'
@@ -21,7 +22,7 @@ const getHandler = (baseDir: string) => {
   const metaPath = join(baseDir, 'meta.json')
   const htmlMeta = existsSync(metaPath) ? JSON.parse(readFileSync(metaPath, { encoding: 'utf-8' })) : defaultHtmlMeta
   const filePath = join(baseDir, 'index.html')
-  existsSync(filePath)
+  assertEx(existsSync(filePath), 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf-8' })
 
   return asyncHandler(async (req, res, next) => {

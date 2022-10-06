@@ -37,6 +37,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
+        "src/modules/metaServer/contentHandlers/proxyOriginal/proxyOriginal.spec.ts"
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

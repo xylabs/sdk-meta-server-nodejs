@@ -45,7 +45,7 @@ yarn add @xylabs/meta-server
 
   - [Arie Trouw](https://github.com/arietrouw) (<https://arietrouw.com>)
   - [Matt Jones](https://github.com/jonesmac)
-  - [Joel Carter](https://github.com/joelbcarter)
+  - [Joel Carter](https://github.com/joelbcarter) (<https://joelbcarter.com>)
 
 ## License
 

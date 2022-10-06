@@ -1,6 +1,8 @@
 import { assertEx } from '@xylabs/assert'
+import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
+import { stat } from 'fs/promises'
 import { join } from 'path'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
@@ -22,15 +24,19 @@ const getHandler = (baseDir: string) => {
   assertEx(existsSync(filePath), 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf-8' })
   const proxy = serveStatic(baseDir, options)
-  const handler: RequestHandler = (req, res, next) => {
+  const handler: RequestHandler = async (req, res, next) => {
+    // Check if file exists on disk and proxy
     const adjustedPath = getAdjustedPath(req)
-    if (isKnownFileExtension(adjustedPath)) {
+    const requestedFile = join(baseDir, adjustedPath)
+    const exists = (await stat(requestedFile)).isFile()
+    if (exists) {
       proxy(req, res, next)
     } else {
+      // otherwise serve up index
       res.set('Cache-Control', `public, max-age=${oneDayInMs}`).send(html)
     }
   }
-  return handler
+  return asyncHandler(handler)
 }
 
 /**

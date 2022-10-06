@@ -6,7 +6,10 @@ import { SuperTest, Test } from 'supertest'
 
 import { getServerOnPort } from '../../test'
 
-const payloadUri = '/archive/temp/payload/hash/2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99?network=kerplunk'
+const payloadUris = [
+  '/archive/temp/block/hash/eb27161e9d12403a0a2c49590ca27c215c70382fa5f8aa7d06a28ed24394748e?network=kerplunk',
+  '/archive/temp/payload/hash/2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99?network=kerplunk',
+]
 
 const testServerPort = 12345
 
@@ -23,7 +26,7 @@ describe('archivistBlock', () => {
   afterAll((done) => {
     server.close(done)
   })
-  it('Modifies the head with block information', async () => {
+  it.each(payloadUris)('Modifies the head with block information', async (payloadUri) => {
     // Get this file via server
     const response = await agent.get(payloadUri).expect(200)
     expect(response).toBeTruthy()
@@ -46,17 +49,6 @@ describe('archivistBlock', () => {
     // Validate HTML document
     const actual = response.text
     expect(actual).toBeTruthy()
-    expect(actual).toMatchInlineSnapshot(`
-      "<!DOCTYPE html><html lang="en"><head>
-        <meta charset="utf-8">
-        <title>XYO 2.0: Payload | 2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99</title>
-      <meta property="og:title" content="XYO 2.0: Payload | 2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99"><meta property="og:url" content="http://127.0.0.1:12345/archive/temp/payload/hash/2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99?network=kerplunk"><meta property="twitter:title" content="XYO 2.0: Payload | 2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99"><meta property="description" content="A XYO 2.0 network.xyo.location payload with the hash 2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99."><meta property="title" content="XYO 2.0: Payload | 2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99"></head>
-
-      <body>
-        <pre>Test</pre>
-
-
-      </body></html>"
-    `)
+    expect(actual).toMatchSnapshot()
   })
 })

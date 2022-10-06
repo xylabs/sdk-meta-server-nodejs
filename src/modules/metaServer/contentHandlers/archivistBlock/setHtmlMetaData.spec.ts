@@ -87,7 +87,7 @@ const verifyHtmlContainsMeta = (html: string, path: string) => {
 
 describe('setHtmlMetaData', () => {
   it('for non-payload URL sets standard meta fields', async () => {
-    const path = '/'
+    const path = 'https://www.google.com'
     const newHtml = await setHtmlMetaData(path, testHtml, testMeta)
     verifyHtmlContainsMeta(newHtml, path)
   })

@@ -11,14 +11,14 @@ export const setHtmlMetaData = async (path: string, html: string, config: Meta):
   const meta = cloneDeep(config)
   if (archive && hash && type && apiDomain) {
     const api = new XyoArchivistApi({ apiDomain })
-    // TODO: We're only getting payloads, handle bound witnesses
     try {
-      const blocks = await api.archive(archive).payload.hash(hash).get()
-      if (blocks && blocks.length > 0) {
-        const wrapper = new PayloadWrapper(blocks[0])
+      const results = type === 'block' ? await api.archive(archive).block.hash(hash).get() : await api.archive(archive).payload.hash(hash).get()
+      if (results && results.length > 0) {
+        const wrapper = new PayloadWrapper(results[0])
         const hash = wrapper.hash
-        meta.title = `XYO 2.0: Block | ${hash}`
-        meta.description = `A XYO 2.0 ${wrapper.body.schema} block with the hash ${hash}.`
+        const name = type === 'block' ? 'Bound Witness' : 'Payload'
+        meta.title = `XYO 2.0: ${name} | ${hash}`
+        meta.description = `A XYO 2.0 ${wrapper.body.schema} payload with the hash ${hash}.`
       }
     } catch (error) {
       console.log(error)

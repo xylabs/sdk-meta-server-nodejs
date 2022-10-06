@@ -28,11 +28,9 @@ const getHandler = (baseDir: string) => {
   const handler: RequestHandler = async (req, res, next) => {
     try {
       // Check if file exists on disk and proxy
-      const adjustedPath = getAdjustedPath(req)
-      const requestedFile = join(baseDir, adjustedPath)
-      // Stat throws if file doesn't exist
-      const exists = (await stat(requestedFile)).isFile()
-      if (exists) {
+      const requestedFile = join(baseDir, getAdjustedPath(req))
+      // NOTE: Stat throws if file doesn't exist
+      if ((await stat(requestedFile)).isFile()) {
         proxy(req, res, next)
       } else {
         serveIndex(req, res, next)

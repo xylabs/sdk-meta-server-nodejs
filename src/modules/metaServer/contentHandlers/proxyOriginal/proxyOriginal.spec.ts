@@ -24,6 +24,22 @@ describe('proxyOriginal', () => {
       // Compare served up version with actual for equality
       expect(actual).toBe(expected)
     })
+    it('serves up the original file content unmodified on subsequent retrievals', async () => {
+      // Serve up this directory
+      const server = getServer(__dirname)
+      const serverRelativePath = __filename.split(__dirname)[1]
+      expect(serverRelativePath).toBeTruthy()
+
+      // Get this file from the server
+      const firstResponse = await server.get(serverRelativePath).expect(200)
+      expect(firstResponse.body).toBeTruthy()
+
+      // Get this file from the server again to test fs.stats caching
+      // returns the same result as the first request
+      const subsequentResponse = await server.get(serverRelativePath).expect(200)
+      expect(subsequentResponse.body).toBeTruthy()
+      expect(firstResponse.body.toString()).toBe(subsequentResponse.body.toString())
+    })
   })
   describe('when requested file does not exist', () => {
     it('serves up default index.html', async () => {

@@ -3,14 +3,13 @@ import { PayloadWrapper } from '@xyo-network/payload'
 import { Meta, metaBuilder } from '@xyo-network/sdk-meta'
 import cloneDeep from 'lodash/cloneDeep'
 
-import { getArchiveFromUri, getArchivistDomainFromExploreUri, getHashFromUri } from '../../lib'
+import { getArchivistDomainFromExploreUri, getHashInfoFromUri } from '../../lib'
 
 export const setHtmlMetaData = async (path: string, html: string, config: Meta): Promise<string> => {
-  const hash = getHashFromUri(path)
   const apiDomain = getArchivistDomainFromExploreUri(path)
-  const archive = getArchiveFromUri(path)
+  const { archive, hash, type } = getHashInfoFromUri(path)
   const meta = cloneDeep(config)
-  if (hash && apiDomain && archive) {
+  if (archive && hash && type && apiDomain) {
     const api = new XyoArchivistApi({ apiDomain })
     // TODO: We're only getting payloads, handle bound witnesses
     try {

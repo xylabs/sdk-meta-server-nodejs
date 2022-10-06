@@ -97,6 +97,7 @@
     "url": "https://github.com/xylabs/sdk-meta-server-nodejs.git"
   },
   "scripts": {
+    "coverage": "yarn jest --coverage",
     "lint-pkg": "npmPkgJsonLint .",
     "start": "node dist/cjs/bin/start-meta.js",
     "build": "yarn clean && tsc -p tsconfig.build.cjs.json && tsc -p tsconfig.build.esm.json && yarn gen:docs",

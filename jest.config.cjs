@@ -1,6 +1,7 @@
 const generateJestConfig = ({ esModules }) => {
   const esModulesList = Array.isArray(esModules) ? esModules.join('|') : esModules
   return {
+    coveragePathIgnorePatterns: ['src/modules/metaServer/server/index.ts'],
     moduleNameMapper: {
       '^(\\.{1,2}/.*)\\.js$': '$1',
     },

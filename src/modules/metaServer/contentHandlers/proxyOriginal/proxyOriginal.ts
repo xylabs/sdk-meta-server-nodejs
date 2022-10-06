@@ -24,7 +24,9 @@ const getHandler = (baseDir: string) => {
   assertEx(existsSync(filePath), 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf-8' })
   const proxy = serveStatic(baseDir, options)
-  const serveIndex: RequestHandler = (_req, res, _next) => res.set('Cache-Control', `public, max-age=${oneDayInMs}`).send(html)
+  const serveIndex: RequestHandler = (_req, res, _next) => {
+    res.type('html').set('Cache-Control', `public, max-age=${oneDayInMs}`).send(html)
+  }
   const handler: RequestHandler = async (req, res, next) => {
     try {
       // Check if file exists on disk and proxy

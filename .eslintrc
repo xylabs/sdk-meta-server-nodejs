@@ -3,7 +3,7 @@
   "extends": [
     "@xylabs"
   ],
-  "ignorePatterns": ["node_modules", "build", "dist", "bin", "storybook-static", ".yarn"],
+  "ignorePatterns": ["node_modules", "build", "coverage", "dist", "bin", "storybook-static", ".yarn"],
   "rules": {
     "import/no-nodejs-modules": ["off"],
     "import/no-default-export": "warn",

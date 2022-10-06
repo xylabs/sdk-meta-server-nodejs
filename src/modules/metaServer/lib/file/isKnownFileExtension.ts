@@ -3,7 +3,6 @@ import { extname } from 'path'
 import { knownFileExtensions } from './knownFileExtensions'
 
 export const isKnownFileExtension = (filePath: string): boolean => {
-  const extension = extname(filePath)
-  console.log(extension)
+  const extension = extname(filePath).toLowerCase()
   return knownFileExtensions[extension] ?? false
 }

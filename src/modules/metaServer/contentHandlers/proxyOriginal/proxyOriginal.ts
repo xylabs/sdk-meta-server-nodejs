@@ -17,7 +17,7 @@ const options: ServeStaticOptions = {
 }
 
 const getHandler = (baseDir: string) => {
-  // If file containing standard HTML meta exists use it otherwise use defaults
+  // Ensure file containing base HTML exists
   const filePath = join(baseDir, 'index.html')
   assertEx(existsSync(filePath), 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf-8' })

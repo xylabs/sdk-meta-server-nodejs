@@ -22,26 +22,30 @@
     },
     {
       "name": "Debug Jest Tests",
-      "type": "node",
       "request": "launch",
-      "linux": {
-        "runtimeArgs": [
-          "--inspect-brk",
-          "${workspaceRoot}/node_modules/.bin/jest",
-          "--runInBand"
-        ]
+      "type": "node",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "--max-old-space-size=8192",
+      ],
+      "osx": {
+        "program": "${workspaceRoot}/node_modules/.bin/jest",
       },
       "windows": {
-        "runtimeArgs": [
-          "--inspect-brk",
-          "${workspaceRoot}/node_modules/jest/bin/jest.js",
-          "--runInBand"
-        ]
+        "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       },
+      "args": [
+        "--forceExit",
+        "--runInBand",
+      ],
+      "pauseForSourceMap": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "cwd": "${workspaceFolder}",
-      "envFile": "${workspaceFolder}/.env"
+      "cwd": "${workspaceRoot}",
+      "env": {
+        "NODE_ENV": "test"
+      },
+      "envFile": "${workspaceRoot}/.env",
     }
   ]
 }

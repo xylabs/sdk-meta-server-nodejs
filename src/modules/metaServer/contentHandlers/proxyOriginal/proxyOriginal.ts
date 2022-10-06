@@ -6,7 +6,7 @@ import { stat } from 'fs/promises'
 import { join } from 'path'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
-import { getAdjustedPath, isKnownFileExtension } from '../../lib'
+import { getAdjustedPath } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 
 const oneDayInMs = 1000 * 60 * 60 * 24

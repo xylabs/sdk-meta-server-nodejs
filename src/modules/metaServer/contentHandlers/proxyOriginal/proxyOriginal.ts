@@ -43,9 +43,8 @@ const getHandler = (baseDir: string) => {
       if (cachedResult !== undefined) {
         proxyIfExists(req, res, next, cachedResult)
       } else {
-        const path = join(baseDir, file)
         // NOTE: Stat throws if file doesn't exist
-        const exists = (await stat(path)).isFile()
+        const exists = (await stat(join(baseDir, file))).isFile()
         existingFiles.set(file, exists)
         proxyIfExists(req, res, next, exists)
       }

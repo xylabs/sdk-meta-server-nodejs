@@ -25,14 +25,18 @@ const getHandler = (baseDir: string) => {
   const html = readFileSync(filePath, { encoding: 'utf-8' })
   const proxy = serveStatic(baseDir, options)
   const handler: RequestHandler = async (req, res, next) => {
-    // Check if file exists on disk and proxy
-    const adjustedPath = getAdjustedPath(req)
-    const requestedFile = join(baseDir, adjustedPath)
-    const exists = (await stat(requestedFile)).isFile()
-    if (exists) {
-      proxy(req, res, next)
-    } else {
-      // otherwise serve up index
+    try {
+      // Check if file exists on disk and proxy
+      const adjustedPath = getAdjustedPath(req)
+      const requestedFile = join(baseDir, adjustedPath)
+      // Stat throws if file doesn't exist
+      const exists = (await stat(requestedFile)).isFile()
+      if (exists) {
+        proxy(req, res, next)
+      } else {
+        res.set('Cache-Control', `public, max-age=${oneDayInMs}`).send(html)
+      }
+    } catch (error) {
       res.set('Cache-Control', `public, max-age=${oneDayInMs}`).send(html)
     }
   }

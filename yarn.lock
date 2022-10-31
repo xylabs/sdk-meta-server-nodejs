@@ -3985,21 +3985,21 @@ __metadata:
   linkType: hard
 
 "@xyo-network/core@npm:^2.37.1":
-  version: 2.37.1
-  resolution: "@xyo-network/core@npm:2.37.1"
+  version: 2.38.27
+  resolution: "@xyo-network/core@npm:2.38.27"
   dependencies:
     "@scure/base": ^1.1.1
     "@xylabs/assert": ^2.6.9
     "@xylabs/bignumber": ^2.6.9
     "@xylabs/buffer": ^2.6.9
-    "@xyo-network/typeof": ^2.37.1
-    axios: ^0.27.2
+    "@xyo-network/typeof": ^2.38.27
+    axios: ^1.1.3
     keccak256: ^1.0.6
     lodash: ^4.17.21
     sha.js: ^2.4.11
     tslib: ^2.4.0
     uuid: ^9.0.0
-  checksum: 56a3000c201514f5f2cca4cbe1e03f67c63da658ac900129e128c084f53697ba7bd46be560003a859ff085e94aa477c1dbb1a63f97ef2525602028006367a13a
+  checksum: c6648ae8e14add0384d03833c38e5d780449c82174491816b7dcf7e45341e10e27215c62956405a917eaf002c9647234d9805b37ef20b081c97718933297f348
   languageName: node
   linkType: hard
 
@@ -4100,6 +4100,15 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: baa12f5c4a349ddb3e66366e0887a7a6534f9ecff9a1ea13a30b6da2521e3d03d3208120514b1d13491f44798b16ecba395c97c0541ff1516d1a3937697bb19a
+  languageName: node
+  linkType: hard
+
+"@xyo-network/typeof@npm:^2.38.27":
+  version: 2.38.27
+  resolution: "@xyo-network/typeof@npm:2.38.27"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 78f5ba8f5f8eacab429c78bd3a60eb1b66eaeb420506b890b9b447ce0babb9ae5a6b9178b8e21086cf3bab9f197aff3e96ebd0d2e03907be24209213e5575508
   languageName: node
   linkType: hard
 
@@ -4436,6 +4445,17 @@ __metadata:
     follow-redirects: ^1.14.9
     form-data: ^4.0.0
   checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "axios@npm:1.1.3"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: cab3b17bf6092c9387f7023d699db093cfa23650b56c4422cd474d124b78b2e3b5a520f932c330664a58ab85b867b1c25a95cace475ef72d236888c852b84e6d
   languageName: node
   linkType: hard
 
@@ -6826,6 +6846,16 @@ __metadata:
     debug:
       optional: true
   checksum: f5982e0eb481818642492d3ca35a86989c98af1128b8e1a62911a3410621bc15d2b079e8170b35b19d3bdee770b73ed431a257ed86195af773771145baa57845
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.15.0":
+  version: 1.15.2
+  resolution: "follow-redirects@npm:1.15.2"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: faa66059b66358ba65c234c2f2a37fcec029dc22775f35d9ad6abac56003268baf41e55f9ee645957b32c7d9f62baf1f0b906e68267276f54ec4b4c597c2b190
   languageName: node
   linkType: hard
 
@@ -11246,6 +11276,13 @@ __metadata:
     forwarded: 0.2.0
     ipaddr.js: 1.9.1
   checksum: 29c6990ce9364648255454842f06f8c46fcd124d3e6d7c5066df44662de63cdc0bad032e9bf5a3d653ff72141cc7b6019873d685708ac8210c30458ad99f2b74
+  languageName: node
+  linkType: hard
+
+"proxy-from-env@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proxy-from-env@npm:1.1.0"
+  checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
   languageName: node
   linkType: hard
 

@@ -10,13 +10,13 @@ import serveStatic, { ServeStaticOptions } from 'serve-static'
 import { getAdjustedPath } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 
-const oneDayInMs = 1000 * 60 * 60 * 24
+const oneHour = 60 * 60
 
 const options: ServeStaticOptions = {
   cacheControl: true,
   // etag: true,
   fallthrough: false,
-  maxAge: oneDayInMs,
+  maxAge: oneHour * 1000,
 }
 
 const existingFiles = new LruCache<string, boolean>({ max: 1000 })
@@ -27,7 +27,7 @@ const getHandler = (baseDir: string) => {
   assertEx(existsSync(filePath), 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf-8' })
   const proxy = serveStatic(baseDir, options)
-  const serveIndex: RequestHandler = (_req, res, _next) => res.type('html').set('Cache-Control', `public, max-age=${oneDayInMs}`).send(html)
+  const serveIndex: RequestHandler = (_req, res, _next) => res.type('html').set('Cache-Control', `public, max-age=${oneHour}`).send(html)
   const proxyIfExists = (req: Request, res: Response, next: NextFunction, exists: boolean) => {
     if (exists) {
       proxy(req, res, next)

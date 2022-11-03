@@ -9,8 +9,8 @@ import { addMiddleware } from './addMiddleware'
 
 const defaultDirectory = process.env.SERVE_DIRECTORY || './build'
 
-export const getApp = (directory = defaultDirectory): Express => {
-  const opts: ApplicationMiddlewareOptions = { baseDir: directory }
+export const getApp = (baseDir = defaultDirectory): Express => {
+  const opts: ApplicationMiddlewareOptions = { baseDir }
   const app = express()
   addMiddleware(app)
   addContentHandlers(app, opts)

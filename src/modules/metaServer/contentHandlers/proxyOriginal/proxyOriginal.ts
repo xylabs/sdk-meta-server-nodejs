@@ -1,6 +1,6 @@
 import { assertEx } from '@xylabs/assert'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
-import { NextFunction, Request, RequestHandler, Response } from 'express'
+import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { StatusCodes } from 'http-status-codes'
 import LruCache from 'lru-cache'
@@ -40,32 +40,27 @@ const getHandler = (baseDir: string) => {
   const html = readFileSync(filePath, { encoding: 'utf-8' })
   const proxy = serveStatic(baseDir, options)
   const serveIndex: RequestHandler = (_req, res, _next) => res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
-  const proxyIfExists = (req: Request, res: Response, next: NextFunction, exists: boolean) => {
-    if (exists) {
-      proxy(req, res, next)
-    } else {
-      serveIndex(req, res, next)
-    }
-  }
   const handler: RequestHandler = async (req, res, next) => {
-    const file = getAdjustedPath(req)
     try {
-      // Check if file exists on disk and proxy
-      const cachedResult = existingFiles.get(file)
-      if (cachedResult !== undefined) {
-        proxyIfExists(req, res, next, cachedResult)
+      // Check if file exists on disk (cache check for performance)
+      const file = getAdjustedPath(req)
+      let exists = existingFiles.get(file)
+      if (exists === undefined) {
+        const result = await isFile(join(baseDir, file))
+        existingFiles.set(file, result)
+        exists = result
+      }
+      if (exists) {
+        proxy(req, res, next)
       } else {
-        const exists = await isFile(join(baseDir, file))
-        existingFiles.set(file, exists)
-        proxyIfExists(req, res, next, exists)
+        if (file.toLowerCase().endsWith('.html')) {
+          serveIndex(req, res, next)
+        } else {
+          res.sendStatus(StatusCodes.NOT_FOUND)
+        }
       }
     } catch (error) {
-      // We got here because
-      if (file.endsWith('.html')) {
-        serveIndex(req, res, next)
-      } else {
-        res.sendStatus(StatusCodes.NOT_FOUND)
-      }
+      res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR)
     }
   }
   return asyncHandler(handler)

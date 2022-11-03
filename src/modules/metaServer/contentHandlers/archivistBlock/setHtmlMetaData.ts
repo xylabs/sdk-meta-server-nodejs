@@ -3,11 +3,10 @@ import { PayloadWrapper } from '@xyo-network/payload'
 import { Meta, metaBuilder } from '@xyo-network/sdk-meta'
 import cloneDeep from 'lodash/cloneDeep'
 
-import { getArchivistDomainFromExploreUri, getHashInfoFromUri } from '../../lib'
+import { ExplorerArchivistBlockInfo } from '../../types'
 
-export const setHtmlMetaData = async (path: string, html: string, config: Meta): Promise<string> => {
-  const apiDomain = getArchivistDomainFromExploreUri(path)
-  const { archive, hash, type } = getHashInfoFromUri(path)
+export const setHtmlMetaData = async (info: ExplorerArchivistBlockInfo, html: string, config: Meta): Promise<string> => {
+  const { apiDomain, archive, hash, path, type } = info
   const meta = cloneDeep(config)
   if (archive && hash && type && apiDomain) {
     const api = new XyoArchivistApi({ apiDomain })

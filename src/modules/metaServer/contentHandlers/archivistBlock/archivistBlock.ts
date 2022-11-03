@@ -6,6 +6,7 @@ import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
+import { getExplorerArchivistBlockInfo } from './getExplorerArchivistBlockInfo'
 import { setHtmlMetaData } from './setHtmlMetaData'
 
 const defaultHtmlMeta: Meta = {
@@ -35,7 +36,8 @@ const getHandler = (baseDir: string) => {
     if (extname(adjustedPath) === '.html') {
       try {
         const uri = getUriBehindProxy(req)
-        const updatedHtml = await setHtmlMetaData(uri, html, htmlMeta)
+        const info = getExplorerArchivistBlockInfo(uri)
+        const updatedHtml = await setHtmlMetaData(info, html, htmlMeta)
         res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
         return
       } catch (error) {

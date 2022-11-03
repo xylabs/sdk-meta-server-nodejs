@@ -1,5 +1,6 @@
 import { Meta } from '@xyo-network/sdk-meta'
 
+import { getExplorerArchivistBlockInfo } from './getExplorerArchivistBlockInfo'
 import { setHtmlMetaData } from './setHtmlMetaData'
 
 const testHtml = `
@@ -88,13 +89,15 @@ const verifyHtmlContainsMeta = (html: string, path: string) => {
 describe('setHtmlMetaData', () => {
   it('for non-payload URL sets standard meta fields', async () => {
     const path = 'https://www.google.com'
-    const newHtml = await setHtmlMetaData(path, testHtml, testMeta)
+    const info = getExplorerArchivistBlockInfo(path)
+    const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
     verifyHtmlContainsMeta(newHtml, path)
   })
   it('for payload URL', async () => {
     const hash = '62378096c541bda4a150643314fb0ed85d6f964023452f586d0e5c74db08d852'
     const path = `http://aws-alb-123456789.us-east-1.elb.amazonaws.com:80/archive/temp/payload/hash/${hash}`
-    const newHtml = await setHtmlMetaData(path, testHtml, testMeta)
+    const info = getExplorerArchivistBlockInfo(path)
+    const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
     verifyHtmlContainsMeta(newHtml, path)
     expect(newHtml).toContain(hash)
   })

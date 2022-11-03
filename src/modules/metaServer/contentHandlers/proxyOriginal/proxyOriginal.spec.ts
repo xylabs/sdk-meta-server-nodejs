@@ -1,13 +1,18 @@
 import { readFile } from 'fs/promises'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { join } from 'path'
+import { SuperTest, Test } from 'supertest'
 
 import { getServer } from '../../test'
 
 describe('proxyOriginal', () => {
+  let server: SuperTest<Test>
+  beforeEach(() => {
+    // Serve up this directory
+    server = getServer(__dirname)
+  })
   describe('when requested file exists', () => {
     it('serves up the original file content unmodified', async () => {
-      // Serve up this directory
-      const server = getServer(__dirname)
       const serverRelativePath = __filename.split(__dirname)[1]
       expect(serverRelativePath).toBeTruthy()
 
@@ -25,8 +30,6 @@ describe('proxyOriginal', () => {
       expect(actual).toBe(expected)
     })
     it('serves up the original file content unmodified on subsequent retrievals', async () => {
-      // Serve up this directory
-      const server = getServer(__dirname)
       const serverRelativePath = __filename.split(__dirname)[1]
       expect(serverRelativePath).toBeTruthy()
 
@@ -41,11 +44,40 @@ describe('proxyOriginal', () => {
       expect(firstResponse.body.toString()).toBe(subsequentResponse.body.toString())
     })
   })
-  describe('when requested file does not exist', () => {
-    it('serves up default index.html', async () => {
-      // Serve up this directory
-      const server = getServer(__dirname)
-      const serverRelativePath = '/foo/bar/index.js'
+  describe('when requested resource does not exist', () => {
+    describe('serves up default index.html', () => {
+      it('when requested resource was a HTML document', async () => {
+        const serverRelativePath = '/foo/bar/index.html'
+        expect(serverRelativePath).toBeTruthy()
+
+        // Get this file from the server
+        const response = await server.get(serverRelativePath).expect(200)
+        expect(response.body).toBeTruthy()
+        const actual = response.text.toString()
+        expect(actual).toBeTruthy()
+
+        // Get this file by reading it directly from the filesystem
+        const expected = await readFile(join(__dirname, 'index.html'), { encoding: 'utf-8' })
+        expect(expected).toBeTruthy()
+
+        // Compare served up version with actual for equality
+        expect(actual).toBe(expected)
+      })
+    })
+    describe(`returns ${ReasonPhrases.NOT_FOUND}`, () => {
+      it('when requested resource not HTML file', async () => {
+        const serverRelativePath = '/foo/bar/index.js'
+        expect(serverRelativePath).toBeTruthy()
+
+        // Get this file from the server
+        const response = await server.get(serverRelativePath).expect(StatusCodes.NOT_FOUND)
+        expect(response.body).toEqual({})
+      })
+    })
+  })
+  describe('when requested resource is a directory', () => {
+    it('serves up the index.html in that directory', async () => {
+      const serverRelativePath = '/test'
       expect(serverRelativePath).toBeTruthy()
 
       // Get this file from the server
@@ -55,32 +87,19 @@ describe('proxyOriginal', () => {
       expect(actual).toBeTruthy()
 
       // Get this file by reading it directly from the filesystem
-      const expected = await readFile(join(__dirname, 'index.html'), { encoding: 'utf-8' })
+      const expected = await readFile(join(__dirname, 'test', 'index.html'), { encoding: 'utf-8' })
       expect(expected).toBeTruthy()
 
       // Compare served up version with actual for equality
       expect(actual).toBe(expected)
     })
-  })
-  describe('when requested resource is not a file', () => {
-    it('serves up default index.html', async () => {
-      // Serve up this directory
-      const server = getServer(__dirname)
+    it(`returns ${ReasonPhrases.NOT_FOUND} if no index.html exists in the directory`, async () => {
       const serverRelativePath = '/test/directory.test'
       expect(serverRelativePath).toBeTruthy()
 
       // Get this file from the server
-      const response = await server.get(serverRelativePath).expect(200)
-      expect(response.body).toBeTruthy()
-      const actual = response.text.toString()
-      expect(actual).toBeTruthy()
-
-      // Get this file by reading it directly from the filesystem
-      const expected = await readFile(join(__dirname, 'index.html'), { encoding: 'utf-8' })
-      expect(expected).toBeTruthy()
-
-      // Compare served up version with actual for equality
-      expect(actual).toBe(expected)
+      const response = await server.get(serverRelativePath).expect(StatusCodes.NOT_FOUND)
+      expect(response.body).toEqual({})
     })
   })
 })

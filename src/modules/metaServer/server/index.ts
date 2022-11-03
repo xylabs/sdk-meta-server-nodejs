@@ -17,8 +17,8 @@ export const getApp = (baseDir = defaultDirectory): Express => {
   return app
 }
 
-export const server = (port = 80, directory = defaultDirectory) => {
-  const app = getApp(directory)
+export const server = (port = 80, baseDir = defaultDirectory) => {
+  const app = getApp(baseDir)
   const server = app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`)
   })

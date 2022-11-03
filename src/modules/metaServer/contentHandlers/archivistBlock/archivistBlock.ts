@@ -15,7 +15,12 @@ const defaultHtmlMeta: Meta = {
   twitter: {},
 }
 
-const tenSecondsInMs = 10000
+/**
+ * The max-age cache control header time (in seconds)
+ * to set for html files
+ */
+const indexHtmlMaxAge = 60 * 10
+const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 
 const getHandler = (baseDir: string) => {
   // If file containing standard HTML meta exists use it otherwise use defaults
@@ -31,7 +36,7 @@ const getHandler = (baseDir: string) => {
       try {
         const uri = getUriBehindProxy(req)
         const updatedHtml = await setHtmlMetaData(uri, html, htmlMeta)
-        res.set('Cache-Control', `public, max-age=${tenSecondsInMs}`).send(updatedHtml)
+        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
         return
       } catch (error) {
         console.log(error)

@@ -45,8 +45,8 @@ describe('proxyOriginal', () => {
     })
   })
   describe('when requested resource does not exist', () => {
-    describe('serves up default index.html', () => {
-      it('when requested resource was a HTML document', async () => {
+    describe('when requested resource was a HTML document', () => {
+      it('serves up default index.html', async () => {
         const serverRelativePath = '/foo/bar/index.html'
         expect(serverRelativePath).toBeTruthy()
 
@@ -64,8 +64,8 @@ describe('proxyOriginal', () => {
         expect(actual).toBe(expected)
       })
     })
-    describe(`returns ${ReasonPhrases.NOT_FOUND}`, () => {
-      it('when requested resource not HTML file', async () => {
+    describe('when requested resource not HTML file', () => {
+      it(`returns ${ReasonPhrases.NOT_FOUND}`, async () => {
         const serverRelativePath = '/foo/bar/index.js'
         expect(serverRelativePath).toBeTruthy()
 

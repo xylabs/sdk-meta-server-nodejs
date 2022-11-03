@@ -2,13 +2,14 @@ import { assertEx } from '@xylabs/assert'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { NextFunction, Request, RequestHandler, Response } from 'express'
 import { existsSync, readFileSync } from 'fs'
-import { stat } from 'fs/promises'
+import { StatusCodes } from 'http-status-codes'
 import LruCache from 'lru-cache'
 import { join } from 'path'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
 import { getAdjustedPath } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
+import { isFile } from './isFile'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -47,20 +48,24 @@ const getHandler = (baseDir: string) => {
     }
   }
   const handler: RequestHandler = async (req, res, next) => {
+    const file = getAdjustedPath(req)
     try {
       // Check if file exists on disk and proxy
-      const file = getAdjustedPath(req)
       const cachedResult = existingFiles.get(file)
       if (cachedResult !== undefined) {
         proxyIfExists(req, res, next, cachedResult)
       } else {
-        // NOTE: Stat throws if file doesn't exist
-        const exists = (await stat(join(baseDir, file))).isFile()
+        const exists = await isFile(join(baseDir, file))
         existingFiles.set(file, exists)
         proxyIfExists(req, res, next, exists)
       }
     } catch (error) {
-      serveIndex(req, res, next)
+      // We got here because
+      if (file.endsWith('.html')) {
+        serveIndex(req, res, next)
+      } else {
+        res.sendStatus(StatusCodes.NOT_FOUND)
+      }
     }
   }
   return asyncHandler(handler)

@@ -5,8 +5,9 @@ import { existsSync, readFileSync } from 'fs'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
-import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
+import { ApplicationMiddlewareOptions, ExplorerArchivistBlockInfo, MountPathAndMiddleware } from '../../types'
 import { getExplorerArchivistBlockInfo } from './getExplorerArchivistBlockInfo'
+import { isEnoughInfoToRetrieveBlock } from './isEnoughInfoToRetrieveBlock'
 import { setHtmlMetaData } from './setHtmlMetaData'
 
 const defaultHtmlMeta: Meta = {
@@ -37,7 +38,7 @@ const getHandler = (baseDir: string) => {
       try {
         const uri = getUriBehindProxy(req)
         const info = getExplorerArchivistBlockInfo(uri)
-        if (info.archive && info.hash && info.type) {
+        if (isEnoughInfoToRetrieveBlock(info)) {
           const updatedHtml = await setHtmlMetaData(info, html, htmlMeta)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
           return

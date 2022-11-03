@@ -1,2 +1,4 @@
 export * from './ApplicationMiddleware'
-export * from './UriBlockInfo'
+export * from './ExplorerArchivistBlockInfo'
+export * from './HashInfo'
+export * from './HashType'

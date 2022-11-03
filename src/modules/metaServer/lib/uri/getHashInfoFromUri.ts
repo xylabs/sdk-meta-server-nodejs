@@ -1,12 +1,6 @@
-export type HashType = 'payload' | 'block'
+import { HashInfo, HashType } from '../../types'
 
 const pattern = /archive\/(?<archive>[a-z0-9-]+)\/(?<type>block|payload)\/hash\/(?<hash>[a-z0-9]+)/
-
-export interface HashInfo {
-  archive?: string
-  hash?: string
-  type?: HashType
-}
 
 export const getHashInfoFromUri = (uri: string): HashInfo => {
   const value = pattern.exec(uri)

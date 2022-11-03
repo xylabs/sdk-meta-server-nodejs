@@ -37,9 +37,11 @@ const getHandler = (baseDir: string) => {
       try {
         const uri = getUriBehindProxy(req)
         const info = getExplorerArchivistBlockInfo(uri)
-        const updatedHtml = await setHtmlMetaData(info, html, htmlMeta)
-        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
-        return
+        if (info.archive && info.hash && info.type) {
+          const updatedHtml = await setHtmlMetaData(info, html, htmlMeta)
+          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+          return
+        }
       } catch (error) {
         console.log(error)
       }

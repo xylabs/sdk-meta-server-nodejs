@@ -28,6 +28,7 @@ const options: ServeStaticOptions = {
   cacheControl: true,
   // etag: true,
   fallthrough: false,
+  index: 'index.html',
   maxAge,
 }
 

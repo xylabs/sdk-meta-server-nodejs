@@ -1,6 +1,9 @@
 import { Request } from 'express'
-import { extname, join } from 'path'
+import { join } from 'path'
+
+import { isKnownFileExtension } from '../file'
 
 export const getAdjustedPath = (req: Request): string => {
-  return extname(req.path).length > 0 ? req.path : join(req.path, 'index.html')
+  if (isKnownFileExtension(req.path)) return req.path
+  return join(req.path, 'index.html')
 }

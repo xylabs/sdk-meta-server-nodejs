@@ -88,7 +88,7 @@ describe('proxyOriginal', () => {
       expect(actual).toBeTruthy()
       await expectToEqualFileContents(actual, join(__dirname, 'test', 'index.html'))
     })
-    it('without slash directory redirects to the index.html in that directory', async () => {
+    it('without slash permanently redirects to directory with slash', async () => {
       const serverRelativePath = '/test'
       expect(serverRelativePath).toBeTruthy()
 
@@ -97,17 +97,40 @@ describe('proxyOriginal', () => {
       expect(response.body).toBeTruthy()
       const actual = response.text.toString()
       expect(actual).toBeTruthy()
-      await expectToEqualFileContents(actual, join(__dirname, 'test', 'index.html'))
+      // await expectToEqualFileContents(actual, join(__dirname, 'test', 'index.html'))
     })
     it('serves up the root index.html if no index.html exists in the directory', async () => {
-      const serverRelativePath = '/test/directory.test/'
+      const serverRelativePath = '/test/nested/'
       expect(serverRelativePath).toBeTruthy()
 
       // Get this file from the server
       const response = await server.get(serverRelativePath).expect(StatusCodes.OK)
-      const actual = response.body.toString()
+      const actual = response.text.toString()
       expect(actual).toBeTruthy()
       await expectToEqualFileContents(actual)
+    })
+    describe.skip('with dot in folder', () => {
+      it('with slash serves up the index.html in that directory', async () => {
+        const serverRelativePath = '/test/'
+        expect(serverRelativePath).toBeTruthy()
+
+        // Get this file from the server
+        const response = await server.get(serverRelativePath).expect(StatusCodes.OK)
+        expect(response.body).toBeTruthy()
+        const actual = response.text.toString()
+        expect(actual).toBeTruthy()
+        await expectToEqualFileContents(actual, join(__dirname, 'test', 'index.html'))
+      })
+      it('serves up the root index.html if no index.html exists in the directory', async () => {
+        const serverRelativePath = '/test/directory.test/'
+        expect(serverRelativePath).toBeTruthy()
+
+        // Get this file from the server
+        const response = await server.get(serverRelativePath).expect(StatusCodes.OK)
+        const actual = response.text.toString()
+        expect(actual).toBeTruthy()
+        await expectToEqualFileContents(actual)
+      })
     })
   })
 })

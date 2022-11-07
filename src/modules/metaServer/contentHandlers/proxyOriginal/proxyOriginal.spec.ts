@@ -17,7 +17,7 @@ describe('proxyOriginal', () => {
       expect(serverRelativePath).toBeTruthy()
 
       // Get this file from the server
-      const response = await server.get(serverRelativePath).expect(200)
+      const response = await server.get(serverRelativePath).expect(StatusCodes.OK)
       expect(response.body).toBeTruthy()
       const actual = response.body.toString()
       expect(actual).toBeTruthy()
@@ -34,12 +34,12 @@ describe('proxyOriginal', () => {
       expect(serverRelativePath).toBeTruthy()
 
       // Get this file from the server
-      const firstResponse = await server.get(serverRelativePath).expect(200)
+      const firstResponse = await server.get(serverRelativePath).expect(StatusCodes.OK)
       expect(firstResponse.body).toBeTruthy()
 
       // Get this file from the server again to test fs.stats caching
       // returns the same result as the first request
-      const subsequentResponse = await server.get(serverRelativePath).expect(200)
+      const subsequentResponse = await server.get(serverRelativePath).expect(StatusCodes.OK)
       expect(subsequentResponse.body).toBeTruthy()
       expect(firstResponse.body.toString()).toBe(subsequentResponse.body.toString())
     })
@@ -51,7 +51,7 @@ describe('proxyOriginal', () => {
         expect(serverRelativePath).toBeTruthy()
 
         // Get this file from the server
-        const response = await server.get(serverRelativePath).expect(200)
+        const response = await server.get(serverRelativePath).expect(StatusCodes.OK)
         expect(response.body).toBeTruthy()
         const actual = response.text.toString()
         expect(actual).toBeTruthy()
@@ -81,7 +81,7 @@ describe('proxyOriginal', () => {
       expect(serverRelativePath).toBeTruthy()
 
       // Get this file from the server
-      const response = await server.get(serverRelativePath).expect(200)
+      const response = await server.get(serverRelativePath).expect(StatusCodes.OK)
       expect(response.body).toBeTruthy()
       const actual = response.text.toString()
       expect(actual).toBeTruthy()

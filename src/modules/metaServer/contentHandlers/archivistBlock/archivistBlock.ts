@@ -5,7 +5,7 @@ import { existsSync, readFileSync } from 'fs'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
-import { ApplicationMiddlewareOptions, ExplorerArchivistBlockInfo, MountPathAndMiddleware } from '../../types'
+import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 import { getExplorerArchivistBlockInfo } from './getExplorerArchivistBlockInfo'
 import { isEnoughInfoToRetrieveBlock } from './isEnoughInfoToRetrieveBlock'
 import { setHtmlMetaData } from './setHtmlMetaData'

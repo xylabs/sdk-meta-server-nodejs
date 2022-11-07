@@ -106,9 +106,9 @@ describe('proxyOriginal', () => {
       expect(actual).toBeTruthy()
       await expectToEqualFileContents(actual)
     })
-    describe.skip('with dot in folder', () => {
+    describe('with dot in folder', () => {
       it('serves up the index.html in that directory', async () => {
-        const serverRelativePath = '/test/'
+        const serverRelativePath = '/test/with.dot.in.folder.test/'
         expect(serverRelativePath).toBeTruthy()
 
         // Get this file from the server
@@ -116,10 +116,10 @@ describe('proxyOriginal', () => {
         expect(response.body).toBeTruthy()
         const actual = response.text.toString()
         expect(actual).toBeTruthy()
-        await expectToEqualFileContents(actual, join(__dirname, 'test', 'index.html'))
+        await expectToEqualFileContents(actual, join(__dirname, '/test/with.dot.in.folder.test/', 'index.html'))
       })
       it('serves up the root index.html if no index.html exists in the directory', async () => {
-        const serverRelativePath = '/test/directory.test/'
+        const serverRelativePath = '/test/with.dot.in.folder.test.empty/'
         expect(serverRelativePath).toBeTruthy()
 
         // Get this file from the server

@@ -9,7 +9,7 @@ import serveStatic, { ServeStaticOptions } from 'serve-static'
 
 import { getAdjustedPath } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { isFile } from './isFile'
+import { exists } from './exists'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -44,13 +44,13 @@ const getHandler = (baseDir: string) => {
     try {
       // Check if file exists on disk (cache check for performance)
       const file = getAdjustedPath(req)
-      let exists = existingFiles.get(file)
-      if (exists === undefined) {
-        const result = await isFile(join(baseDir, file))
+      let pathExists = existingFiles.get(file)
+      if (pathExists === undefined) {
+        const result = await exists(join(baseDir, file))
         existingFiles.set(file, result)
-        exists = result
+        pathExists = result
       }
-      if (exists) {
+      if (pathExists) {
         proxy(req, res, next)
       } else {
         if (file.toLowerCase().endsWith('.html')) {

@@ -93,12 +93,12 @@ describe('proxyOriginal', () => {
       // Compare served up version with actual for equality
       expect(actual).toBe(expected)
     })
-    it(`returns ${ReasonPhrases.NOT_FOUND} if no index.html exists in the directory`, async () => {
+    it('serves up the root index.html if no index.html exists in the directory', async () => {
       const serverRelativePath = '/test/directory.test'
       expect(serverRelativePath).toBeTruthy()
 
       // Get this file from the server
-      const response = await server.get(serverRelativePath).expect(StatusCodes.NOT_FOUND)
+      const response = await server.get(serverRelativePath).expect(StatusCodes.MOVED_PERMANENTLY)
       expect(response.body).toEqual({})
     })
   })

@@ -11,7 +11,7 @@ describe('proxyOriginal', () => {
     // Serve up this directory
     server = getServer(__dirname)
   })
-  describe('when requested file exists', () => {
+  describe('when requested resource exists', () => {
     it('serves up the original file content unmodified', async () => {
       const serverRelativePath = __filename.split(__dirname)[1]
       expect(serverRelativePath).toBeTruthy()
@@ -45,9 +45,43 @@ describe('proxyOriginal', () => {
     })
   })
   describe('when requested resource does not exist', () => {
-    describe('when requested resource was a HTML document', () => {
-      it('serves up default index.html', async () => {
+    describe('serves up default index.html when requested resource', () => {
+      it('was a HTML document', async () => {
         const serverRelativePath = '/foo/bar/index.html'
+        expect(serverRelativePath).toBeTruthy()
+
+        // Get this file from the server
+        const response = await server.get(serverRelativePath).expect(StatusCodes.OK)
+        expect(response.body).toBeTruthy()
+        const actual = response.text.toString()
+        expect(actual).toBeTruthy()
+
+        // Get this file by reading it directly from the filesystem
+        const expected = await readFile(join(__dirname, 'index.html'), { encoding: 'utf-8' })
+        expect(expected).toBeTruthy()
+
+        // Compare served up version with actual for equality
+        expect(actual).toBe(expected)
+      })
+      it('was a directory', async () => {
+        const serverRelativePath = '/foo/bar/baz'
+        expect(serverRelativePath).toBeTruthy()
+
+        // Get this file from the server
+        const response = await server.get(serverRelativePath).expect(StatusCodes.OK)
+        expect(response.body).toBeTruthy()
+        const actual = response.text.toString()
+        expect(actual).toBeTruthy()
+
+        // Get this file by reading it directly from the filesystem
+        const expected = await readFile(join(__dirname, 'index.html'), { encoding: 'utf-8' })
+        expect(expected).toBeTruthy()
+
+        // Compare served up version with actual for equality
+        expect(actual).toBe(expected)
+      })
+      it('was a an unknown extension', async () => {
+        const serverRelativePath = '/foo/bar/network.xyo.payload'
         expect(serverRelativePath).toBeTruthy()
 
         // Get this file from the server
@@ -81,7 +115,7 @@ describe('proxyOriginal', () => {
       expect(serverRelativePath).toBeTruthy()
 
       // Get this file from the server
-      const response = await server.get(serverRelativePath).expect(StatusCodes.OK)
+      const response = await server.get(serverRelativePath).expect(StatusCodes.MOVED_PERMANENTLY)
       expect(response.body).toBeTruthy()
       const actual = response.text.toString()
       expect(actual).toBeTruthy()

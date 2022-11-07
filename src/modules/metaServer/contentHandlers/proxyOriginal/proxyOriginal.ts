@@ -7,7 +7,7 @@ import LruCache from 'lru-cache'
 import { join } from 'path'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
-import { getAdjustedPath } from '../../lib'
+import { getAdjustedPath, isHtmlLike } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 import { exists } from './exists'
 
@@ -31,7 +31,7 @@ const options: ServeStaticOptions = {
   maxAge,
 }
 
-const existingFiles = new LruCache<string, boolean>({ max: 1000 })
+const existingPaths = new LruCache<string, boolean>({ max: 1000 })
 
 const getHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
@@ -44,16 +44,16 @@ const getHandler = (baseDir: string) => {
     try {
       // Check if file exists on disk (cache check for performance)
       const file = getAdjustedPath(req)
-      let pathExists = existingFiles.get(file)
+      let pathExists = existingPaths.get(file)
       if (pathExists === undefined) {
         const result = await exists(join(baseDir, file))
-        existingFiles.set(file, result)
+        existingPaths.set(file, result)
         pathExists = result
       }
       if (pathExists) {
         proxy(req, res, next)
       } else {
-        if (file.toLowerCase().endsWith('.html')) {
+        if (isHtmlLike(req)) {
           serveIndex(req, res, next)
         } else {
           res.sendStatus(StatusCodes.NOT_FOUND)

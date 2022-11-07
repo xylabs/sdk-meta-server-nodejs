@@ -94,10 +94,7 @@ describe('proxyOriginal', () => {
 
       // Get this file from the server
       const response = await server.get(serverRelativePath).expect(StatusCodes.MOVED_PERMANENTLY)
-      expect(response.body).toBeTruthy()
-      const actual = response.text.toString()
-      expect(actual).toBeTruthy()
-      // await expectToEqualFileContents(actual, join(__dirname, 'test', 'index.html'))
+      expect(response.header['location']).toEqual('/test/')
     })
     it('serves up the root index.html if no index.html exists in the directory', async () => {
       const serverRelativePath = '/test/nested/'
@@ -110,7 +107,7 @@ describe('proxyOriginal', () => {
       await expectToEqualFileContents(actual)
     })
     describe.skip('with dot in folder', () => {
-      it('with slash serves up the index.html in that directory', async () => {
+      it('serves up the index.html in that directory', async () => {
         const serverRelativePath = '/test/'
         expect(serverRelativePath).toBeTruthy()
 

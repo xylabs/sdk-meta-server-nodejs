@@ -10,13 +10,26 @@ const getRequestForUri = (uri: string) => {
 }
 
 describe('getAdjustedPath', () => {
-  it('returns the real path if there is an extension', () => {
-    expect(getAdjustedPath(getRequestForUri('/index.js'))).toBe(`${sep}index.js`)
+  describe('returns the real path for', () => {
+    it('html extensions', () => {
+      expect(getAdjustedPath(getRequestForUri('/test.html'))).toBe(`${sep}test.html`)
+    })
+    it('nested html extensions', () => {
+      expect(getAdjustedPath(getRequestForUri('/test/test.html'))).toBe(`${sep}test${sep}test.html`)
+    })
+    it('known web files with non-html extensions', () => {
+      expect(getAdjustedPath(getRequestForUri('/index.js'))).toBe(`${sep}index.js`)
+    })
+    it('non web files with extensions', () => {
+      expect(getAdjustedPath(getRequestForUri('/index.ts'))).toBe(`${sep}index.ts`)
+    })
   })
-  it('returns the real path if there is a schema', () => {
-    expect(getAdjustedPath(getRequestForUri('/network.xyo.payload'))).toBe(`${sep}network.xyo.payload`)
-  })
-  it('returns index.html if there is no extension', () => {
-    expect(getAdjustedPath(getRequestForUri('/'))).toBe(`${sep}index.html`)
+  describe('appends index.html to path for', () => {
+    it('folders', () => {
+      expect(getAdjustedPath(getRequestForUri('/network'))).toBe(`${sep}network${sep}index.html`)
+    })
+    it('folders with dots in them', () => {
+      expect(getAdjustedPath(getRequestForUri('/'))).toBe(`${sep}index.html`)
+    })
   })
 })

@@ -92,8 +92,9 @@ describe('proxyOriginal', () => {
       const serverRelativePath = '/test'
       expect(serverRelativePath).toBeTruthy()
 
-      // Get this file from the server
-      const response = await server.get(serverRelativePath).expect(StatusCodes.MOVED_PERMANENTLY)
+      // This is the behavior of Express Serve static
+      // https://github.com/expressjs/express/blob/a65913776d0b16837364ee66caa1a7f38a9997c0/test/express.static.js#L301
+      const response = await server.get(serverRelativePath).expect(StatusCodes.MOVED_PERMANENTLY, /Redirecting/)
       expect(response.header['location']).toEqual('/test/')
     })
     it('serves up the root index.html if no index.html exists in the directory', async () => {
@@ -117,6 +118,15 @@ describe('proxyOriginal', () => {
         const actual = response.text.toString()
         expect(actual).toBeTruthy()
         await expectToEqualFileContents(actual, join(__dirname, '/test/with.dot.in.folder.test/', 'index.html'))
+      })
+      it('without slash permanently redirects to directory with slash', async () => {
+        const serverRelativePath = '/test/with.dot.in.folder.test'
+        expect(serverRelativePath).toBeTruthy()
+
+        // This is the behavior of Express Serve static
+        // https://github.com/expressjs/express/blob/a65913776d0b16837364ee66caa1a7f38a9997c0/test/express.static.js#L301
+        const response = await server.get(serverRelativePath).expect(StatusCodes.MOVED_PERMANENTLY, /Redirecting/)
+        expect(response.header['location']).toEqual('/test/with.dot.in.folder.test/')
       })
       it('serves up the root index.html if no index.html exists in the directory', async () => {
         const serverRelativePath = '/test/with.dot.in.folder.test.empty/'

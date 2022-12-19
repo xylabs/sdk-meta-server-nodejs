@@ -8,6 +8,7 @@ words:
   - codacy
   - codeclimate
   - huri
+  - pako
   - printenv
   - proxied
   - snyk

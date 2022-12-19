@@ -3571,13 +3571,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/bignumber@npm:^2.6.9":
-  version: 2.6.9
-  resolution: "@xylabs/bignumber@npm:2.6.9"
+"@xylabs/bignumber@npm:^2.6.11":
+  version: 2.6.11
+  resolution: "@xylabs/bignumber@npm:2.6.11"
   dependencies:
     bn.js: ^5.2.1
-    tslib: ^2.4.0
-  checksum: 142f3897e020958e388b087f263b44294e704300666aec0e8a48877a9f95f281bff90e5a1dba4e8af16d0253b79a9c0d490c12d324f0e531245455b1126f3c4e
+    tslib: ^2.4.1
+  checksum: 62e44e15f1525b8b7ef2d96d76b32d9c765da1e4483433210e344a754a0a0a19fd53d40a499e83f83b3d33a924a5450a05daac9bd5b432dd6e55cbec7e4d8750
+  languageName: node
+  linkType: hard
+
+"@xylabs/buffer@npm:^2.6.11":
+  version: 2.6.11
+  resolution: "@xylabs/buffer@npm:2.6.11"
+  dependencies:
+    buffer: ^6.0.3
+    tslib: ^2.4.1
+  checksum: 703df7d14b0b71c5030c1c9a16fd73b48cf104c68076e13fd82469b8a905203d6dd87607a584385f4c6b150276554613cbf6aa021c51c6d31ea575be6066b8c1
   languageName: node
   linkType: hard
 
@@ -3865,21 +3875,21 @@ __metadata:
   linkType: hard
 
 "@xyo-network/core@npm:^2.37.1":
-  version: 2.37.1
-  resolution: "@xyo-network/core@npm:2.37.1"
+  version: 2.42.10
+  resolution: "@xyo-network/core@npm:2.42.10"
   dependencies:
     "@scure/base": ^1.1.1
-    "@xylabs/assert": ^2.6.9
-    "@xylabs/bignumber": ^2.6.9
-    "@xylabs/buffer": ^2.6.9
-    "@xyo-network/typeof": ^2.37.1
-    axios: ^0.27.2
+    "@xylabs/assert": ^2.6.11
+    "@xylabs/bignumber": ^2.6.11
+    "@xylabs/buffer": ^2.6.11
+    "@xyo-network/typeof": ^2.42.10
+    axios: ~1.2.1
     keccak256: ^1.0.6
     lodash: ^4.17.21
     sha.js: ^2.4.11
-    tslib: ^2.4.0
+    tslib: ^2.4.1
     uuid: ^9.0.0
-  checksum: 56a3000c201514f5f2cca4cbe1e03f67c63da658ac900129e128c084f53697ba7bd46be560003a859ff085e94aa477c1dbb1a63f97ef2525602028006367a13a
+  checksum: 65286866afef3fe8ea15054ecf2edb61c591ca248461199f24cbe5a4ce2a2d4e113090205270486f253d9258b2a80e9516a36c442011ff28e289d3b187741369
   languageName: node
   linkType: hard
 
@@ -3980,6 +3990,15 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: baa12f5c4a349ddb3e66366e0887a7a6534f9ecff9a1ea13a30b6da2521e3d03d3208120514b1d13491f44798b16ecba395c97c0541ff1516d1a3937697bb19a
+  languageName: node
+  linkType: hard
+
+"@xyo-network/typeof@npm:^2.42.10":
+  version: 2.42.10
+  resolution: "@xyo-network/typeof@npm:2.42.10"
+  dependencies:
+    tslib: ^2.4.1
+  checksum: 589116f93dcd0ebe1e1f5cee4023cb4a5e97dd8ba34fe407b72c80cda396f27c5590b98a289643b8f31da7b0f27c3540831214eeed782f5920b155b1ddaff663
   languageName: node
   linkType: hard
 
@@ -4333,7 +4352,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.2.1":
+"axios@npm:^1.2.1, axios@npm:~1.2.1":
   version: 1.2.1
   resolution: "axios@npm:1.2.1"
   dependencies:
@@ -13708,6 +13727,13 @@ __metadata:
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "tslib@npm:2.4.1"
+  checksum: 19480d6e0313292bd6505d4efe096a6b31c70e21cf08b5febf4da62e95c265c8f571f7b36fcc3d1a17e068032f59c269fab3459d6cd3ed6949eafecf64315fca
   languageName: node
   linkType: hard
 

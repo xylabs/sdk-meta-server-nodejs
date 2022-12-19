@@ -3966,11 +3966,11 @@ __metadata:
   linkType: hard
 
 "@xyo-network/sdk-meta@npm:^2.6.20":
-  version: 2.6.20
-  resolution: "@xyo-network/sdk-meta@npm:2.6.20"
+  version: 2.7.0
+  resolution: "@xyo-network/sdk-meta@npm:2.7.0"
   dependencies:
     cheerio: ^1.0.0-rc.12
-  checksum: dc65a5dcb1d86210e1a106af2e84c8ac15c71a08a785afe525ea1975c650519772a1ed4751c9f9e05a69f5a41fd783d5d27c4500d8dc297088972725d9dd0e5e
+  checksum: 2ab9b234ab9a968775c5253a4e717683db12cb1d95b26af875251e089fdcd8a09f51e89a0fd09eac9f03386ae9dc4918003a70b98aac8389eae22e82f83e798f
   languageName: node
   linkType: hard
 

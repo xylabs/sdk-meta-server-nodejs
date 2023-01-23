@@ -3751,9 +3751,9 @@ __metadata:
   linkType: hard
 
 "@xylabs/assert@npm:^2.6.11, @xylabs/assert@npm:^2.6.9":
-  version: 2.6.11
-  resolution: "@xylabs/assert@npm:2.6.11"
-  checksum: 340f5a8828cddc2d7b21e4c3bf0bdd389f7dab325121c56c773b116ae93397baa7a8a8e2c1cf1ac8149c2e739103e1e7f5a9650bb241fec8669fdf63a427c989
+  version: 2.6.16
+  resolution: "@xylabs/assert@npm:2.6.16"
+  checksum: 92d6b9e3280578b5afc1b983fc17799346907b8c3452710ee65e682aee257b045375fd7dd6bdca8c4543a4c0a9763c1d786c64d882ecad872c430fd3de087786
   languageName: node
   linkType: hard
 

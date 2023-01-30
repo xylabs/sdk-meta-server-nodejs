@@ -3757,6 +3757,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/assert@npm:^2.6.16":
+  version: 2.6.16
+  resolution: "@xylabs/assert@npm:2.6.16"
+  checksum: 92d6b9e3280578b5afc1b983fc17799346907b8c3452710ee65e682aee257b045375fd7dd6bdca8c4543a4c0a9763c1d786c64d882ecad872c430fd3de087786
+  languageName: node
+  linkType: hard
+
 "@xylabs/bignumber@npm:^2.6.11":
   version: 2.6.11
   resolution: "@xylabs/bignumber@npm:2.6.11"
@@ -3767,6 +3774,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/bignumber@npm:^2.6.16":
+  version: 2.6.16
+  resolution: "@xylabs/bignumber@npm:2.6.16"
+  dependencies:
+    bn.js: ^5.2.1
+  checksum: 68ed98db5556d40e801edb518d2f2e46c204479ccd759985534216f4a4f13649865c29ea5612ca9ee6a182710bf9f6490ce1017ddf2b69196e20337e3d00a2fc
+  languageName: node
+  linkType: hard
+
 "@xylabs/buffer@npm:^2.6.11":
   version: 2.6.11
   resolution: "@xylabs/buffer@npm:2.6.11"
@@ -3774,6 +3790,15 @@ __metadata:
     buffer: ^6.0.3
     tslib: ^2.4.1
   checksum: 703df7d14b0b71c5030c1c9a16fd73b48cf104c68076e13fd82469b8a905203d6dd87607a584385f4c6b150276554613cbf6aa021c51c6d31ea575be6066b8c1
+  languageName: node
+  linkType: hard
+
+"@xylabs/buffer@npm:^2.6.16":
+  version: 2.6.16
+  resolution: "@xylabs/buffer@npm:2.6.16"
+  dependencies:
+    buffer: ^6.0.3
+  checksum: 1789aca001ba3a87dc611442842933fe700449e04313d8fdf87931eda049ba2cf5497cead9ef4324dd83e2b82d1b6986e21ae28667fa04642d030898af512c1d
   languageName: node
   linkType: hard
 
@@ -4121,21 +4146,19 @@ __metadata:
   linkType: hard
 
 "@xyo-network/core@npm:^2.42.10":
-  version: 2.42.10
-  resolution: "@xyo-network/core@npm:2.42.10"
+  version: 2.43.20
+  resolution: "@xyo-network/core@npm:2.43.20"
   dependencies:
     "@scure/base": ^1.1.1
-    "@xylabs/assert": ^2.6.11
-    "@xylabs/bignumber": ^2.6.11
-    "@xylabs/buffer": ^2.6.11
-    "@xyo-network/typeof": ^2.42.10
-    axios: ~1.2.1
+    "@xylabs/assert": ^2.6.16
+    "@xylabs/bignumber": ^2.6.16
+    "@xylabs/buffer": ^2.6.16
+    "@xyo-network/typeof": ^2.43.20
     keccak256: ^1.0.6
     lodash: ^4.17.21
     sha.js: ^2.4.11
-    tslib: ^2.4.1
     uuid: ^9.0.0
-  checksum: 65286866afef3fe8ea15054ecf2edb61c591ca248461199f24cbe5a4ce2a2d4e113090205270486f253d9258b2a80e9516a36c442011ff28e289d3b187741369
+  checksum: aedbcb3114e190ff06a1638168b2e8789962b79b649fb9627a7e7fbcca6e3601db85efc3127fa6735bc046d194a86b3c258b52e5eb182c48901ebe6801eded80
   languageName: node
   linkType: hard
 
@@ -4243,6 +4266,13 @@ __metadata:
   dependencies:
     tslib: ^2.4.1
   checksum: 589116f93dcd0ebe1e1f5cee4023cb4a5e97dd8ba34fe407b72c80cda396f27c5590b98a289643b8f31da7b0f27c3540831214eeed782f5920b155b1ddaff663
+  languageName: node
+  linkType: hard
+
+"@xyo-network/typeof@npm:^2.43.20":
+  version: 2.43.20
+  resolution: "@xyo-network/typeof@npm:2.43.20"
+  checksum: d170fc6b997a7c0801b6a45a90a60193dd30c7c3646c984ad3708036bbfe1448b2b9f7d537bb8435a13f267072b2ae577820337c726581b8fd6ca393dee4839b
   languageName: node
   linkType: hard
 

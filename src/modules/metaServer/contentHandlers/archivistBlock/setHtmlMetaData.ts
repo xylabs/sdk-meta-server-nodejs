@@ -1,5 +1,5 @@
 import { XyoArchivistApi } from '@xyo-network/api'
-import { XyoPayloadWrapper } from '@xyo-network/core'
+import { PayloadWrapper } from '@xyo-network/payload-wrapper'
 import { Meta, metaBuilder } from '@xyo-network/sdk-meta'
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -16,7 +16,7 @@ export const setHtmlMetaData = async (path: string, html: string, config: Meta):
     try {
       const blocks = await api.archive(archive).payload.hash(hash).get()
       if (blocks && blocks.length > 0) {
-        const wrapper = new XyoPayloadWrapper(blocks[0])
+        const wrapper = new PayloadWrapper(blocks[0])
         const hash = wrapper.hash
         meta.title = `XYO 2.0: Block | ${hash}`
         meta.description = `A XYO 2.0 ${wrapper.body.schema} block with the hash ${hash}.`

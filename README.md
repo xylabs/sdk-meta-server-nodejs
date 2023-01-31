@@ -10,7 +10,8 @@
 [![codeclimate-badge][]][codeclimate-link]
 [![snyk-badge][]][snyk-link]
 
-> The XYO Foundation provides this source code available in our efforts to advance the understanding of the XYO Procotol and its possible uses.
+> The XYO Foundation provides this source code available in our efforts to
+> advance the understanding of the XYO Protocol and its possible uses.
 
 ## Table of Contents
 
@@ -22,7 +23,7 @@
 
 ## Description
 
-Common React code that is used throughtout XYO projects that use React.
+Common React code that is used throughout XYO projects that use React.
 
 ## Install
 

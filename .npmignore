@@ -13,3 +13,6 @@ storybook-static
 
 .pnp.*
 .yarn/*
+
+.eslintcache
+.tsconfig.*

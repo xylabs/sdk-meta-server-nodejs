@@ -3,9 +3,7 @@
 # @xylabs/meta-server
 
 [![main-build][]][main-build-link]
-[![beta-build][]][beta-build-link]
 [![npm-badge][]][npm-link]
-[![bch-badge][]][bch-link]
 [![codacy-badge][]][codacy-link]
 [![codeclimate-badge][]][codeclimate-link]
 [![snyk-badge][]][snyk-link]
@@ -59,12 +57,8 @@ See the [LICENSE](LICENSE) file for license details
 [logo-link]: https://xylabs.com
 [main-build]: https://github.com/xylabs/sdk-meta-server-nodejs/actions/workflows/build-main.yml/badge.svg
 [main-build-link]: https://github.com/xylabs/sdk-meta-server-nodejs/actions/workflows/build-main.yml
-[beta-build]: https://github.com/xylabs/sdk-meta-server-nodejs/actions/workflows/build-beta.yml/badge.svg
-[beta-build-link]: https://github.com/xylabs/sdk-meta-server-nodejs/actions/workflows/build-beta.yml
 [npm-badge]: https://img.shields.io/npm/v/@xylabs/meta-server.svg
 [npm-link]: https://www.npmjs.com/package/@xylabs/meta-server
-[bch-badge]: https://bettercodehub.com/edge/badge/xylabs/sdk-meta-server-nodejs?branch=main
-[bch-link]: https://bettercodehub.com/results/xylabs/sdk-meta-server-nodejs
 [codacy-badge]: https://app.codacy.com/project/badge/Grade/7ca145c4ea064ced8d10e1c5841b36b3
 [codacy-link]: https://www.codacy.com/gh/xylabs/sdk-meta-server-nodejs/dashboard?utm_source=github.com&utm_medium=referral&utm_content=xylabs/sdk-meta-server-nodejs&utm_campaign=Badge_Grade
 [codeclimate-badge]: https://api.codeclimate.com/v1/badges/c8c1d92fc4d69d19adfd/maintainability

@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Debug",
-      "program": "${workspaceFolder}/bin/start-meta.js",
+      "program": "${workspaceFolder}/src/bin/start-meta.ts",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "runtimeArgs": [
         "--experimental-specifier-resolution=node",
@@ -16,34 +16,37 @@
       ],
       "sourceMaps": true,
       "resolveSourceMapLocations": [
-        "${workspaceFolder}/src/**",
         "!**/node_modules/**"
       ],
       "pauseForSourceMap": true,
     },
     {
       "name": "Debug Jest Tests",
-      "type": "node",
       "request": "launch",
-      "linux": {
-        "runtimeArgs": [
-          "--inspect-brk",
-          "${workspaceRoot}/node_modules/.bin/jest",
-          "--runInBand"
-        ]
+      "type": "node",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "--max-old-space-size=8192",
+      ],
+      "osx": {
+        "program": "${workspaceRoot}/node_modules/.bin/jest",
       },
       "windows": {
-        "runtimeArgs": [
-          "--inspect-brk",
-          "${workspaceRoot}/node_modules/jest/bin/jest.js",
-          "--runInBand"
-        ]
+        "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
       },
+      "args": [
+        "--forceExit",
+        "--runInBand",
+        "src/modules/metaServer/contentHandlers/proxyOriginal/proxyOriginal.spec.ts"
+      ],
+      "pauseForSourceMap": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "port": 9229,
-      "cwd": "${workspaceFolder}",
-      "envFile": "${workspaceFolder}/.env"
+      "cwd": "${workspaceRoot}",
+      "env": {
+        "NODE_ENV": "test"
+      },
+      "envFile": "${workspaceRoot}/.env",
     }
   ]
 }

@@ -11,6 +11,7 @@ const validUris = [
     'https://explore.xyo.network/archive/temp/block/hash/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=main',
     'https://explore.xyo.network',
   ],
+  ['https://explore.xyo.network/schema/network.xyo.schema?network=main', 'https://explore.xyo.network'],
   ['https://api.archivist.xyo.network', 'https://api.archivist.xyo.network'],
 ]
 

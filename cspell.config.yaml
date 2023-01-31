@@ -1,0 +1,20 @@
+version: "0.2"
+ignorePaths: []
+dictionaryDefinitions: []
+dictionaries: []
+words:
+  - Arie
+  - boundwitness
+  - codacy
+  - codeclimate
+  - huri
+  - pako
+  - printenv
+  - proxied
+  - snyk
+  - templating
+  - Trouw
+  - xylabs
+  - XYO
+ignoreWords: []
+import: []

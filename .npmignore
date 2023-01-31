@@ -1,4 +1,5 @@
 .aws
+.env
 .git
 .github
 .vscode

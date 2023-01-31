@@ -1,14 +1,15 @@
+import { assertEx } from '@xylabs/assert'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { Meta } from '@xyo-network/sdk-meta'
-// import { readFileSync } from 'fs'
-import { readFile } from 'fs/promises'
+import { existsSync, readFileSync } from 'fs'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
+import { getExplorerArchivistBlockInfo } from './getExplorerArchivistBlockInfo'
+import { isEnoughInfoToRetrieveBlock } from './isEnoughInfoToRetrieveBlock'
 import { setHtmlMetaData } from './setHtmlMetaData'
 
-// TODO: Pass in via config file or ENV VARs
 const defaultHtmlMeta: Meta = {
   description: "Own your piece of XYO's Decentralized Digital World!",
   og: {},
@@ -16,30 +17,37 @@ const defaultHtmlMeta: Meta = {
   twitter: {},
 }
 
-const tenSecondsInMs = 10000
+/**
+ * The max-age cache control header time (in seconds)
+ * to set for html files
+ */
+const indexHtmlMaxAge = 60 * 10
+const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 
 const getHandler = (baseDir: string) => {
-  // TODO: statFileSync, if file containing standard HTML meta
-  // exists use it otherwise use defaults here
-  /*
-  try {
-    defaultHtmlMeta = JSON.parse(readFileSync(join(baseDir, 'meta.json'), { encoding: 'utf-8' }) ?? '{}')
-  } catch (ex) {
-    console.warn('No config found!  Please create a config at meta.json file in your ./build folder')
-  }
-  */
+  // If file containing standard HTML meta exists use it otherwise use defaults
+  const metaPath = join(baseDir, 'meta.json')
+  const htmlMeta = existsSync(metaPath) ? JSON.parse(readFileSync(metaPath, { encoding: 'utf-8' })) : defaultHtmlMeta
+  const filePath = join(baseDir, 'index.html')
+  assertEx(existsSync(filePath), 'Missing index.html')
+  const html = readFileSync(filePath, { encoding: 'utf-8' })
 
   return asyncHandler(async (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
-    if (defaultHtmlMeta && extname(adjustedPath) === '.html') {
-      // TODO: Check if file exists
-      const html = await readFile(join(baseDir, 'index.html'), { encoding: 'utf-8' })
-      const uri = getUriBehindProxy(req)
-      const updatedHtml = await setHtmlMetaData(uri, html, defaultHtmlMeta)
-      res.set('Cache-Control', `public, max-age=${tenSecondsInMs}`).send(updatedHtml)
-    } else {
-      next()
+    if (extname(adjustedPath) === '.html') {
+      try {
+        const uri = getUriBehindProxy(req)
+        const info = getExplorerArchivistBlockInfo(uri)
+        if (isEnoughInfoToRetrieveBlock(info)) {
+          const updatedHtml = await setHtmlMetaData(info, html, htmlMeta)
+          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+          return
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
+    next()
   })
 }
 

@@ -1,22 +1,70 @@
+import { assertEx } from '@xylabs/assert'
+import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
+import { RequestHandler } from 'express'
+import { existsSync, readFileSync } from 'fs'
+import { StatusCodes } from 'http-status-codes'
+import LruCache from 'lru-cache'
+import { join } from 'path'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
+import { getAdjustedPath, isHtmlLike } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
+import { exists } from './exists'
 
-const oneDayInMs = 1000 * 60 * 60 * 24
+/**
+ * The max-age cache control header time (in seconds)
+ * to set for the index.html file
+ */
+const indexHtmlMaxAge = 60 * 10
+const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
+
+/**
+ * The max-age cache control header time (in mS)
+ * to set for static files other than index.html
+ */
+const maxAge = 60 * 60 * 1000
+
 const options: ServeStaticOptions = {
   cacheControl: true,
   // etag: true,
   fallthrough: false,
-  maxAge: oneDayInMs,
+  index: 'index.html',
+  maxAge,
 }
 
-const getHandler = (baseDir: string) => {
-  return serveStatic(baseDir, options)
+const existingPaths = new LruCache<string, boolean>({ max: 1000 })
 
-  // return asyncHandler(async (req, res) => {
-  //   const adjustedPath = getAdjustedPath(req)
-  //   res.send(await readFile(join(baseDir, adjustedPath)))
-  // })
+const getHandler = (baseDir: string) => {
+  // Ensure file containing base HTML exists
+  const filePath = join(baseDir, 'index.html')
+  assertEx(existsSync(filePath), 'Missing index.html')
+  const html = readFileSync(filePath, { encoding: 'utf-8' })
+  const proxy = serveStatic(baseDir, options)
+  const serveIndex: RequestHandler = (_req, res, _next) => res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
+  const handler: RequestHandler = async (req, res, next) => {
+    try {
+      // Check if file exists on disk (cache check for performance)
+      const file = getAdjustedPath(req)
+      let pathExists = existingPaths.get(file)
+      if (pathExists === undefined) {
+        const result = await exists(join(baseDir, file))
+        existingPaths.set(file, result)
+        pathExists = result
+      }
+      if (pathExists) {
+        proxy(req, res, next)
+      } else {
+        if (isHtmlLike(req)) {
+          serveIndex(req, res, next)
+        } else {
+          res.sendStatus(StatusCodes.NOT_FOUND)
+        }
+      }
+    } catch (error) {
+      res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+  }
+  return asyncHandler(handler)
 }
 
 /**

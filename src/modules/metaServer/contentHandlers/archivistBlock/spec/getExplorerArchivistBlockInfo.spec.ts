@@ -1,4 +1,4 @@
-import { getExplorerArchivistBlockInfo } from './getExplorerArchivistBlockInfo'
+import { getExplorerArchivistBlockInfo } from '../getExplorerArchivistBlockInfo'
 
 describe('getExplorerArchivistBlockInfo', () => {
   it('gets ExplorerArchivistBlockInfo from path', () => {

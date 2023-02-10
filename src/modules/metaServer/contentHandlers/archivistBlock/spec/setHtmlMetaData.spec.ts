@@ -1,7 +1,7 @@
 import { Meta } from '@xyo-network/sdk-meta'
 
-import { getExplorerArchivistBlockInfo } from './getExplorerArchivistBlockInfo'
-import { setHtmlMetaData } from './setHtmlMetaData'
+import { getExplorerArchivistBlockInfo } from '../getExplorerArchivistBlockInfo'
+import { setHtmlMetaData } from '../setHtmlMetaData'
 
 const testHtml = `
 <!doctype html>

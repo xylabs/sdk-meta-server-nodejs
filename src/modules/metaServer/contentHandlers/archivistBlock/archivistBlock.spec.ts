@@ -4,7 +4,7 @@ import { Server } from 'http'
 import { join } from 'path'
 import { SuperTest, Test } from 'supertest'
 
-import { getServerOnPort } from '../../test'
+import { getServerOnPort } from '../../spec'
 
 const payloadUris = [
   '/archive/temp/block/hash/eb27161e9d12403a0a2c49590ca27c215c70382fa5f8aa7d06a28ed24394748e?network=kerplunk',

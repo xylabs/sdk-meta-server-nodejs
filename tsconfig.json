@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "outDir": "./bin",
-    "sourceMap": true,
-    "typeRoots": ["./node_modules/@types"],
-    "types": ["jest", "@types/jest", "jest-sorted"]
+    "declarationDir": "./dist/types",
+    "typeRoots": []
   },
-  "exclude": [".yarn/**/*", "dist", "bin", "node_modules"],
   "extends": "@xylabs/tsconfig"
 }

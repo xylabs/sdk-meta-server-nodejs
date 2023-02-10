@@ -1,3 +1,7 @@
 ignores: [
-  "@xylabs/tsconfig"
+  "@types/supertest",
+  "nodemon",
+  "supertest",
+  "ts-jest",
+  "ts-node"
 ]

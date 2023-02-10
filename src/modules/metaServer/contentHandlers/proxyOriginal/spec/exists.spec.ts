@@ -1,4 +1,4 @@
-import { exists } from './exists'
+import { exists } from '../exists'
 
 describe('exists', () => {
   describe('when path exists returns true', () => {

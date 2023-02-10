@@ -3,7 +3,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { join } from 'path'
 import { SuperTest, Test } from 'supertest'
 
-import { getServer } from '../../test'
+import { getServer } from '../../../spec'
 
 const expectToEqualFileContents = async (actual: string, filePath: string = join(__dirname, 'index.html')) => {
   // Get index.html file by reading it directly from the filesystem

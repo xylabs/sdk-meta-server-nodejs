@@ -4117,6 +4117,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xyo-network/core@npm:^2.43.35":
+  version: 2.43.35
+  resolution: "@xyo-network/core@npm:2.43.35"
+  dependencies:
+    "@scure/base": ^1.1.1
+    "@xylabs/assert": ^2.7.1
+    "@xylabs/bignumber": ^2.7.1
+    "@xylabs/buffer": ^2.7.1
+    "@xyo-network/typeof": ^2.43.35
+    keccak256: ^1.0.6
+    lodash: ^4.17.21
+    sha.js: ^2.4.11
+    uuid: ^9.0.0
+  checksum: f0eac00a183311973aaa56434ba479c106f054109278c650cb76759ab32c42e40f7965c9c4f40785dc211bfb815e1e1bf57918f7e03c04d1a3931d5a2abccc74
+  languageName: node
+  linkType: hard
+
 "@xyo-network/diviner-model@npm:^2.43.32":
   version: 2.43.32
   resolution: "@xyo-network/diviner-model@npm:2.43.32"
@@ -4234,6 +4251,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xyo-network/payload-model@npm:^2.43.35":
+  version: 2.43.35
+  resolution: "@xyo-network/payload-model@npm:2.43.35"
+  checksum: a46bed42e64e22c4ffd8ab772df2e5724a514f65c741c506631f2d8aa8dc6a09b33cba38eeb95e695b00eeb2917480db257ce12f0c55f47cb5b94722230e1ee0
+  languageName: node
+  linkType: hard
+
 "@xyo-network/payload-plugin@npm:^2.43.32":
   version: 2.43.32
   resolution: "@xyo-network/payload-plugin@npm:2.43.32"
@@ -4258,16 +4282,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xyo-network/payload-validator@npm:^2.43.35":
+  version: 2.43.35
+  resolution: "@xyo-network/payload-validator@npm:2.43.35"
+  dependencies:
+    "@xyo-network/core": ^2.43.35
+    "@xyo-network/payload-model": ^2.43.35
+  checksum: cceda0eee3103f9a6e7910cac59eaa362a8ec82adb7ee010f149f2f6c0ab975e677a16ea605019db5b438906bf1ffd2f51a5de415b85fce75f3808a002db99e3
+  languageName: node
+  linkType: hard
+
 "@xyo-network/payload-wrapper@npm:^2.43.32":
-  version: 2.43.32
-  resolution: "@xyo-network/payload-wrapper@npm:2.43.32"
+  version: 2.43.35
+  resolution: "@xyo-network/payload-wrapper@npm:2.43.35"
   dependencies:
     "@xylabs/assert": ^2.7.1
-    "@xyo-network/core": ^2.43.32
-    "@xyo-network/payload-model": ^2.43.32
-    "@xyo-network/payload-validator": ^2.43.32
-    "@xyo-network/promise": ^2.43.32
-  checksum: 4b3a219b83f35921e4eadc6165530961684287d071accae99f5256d24a6e6242b05855935dcf670cd9168b0bbe4718b94b34c70fee278f807c3f21839cacebb3
+    "@xyo-network/core": ^2.43.35
+    "@xyo-network/payload-model": ^2.43.35
+    "@xyo-network/payload-validator": ^2.43.35
+    "@xyo-network/promise": ^2.43.35
+  checksum: c38eea694b602d792e97521e4c55b72747c1b7cbb73d3b816fdb0f19aa39fd3ab4ea5cb7506bf83b63d6dd9bb71d9242d0b14299035673bc77945e3cba389979
   languageName: node
   linkType: hard
 
@@ -4275,6 +4309,13 @@ __metadata:
   version: 2.43.32
   resolution: "@xyo-network/promise@npm:2.43.32"
   checksum: 7af303b0834429d98e2606c066ff9f4ea956bf7933d74addb767e9e83e4fc2e0c95a38d037c11a193809a74f5dd80ebf99ae2b41ece67a3dc12fc23595c877c2
+  languageName: node
+  linkType: hard
+
+"@xyo-network/promise@npm:^2.43.35":
+  version: 2.43.35
+  resolution: "@xyo-network/promise@npm:2.43.35"
+  checksum: 30c9689f5cf1809d942e4c3635bcd483bb0464a05a48c3632c87fb6eedfa117c9a71ed84d4c32eb36d6a927102d8bc181644873310301d85b56312984d553d2b
   languageName: node
   linkType: hard
 
@@ -4318,6 +4359,13 @@ __metadata:
   version: 2.43.32
   resolution: "@xyo-network/typeof@npm:2.43.32"
   checksum: a59227268765a72a7754f618a4f7518de864b54f46c2a3940b86418ac2a0300aa6c7e28f1637c415ab1eefdc6698541d567bdc2121a0a6806e125db5e89b15b1
+  languageName: node
+  linkType: hard
+
+"@xyo-network/typeof@npm:^2.43.35":
+  version: 2.43.35
+  resolution: "@xyo-network/typeof@npm:2.43.35"
+  checksum: 0490001255e747902874a97a420ec1a390a991cdca28d19175b2bc9f550ef21ae0b105ad5cc92355f5d05e4d2ca75757cd7d31d4bc3471c50fd4d7e794af3656
   languageName: node
   linkType: hard
 

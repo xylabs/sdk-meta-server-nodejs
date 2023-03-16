@@ -3876,8 +3876,8 @@ __metadata:
     "@xylabs/ts-scripts-yarn3": ^2.16.1
     "@xylabs/tsconfig": ^2.16.1
     "@xylabs/tsconfig-jest": ^2.16.1
-    "@xyo-network/api": ^2.53.1
     "@xyo-network/archivist-wrapper": ^2.53.1
+    "@xyo-network/boundwitness-model": ^2.53.1
     "@xyo-network/http-bridge": ^2.53.1
     "@xyo-network/payload-wrapper": ^2.53.1
     "@xyo-network/sdk-meta": ^2.8.0
@@ -4116,22 +4116,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/api@npm:^2.53.1":
-  version: 2.53.1
-  resolution: "@xyo-network/api@npm:2.53.1"
-  dependencies:
-    "@xyo-network/account": ^2.53.1
-    "@xyo-network/api-models": ^2.53.1
-    "@xyo-network/axios": ^2.53.1
-    "@xyo-network/boundwitness-model": ^2.53.1
-    "@xyo-network/core": ^2.53.1
-    "@xyo-network/diviner-model": ^2.53.1
-    "@xyo-network/huri": ^2.53.1
-    "@xyo-network/payload-model": ^2.53.1
-  checksum: dac22492b27ff562478e58737c303fa17e8df6b395e95d6094c0d2773a05498b7813ec9aee3b585720a851fd7cece6eeb6ab53a61817370ddf55fd92c6a7eb2f
-  languageName: node
-  linkType: hard
-
 "@xyo-network/archivist-interface@npm:^2.53.1":
   version: 2.53.1
   resolution: "@xyo-network/archivist-interface@npm:2.53.1"
@@ -4278,19 +4262,6 @@ __metadata:
     sha.js: ^2.4.11
     uuid: ^9.0.0
   checksum: ed613b5d597a3a072102c77ad57e7f2c9ab3ea636f139fbe001cfda2a0db541530763f297bc0bd24c67f48481663f1d511f4865750f6c89ca7fcf5060edae136
-  languageName: node
-  linkType: hard
-
-"@xyo-network/diviner-model@npm:^2.53.1":
-  version: 2.53.1
-  resolution: "@xyo-network/diviner-model@npm:2.53.1"
-  dependencies:
-    "@xyo-network/core": ^2.53.1
-    "@xyo-network/module": ^2.53.1
-    "@xyo-network/module-model": ^2.53.1
-    "@xyo-network/payload-model": ^2.53.1
-    "@xyo-network/promise": ^2.53.1
-  checksum: 74296ae190d1efab0c2c25cd54479110929624994ab61828799d8226da1aa4248e7c9b4d10610b5060828d88ed70f8a8be6ac5b435750efa070e4f4ebbaf036e
   languageName: node
   linkType: hard
 

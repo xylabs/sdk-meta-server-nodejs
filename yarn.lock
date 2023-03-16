@@ -3877,6 +3877,7 @@ __metadata:
     "@xylabs/tsconfig": ^2.16.1
     "@xylabs/tsconfig-jest": ^2.16.1
     "@xyo-network/api": ^2.53.1
+    "@xyo-network/http-bridge": ^2.53.1
     "@xyo-network/payload-wrapper": ^2.53.1
     "@xyo-network/sdk-meta": ^2.8.0
     axios: ^1.3.4
@@ -4054,6 +4055,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xyo-network/abstract-bridge@npm:^2.53.1":
+  version: 2.53.1
+  resolution: "@xyo-network/abstract-bridge@npm:2.53.1"
+  dependencies:
+    "@xyo-network/account": ^2.53.1
+    "@xyo-network/bridge-model": ^2.53.1
+    "@xyo-network/bridge-module-resolver": ^2.53.1
+    "@xyo-network/module": ^2.53.1
+    "@xyo-network/payload-model": ^2.53.1
+    "@xyo-network/promise": ^2.53.1
+  checksum: b942d9ed2c87a503577d9afeb81fe30ad39f4f0305ba1115b74b8a86691e5a44e08119ed818c4fcec63aa398369f7becb58d4a17680b10f59ac6c3d8fdd0cd31
+  languageName: node
+  linkType: hard
+
 "@xyo-network/account-model@npm:^2.53.1":
   version: 2.53.1
   resolution: "@xyo-network/account-model@npm:2.53.1"
@@ -4182,6 +4197,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xyo-network/bridge-model@npm:^2.53.1":
+  version: 2.53.1
+  resolution: "@xyo-network/bridge-model@npm:2.53.1"
+  dependencies:
+    "@xyo-network/module": ^2.53.1
+    "@xyo-network/module-model": ^2.53.1
+    "@xyo-network/payload-model": ^2.53.1
+    "@xyo-network/promise": ^2.53.1
+  checksum: 76a88096677176c1951428acf7c577dad2e2b7f3c2fadc96fbc54597e10e156a2b8cc30cb07af6c1a31692b7a15ca7139c656633401c99e1d2d2b74af9ea5285
+  languageName: node
+  linkType: hard
+
+"@xyo-network/bridge-module-resolver@npm:^2.53.1":
+  version: 2.53.1
+  resolution: "@xyo-network/bridge-module-resolver@npm:2.53.1"
+  dependencies:
+    "@xylabs/assert": ^2.7.4
+    "@xyo-network/address-payload-plugin": ^2.53.1
+    "@xyo-network/bridge-model": ^2.53.1
+    "@xyo-network/module": ^2.53.1
+    "@xyo-network/module-model": ^2.53.1
+    "@xyo-network/payload-model": ^2.53.1
+    lodash: ^4.17.21
+  checksum: 640edd8250c8b6c9473ec8123b250bfb557bdc85a72d1031aff65d975fc2a3021940cb419d5d84c15176a67c02f8216745f25210609c2d2836ccbc8675e59df8
+  languageName: node
+  linkType: hard
+
 "@xyo-network/config-payload-plugin@npm:^2.53.1":
   version: 2.53.1
   resolution: "@xyo-network/config-payload-plugin@npm:2.53.1"
@@ -4228,6 +4270,27 @@ __metadata:
   dependencies:
     "@xyo-network/axios": ^2.53.1
   checksum: dd906f196ce7878e031947c85623c1906f71e92b014c6c047d22b38df5f0197b7c7ffea8878896ea08dece61a98a34199d4cc68cdcc3fa285f09fc0be1a10d2a
+  languageName: node
+  linkType: hard
+
+"@xyo-network/http-bridge@npm:^2.53.1":
+  version: 2.53.1
+  resolution: "@xyo-network/http-bridge@npm:2.53.1"
+  dependencies:
+    "@xylabs/assert": ^2.7.4
+    "@xyo-network/abstract-bridge": ^2.53.1
+    "@xyo-network/api-models": ^2.53.1
+    "@xyo-network/axios": ^2.53.1
+    "@xyo-network/bridge-model": ^2.53.1
+    "@xyo-network/config-payload-plugin": ^2.53.1
+    "@xyo-network/core": ^2.53.1
+    "@xyo-network/module": ^2.53.1
+    "@xyo-network/payload-model": ^2.53.1
+    "@xyo-network/payload-wrapper": ^2.53.1
+    "@xyo-network/promise": ^2.53.1
+    "@xyo-network/query-payload-plugin": ^2.53.1
+    lodash: ^4.17.21
+  checksum: 8efd8a0f6390b415408ee1cc20a00d246a21dc020ea76e133a79a1b19da49f6bc502d505541d36144b927ddb43cc0391c6f7060ed755eb47ef5f82e41810a24b
   languageName: node
   linkType: hard
 

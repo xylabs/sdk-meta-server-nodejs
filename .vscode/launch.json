@@ -37,7 +37,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/contentHandlers/proxyOriginal/proxyOriginal.spec.ts"
+        "src/modules/metaServer/contentHandlers/archivistBlock/spec/archivistBlock.spec.ts"
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

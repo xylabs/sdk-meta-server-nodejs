@@ -1,4 +1,4 @@
-import { getArchivistDomainFromExploreUri, networkToArchivistUri } from './getArchivistDomainFromExploreUri'
+import { getArchivistDomainFromExploreUri, networkToArchivistUri } from '../getArchivistDomainFromExploreUri'
 
 const prodUrls = [
   'https://explore.xyo.network',

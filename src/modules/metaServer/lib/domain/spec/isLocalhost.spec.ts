@@ -1,4 +1,4 @@
-import { isLocalhost } from './isLocalhost'
+import { isLocalhost } from '../isLocalhost'
 
 const localhostStrings = [
   'localhost',

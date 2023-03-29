@@ -1,4 +1,4 @@
-import { XyoBoundWitnessSchema } from '@xyo-network/boundwitness-model'
+import { BoundWitnessSchema } from '@xyo-network/boundwitness-model'
 import { PayloadWrapper } from '@xyo-network/payload-wrapper'
 import { Meta, metaBuilder } from '@xyo-network/sdk-meta'
 import cloneDeep from 'lodash/cloneDeep'
@@ -16,7 +16,7 @@ export const setHtmlMetaData = async (info: PayloadInfo, html: string, config: M
       const payload = PayloadWrapper.tryParse(results?.[0])
       if (payload) {
         const schema = payload.schema
-        const type = schema === XyoBoundWitnessSchema ? 'Bound Witness' : 'Payload'
+        const type = schema === BoundWitnessSchema ? 'Bound Witness' : 'Payload'
         meta.title = `XYO 2.0: ${type} | ${hash}`
         meta.description = `A XYO 2.0 ${schema} payload with the hash ${hash}.`
       }

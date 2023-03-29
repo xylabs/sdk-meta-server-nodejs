@@ -10,9 +10,7 @@ describe('getHashInfoFromUri', () => {
     ]
     it.each(uris)('gets hash info from URI', (uri) => {
       const info = getHashInfoFromUri(uri)
-      expect(info.archive).toBeTruthy()
       expect(info.hash).toBeTruthy()
-      expect(info.type).toBeTruthy()
     })
   })
   describe('when missing', () => {
@@ -31,19 +29,7 @@ describe('getHashInfoFromUri', () => {
       'https://beta.explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=main',
       'https://beta.explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=kerplunk',
     ]
-    describe('archive', () => {
-      const uris = [
-        ...domainUris,
-        ...huriUris,
-        'https://beta.explore.xyo.network/archive',
-        'https://explore.xyo.network/archive/?network=main',
-        'https://explore.xyo.network/schema/network.xyo.payload',
-      ]
-      it.each(uris)('returns undefined', (uri) => {
-        const info = getHashInfoFromUri(uri)
-        expect(info.archive).toBeUndefined()
-      })
-    })
+
     describe('hash', () => {
       const uris = [
         ...domainUris,
@@ -64,19 +50,6 @@ describe('getHashInfoFromUri', () => {
       it.each(uris)('returns undefined', (uri) => {
         const info = getHashInfoFromUri(uri)
         expect(info.hash).toBeUndefined()
-      })
-    })
-    describe('type', () => {
-      const uris = [
-        ...domainUris,
-        ...huriUris,
-        'https://beta.explore.xyo.network/archive/temp',
-        'https://explore.xyo.network/archive/temp/?network=main',
-        'https://explore.xyo.network/schema/network.xyo.payload',
-      ]
-      it.each(uris)('returns undefined', (uri) => {
-        const info = getHashInfoFromUri(uri)
-        expect(info.type).toBeUndefined()
       })
     })
   })

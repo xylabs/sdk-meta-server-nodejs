@@ -16,7 +16,7 @@ export const getArchivistForDomain = async (domain: string): Promise<ArchivistWr
   const value = cache.get(domain)
   if (value) {
     const [, archivist] = value
-    return archivist
+    if (archivist) return archivist
   }
   const bridge = await HttpBridge.create({ config: { nodeUri: `${domain}/node`, schema, security } })
   const resolved = await bridge.downResolver.resolve({ name })

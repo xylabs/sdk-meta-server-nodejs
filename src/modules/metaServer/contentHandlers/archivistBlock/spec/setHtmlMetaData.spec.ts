@@ -101,36 +101,28 @@ const verifyHtmlContainsMeta = (html: string, path: string, meta = testMeta) => 
 }
 
 describe('setHtmlMetaData', () => {
-  it('for non-payload URL sets standard meta fields', async () => {
-    const path = 'https://www.google.com'
-    const info = getPayloadInfoFromPath(path)
-    const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
-    verifyHtmlContainsMeta(newHtml, path)
+  describe('for non-Payload URLs', () => {
+    it('sets standard meta fields', async () => {
+      const path = 'https://www.google.com'
+      const info = getPayloadInfoFromPath(path)
+      const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
+      verifyHtmlContainsMeta(newHtml, path)
+    })
   })
-  it('for Payload URL', async () => {
-    const hash = '9213d6b605aad8a4b1871fd5d4f9a23355ffb7334b290afae51ead9bda9fa6a3'
-    const path = `https://beta.explore.xyo.network/payload/hash/${hash}?network=kerplunk`
-    const info = getPayloadInfoFromPath(path)
-    const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
-    const title = `XYO 2.0: Payload | ${hash}`
-    const expected: Meta = {
-      ...expectedMeta,
-      title: `XYO 2.0: Payload | ${hash}`,
-    }
-    verifyHtmlContainsMeta(newHtml, path, expected)
-    expect(newHtml).toContain(title)
-  })
-  it('for BoundWitness URL', async () => {
-    const hash = '6d7351f818fd9342fc41072a7dcceb57bdff0fe55e2f8e4d28abac13a5320b15'
-    const path = `https://beta.explore.xyo.network/block/hash/${hash}?network=kerplunk`
-    const info = getPayloadInfoFromPath(path)
-    const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
-    const title = `XYO 2.0: Bound Witness | ${hash}`
-    const expected: Meta = {
-      ...expectedMeta,
-      title: `XYO 2.0: Bound Witness | ${hash}`,
-    }
-    verifyHtmlContainsMeta(newHtml, path, expected)
-    expect(newHtml).toContain(title)
+  describe('for Payload URLs sets standard meta fields', () => {
+    const bwHash = '6d7351f818fd9342fc41072a7dcceb57bdff0fe55e2f8e4d28abac13a5320b15'
+    const payloadHash = '9213d6b605aad8a4b1871fd5d4f9a23355ffb7334b290afae51ead9bda9fa6a3'
+    const cases: [type: string, hash: string, path: string][] = [
+      ['Bound Witness', bwHash, `https://beta.explore.xyo.network/payload/hash/${bwHash}?network=kerplunk`],
+      ['Payload', payloadHash, `https://beta.explore.xyo.network/payload/hash/${payloadHash}?network=kerplunk`],
+    ]
+    it.each(cases)('sets fields based on the  %s', async (type, hash, path) => {
+      const info = getPayloadInfoFromPath(path)
+      const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
+      const title = `XYO 2.0: ${type} | ${hash}`
+      const expected: Meta = { ...expectedMeta, title }
+      verifyHtmlContainsMeta(newHtml, path, expected)
+      expect(newHtml).toContain(title)
+    })
   })
 })

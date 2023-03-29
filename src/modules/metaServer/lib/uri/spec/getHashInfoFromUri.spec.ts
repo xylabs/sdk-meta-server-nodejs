@@ -1,4 +1,4 @@
-import { getHashInfoFromUri } from './getHashInfoFromUri'
+import { getHashInfoFromUri } from '../getHashInfoFromUri'
 
 describe('getHashInfoFromUri', () => {
   describe('with valid URI', () => {

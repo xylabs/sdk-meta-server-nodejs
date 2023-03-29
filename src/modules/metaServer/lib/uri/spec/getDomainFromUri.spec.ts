@@ -1,4 +1,4 @@
-import { getDomainFromUri } from './getDomainFromUri'
+import { getDomainFromUri } from '../getDomainFromUri'
 
 const validUris = [
   ['https://www.google.com/search/foo', 'https://www.google.com'],

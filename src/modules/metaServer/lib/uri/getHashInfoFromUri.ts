@@ -1,6 +1,7 @@
 import { HashInfo } from '../../types'
 
-const pattern = /(?<hash>[a-f0-9]{32})/
+// TODO: Something more intelligent than just same length/characters
+const pattern = /(?<hash>[a-f0-9]{64})/
 
 export const getHashInfoFromUri = (uri: string): HashInfo => {
   const value = pattern.exec(uri)

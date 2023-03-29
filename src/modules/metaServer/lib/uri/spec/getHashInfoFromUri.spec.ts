@@ -8,7 +8,17 @@ describe('getHashInfoFromUri', () => {
       '/archive/temp/block/hash/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=main',
       'http://locahost:8080/archive/temp/payload/hash/62378096c541bda4a150643314fb0ed85d6f964023452f586d0e5c74db08d852',
     ]
-    it.each(uris)('gets hash info from URI', (uri) => {
+    const huriUris = [
+      '/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=main',
+      'https://explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436',
+      'https://explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=main',
+      'https://explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=kerplunk',
+      'https://beta.explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436',
+      'https://beta.explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=main',
+      'https://beta.explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=kerplunk',
+    ]
+    const cases = [...uris, ...huriUris]
+    it.each(cases)('gets hash info from URI', (uri) => {
       const info = getHashInfoFromUri(uri)
       expect(info.hash).toBeTruthy()
     })
@@ -20,20 +30,10 @@ describe('getHashInfoFromUri', () => {
       'https://explore.xyo.network/?network=kerplunk',
       'https://beta.explore.xyo.network/?network=kerplunk',
     ]
-    const huriUris = [
-      '/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=main',
-      'https://explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436',
-      'https://explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=main',
-      'https://explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=kerplunk',
-      'https://beta.explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436',
-      'https://beta.explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=main',
-      'https://beta.explore.xyo.network/ce9d1723d3f501abc980c4f48248c11c9689051d9a2010d521e4ee484b260436?network=kerplunk',
-    ]
 
     describe('hash', () => {
       const uris = [
         ...domainUris,
-        ...huriUris,
         'https://beta.explore.xyo.network/archive/temp',
         'https://explore.xyo.network/archive/temp/?network=main',
         'https://explore.xyo.network/schema/network.xyo.payload',

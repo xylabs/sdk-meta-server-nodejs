@@ -11,7 +11,7 @@ import { ExplorerArchivistBlockInfo } from '../../types'
 const schema = HttpBridgeConfigSchema
 const security = { allowAnonymous: true }
 
-const name = 'Archivist'
+const name = ['Archivist']
 
 export const setHtmlMetaData = async (info: ExplorerArchivistBlockInfo, html: string, config: Meta): Promise<string> => {
   const { apiDomain, hash, path } = info
@@ -19,7 +19,7 @@ export const setHtmlMetaData = async (info: ExplorerArchivistBlockInfo, html: st
   if (hash && apiDomain) {
     try {
       const bridge = await HttpBridge.create({ config: { nodeUri: `${apiDomain}/node`, schema, security } })
-      const resolved = await bridge.downResolver.resolve({ name: [name] })
+      const resolved = await bridge.downResolver.resolve({ name })
       const mod = assertEx(resolved.pop(), `Failed to load module [${name}]`)
       const archivist = ArchivistWrapper.wrap(mod)
       const results = await archivist.get([hash])

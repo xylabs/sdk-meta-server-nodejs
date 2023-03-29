@@ -18,7 +18,7 @@ export const getArchivistForDomain = async (domain: string): Promise<ArchivistWr
     const [, archivist] = value
     if (archivist) return archivist
   }
-  const bridge = await HttpBridge.create({ config: { nodeUri: `${domain}/node`, schema, security } })
+  const bridge = await HttpBridge.create({ config: { nodeUrl: `${domain}/node`, schema, security } })
   const resolved = await bridge.downResolver.resolve({ name })
   const mod = assertEx(resolved.pop(), `Failed to load module [${name}]`)
   const archivist = ArchivistWrapper.wrap(mod)

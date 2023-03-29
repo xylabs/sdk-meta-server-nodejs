@@ -32,7 +32,7 @@ const fromOrigin = (origin: string): string | undefined => {
   return originToArchivistUri[origin]
 }
 
-export const getArchivistDomainFromExploreUri = (uri: string): string => {
+export const getArchivistDomainFromUri = (uri: string): string => {
   try {
     const parsed = new URL(uri)
     return fromQuery(parsed) || fromOrigin(parsed.origin) || networkToArchivistUri['main']

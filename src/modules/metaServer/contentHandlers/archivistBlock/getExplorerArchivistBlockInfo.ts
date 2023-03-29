@@ -1,8 +1,8 @@
-import { getArchivistDomainFromExploreUri, getHashInfoFromUri } from '../../lib'
+import { getArchivistDomainFromUri, getHashInfoFromUri } from '../../lib'
 import { ExplorerArchivistBlockInfo } from '../../types'
 
 export const getExplorerArchivistBlockInfo = (path: string): ExplorerArchivistBlockInfo => {
-  const apiDomain = getArchivistDomainFromExploreUri(path)
+  const apiDomain = getArchivistDomainFromUri(path)
   const { archive, hash, type } = getHashInfoFromUri(path)
   return { apiDomain, archive, hash, path, type }
 }

@@ -1,4 +1,4 @@
-import { isArchivistDomain } from './isArchivistDomain'
+import { isArchivistDomain } from '../isArchivistDomain'
 
 const archivistDomains = ['https://beta.api.archivist.xyo.network', 'https://api.archivist.xyo.network', 'http://localhost:8080']
 

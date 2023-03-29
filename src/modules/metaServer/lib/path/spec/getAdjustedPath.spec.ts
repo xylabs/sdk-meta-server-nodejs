@@ -1,7 +1,7 @@
 import { Request } from 'express'
 import { sep } from 'path'
 
-import { getAdjustedPath } from './getAdjustedPath'
+import { getAdjustedPath } from '../getAdjustedPath'
 
 const getRequestForUri = (uri: string) => {
   return {

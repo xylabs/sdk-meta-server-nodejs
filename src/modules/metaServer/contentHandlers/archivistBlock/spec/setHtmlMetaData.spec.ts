@@ -73,17 +73,17 @@ const testMeta: Meta = {
   },
 }
 
-const verifyHtmlContainsMeta = (html: string, path: string) => {
+const verifyHtmlContainsMeta = (html: string, path: string, meta = testMeta) => {
   expect(html.length).toBeGreaterThan(testHtml.length)
-  expect(html).toContain(testMeta.title)
-  expect(html).toContain(testMeta.description)
-  expect(html).toContain(testMeta.og?.image)
-  expect(html).toContain(testMeta.og?.title)
-  expect(html).toContain(testMeta.og?.type)
+  expect(html).toContain(meta.title)
+  expect(html).toContain(meta.description)
+  expect(html).toContain(meta.og?.image)
+  expect(html).toContain(meta.og?.title)
+  expect(html).toContain(meta.og?.type)
   expect(html).toContain(path)
-  expect(html).toContain(testMeta.twitter?.card)
-  expect(html).toContain(testMeta.twitter?.image?.url)
-  expect(html).toContain(testMeta.twitter?.title)
+  expect(html).toContain(meta.twitter?.card)
+  expect(html).toContain(meta.twitter?.image?.url)
+  expect(html).toContain(meta.twitter?.title)
 }
 
 describe('setHtmlMetaData', () => {
@@ -93,12 +93,50 @@ describe('setHtmlMetaData', () => {
     const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
     verifyHtmlContainsMeta(newHtml, path)
   })
-  it('for payload URL', async () => {
-    const hash = '62378096c541bda4a150643314fb0ed85d6f964023452f586d0e5c74db08d852'
-    const path = `http://aws-alb-123456789.us-east-1.elb.amazonaws.com:80/archive/temp/payload/hash/${hash}`
+  it('for Payload URL', async () => {
+    const hash = '9213d6b605aad8a4b1871fd5d4f9a23355ffb7334b290afae51ead9bda9fa6a3'
+    const path = `https://beta.explore.xyo.network/payload/hash/${hash}?network=kerplunk`
     const info = getPayloadInfoFromPath(path)
     const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
-    verifyHtmlContainsMeta(newHtml, path)
-    expect(newHtml).toContain(hash)
+    const title = `XYO 2.0: Payload | ${hash}`
+    const expected: Meta = {
+      description: 'Explore the XYO 2.0 Blockchain',
+      og: {
+        image: 'https://explore.xyo.network/meta-image-explore.jpg',
+        title: 'XYO 2.0 Explore',
+        type: 'website',
+      },
+      title: `XYO 2.0: Payload | ${hash}`,
+      twitter: {
+        card: 'summary_large_image',
+        image: { url: 'https://explore.xyo.network/meta-image-explore.jpg' },
+        title: 'XYO 2.0 Explore',
+      },
+    }
+    verifyHtmlContainsMeta(newHtml, path, expected)
+    expect(newHtml).toContain(title)
+  })
+  it('for BoundWitness URL', async () => {
+    const hash = '6d7351f818fd9342fc41072a7dcceb57bdff0fe55e2f8e4d28abac13a5320b15'
+    const path = `https://beta.explore.xyo.network/block/hash/${hash}?network=kerplunk`
+    const info = getPayloadInfoFromPath(path)
+    const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
+    const title = `XYO 2.0: Bound Witness | ${hash}`
+    const expected: Meta = {
+      description: 'Explore the XYO 2.0 Blockchain',
+      og: {
+        image: 'https://explore.xyo.network/meta-image-explore.jpg',
+        title: 'XYO 2.0 Explore',
+        type: 'website',
+      },
+      title: `XYO 2.0: Bound Witness | ${hash}`,
+      twitter: {
+        card: 'summary_large_image',
+        image: { url: 'https://explore.xyo.network/meta-image-explore.jpg' },
+        title: 'XYO 2.0 Explore',
+      },
+    }
+    verifyHtmlContainsMeta(newHtml, path, expected)
+    expect(newHtml).toContain(title)
   })
 })

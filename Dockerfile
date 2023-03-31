@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
+
 # Build here and pull down all the devDependencies
 FROM node:16 AS builder
+ARG NODE_OPTIONS="--max_old_space_size=5120"
 WORKDIR /app
 COPY . .
 RUN yarn install

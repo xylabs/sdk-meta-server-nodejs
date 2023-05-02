@@ -1,7 +1,7 @@
-import { lookup } from 'mime'
+import { getType } from 'mime'
 
 export const isKnownFileExtension = (filePath: string): boolean => {
   // const extension = extname(filePath).toLowerCase()
   // return knownFileExtensions[extension] ?? false
-  return lookup(filePath) ? true : false
+  return getType(filePath) ? true : false
 }

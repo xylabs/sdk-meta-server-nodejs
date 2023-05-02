@@ -7,8 +7,8 @@ import { SuperTest, Test } from 'supertest'
 import { getServerOnPort } from '../../../spec'
 
 const payloadUris = [
-  '/archive/temp/block/hash/eb27161e9d12403a0a2c49590ca27c215c70382fa5f8aa7d06a28ed24394748e?network=kerplunk',
-  '/archive/temp/payload/hash/2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99?network=kerplunk',
+  '/block/hash/eb27161e9d12403a0a2c49590ca27c215c70382fa5f8aa7d06a28ed24394748e?network=kerplunk',
+  '/payload/hash/2096d4e1a3c0bf1ead5e7b2144bf98e39d0679c343d79c896a0d836479475e99?network=kerplunk',
 ]
 
 const testServerPort = 12345

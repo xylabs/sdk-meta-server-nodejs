@@ -3,7 +3,7 @@ import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { StatusCodes } from 'http-status-codes'
-import LruCache from 'lru-cache'
+import { LRUCache } from 'lru-cache'
 import { join } from 'path'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
@@ -32,7 +32,7 @@ const options: ServeStaticOptions = {
   maxAge,
 }
 
-const existingPaths = new LruCache<string, boolean>({ max: 1000 })
+const existingPaths = new LRUCache<string, boolean>({ max: 1000 })
 
 const getHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists

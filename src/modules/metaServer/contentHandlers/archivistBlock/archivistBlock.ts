@@ -13,7 +13,7 @@ import { setHtmlMetaData } from './setHtmlMetaData'
 const defaultHtmlMeta: Meta = {
   description: "Own your piece of XYO's Decentralized Digital World!",
   og: {},
-  title: 'XYO 2.0',
+  title: 'XYO 2.1',
   twitter: {},
 }
 

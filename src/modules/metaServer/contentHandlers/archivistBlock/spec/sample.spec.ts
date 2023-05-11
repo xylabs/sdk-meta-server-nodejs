@@ -1,6 +1,6 @@
 import { Meta } from '@xyo-network/sdk-meta'
 
-const title = 'XYO 2.0'
+const title = 'XYO 2.1'
 
 export const sampleMeta: Meta = {
   description: "Own your piece of XYO's Decentralized Digital World!",

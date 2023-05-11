@@ -15,13 +15,13 @@ const testHtml = `
   <meta name="description" content="Own your piece of XYO's Decentralized Digital World!" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/manifest.json" />
-  <title>XYO 2.0</title>
+  <title>XYO 2.1</title>
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans|Lexend+Deca|Rock+Salt|Source+Code+Pro&display=swap"
     rel="stylesheet">
   <meta property="og:url" content="https://explore.xyo.network" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="XYO 2.0 Explore" />
-  <meta property="og:description" content="Explore the XYO 2.0 Blockchain" />
+  <meta property="og:title" content="XYO 2.1 Explore" />
+  <meta property="og:description" content="Explore the XYO 2.1 Blockchain" />
   <meta property="og:image" content="https://explore.xyo.network/meta-image-explore.jpg" />
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:image" content="https://explore.xyo.network/meta-image-explore.jpg" />
@@ -74,16 +74,16 @@ const testMeta: Meta = {
 }
 
 const expectedMeta: Meta = {
-  description: 'Explore the XYO 2.0 Blockchain',
+  description: 'Explore the XYO 2.1 Blockchain',
   og: {
     image: 'https://explore.xyo.network/meta-image-explore.jpg',
-    title: 'XYO 2.0 Explore',
+    title: 'XYO 2.1 Explore',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
     image: { url: 'https://explore.xyo.network/meta-image-explore.jpg' },
-    title: 'XYO 2.0 Explore',
+    title: 'XYO 2.1 Explore',
   },
 }
 
@@ -119,7 +119,7 @@ describe('setHtmlMetaData', () => {
     it.each(cases)('sets fields based on the  %s', async (type, hash, path) => {
       const info = getPayloadInfoFromPath(path)
       const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
-      const title = `XYO 2.0: ${type} | ${hash}`
+      const title = `XYO 2.1: ${type} | ${hash}`
       const expected: Meta = { ...expectedMeta, title }
       verifyHtmlContainsMeta(newHtml, path, expected)
       expect(newHtml).toContain(title)

@@ -108,6 +108,6 @@
   },
   "sideEffects": false,
   "types": "dist/types/index.d.ts",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "packageManager": "yarn@3.4.1"
 }

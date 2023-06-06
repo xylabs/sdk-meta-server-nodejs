@@ -15,7 +15,7 @@ export const setHtmlMetaData = async (info: PayloadInfo, html: string, config: M
       const results = await archivist.get([hash])
       const payload = PayloadWrapper.tryParse(results?.[0])
       if (payload) {
-        const schema = payload.schema
+        const schema = payload.schema()
         const type = schema === BoundWitnessSchema ? 'Bound Witness' : 'Payload'
         meta.title = `XYO 2.1: ${type} | ${hash}`
         meta.description = `A XYO 2.1 ${schema} payload with the hash ${hash}.`

@@ -9,7 +9,7 @@ import serveStatic, { ServeStaticOptions } from 'serve-static'
 
 import { getAdjustedPath, isHtmlLike } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { exists } from './exists'
+import { exists } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)

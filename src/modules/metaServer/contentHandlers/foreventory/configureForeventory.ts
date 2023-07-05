@@ -1,6 +1,7 @@
 import { assertEx } from '@xylabs/assert'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { Meta } from '@xyo-network/sdk-meta'
+import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { extname, join } from 'path'
 
@@ -22,7 +23,10 @@ const defaultHtmlMeta: Meta = {
 const indexHtmlMaxAge = 60 * 10
 const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 
-const getHandler = (baseDir: string) => {
+const ALLOW_FOREVENTORY_HANDLER = false
+
+const getHandler = (baseDir: string): RequestHandler => {
+  if (!ALLOW_FOREVENTORY_HANDLER) return (_req, _res, next) => next()
   // If file containing standard HTML meta exists use it otherwise use defaults
   const metaPath = join(baseDir, 'meta.json')
   const htmlMeta = existsSync(metaPath) ? JSON.parse(readFileSync(metaPath, { encoding: 'utf-8' })) : defaultHtmlMeta

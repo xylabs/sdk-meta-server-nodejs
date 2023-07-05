@@ -9,9 +9,9 @@ import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../type
 import { getPayloadInfoFromPath, isEnoughInfoToRetrievePayload, setHtmlMetaData } from './lib'
 
 const defaultHtmlMeta: Meta = {
-  description: "Own your piece of XYO's Decentralized Digital World!",
+  description: 'Your Data, Forever Long.',
   og: {},
-  title: 'XYO 2.1',
+  title: 'Foreventory',
   twitter: {},
 }
 

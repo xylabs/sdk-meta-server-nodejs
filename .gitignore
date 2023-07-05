@@ -3,6 +3,9 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+**/*.jpeg
+**/*.png
+**/*.webp
 *.log
 *.tgz
 .DS_Store

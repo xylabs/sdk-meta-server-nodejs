@@ -5,7 +5,7 @@ export const generateImageFromPage = async (url: string): Promise<Buffer | undef
   try {
     const [page] = await browser.pages()
     await page.goto(url)
-    const image = await page.screenshot({ fullPage: true })
+    const image = await page.screenshot({ fullPage: true, path: 'screenshot.png', type: 'png' })
     return image
   } catch (err) {
     console.error(err)

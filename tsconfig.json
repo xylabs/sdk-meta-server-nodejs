@@ -3,5 +3,5 @@
     "declarationDir": "./dist/types",
     "typeRoots": []
   },
-  "extends": "@xylabs/tsconfig"
+  "extends": "@xylabs/tsconfig-dom"
 }

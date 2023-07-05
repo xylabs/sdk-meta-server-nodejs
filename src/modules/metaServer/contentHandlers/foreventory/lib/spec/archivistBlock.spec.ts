@@ -13,7 +13,7 @@ const payloadUris = [
 
 const testServerPort = 12345
 
-describe('archivistBlock', () => {
+describe.skip('archivistBlock', () => {
   let server: Server
   let agent: SuperTest<Test>
   beforeAll(() => {

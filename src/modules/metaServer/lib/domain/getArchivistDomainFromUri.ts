@@ -10,8 +10,10 @@ export const networkToArchivistUri: Record<string, string> = {
 export const originToArchivistUri: Record<string, string> = {
   'http://localhost:3000': 'http://localhost:8080',
   'https://beta.explore.xyo.network': 'https://beta.api.archivist.xyo.network',
+  'https://beta.forenventory.com': 'https://beta.api.archivist.xyo.network',
   'https://beta.node.xyo.network': 'https://beta.api.archivist.xyo.network',
   'https://explore.xyo.network': 'https://api.archivist.xyo.network',
+  'https://forenventory.com': 'https://api.archivist.xyo.network',
   'https://node.xyo.network': 'https://api.archivist.xyo.network',
 }
 

@@ -1,1 +1,1 @@
-export * from './archivistBlock'
+export * from './configureArchivistBlock'

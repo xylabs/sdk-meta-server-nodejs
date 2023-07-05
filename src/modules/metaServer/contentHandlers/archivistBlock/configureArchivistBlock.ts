@@ -6,9 +6,7 @@ import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getPayloadInfoFromPath } from './getPayloadInfoFromPath'
-import { isEnoughInfoToRetrievePayload } from './isEnoughInfoToRetrievePayload'
-import { setHtmlMetaData } from './setHtmlMetaData'
+import { getPayloadInfoFromPath, isEnoughInfoToRetrievePayload, setHtmlMetaData } from './lib'
 
 const defaultHtmlMeta: Meta = {
   description: "Own your piece of XYO's Decentralized Digital World!",

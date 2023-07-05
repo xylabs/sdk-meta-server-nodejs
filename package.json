@@ -109,7 +109,8 @@
   },
   "scripts": {
     "coverage": "yarn jest --coverage",
-    "start": "node dist/cjs/bin/start-meta.js"
+    "start": "node dist/cjs/bin/start-meta.js",
+    "test": "yarn jest"
   },
   "sideEffects": false,
   "types": "dist/types/index.d.ts",

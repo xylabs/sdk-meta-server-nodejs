@@ -1,4 +1,6 @@
 export * from './domain'
 export * from './file'
+export * from './image'
+export * from './page'
 export * from './path'
 export * from './uri'

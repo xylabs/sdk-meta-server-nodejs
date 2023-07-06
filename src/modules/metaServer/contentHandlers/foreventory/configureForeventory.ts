@@ -61,5 +61,5 @@ const getHandler = (baseDir: string): RequestHandler => {
  */
 export const configureForeventory = <T extends ApplicationMiddlewareOptions>(opts: T): MountPathAndMiddleware => [
   'get',
-  ['*', getHandler(opts.baseDir)],
+  ['/:provider/:hash/share', getHandler(opts.baseDir)],
 ]

@@ -1,5 +1,7 @@
 ignores: [
   "@types/supertest",
+  "@xylabs/eslint-config-react",
+  "@xylabs/tsconfig-dom-jest",
   "nodemon",
   "supertest",
   "ts-jest",

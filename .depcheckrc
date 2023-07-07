@@ -1,10 +1,11 @@
 ignores: [
+  "@types/jest",
   "@types/supertest",
   "@xylabs/eslint-config-react",
   "@xylabs/tsconfig-dom-jest",
+  "jest-serializer-html",
   "nodemon",
   "supertest",
   "ts-jest",
-  "ts-node",
-  "@types/jest"
+  "ts-node"
 ]

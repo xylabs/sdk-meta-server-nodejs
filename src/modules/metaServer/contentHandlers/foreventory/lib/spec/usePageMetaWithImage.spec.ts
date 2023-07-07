@@ -1,7 +1,6 @@
 import { Meta } from '@xyo-network/sdk-meta'
 
-import { getPayloadInfoFromPath } from '../getPayloadInfoFromPath'
-import { setHtmlMetaData } from '../setHtmlMetaData'
+import { usePageMetaWithImage } from '../usePageMetaWithImage'
 
 const testHtml = `
 <!doctype html>
@@ -87,7 +86,7 @@ const expectedMeta: Meta = {
   },
 }
 
-const verifyHtmlContainsMeta = (html: string, path: string, meta = testMeta) => {
+const verifyHtmlContainsMeta = (html: string, path: string, meta: Meta) => {
   expect(html.length).toBeGreaterThan(testHtml.length)
   expect(html).toContain(meta.title)
   expect(html).toContain(meta.description)
@@ -100,26 +99,11 @@ const verifyHtmlContainsMeta = (html: string, path: string, meta = testMeta) => 
   expect(html).toContain(meta.twitter?.title)
 }
 
-describe('setHtmlMetaData', () => {
-  describe('for non-Payload URLs', () => {
-    it('sets standard meta fields', async () => {
-      const path = 'https://www.google.com'
-      const info = getPayloadInfoFromPath(path)
-      const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
-      verifyHtmlContainsMeta(newHtml, path)
-    })
-  })
+describe('usePageMetaWithImage', () => {
   describe('for Payload URLs sets standard meta fields', () => {
-    const bwHash = '6d7351f818fd9342fc41072a7dcceb57bdff0fe55e2f8e4d28abac13a5320b15'
-    const payloadHash = '9213d6b605aad8a4b1871fd5d4f9a23355ffb7334b290afae51ead9bda9fa6a3'
-    const cases: [type: string, hash: string, path: string][] = [
-      ['Bound Witness', bwHash, `https://beta.explore.xyo.network/payload/hash/${bwHash}?network=kerplunk`],
-      ['Payload', payloadHash, `https://beta.explore.xyo.network/payload/hash/${payloadHash}?network=kerplunk`],
-    ]
-    it.each(cases)('sets fields based on the  %s', async (type, hash, path) => {
-      const info = getPayloadInfoFromPath(path)
-      const newHtml = await setHtmlMetaData(info, testHtml, testMeta)
-      const title = `XYO 2.1: ${type} | ${hash}`
+    const cases: string[] = ['']
+    it.each(cases)('sets fields based on the  %s', async (path) => {
+      const newHtml = await usePageMetaWithImage(path)
       const expected: Meta = { ...expectedMeta, title }
       verifyHtmlContainsMeta(newHtml, path, expected)
       expect(newHtml).toContain(title)

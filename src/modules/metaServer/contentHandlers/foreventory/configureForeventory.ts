@@ -7,7 +7,7 @@ import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getPayloadInfoFromPath, isEnoughInfoToRetrievePayload, setHtmlMetaData } from './lib'
+import { setHtmlMetaData } from './lib'
 
 const defaultHtmlMeta: Meta = {
   description: 'Your Data, Forever Long.',
@@ -39,12 +39,9 @@ const getHandler = (baseDir: string): RequestHandler => {
     if (extname(adjustedPath) === '.html') {
       try {
         const uri = getUriBehindProxy(req)
-        const info = getPayloadInfoFromPath(uri)
-        if (isEnoughInfoToRetrievePayload(info)) {
-          const updatedHtml = await setHtmlMetaData(info, html, htmlMeta)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
-          return
-        }
+        const updatedHtml = await setHtmlMetaData(uri, html, htmlMeta)
+        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+        return
       } catch (error) {
         console.log(error)
       }

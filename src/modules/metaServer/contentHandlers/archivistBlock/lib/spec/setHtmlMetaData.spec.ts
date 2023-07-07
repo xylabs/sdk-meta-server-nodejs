@@ -68,7 +68,7 @@ const testMeta: Meta = {
   title,
   twitter: {
     card: 'summary_large_image',
-    image: { url: 'https://www.placecage.com/400/300' },
+    image: { '': 'https://www.placecage.com/400/300' },
     title,
   },
 }
@@ -82,7 +82,7 @@ const expectedMeta: Meta = {
   },
   twitter: {
     card: 'summary_large_image',
-    image: { url: 'https://explore.xyo.network/meta-image-explore.jpg' },
+    image: { '': 'https://explore.xyo.network/meta-image-explore.jpg' },
     title: 'XYO 2.1 Explore',
   },
 }
@@ -96,7 +96,7 @@ const verifyHtmlContainsMeta = (html: string, path: string, meta = testMeta) => 
   expect(html).toContain(meta.og?.type)
   expect(html).toContain(path)
   expect(html).toContain(meta.twitter?.card)
-  expect(html).toContain(meta.twitter?.image?.url)
+  expect(html).toContain(meta.twitter?.image)
   expect(html).toContain(meta.twitter?.title)
 }
 

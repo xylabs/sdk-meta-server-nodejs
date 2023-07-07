@@ -3,6 +3,7 @@ ignores: [
   "@types/supertest",
   "@xylabs/eslint-config-react",
   "@xylabs/tsconfig-dom-jest",
+  "jest-extended",
   "jest-serializer-html",
   "nodemon",
   "supertest",

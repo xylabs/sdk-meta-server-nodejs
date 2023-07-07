@@ -15,10 +15,10 @@ export const defaultPageRenderingOptions: PageRenderingOptions = {
   viewportSize: viewPortDefaults,
 }
 
-export const usePage = async (
+export const usePage = async <T>(
   url: string,
   options: PageRenderingOptions | undefined = defaultPageRenderingOptions,
-  pageCallback: (page: Page) => Promise<void> | void,
+  pageCallback: (page: Page) => Promise<T> | T,
 ) => {
   if (!options) options = defaultPageRenderingOptions
   const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
@@ -26,7 +26,7 @@ export const usePage = async (
   try {
     const [page] = await browser.pages()
     await page.goto(url)
-    await pageCallback(page)
+    return await pageCallback(page)
   } catch (err) {
     console.error(err)
   } finally {

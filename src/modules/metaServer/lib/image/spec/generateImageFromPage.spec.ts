@@ -1,14 +1,9 @@
-import { generateImageFromPage, PageImageOptions } from '../generateImageFromPage'
+import { renderAndGenerateImageFromPage } from '../generateImageFromPage'
 
 describe('generateImageFromPage', () => {
   it('generates image from page', async () => {
-    const opts: PageImageOptions = {
-      encoding: 'binary',
-      path: './test.png',
-      type: 'png',
-      url: 'https://dataism.org',
-    }
-    const image = await generateImageFromPage(opts)
+    const url = 'https://dataism.org'
+    const image = await renderAndGenerateImageFromPage(url)
     expect(image).toBeDefined()
   })
 })

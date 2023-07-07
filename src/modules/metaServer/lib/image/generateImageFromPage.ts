@@ -1,21 +1,34 @@
 import { Page, ScreenshotOptions } from 'puppeteer'
 
-import { PageRenderingOptions, usePage } from '../page'
+import { defaultPageRenderingOptions, PageRenderingOptions, usePage } from '../page'
 import { ImageEncoding } from './ImageEncoding'
 import { ImageType } from './ImageType'
 
 export type PageImageOptions = PageRenderingOptions & {
   encoding?: ImageEncoding
-  path?: string
   type?: ImageType
 }
 
-export const generateImageFromPage = async (options: PageImageOptions): Promise<Buffer | string | undefined> => {
+export const defaultScreenshotOptions: ScreenshotOptions = {
+  encoding: 'binary',
+  type: 'png',
+}
+
+export const generateImageFromPage = (
+  page: Page,
+  screenshotOptions: ScreenshotOptions = defaultScreenshotOptions,
+): Promise<Buffer | string | undefined> => {
+  return page.screenshot(screenshotOptions)
+}
+
+export const renderAndGenerateImageFromPage = async (
+  url: string,
+  pageRenderingOptions: PageRenderingOptions = defaultPageRenderingOptions,
+  screenshotOptions: ScreenshotOptions = defaultScreenshotOptions,
+): Promise<Buffer | string | undefined> => {
   let image: Buffer | string | undefined = undefined
-  await usePage(options, async (page: Page) => {
-    const opts: ScreenshotOptions = { encoding: options.encoding || 'binary', type: options.type || 'png' }
-    if (options.path) opts.path = options.path
-    image = await page.screenshot(opts)
+  await usePage(url, pageRenderingOptions, async (page: Page) => {
+    image = await generateImageFromPage(page, screenshotOptions)
   })
   return image
 }

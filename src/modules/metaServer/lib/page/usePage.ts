@@ -3,7 +3,7 @@ import { launch, Page, Viewport } from 'puppeteer'
 import { PageRenderingOptions } from './PageRenderingOptions'
 import { defaultViewportSize } from './ViewPortSize'
 
-const viewPortDefaults: Viewport = {
+export const viewPortDefaults: Viewport = {
   ...defaultViewportSize,
   deviceScaleFactor: 1,
   hasTouch: false,
@@ -11,12 +11,21 @@ const viewPortDefaults: Viewport = {
   isMobile: true, // So we can render as lean as possible
 }
 
-export const usePage = async (options: PageRenderingOptions, pageCallback: (page: Page) => Promise<void> | void) => {
-  const defaultViewport: Viewport = options.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
+export const defaultPageRenderingOptions: PageRenderingOptions = {
+  viewportSize: viewPortDefaults,
+}
+
+export const usePage = async (
+  url: string,
+  options: PageRenderingOptions | undefined = defaultPageRenderingOptions,
+  pageCallback: (page: Page) => Promise<void> | void,
+) => {
+  if (!options) options = defaultPageRenderingOptions
+  const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
   const browser = await launch({ defaultViewport, headless: 'new' })
   try {
     const [page] = await browser.pages()
-    await page.goto(options.url)
+    await page.goto(url)
     await pageCallback(page)
   } catch (err) {
     console.error(err)

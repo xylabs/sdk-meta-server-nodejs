@@ -19,13 +19,15 @@ export const usePageMetaWithImage = async (url: string, imageCache: ImageCache):
       const meta: Meta = {
         og: {
           image: {
+            '': imageUrl,
+            secure_url: imageUrl,
             type: 'image/png',
             url: imageUrl,
           },
         },
         twitter: {
           image: {
-            url: imageUrl,
+            '': imageUrl,
           },
         },
       }

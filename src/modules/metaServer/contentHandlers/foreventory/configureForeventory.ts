@@ -1,9 +1,11 @@
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
+import { LRUCache } from 'lru-cache'
 import { extname } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { MountPathAndMiddleware } from '../../types'
+import { ImageCache } from './ImageCache'
 import { usePageMetaWithImage } from './lib'
 
 /**
@@ -12,6 +14,8 @@ import { usePageMetaWithImage } from './lib'
  */
 const indexHtmlMaxAge = 60 * 10
 const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
+
+const images = new LRUCache<string, Buffer>({ max: 1000 })
 
 const ALLOW_FOREVENTORY_HANDLER = false
 
@@ -23,7 +27,7 @@ const getHandler = (): RequestHandler => {
     if (extname(adjustedPath) === '.html') {
       try {
         const uri = getUriBehindProxy(req)
-        const updatedHtml = await usePageMetaWithImage(uri)
+        const updatedHtml = await usePageMetaWithImage(uri, images)
         res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
         return
       } catch (error) {

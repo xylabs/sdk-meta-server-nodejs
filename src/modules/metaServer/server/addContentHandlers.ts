@@ -5,10 +5,10 @@ import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../types'
 
 export const addContentHandlers = (app: Express, opts: ApplicationMiddlewareOptions) => {
   const knownRequestTypeHandlers: MountPathAndMiddleware[] = [
+    // Foreventory handlers
+    configureForeventory(),
     // Explore/Node handlers
     configureArchivistBlock(opts),
-    // Foreventory handlers
-    configureForeventory(opts),
   ]
   // Add catch-all pass-through handler last to ensure
   // all unknown/unsupported requests are simply proxied

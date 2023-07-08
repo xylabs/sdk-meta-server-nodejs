@@ -1,13 +1,15 @@
 import { Meta, metaBuilder, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 import { URL } from 'url'
 
-import { summaryCardWithLargeImageFromPage, usePage } from '../../../lib'
+import { summaryCardViewport, summaryCardWithLargeImageFromPage, usePage } from '../../../lib'
 import { ImageCache } from '../ImageCache'
 
 const getImageUrl = (url: string): string => {
   const parsed = new URL(url)
   return `${parsed.origin}/${parsed.pathname}/share.png`
 }
+
+const { height, width } = summaryCardViewport
 
 export const usePageMetaWithImage = async (url: string, imageCache: ImageCache): Promise<string | undefined> => {
   try {
@@ -16,7 +18,7 @@ export const usePageMetaWithImage = async (url: string, imageCache: ImageCache):
       const image = await summaryCardWithLargeImageFromPage(page)
       const imageUrl = getImageUrl(url)
       imageCache.set(imageUrl, image)
-      const og: OpenGraphMeta = { image: { '': imageUrl, secure_url: imageUrl, type: 'image/png', url: imageUrl } }
+      const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
       const twitter: TwitterMeta = { image: { '': imageUrl } }
       const meta: Meta = { og, twitter }
       return metaBuilder(html, meta)

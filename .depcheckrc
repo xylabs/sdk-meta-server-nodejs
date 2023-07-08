@@ -1,10 +1,14 @@
 ignores: [
+  "@types/jest-image-snapshot",
+  "@types/jest",
   "@types/supertest",
   "@xylabs/eslint-config-react",
   "@xylabs/tsconfig-dom-jest",
+  "jest-extended",
+  "jest-image-snapshot",
+  "jest-serializer-html",
   "nodemon",
   "supertest",
   "ts-jest",
-  "ts-node",
-  "@types/jest"
+  "ts-node"
 ]

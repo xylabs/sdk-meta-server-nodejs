@@ -2,10 +2,14 @@
 .aws
 .env
 .eslintcache
+.gif
 .git
 .github
+.jpg
+.png
 .pnp.*
 .storybook
+.svg
 .tsconfig.*
 .vscode
 .yarn/*

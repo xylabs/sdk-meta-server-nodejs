@@ -13,7 +13,7 @@ export const sampleMeta: Meta = {
   title,
   twitter: {
     card: 'summary_large_image',
-    image: { url: 'https://explore.xyo.network/meta-image-explore.jpg' },
+    image: { '': 'https://explore.xyo.network/meta-image-explore.jpg' },
     title,
   },
 }

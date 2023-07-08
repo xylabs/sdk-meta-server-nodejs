@@ -4,12 +4,12 @@ import { URL } from 'url'
 import { summaryCardViewport, summaryCardWithLargeImageFromPage, usePage } from '../../../lib'
 import { ImageCache } from '../ImageCache'
 
+const { height, width } = summaryCardViewport
+
 const getImageUrl = (url: string): string => {
   const parsed = new URL(url)
-  return `${parsed.origin}/${parsed.pathname}/share.png`
+  return `${parsed.origin}/${parsed.pathname}/${width}/${height}/share.png`
 }
-
-const { height, width } = summaryCardViewport
 
 export const usePageMetaWithImage = async (url: string, imageCache: ImageCache): Promise<string | undefined> => {
   try {

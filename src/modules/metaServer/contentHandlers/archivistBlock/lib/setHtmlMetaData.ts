@@ -24,7 +24,7 @@ export const setHtmlMetaData = async (info: PayloadInfo, html: string, config: M
       console.log(error)
     }
   }
-  meta.og = { ...meta.og, title: meta.title, url: path } as typeof meta.og
+  meta.og = { ...meta.og, title: meta.title, url: path }
   meta.twitter = { ...meta.twitter, title: meta.title }
   const updated = metaBuilder(html, meta)
   return updated

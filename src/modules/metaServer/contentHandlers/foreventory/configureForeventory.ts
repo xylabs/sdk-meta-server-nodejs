@@ -5,7 +5,6 @@ import { extname } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { MountPathAndMiddleware } from '../../types'
-import { ImageCache } from './ImageCache'
 import { usePageMetaWithImage } from './lib'
 
 /**
@@ -15,30 +14,39 @@ import { usePageMetaWithImage } from './lib'
 const indexHtmlMaxAge = 60 * 10
 const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 
-const images = new LRUCache<string, Buffer>({ max: 1000 })
+const imageCache = new LRUCache<string, Buffer>({ max: 1000 })
 
-const ALLOW_FOREVENTORY_HANDLER = false
-
-const getHandler = (): RequestHandler => {
-  if (!ALLOW_FOREVENTORY_HANDLER) return (_req, _res, next) => next()
-
-  return asyncHandler(async (req, res, next) => {
-    const adjustedPath = getAdjustedPath(req)
-    if (extname(adjustedPath) === '.html') {
-      try {
-        const uri = getUriBehindProxy(req)
-        const updatedHtml = await usePageMetaWithImage(uri, images)
-        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
-        return
-      } catch (error) {
-        console.log(error)
-      }
+const pageHandler = asyncHandler(async (req, res, next) => {
+  const adjustedPath = getAdjustedPath(req)
+  if (extname(adjustedPath) === '.html') {
+    try {
+      const uri = getUriBehindProxy(req)
+      const updatedHtml = await usePageMetaWithImage(uri, imageCache)
+      res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+      return
+    } catch (error) {
+      console.log(error)
     }
-    next()
-  })
+  }
+  next()
+})
+
+const imageHandler: RequestHandler = (req, res, next) => {
+  try {
+    const uri = getUriBehindProxy(req)
+    const image = imageCache.get(uri)
+    if (image) {
+      res.type('png').set('Cache-Control', indexHtmlCacheControlHeader).send(image)
+      return
+    }
+  } catch (error) {
+    console.log(error)
+  }
+  next()
 }
 
 /**
  * Middleware for augmenting HTML metadata for Foreventory shares
  */
-export const configureForeventory = (): MountPathAndMiddleware => ['get', ['/:provider/:hash/share', getHandler()]]
+export const foreventoryPageHandler = (): MountPathAndMiddleware => ['get', ['/:provider/:hash/share', pageHandler]]
+export const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/:provider/:hash/share/:width/:height', imageHandler]]

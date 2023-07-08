@@ -1,6 +1,6 @@
 import { mock } from 'jest-mock-extended'
 
-import { ImageCache } from '../../ImageCache'
+import { ImageCache } from '../imageCache'
 import { usePageMetaWithImage } from '../usePageMetaWithImage'
 
 describe('usePageMetaWithImage', () => {

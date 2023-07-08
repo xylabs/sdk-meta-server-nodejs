@@ -5,6 +5,7 @@
 !.yarn/versions
 **/*.jpeg
 **/*.png
+!**/__image_snapshots__/*.png
 **/*.webp
 *.log
 *.tgz

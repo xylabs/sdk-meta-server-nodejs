@@ -10,10 +10,10 @@
       "name": "Debug",
       "program": "${workspaceFolder}/src/bin/start-meta.ts",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "runtimeArgs": [
-        "--experimental-specifier-resolution=node",
-        "--loader=ts-node/esm"
-      ],
+      "env": {
+        "NODE_OPTIONS": "-r ts-node/register --loader ts-node/esm --max-old-space-size=8192"
+      },
+      "envFile": "${workspaceFolder}/.env",
       "sourceMaps": true,
       "resolveSourceMapLocations": [
         "!**/node_modules/**"

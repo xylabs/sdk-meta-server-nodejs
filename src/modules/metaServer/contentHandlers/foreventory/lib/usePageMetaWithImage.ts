@@ -1,7 +1,7 @@
 import { Meta, metaBuilder } from '@xyo-network/sdk-meta'
 import { URL } from 'url'
 
-import { generateImageBufferFromPage, usePage } from '../../../lib'
+import { summaryCardWithLargeImageFromPage, usePage } from '../../../lib'
 import { ImageCache } from '../ImageCache'
 
 const getImageUrl = (url: string): string => {
@@ -12,7 +12,7 @@ const getImageUrl = (url: string): string => {
 export const usePageMetaWithImage = async (url: string, imageCache: ImageCache): Promise<string | undefined> => {
   try {
     const updatedHtml = await usePage(url, undefined, async (page) => {
-      const image = await generateImageBufferFromPage(page)
+      const image = await summaryCardWithLargeImageFromPage(page)
       const imageUrl = getImageUrl(url)
       imageCache.set(imageUrl, image)
       const html = await page.content()

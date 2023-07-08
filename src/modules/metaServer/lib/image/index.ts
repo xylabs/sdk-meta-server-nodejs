@@ -1,1 +1,1 @@
-export * from './generateImageFromPage'
+export * from './twitter'

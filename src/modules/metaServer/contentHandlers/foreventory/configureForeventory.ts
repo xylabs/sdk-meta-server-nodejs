@@ -1,10 +1,13 @@
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
+import { LRUCache } from 'lru-cache'
 import { extname } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { MountPathAndMiddleware } from '../../types'
 import { getImageCache, usePageMetaWithImage } from './lib'
+
+const imageCache = new LRUCache<string, Buffer>({ max: 1000 })
 
 /**
  * The max-age cache control header time (in seconds)
@@ -18,7 +21,7 @@ const pageHandler = asyncHandler(async (req, res, next) => {
   if (extname(adjustedPath) === '.html') {
     try {
       const uri = getUriBehindProxy(req)
-      const updatedHtml = await usePageMetaWithImage(uri, getImageCache())
+      const updatedHtml = await usePageMetaWithImage(uri, imageCache)
       res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
       return
     } catch (error) {
@@ -30,8 +33,7 @@ const pageHandler = asyncHandler(async (req, res, next) => {
 
 const imageHandler: RequestHandler = (req, res, next) => {
   try {
-    const uri = getUriBehindProxy(req)
-    const image = getImageCache().get(uri)
+    const image = imageCache?.get(req.originalUrl)
     if (image) {
       res.type('png').set('Cache-Control', indexHtmlCacheControlHeader).send(image)
       return
@@ -45,5 +47,5 @@ const imageHandler: RequestHandler = (req, res, next) => {
 /**
  * Middleware for augmenting HTML metadata for Foreventory shares
  */
-export const foreventoryPageHandler = (): MountPathAndMiddleware => ['get', ['/:provider/:hash/share', pageHandler]]
-export const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/:provider/:hash/share/:width/:height', imageHandler]]
+export const foreventoryPageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/share', pageHandler]]
+export const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/share/:width/:height', imageHandler]]

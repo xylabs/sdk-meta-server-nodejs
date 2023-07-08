@@ -19,7 +19,7 @@ const opts: ScreenshotOptions = {
  * supported. Only the first frame of an animated GIF will be used. SVG is not
  * supported.
  */
-export const summaryCardViewport: Viewport = {
+export const summaryCardWithLargeImageViewport: Viewport = {
   deviceScaleFactor: 1,
   height: 900,
   isLandscape: false,
@@ -28,6 +28,6 @@ export const summaryCardViewport: Viewport = {
 }
 
 export const summaryCardWithLargeImageFromPage = async (page: Page) => {
-  await page.setViewport(summaryCardViewport)
+  await page.setViewport(summaryCardWithLargeImageViewport)
   return generateImageBufferFromPage(page, opts)
 }

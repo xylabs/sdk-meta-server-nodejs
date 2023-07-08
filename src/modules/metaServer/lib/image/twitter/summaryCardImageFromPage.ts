@@ -22,7 +22,7 @@ const dimensions = 900
  * and GIF formats are supported. Only the first frame of an animated GIF will
  * be used. SVG is not supported.
  */
-const summaryCardViewport: Viewport = {
+export const summaryCardViewport: Viewport = {
   deviceScaleFactor: 1,
   height: dimensions,
   isLandscape: false,

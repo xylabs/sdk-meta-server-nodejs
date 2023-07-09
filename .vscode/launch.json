@@ -37,7 +37,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/lib/image/twitter/spec/summaryCardImageFromPage.spec.ts",
+        "src/modules/metaServer/lib/head/spec/getRenderedHead.spec.ts",
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

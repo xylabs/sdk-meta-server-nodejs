@@ -5224,11 +5224,11 @@ __metadata:
   linkType: hard
 
 "@xyo-network/sdk-meta@npm:^2.9.0":
-  version: 2.9.0
-  resolution: "@xyo-network/sdk-meta@npm:2.9.0"
+  version: 2.9.1
+  resolution: "@xyo-network/sdk-meta@npm:2.9.1"
   dependencies:
     cheerio: ^1.0.0-rc.12
-  checksum: 9dfcff8500096cfceee24fe4eca23fc8a7bd4fb2478045e0fccb0cb2f209c63bbcd9b78aae14d310570ac6f4eacbd28ce91f1a34d415e05e93d702338088a893
+  checksum: f4d65837509fca286bf22102521762ea25f7f6ff32742b3943d763bee162f97e10a310d6e35dbecb10de5a6d84c7e03639b8063dfb92a671d1fdd5197b97de52
   languageName: node
   linkType: hard
 

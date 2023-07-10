@@ -3755,13 +3755,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:^29.5.2":
-  version: 29.5.2
-  resolution: "@types/jest@npm:29.5.2"
+"@types/jest@npm:*, @types/jest@npm:^29.5.3":
+  version: 29.5.3
+  resolution: "@types/jest@npm:29.5.3"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: 7d205599ea3cccc262bad5cc173d3242d6bf8138c99458509230e4ecef07a52d6ddcde5a1dbd49ace655c0af51d2dbadef3748697292ea4d86da19d9e03e19c0
+  checksum: e36bb92e0b9e5ea7d6f8832baa42f087fc1697f6cd30ec309a07ea4c268e06ec460f1f0cfd2581daf5eff5763475190ec1ad8ac6520c49ccfe4f5c0a48bfa676
   languageName: node
   linkType: hard
 
@@ -4339,7 +4339,7 @@ __metadata:
     "@babel/core": ^7.22.8
     "@babel/preset-env": ^7.22.7
     "@types/express": ^4.17.17
-    "@types/jest": ^29.5.2
+    "@types/jest": ^29.5.3
     "@types/jest-image-snapshot": ^6.1.0
     "@types/lodash": ^4.14.195
     "@types/node": ^20.4.1
@@ -4358,7 +4358,7 @@ __metadata:
     "@xyo-network/boundwitness-model": ^2.64.8
     "@xyo-network/http-bridge": ^2.64.8
     "@xyo-network/payload-wrapper": ^2.64.8
-    "@xyo-network/sdk-meta": ^2.9.0
+    "@xyo-network/sdk-meta": ^2.9.1
     axios: ^1.4.0
     body-parser: ^1.20.2
     dotenv: ^16.3.1
@@ -5223,12 +5223,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/sdk-meta@npm:^2.9.0":
-  version: 2.9.0
-  resolution: "@xyo-network/sdk-meta@npm:2.9.0"
+"@xyo-network/sdk-meta@npm:^2.9.1":
+  version: 2.9.1
+  resolution: "@xyo-network/sdk-meta@npm:2.9.1"
   dependencies:
     cheerio: ^1.0.0-rc.12
-  checksum: 9dfcff8500096cfceee24fe4eca23fc8a7bd4fb2478045e0fccb0cb2f209c63bbcd9b78aae14d310570ac6f4eacbd28ce91f1a34d415e05e93d702338088a893
+  checksum: f4d65837509fca286bf22102521762ea25f7f6ff32742b3943d763bee162f97e10a310d6e35dbecb10de5a6d84c7e03639b8063dfb92a671d1fdd5197b97de52
   languageName: node
   linkType: hard
 

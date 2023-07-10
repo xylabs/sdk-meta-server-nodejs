@@ -1,7 +1,7 @@
 import { usePage } from '../../page'
-import { getRenderedHead } from '../getRenderedHead'
+import { getRenderedHead, getRenderedMeta } from '../getRenderedHead'
 
-const uris = ['https://dataism.org']
+const uris = ['https://www.youtube.com/watch?v=Kauv7MVPcsA']
 
 describe('getRenderedHead', () => {
   it.each(uris)('Returns true for known file extensions', async (uri) => {
@@ -10,5 +10,15 @@ describe('getRenderedHead', () => {
       return getRenderedHead(page)
     })
     expect(head).toBeString()
+  })
+})
+
+describe('getRenderedMeta', () => {
+  it.each(uris)('Returns true for known file extensions', async (uri) => {
+    const head = await usePage(uri, undefined, async (page) => {
+      expect(await getRenderedMeta(page)).toBe(true)
+      return getRenderedMeta(page)
+    })
+    expect(head).toBeObject()
   })
 })

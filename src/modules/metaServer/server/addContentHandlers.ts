@@ -7,7 +7,7 @@ export const addContentHandlers = (app: Express, opts: ApplicationMiddlewareOpti
   const knownRequestTypeHandlers: MountPathAndMiddleware[] = [
     // Foreventory handlers
     foreventoryImageHandler(),
-    foreventoryPageHandler(),
+    foreventoryPageHandler(opts),
     // Explore/Node handlers
     configureArchivistBlock(opts),
   ]

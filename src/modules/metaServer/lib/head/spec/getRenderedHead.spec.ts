@@ -1,5 +1,5 @@
 import { usePage } from '../../page'
-import { getRenderedHead, getRenderedMeta, getRenderedMetaElements } from '../getRenderedHead'
+import { getRenderedHead, getRenderedMeta, getRenderedMetaElements, getSelectiveHeadElements } from '../getRenderedHead'
 
 const uris = ['https://www.youtube.com/watch?v=Kauv7MVPcsA']
 
@@ -21,5 +21,11 @@ describe('getRenderedMeta', () => {
   it.each(uris)('Returns object from elements on page', async (uri) => {
     const head = await usePage(uri, undefined, (page) => getRenderedMeta(page))
     expect(head).toBeObject()
+  })
+})
+describe.only('getSelectiveHeadElements', () => {
+  it.each(uris)('Returns object from elements on page', async (uri) => {
+    const elements = await usePage(uri, undefined, (page) => getSelectiveHeadElements(page))
+    expect(elements).toBeArray()
   })
 })

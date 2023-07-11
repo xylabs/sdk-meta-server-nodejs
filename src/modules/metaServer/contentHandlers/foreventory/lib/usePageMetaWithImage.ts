@@ -27,17 +27,36 @@ const getImageUrl = (url: string): string => {
 
 export const usePageMetaWithImage = async (url: string, imageCache: ImageCache): Promise<string | undefined> => {
   try {
-    const updatedHtml = await usePage(url, undefined, async (page) => {
-      const html = await page.content()
+    const previewUrl = join(url, 'preview')
+    const [html, meta] = await Promise.all([await getRenderedHtml(url), await getRenderedPageAsImage(previewUrl, imageCache)])
+    if (html && meta) return metaBuilder(html, meta)
+  } catch (error) {
+    console.log(error)
+  }
+  return undefined
+}
+
+const getRenderedHtml = async (url: string): Promise<string | undefined> => {
+  try {
+    return await usePage(url, undefined, async (page) => await page.content())
+  } catch (error) {
+    console.log(error)
+  }
+  return undefined
+}
+
+const getRenderedPageAsImage = async (url: string, imageCache: ImageCache): Promise<Meta | undefined> => {
+  try {
+    const meta = await usePage(url, undefined, async (page) => {
       const image = await twitterCardGenerator(page)
       const imageUrl = getImageUrl(url)
       imageCache.set(imageUrl, image)
       const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
       const twitter: TwitterMeta = { image: { '': imageUrl } }
       const meta: Meta = { og, twitter }
-      return metaBuilder(html, meta)
+      return meta
     })
-    return updatedHtml
+    return meta
   } catch (error) {
     console.log(error)
   }

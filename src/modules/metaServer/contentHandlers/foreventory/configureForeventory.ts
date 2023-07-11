@@ -61,6 +61,6 @@ const imageHandler: RequestHandler = (req, res, next) => {
  */
 export const foreventoryPageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => [
   'get',
-  ['/netflix/insights/:hash/share', getPageHandler(opts.baseDir)],
+  ['/netflix/insights/:hash', getPageHandler(opts.baseDir)],
 ]
-export const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/share/:width/:height', imageHandler]]
+export const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height', imageHandler]]

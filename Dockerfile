@@ -11,9 +11,8 @@ RUN yarn xy build
 # Just install the production dependencies here
 FROM node:18 AS dependencies
 WORKDIR /app
-COPY ./package.json ./package.json
-COPY ./yarn.lock ./yarn.lock
-RUN yarn install --production --immutable
+COPY . .
+RUN yarn workspaces focus --production
 
 # Copy over the compiled output & production dependencies
 # into puppeteer container

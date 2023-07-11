@@ -1,4 +1,4 @@
-import { launch, Page, Viewport } from 'puppeteer'
+import { launch, Page, Viewport, WaitForOptions } from 'puppeteer'
 
 import { PageRenderingOptions } from './PageRenderingOptions'
 import { defaultViewportSize } from './ViewPortSize'
@@ -22,6 +22,10 @@ const args = [
   '--disable-dev-shm-usage',
 ]
 
+const pageGotoOptions: WaitForOptions = {
+  waitUntil: 'networkidle2',
+}
+
 export const usePage = async <T>(
   url: string,
   options: PageRenderingOptions | undefined = defaultPageRenderingOptions,
@@ -32,7 +36,7 @@ export const usePage = async <T>(
   const browser = await launch({ args, defaultViewport, headless: 'new' })
   try {
     const [page] = await browser.pages()
-    await page.goto(url, { waitUntil: 'networkidle2' })
+    await page.goto(url, pageGotoOptions)
     return await pageCallback(page)
   } catch (err) {
     console.error(err)

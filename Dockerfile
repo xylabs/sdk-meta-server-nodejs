@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 # Build here and pull down all the devDependencies
-FROM node:16 AS builder
+FROM node:18 AS builder
 ARG NODE_OPTIONS="--max_old_space_size=5120"
 WORKDIR /app
 COPY . .
@@ -9,15 +9,15 @@ RUN yarn install
 RUN yarn xy build
 
 # Just install the production dependencies here
-FROM node:16 AS dependencies
+FROM node:18 AS dependencies
 WORKDIR /app
 COPY ./package.json ./package.json
 COPY ./yarn.lock ./yarn.lock
 RUN yarn install --production --immutable
 
-# Copy over the compiled output and production dependencies
-# into a slimmer container
-FROM node:16-alpine as server
+# Copy over the compiled output & production dependencies
+# into puppeteer container
+FROM ghcr.io/puppeteer/puppeteer:20.8.1 as server
 ENV PORT="80"
 WORKDIR /app
 

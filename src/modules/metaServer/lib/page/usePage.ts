@@ -15,6 +15,13 @@ export const defaultPageRenderingOptions: PageRenderingOptions = {
   viewportSize: viewPortDefaults,
 }
 
+const args = [
+  '--no-sandbox',
+  '--disable-setuid-sandbox',
+  // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#tips
+  '--disable-dev-shm-usage',
+]
+
 export const usePage = async <T>(
   url: string,
   options: PageRenderingOptions | undefined = defaultPageRenderingOptions,
@@ -22,7 +29,7 @@ export const usePage = async <T>(
 ) => {
   if (!options) options = defaultPageRenderingOptions
   const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
-  const browser = await launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'], defaultViewport, headless: 'new' })
+  const browser = await launch({ args, defaultViewport, headless: 'new' })
   try {
     const [page] = await browser.pages()
     await page.goto(url)

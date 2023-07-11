@@ -22,7 +22,7 @@ export const usePage = async <T>(
 ) => {
   if (!options) options = defaultPageRenderingOptions
   const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
-  const browser = await launch({ defaultViewport, headless: 'new' })
+  const browser = await launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'], defaultViewport, headless: 'new' })
   try {
     const [page] = await browser.pages()
     await page.goto(url)

@@ -32,7 +32,7 @@ export const usePage = async <T>(
   const browser = await launch({ args, defaultViewport, headless: 'new' })
   try {
     const [page] = await browser.pages()
-    await page.goto(url)
+    await page.goto(url, { waitUntil: 'networkidle2' })
     return await pageCallback(page)
   } catch (err) {
     console.error(err)

@@ -1,5 +1,4 @@
 import { Meta, metaBuilder, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
-import { URL } from 'url'
 
 import {
   join,

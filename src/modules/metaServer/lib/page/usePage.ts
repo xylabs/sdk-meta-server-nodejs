@@ -22,9 +22,9 @@ const args = [
   '--disable-dev-shm-usage',
 ]
 
-const pageGotoOptions: WaitForOptions = {
-  waitUntil: 'networkidle2',
-}
+// const pageGotoOptions: WaitForOptions = {
+//   waitUntil: 'networkidle2',
+// }
 
 export const usePage = async <T>(
   url: string,
@@ -36,10 +36,11 @@ export const usePage = async <T>(
   const browser = await launch({ args, defaultViewport, headless: 'new' })
   try {
     const [page] = await browser.pages()
-    await page.goto(url, pageGotoOptions)
+    // await page.goto(url, pageGotoOptions)
+    await page.goto(url)
     return await pageCallback(page)
   } catch (err) {
-    console.error(err)
+    console.log(err)
   } finally {
     await browser.close()
   }

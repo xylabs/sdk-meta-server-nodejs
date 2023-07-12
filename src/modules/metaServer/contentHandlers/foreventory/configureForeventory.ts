@@ -39,7 +39,7 @@ const getPageHandler = (baseDir: string) => {
           return
         }
       } catch (error) {
-        console.error(error)
+        console.log(error)
       }
     }
     next()
@@ -55,7 +55,7 @@ const imageHandler: RequestHandler = (req, res, next) => {
       return
     }
   } catch (error) {
-    console.error(error)
+    console.log(error)
   }
   next()
 }

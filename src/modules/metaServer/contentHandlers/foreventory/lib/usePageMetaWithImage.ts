@@ -29,7 +29,7 @@ export const usePageMetaWithImage = async (url: string, imageCache: ImageCache):
     const [html, meta] = await Promise.all([getRenderedHtml(url), getRenderedPageAsImage(previewUrl, imageCache)])
     if (html && meta) return metaBuilder(html, meta)
   } catch (error) {
-    console.error(error)
+    console.log(error)
   }
   return undefined
 }
@@ -41,7 +41,7 @@ const getRenderedHtml = async (url: string): Promise<string | undefined> => {
     console.log(`[foreventory][getRenderedHtml][${url}]: returning`)
     return html
   } catch (error) {
-    console.error(error)
+    console.log(error)
   }
   return undefined
 }
@@ -64,7 +64,7 @@ const getRenderedPageAsImage = async (url: string, imageCache: ImageCache): Prom
     })
     return meta
   } catch (error) {
-    console.error(error)
+    console.log(error)
   }
   return undefined
 }

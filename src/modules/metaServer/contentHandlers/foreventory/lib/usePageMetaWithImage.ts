@@ -28,10 +28,12 @@ const getImageUrl = (url: string): string => {
 export const usePageMetaWithImage = async (url: string, imageCache: ImageCache): Promise<string | undefined> => {
   try {
     const previewUrl = join(url, 'preview')
-    const [html, meta] = await Promise.all([await getRenderedHtml(url), await getRenderedPageAsImage(previewUrl, imageCache)])
+    console.log(`Foreventory (previewUrl): ${previewUrl}`)
+    const html = await getRenderedHtml(url)
+    const meta = await getRenderedPageAsImage(previewUrl, imageCache)
     if (html && meta) return metaBuilder(html, meta)
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
   return undefined
 }
@@ -40,7 +42,7 @@ const getRenderedHtml = async (url: string): Promise<string | undefined> => {
   try {
     return await usePage(url, undefined, async (page) => await page.content())
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
   return undefined
 }
@@ -58,7 +60,7 @@ const getRenderedPageAsImage = async (url: string, imageCache: ImageCache): Prom
     })
     return meta
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
   return undefined
 }

@@ -1,13 +1,13 @@
 import { assertEx } from '@xylabs/assert'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
-import { mergeDocumentHead } from '@xyo-network/sdk-meta'
+import { metaBuilder } from '@xyo-network/sdk-meta'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, usePageMetaWithImage } from './lib'
+import { getImageCache, getRenderedPageAsImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -29,12 +29,10 @@ const getPageHandler = (baseDir: string) => {
       try {
         const uri = getUriBehindProxy(req)
         console.log(`[foreventory][pageHandler][${uri}]: handling`)
-        const routeHtml = await usePageMetaWithImage(uri, imageCache)
-        console.log(`[foreventory][pageHandler][${uri}]: obtained html/image`)
-        if (routeHtml) {
-          console.log(`[foreventory][pageHandler][${uri}]: merging meta`)
-          const updatedHtml = mergeDocumentHead(indexHtml, routeHtml)
-          console.log(`[foreventory][pageHandler][${uri}]: responding`)
+        const previewUrl = join(uri, 'preview')
+        const meta = await getRenderedPageAsImage(previewUrl, imageCache)
+        if (meta) {
+          const updatedHtml = metaBuilder(indexHtml, meta)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
           return
         }

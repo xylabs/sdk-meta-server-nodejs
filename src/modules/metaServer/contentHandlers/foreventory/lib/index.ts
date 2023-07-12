@@ -1,3 +1,5 @@
 export * from './getImageUrl'
+export * from './getRenderedHtml'
+export * from './getRenderedPageAsImage'
 export * from './imageCache'
 export * from './usePageMetaWithImage'

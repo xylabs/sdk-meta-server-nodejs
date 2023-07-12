@@ -1,8 +1,9 @@
-import { Browser, launch, Page, Viewport, WaitForOptions } from 'puppeteer'
+import { launch, Page, Viewport, WaitForOptions } from 'puppeteer'
 
 import { PageRenderingOptions } from '../PageRenderingOptions'
 import { defaultViewportSize } from '../ViewPortSize'
 import { getBrowserArgs } from './getBrowserArgs'
+import { getBrowserPage } from './getBrowserPage'
 import { getUserDataDir } from './getUserDataDir'
 
 export const viewPortDefaults: Viewport = {
@@ -28,12 +29,6 @@ const pageGotoOptions: WaitForOptions | undefined = waitForInitialPage ? waitFor
 // Disable warning for using deprecated headless mode as headless: 'new' is measurably slower
 // https://github.com/puppeteer/puppeteer/blob/159513c8dbe2c9f51aa37dbe531d52b5daf1e106/packages/puppeteer-core/src/node/ChromeLauncher.ts#L53
 process.env.PUPPETEER_DISABLE_HEADLESS_WARNING = 'true'
-
-type GetBrowserPage = (browser: Browser) => Promise<Page>
-const getFirstTab: GetBrowserPage = async (browser: Browser) => (await browser.pages())[0]
-const getNewPage: GetBrowserPage = (browser: Browser) => browser.newPage()
-const useFirstTab = false
-const getBrowserPage = useFirstTab ? getFirstTab : getNewPage
 
 export const usePage = async <T>(
   url: string,

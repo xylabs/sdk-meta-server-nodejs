@@ -37,7 +37,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/contentHandlers/foreventory/lib/spec/usePageMetaWithImage.spec.ts",
+        "src/modules/metaServer/lib/uri/spec/join.spec.ts",
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

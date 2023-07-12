@@ -27,9 +27,7 @@ const getPageHandler = (baseDir: string) => {
     const adjustedPath = getAdjustedPath(req)
     if (extname(adjustedPath) === '.html') {
       try {
-        console.log(`Foreventory (adjustedPath): ${adjustedPath}`)
         const uri = getUriBehindProxy(req)
-        console.log(`Foreventory (uri): ${uri}`)
         const routeHtml = await usePageMetaWithImage(uri, imageCache)
         if (routeHtml) {
           const updatedHtml = mergeDocumentHead(indexHtml, routeHtml)
@@ -37,7 +35,7 @@ const getPageHandler = (baseDir: string) => {
           return
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     }
     next()
@@ -53,7 +51,7 @@ const imageHandler: RequestHandler = (req, res, next) => {
       return
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
   next()
 }

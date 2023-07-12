@@ -21,7 +21,7 @@ export const setHtmlMetaData = async (info: PayloadInfo, html: string, config: M
         meta.description = `A XYO 2.1 ${schema} payload with the hash ${hash}.`
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
   meta.og = { ...meta.og, title: meta.title, url: path }

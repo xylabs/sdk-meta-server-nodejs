@@ -25,7 +25,7 @@ const fromQuery = (parsed: URL): string | undefined => {
       return networkToArchivistUri[network]
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
   return undefined
 }
@@ -39,7 +39,7 @@ export const getArchivistDomainFromUri = (uri: string): string => {
     const parsed = new URL(uri)
     return fromQuery(parsed) || fromOrigin(parsed.origin) || networkToArchivistUri['main']
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
   return networkToArchivistUri['main']
 }

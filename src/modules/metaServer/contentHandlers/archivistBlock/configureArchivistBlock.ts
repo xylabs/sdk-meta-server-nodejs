@@ -35,9 +35,13 @@ const getHandler = (baseDir: string) => {
     if (extname(adjustedPath) === '.html') {
       try {
         const uri = getUriBehindProxy(req)
+        console.log(`[archivistBlock][handler][${uri}]: called`)
         const info = getPayloadInfoFromPath(uri)
+        console.log(`[archivistBlock][handler][${uri}]: parsed info`)
         if (isEnoughInfoToRetrievePayload(info)) {
+          console.log(`[archivistBlock][handler][${uri}]: setting meta`)
           const updatedHtml = await setHtmlMetaData(info, html, htmlMeta)
+          console.log(`[archivistBlock][handler][${uri}]: return html`)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
           return
         }

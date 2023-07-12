@@ -36,8 +36,10 @@ export const usePageMetaWithImage = async (url: string, imageCache: ImageCache):
 
 const getRenderedHtml = async (url: string): Promise<string | undefined> => {
   try {
-    console.log(`[foreventory][${url}]: rendering html`)
-    return await usePage(url, undefined, async (page) => await page.content())
+    console.log(`[foreventory][getRenderedHtml][${url}]: rendering`)
+    const html = await usePage(url, undefined, async (page) => await page.content())
+    console.log(`[foreventory][getRenderedHtml][${url}]: returning`)
+    return html
   } catch (error) {
     console.error(error)
   }
@@ -46,17 +48,18 @@ const getRenderedHtml = async (url: string): Promise<string | undefined> => {
 
 const getRenderedPageAsImage = async (url: string, imageCache: ImageCache): Promise<Meta | undefined> => {
   try {
-    console.log(`[foreventory][${url}]: generating image`)
+    console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image`)
     const meta = await usePage(url, undefined, async (page) => {
       const image = await twitterCardGenerator(page)
-      console.log(`[foreventory][${url}]: generating image url`)
+      console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image url`)
       const imageUrl = getImageUrl(url)
-      console.log(`[foreventory][${url}]: caching image`)
+      console.log(`[foreventory][getRenderedPageAsImage][${url}]: caching image`)
       imageCache.set(imageUrl, image)
-      console.log(`[foreventory][${url}]: generating image meta`)
+      console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image meta`)
       const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
       const twitter: TwitterMeta = { image: { '': imageUrl } }
       const meta: Meta = { og, twitter }
+      console.log(`[foreventory][getRenderedPageAsImage][${url}]: returning image meta`)
       return meta
     })
     return meta

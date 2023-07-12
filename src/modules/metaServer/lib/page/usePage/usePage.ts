@@ -1,8 +1,8 @@
-import { format } from 'date-fns'
 import { Browser, launch, Page, Viewport, WaitForOptions } from 'puppeteer'
 
 import { PageRenderingOptions } from '../PageRenderingOptions'
 import { defaultViewportSize } from '../ViewPortSize'
+import { getUserDataDir } from './getUserDataDir'
 
 export const viewPortDefaults: Viewport = {
   ...defaultViewportSize,
@@ -95,7 +95,8 @@ const args = useLimitedArgs ? limitedArgs : fullArgs
 
 const waitForInitialPage = false
 const waitForOptions: WaitForOptions = {
-  waitUntil: 'networkidle0',
+  waitUntil: 'domcontentloaded',
+  // waitUntil: 'networkidle0',
   // waitUntil: 'networkidle2',
 }
 const pageGotoOptions: WaitForOptions | undefined = waitForInitialPage ? waitForOptions : undefined
@@ -124,12 +125,12 @@ export const usePage = async <T>(
     headless: true,
     ignoreHTTPSErrors: true,
     // slowMo: 0,
-    userDataDir: './puppeteer/cache',
+    userDataDir: getUserDataDir(),
     waitForInitialPage,
   })
   try {
     const page = await getBrowserPage(browser)
-    void page.goto(url, pageGotoOptions)
+    await page.goto(url, pageGotoOptions)
     // await page.goto(url)
     return await pageCallback(page)
   } catch (err) {

@@ -19,9 +19,10 @@ RUN yarn workspaces focus --production
 FROM node:18-alpine as server
 ENV PORT="80"
 WORKDIR /app
-
 ENV SDK_META_SERVER_DIR="./node_modules/@xylabs/meta-server"
 
+# Install puppeteer
+# https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#running-on-alpine
 # Install Chromium package.
 RUN apk add --no-cache \
   chromium \

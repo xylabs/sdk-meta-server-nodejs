@@ -10,9 +10,9 @@ describe('getRenderedPageAsImage', () => {
     jest.spyOn(console, 'log').mockImplementation(() => {
       // Stop expected logs from being generated during tests
     })
-    jest.spyOn(console, 'warn').mockImplementation(() => {
-      // Stop expected logs from being generated during tests
-    })
+    // jest.spyOn(console, 'warn').mockImplementation(() => {
+    //   // Stop expected logs from being generated during tests
+    // })
   })
   afterAll(() => {
     jest.clearAllMocks()
@@ -21,6 +21,7 @@ describe('getRenderedPageAsImage', () => {
   })
   it('perf test', async () => {
     const imageCache = mock<ImageCache>()
+    // const url = 'http://pi.hole/admin/login.php'
     const url = 'https://www.google.com'
     const start = Date.now()
     const iterations = 10

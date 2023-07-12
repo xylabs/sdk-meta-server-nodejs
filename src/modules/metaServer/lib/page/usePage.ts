@@ -79,9 +79,21 @@ const args = [
   '--use-mock-keychain',
 ]
 
-const waitForInitialPage = false
+const limitedArgs = [
+  '--no-sandbox',
+  '--disable-setuid-sandbox',
+  '--disable-dev-shm-usage',
+  '--disable-accelerated-2d-canvas',
+  '--no-first-run',
+  '--no-zygote',
+  '--single-process', // <- this one doesn't works in Windows
+  '--disable-gpu',
+]
+
+const waitForInitialPage = true
 const waitForOptions: WaitForOptions = {
-  waitUntil: 'networkidle2',
+  waitUntil: 'networkidle0',
+  // waitUntil: 'networkidle2',
 }
 const pageGotoOptions: WaitForOptions | undefined = waitForInitialPage ? waitForOptions : undefined
 
@@ -97,24 +109,24 @@ export const usePage = async <T>(
   if (!options) options = defaultPageRenderingOptions
   const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
   const browser = await launch({
-    args,
+    args: limitedArgs,
     defaultViewport,
     devtools: false,
     headless: true,
     ignoreHTTPSErrors: true,
-    slowMo: 0,
+    // slowMo: 0,
     userDataDir: './puppeteer/cache',
     // waitForInitialPage: true,
   })
   try {
     const page = await browser.newPage()
-    await page.setRequestInterception(true)
     await page.goto(url, pageGotoOptions)
     // await page.goto(url)
     return await pageCallback(page)
   } catch (err) {
     console.log(err)
   } finally {
+    // TODO: Is is safe to background this?
     void browser.close()
   }
 }

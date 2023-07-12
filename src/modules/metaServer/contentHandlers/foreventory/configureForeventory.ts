@@ -28,11 +28,14 @@ const getPageHandler = (baseDir: string) => {
     if (extname(adjustedPath) === '.html') {
       try {
         const uri = getUriBehindProxy(req)
-        console.log(`[foreventory][pageHandler][${uri}]: handling`)
+        console.log(`[foreventory][pageHandler][${uri}]: rendering`)
         const previewUrl = join(uri, 'preview')
         const meta = await getRenderedPageAsImage(previewUrl, imageCache)
+        console.log(`[foreventory][pageHandler][${uri}]: rendered`)
         if (meta) {
+          console.log(`[foreventory][pageHandler][${uri}]: merging`)
           const updatedHtml = metaBuilder(indexHtml, meta)
+          console.log(`[foreventory][pageHandler][${uri}]: return html`)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
           return
         }

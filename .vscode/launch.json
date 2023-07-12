@@ -37,7 +37,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/lib/head/spec/getRenderedHead.spec.ts",
+        "src/modules/metaServer/contentHandlers/foreventory/lib/spec/usePageMetaWithImage.spec.ts",
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

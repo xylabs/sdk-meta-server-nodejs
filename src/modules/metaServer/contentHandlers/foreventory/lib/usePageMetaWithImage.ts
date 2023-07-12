@@ -1,5 +1,4 @@
 import { Meta, metaBuilder, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
-import { join } from 'path'
 import { URL } from 'url'
 
 import {
@@ -21,13 +20,12 @@ const { height, width } = useLargeImage ? summaryCardWithLargeImageViewport : su
 const twitterCardGenerator = useLargeImage ? summaryCardWithLargeImageFromPage : summaryCardImageFromPage
 
 const getImageUrl = (url: string): string => {
-  const parsed = new URL(url)
-  return join(parsed.pathname, `${width}`, `${height}`)
+  return new URL(`${height}`, new URL(`${width}`, url).href).href
 }
 
 export const usePageMetaWithImage = async (url: string, imageCache: ImageCache): Promise<string | undefined> => {
   try {
-    const previewUrl = join(url, 'preview')
+    const previewUrl = new URL('preview', url).href
     console.log(`Foreventory (previewUrl): ${previewUrl}`)
     const html = await getRenderedHtml(url)
     const meta = await getRenderedPageAsImage(previewUrl, imageCache)

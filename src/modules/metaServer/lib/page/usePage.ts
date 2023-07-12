@@ -1,4 +1,4 @@
-import { launch, Page, Viewport, WaitForOptions } from 'puppeteer'
+import { launch, Page, Viewport } from 'puppeteer'
 
 import { PageRenderingOptions } from './PageRenderingOptions'
 import { defaultViewportSize } from './ViewPortSize'

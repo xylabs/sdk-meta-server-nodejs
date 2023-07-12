@@ -5,6 +5,11 @@ import { getImageUrl } from '../getImageUrl'
 import { usePageMetaWithImage } from '../usePageMetaWithImage'
 
 describe('usePageMetaWithImage', () => {
+  beforeAll(() => {
+    jest.spyOn(console, 'log').mockImplementation(() => {
+      // Stop expected logs from being generated during tests
+    })
+  })
   describe('for Payload URLs sets standard meta fields', () => {
     it('Updates meta with the expected fields', async () => {
       const domain = 'https://insiders.foreventory.com'

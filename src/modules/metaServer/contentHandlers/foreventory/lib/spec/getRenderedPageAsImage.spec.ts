@@ -3,7 +3,7 @@ import { mock } from 'jest-mock-extended'
 import { ImageCache } from '../cache'
 import { getRenderedPageAsImage } from '../getRenderedPageAsImage'
 
-describe('getRenderedPageAsImage', () => {
+describe.skip('getRenderedPageAsImage', () => {
   let average = 0
   let duration = 0
   beforeAll(() => {

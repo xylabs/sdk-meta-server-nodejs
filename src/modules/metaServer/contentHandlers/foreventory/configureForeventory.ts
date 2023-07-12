@@ -68,4 +68,4 @@ export const foreventoryPageHandler = (opts: ApplicationMiddlewareOptions): Moun
   'get',
   ['/netflix/insights/:hash', getPageHandler(opts.baseDir)],
 ]
-export const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height', imageHandler]]
+export const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]

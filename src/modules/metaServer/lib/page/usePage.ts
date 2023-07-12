@@ -1,4 +1,4 @@
-import { launch, Page, Viewport, WaitForOptions } from 'puppeteer'
+import { Browser, launch, Page, Viewport, WaitForOptions } from 'puppeteer'
 
 import { PageRenderingOptions } from './PageRenderingOptions'
 import { defaultViewportSize } from './ViewPortSize'
@@ -18,7 +18,7 @@ export const defaultPageRenderingOptions: PageRenderingOptions = {
 // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#tips
 // https://peter.sh/experiments/chromium-command-line-switches/
 // https://www.bannerbear.com/blog/ways-to-speed-up-puppeteer-screenshots/
-const args = [
+const fullArgs = [
   '--autoplay-policy=user-gesture-required',
   '--disable-2d-canvas-clip-aa', // This flag disables the antialiasing on the 2D canvas clip.
   '--disable-3d-apis', // This flag disables 3D APIs, WebGL and WebGPU.
@@ -89,6 +89,8 @@ const limitedArgs = [
   '--single-process', // <- this one doesn't works in Windows
   '--disable-gpu',
 ]
+const useLimitedArgs = true
+const args = useLimitedArgs ? limitedArgs : fullArgs
 
 const waitForInitialPage = false
 const waitForOptions: WaitForOptions = {
@@ -101,6 +103,12 @@ const pageGotoOptions: WaitForOptions | undefined = waitForInitialPage ? waitFor
 // https://github.com/puppeteer/puppeteer/blob/159513c8dbe2c9f51aa37dbe531d52b5daf1e106/packages/puppeteer-core/src/node/ChromeLauncher.ts#L53
 process.env.PUPPETEER_DISABLE_HEADLESS_WARNING = 'true'
 
+type GetBrowserPage = (browser: Browser) => Promise<Page>
+const getFirstTab: GetBrowserPage = async (browser: Browser) => (await browser.pages())[0]
+const getNewPage: GetBrowserPage = (browser: Browser) => browser.newPage()
+const useFirstTab = false
+const getBrowserPage = useFirstTab ? getFirstTab : getNewPage
+
 export const usePage = async <T>(
   url: string,
   options: PageRenderingOptions | undefined = defaultPageRenderingOptions,
@@ -109,7 +117,7 @@ export const usePage = async <T>(
   if (!options) options = defaultPageRenderingOptions
   const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
   const browser = await launch({
-    args: limitedArgs,
+    args,
     defaultViewport,
     devtools: false,
     headless: true,
@@ -119,7 +127,7 @@ export const usePage = async <T>(
     waitForInitialPage,
   })
   try {
-    const page = await browser.newPage()
+    const page = await getBrowserPage(browser)
     await page.goto(url, pageGotoOptions)
     // await page.goto(url)
     return await pageCallback(page)

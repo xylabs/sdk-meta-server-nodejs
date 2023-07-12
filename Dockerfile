@@ -16,11 +16,23 @@ RUN yarn workspaces focus --production
 
 # Copy over the compiled output & production dependencies
 # into puppeteer container
-FROM ghcr.io/puppeteer/puppeteer:20.8.1 as server
+FROM node:18-alpine as server
 ENV PORT="80"
 WORKDIR /app
 
 ENV SDK_META_SERVER_DIR="./node_modules/@xylabs/meta-server"
+
+# Install Chromium package.
+RUN apk add --no-cache \
+  chromium \
+  nss \
+  freetype \
+  harfbuzz \
+  ca-certificates \
+  ttf-freefont
+
+# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 # Copy over the meta-server to run the app
 COPY --from=dependencies /app/node_modules ./node_modules

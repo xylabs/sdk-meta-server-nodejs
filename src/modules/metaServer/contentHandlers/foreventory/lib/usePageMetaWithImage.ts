@@ -1,9 +1,9 @@
 import { metaBuilder } from '@xyo-network/sdk-meta'
 
 import { join } from '../../../lib'
+import { ImageCache } from './cache'
 import { getRenderedHtml } from './getRenderedHtml'
 import { getRenderedPageAsImage } from './getRenderedPageAsImage'
-import { ImageCache } from './imageCache'
 
 export const usePageMetaWithImage = async (url: string, imageCache: ImageCache): Promise<string | undefined> => {
   try {

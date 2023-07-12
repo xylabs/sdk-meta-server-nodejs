@@ -26,8 +26,7 @@ const getImageUrl = (url: string): string => {
 export const usePageMetaWithImage = async (url: string, imageCache: ImageCache): Promise<string | undefined> => {
   try {
     const previewUrl = join(url, 'preview')
-    const html = await getRenderedHtml(url)
-    const meta = await getRenderedPageAsImage(previewUrl, imageCache)
+    const [html, meta] = await Promise.all([getRenderedHtml(url), getRenderedPageAsImage(previewUrl, imageCache)])
     if (html && meta) return metaBuilder(html, meta)
   } catch (error) {
     console.error(error)

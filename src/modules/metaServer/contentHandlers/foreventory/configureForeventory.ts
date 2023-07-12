@@ -28,9 +28,13 @@ const getPageHandler = (baseDir: string) => {
     if (extname(adjustedPath) === '.html') {
       try {
         const uri = getUriBehindProxy(req)
+        console.log(`[foreventory][${uri}]: handling`)
         const routeHtml = await usePageMetaWithImage(uri, imageCache)
+        console.log(`[foreventory][${uri}]: obtained html/image`)
         if (routeHtml) {
+          console.log(`[foreventory][${uri}]: merging meta`)
           const updatedHtml = mergeDocumentHead(indexHtml, routeHtml)
+          console.log(`[foreventory][${uri}]: responding`)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
           return
         }

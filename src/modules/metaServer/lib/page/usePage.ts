@@ -16,10 +16,9 @@ export const defaultPageRenderingOptions: PageRenderingOptions = {
 }
 
 const args = [
-  '--no-sandbox',
+  '--disable-dev-shm-usage', // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#tips
   '--disable-setuid-sandbox',
-  // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#tips
-  '--disable-dev-shm-usage',
+  '--no-sandbox',
 ]
 
 // const pageGotoOptions: WaitForOptions = {

@@ -3,17 +3,26 @@ ignorePaths: []
 dictionaryDefinitions: []
 dictionaries: []
 words:
+  - antialiasing
   - Arie
+  - backgrounding
   - boundwitness
+  - breakpad
   - codacy
   - codeclimate
+  - customizer
+  - domcontentloaded
   - Foreventory
   - huri
+  - keychain
   - networkidle
   - pako
   - printenv
   - proxied
+  - repost
+  - sandboxing
   - snyk
+  - swiftshader
   - templating
   - Trouw
   - xylabs

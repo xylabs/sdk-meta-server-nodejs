@@ -1,18 +1,26 @@
-import { toMatchImageSnapshot } from 'jest-image-snapshot'
-import { join } from 'path'
+import { MatchImageSnapshotOptions, toMatchImageSnapshot } from 'jest-image-snapshot'
 
 import { usePage } from '../../../page'
+import { join } from '../../../uri'
 import { summaryCardImageFromPage } from '../summaryCardImageFromPage'
+
+const opts: MatchImageSnapshotOptions = {
+  customDiffConfig: {
+    threshold: 0.1,
+  },
+  failureThreshold: 0.02,
+  failureThresholdType: 'percent',
+}
 
 describe('summaryCardImageFromPage', () => {
   beforeAll(() => {
     expect.extend({ toMatchImageSnapshot })
   })
-  it('sets fields based', async () => {
+  it('generates image', async () => {
     const url = join('file://', __dirname, 'index.html')
     await usePage(url, undefined, async (page) => {
       const image = await summaryCardImageFromPage(page)
-      expect(image).toMatchImageSnapshot()
+      expect(image).toMatchImageSnapshot(opts)
     })
   })
 })

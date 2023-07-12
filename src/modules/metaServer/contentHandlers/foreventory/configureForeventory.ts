@@ -7,7 +7,7 @@ import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, getRenderedPageAsImage } from './lib'
+import { getImageCache, getPageCache, getRenderedPageAsImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -22,22 +22,33 @@ const getPageHandler = (baseDir: string) => {
   const filePath = join(baseDir, 'index.html')
   assertEx(existsSync(filePath), 'Missing index.html')
   const indexHtml = readFileSync(filePath, { encoding: 'utf-8' })
+  const pageCache = getPageCache()
 
   const pageHandler = asyncHandler(async (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
     if (extname(adjustedPath) === '.html') {
       try {
         const uri = getUriBehindProxy(req)
-        console.log(`[foreventory][pageHandler][${uri}]: rendering`)
-        const previewUrl = join(uri, 'preview')
-        const meta = await getRenderedPageAsImage(previewUrl, imageCache)
-        console.log(`[foreventory][pageHandler][${uri}]: rendered`)
-        if (meta) {
-          console.log(`[foreventory][pageHandler][${uri}]: merging`)
-          const updatedHtml = metaBuilder(indexHtml, meta)
-          console.log(`[foreventory][pageHandler][${uri}]: return html`)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+        console.log(`[foreventory][pageHandler][${uri}]: called`)
+        const cachedHtml = pageCache.get(uri)
+        if (cachedHtml) {
+          console.log(`[foreventory][pageHandler][${uri}]: return cached`)
+          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(cachedHtml)
           return
+        } else {
+          console.log(`[foreventory][pageHandler][${uri}]: rendering`)
+          const previewUrl = join(uri, 'preview')
+          const meta = await getRenderedPageAsImage(previewUrl, imageCache)
+          console.log(`[foreventory][pageHandler][${uri}]: rendered`)
+          if (meta) {
+            console.log(`[foreventory][pageHandler][${uri}]: merging`)
+            const updatedHtml = metaBuilder(indexHtml, meta)
+            console.log(`[foreventory][pageHandler][${uri}]: caching`)
+            pageCache.set(uri, updatedHtml)
+            console.log(`[foreventory][pageHandler][${uri}]: return html`)
+            res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+            return
+          }
         }
       } catch (error) {
         console.log(error)

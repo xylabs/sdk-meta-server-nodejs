@@ -128,7 +128,7 @@ export const usePage = async <T>(
   })
   try {
     const page = await getBrowserPage(browser)
-    await page.goto(url, pageGotoOptions)
+    void page.goto(url, pageGotoOptions)
     // await page.goto(url)
     return await pageCallback(page)
   } catch (err) {

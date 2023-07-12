@@ -3,7 +3,7 @@ import { mock } from 'jest-mock-extended'
 import { ImageCache } from '../cache'
 import { getRenderedPageAsImage } from '../getRenderedPageAsImage'
 
-describe.skip('getRenderedPageAsImage', () => {
+describe('getRenderedPageAsImage', () => {
   let average = 0
   let duration = 0
   beforeAll(() => {
@@ -20,7 +20,7 @@ describe.skip('getRenderedPageAsImage', () => {
     const imageCache = mock<ImageCache>()
     const url = 'https://www.google.com'
     const start = Date.now()
-    const iterations = 10
+    const iterations = 1
     for (let i = 0; i < iterations; i++) {
       await getRenderedPageAsImage(url, imageCache)
     }

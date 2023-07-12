@@ -10,9 +10,6 @@ describe('getRenderedPageAsImage', () => {
     jest.spyOn(console, 'log').mockImplementation(() => {
       // Stop expected logs from being generated during tests
     })
-    // jest.spyOn(console, 'warn').mockImplementation(() => {
-    //   // Stop expected logs from being generated during tests
-    // })
   })
   afterAll(() => {
     jest.clearAllMocks()

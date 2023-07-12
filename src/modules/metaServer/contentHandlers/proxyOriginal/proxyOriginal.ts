@@ -45,16 +45,21 @@ const getHandler = (baseDir: string) => {
     try {
       // Check if file exists on disk (cache check for performance)
       const file = getAdjustedPath(req)
+      console.log(`[proxyOriginal][pageHandler][${file}]: called`)
       let pathExists = existingPaths.get(file)
       if (pathExists === undefined) {
+        console.log(`[proxyOriginal][pageHandler][${file}]: path not cached`)
         const result = await exists(join(baseDir, file))
+        console.log(`[proxyOriginal][pageHandler][${file}]: cache path`)
         existingPaths.set(file, result)
         pathExists = result
       }
       if (pathExists) {
+        console.log(`[proxyOriginal][pageHandler][${file}]: proxy path`)
         proxy(req, res, next)
       } else {
         if (isHtmlLike(req)) {
+          console.log(`[proxyOriginal][pageHandler][${file}]: serve index`)
           serveIndex(req, res, next)
         } else {
           res.sendStatus(StatusCodes.NOT_FOUND)

@@ -1,13 +1,13 @@
 import { Meta, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 
 import {
-  join,
   summaryCardImageFromPage,
   summaryCardViewport,
   summaryCardWithLargeImageFromPage,
   summaryCardWithLargeImageViewport,
   usePage,
 } from '../../../lib'
+import { getImageUrl } from './getImageUrl'
 import { ImageCache } from './imageCache'
 
 /**
@@ -19,17 +19,13 @@ const useLargeImage = true
 const { height, width } = useLargeImage ? summaryCardWithLargeImageViewport : summaryCardViewport
 const twitterCardGenerator = useLargeImage ? summaryCardWithLargeImageFromPage : summaryCardImageFromPage
 
-const getImageUrl = (url: string): string => {
-  return join(url, `${width}`, `${height}`)
-}
-
 export const getRenderedPageAsImage = async (url: string, imageCache: ImageCache): Promise<Meta | undefined> => {
   try {
     console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image`)
     const meta = await usePage(url, undefined, async (page) => {
       const image = await twitterCardGenerator(page)
       console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image url`)
-      const imageUrl = getImageUrl(url)
+      const imageUrl = getImageUrl(url, width, height)
       console.log(`[foreventory][getRenderedPageAsImage][${url}]: caching image`)
       imageCache.set(imageUrl, image)
       console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image meta`)

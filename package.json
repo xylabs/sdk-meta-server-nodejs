@@ -118,9 +118,12 @@
   "sideEffects": false,
   "types": "dist/types/index.d.ts",
   "version": "2.0.10",
-  "packageManager": "yarn@3.6.1",
+  "engines": {
+    "node": ">=18.13.0"
+  },
   "volta": {
     "node": "18.13.0",
     "yarn": "1.22.19"
-  }
+  },
+  "packageManager": "yarn@3.6.1"
 }

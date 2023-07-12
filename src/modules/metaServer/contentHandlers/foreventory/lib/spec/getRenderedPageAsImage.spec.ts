@@ -18,7 +18,6 @@ describe('getRenderedPageAsImage', () => {
   })
   it('perf test', async () => {
     const imageCache = mock<ImageCache>()
-    // const url = 'http://pi.hole/admin/login.php'
     const url = 'https://www.google.com'
     const start = Date.now()
     const iterations = 10

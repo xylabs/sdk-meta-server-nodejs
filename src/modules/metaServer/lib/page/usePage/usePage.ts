@@ -1,7 +1,8 @@
+import { format } from 'date-fns'
 import { Browser, launch, Page, Viewport, WaitForOptions } from 'puppeteer'
 
-import { PageRenderingOptions } from './PageRenderingOptions'
-import { defaultViewportSize } from './ViewPortSize'
+import { PageRenderingOptions } from '../PageRenderingOptions'
+import { defaultViewportSize } from '../ViewPortSize'
 
 export const viewPortDefaults: Viewport = {
   ...defaultViewportSize,

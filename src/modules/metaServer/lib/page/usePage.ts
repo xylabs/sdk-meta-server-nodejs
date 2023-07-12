@@ -90,7 +90,7 @@ const limitedArgs = [
   '--disable-gpu',
 ]
 
-const waitForInitialPage = true
+const waitForInitialPage = false
 const waitForOptions: WaitForOptions = {
   waitUntil: 'networkidle0',
   // waitUntil: 'networkidle2',
@@ -116,7 +116,7 @@ export const usePage = async <T>(
     ignoreHTTPSErrors: true,
     // slowMo: 0,
     userDataDir: './puppeteer/cache',
-    // waitForInitialPage: true,
+    waitForInitialPage,
   })
   try {
     const page = await browser.newPage()

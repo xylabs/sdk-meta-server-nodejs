@@ -1,4 +1,4 @@
-import { launch, Page, Viewport } from 'puppeteer'
+import { launch, Page, Viewport, WaitForOptions } from 'puppeteer'
 
 import { PageRenderingOptions } from './PageRenderingOptions'
 import { defaultViewportSize } from './ViewPortSize'
@@ -15,15 +15,93 @@ export const defaultPageRenderingOptions: PageRenderingOptions = {
   viewportSize: viewPortDefaults,
 }
 
+// https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#tips
+// https://peter.sh/experiments/chromium-command-line-switches/
 const args = [
-  '--disable-dev-shm-usage', // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#tips
+  '--disable-2d-canvas-clip-aa', // This flag disables the antialiasing on the 2D canvas clip.
+  '--disable-3d-apis', // This flag disables 3D APIs, WebGL and WebGPU.
+  '--disable-accelerated-2d-canvas',
+  '--disable-background-networking', // This flag disables various background network services, including extension updating, safe browsing service, upgrade detector, translate, UMA.
+  '--disable-background-timer-throttling', // This flag disables timers throttling.
+  '--disable-backgrounding-occluded-windows', // This flag disables the tracking of occluded windows.
+  '--disable-breakpad', // This flag disables the breakpad crash reporter.
+  '--disable-canvas-aa', // This flag disables the antialiasing on the HTML canvas element.
+  '--disable-client-side-phishing-detection', // This flag disables the client-side phishing detection.
+  '--disable-composited-antialiasing', // This flag disables the antialiasing in the compositor.
+  '--disable-default-apps', // This flag disables the installation of default apps.
+  '--disable-dev-shm-usage', // This flag prevents Chrome from using shared memory for rendering.
+  '--disable-extensions', // This flag disables extensions.
+  '--disable-features=site-per-process,TranslateUI,BlinkGenPropertyTrees', // This flag disables site per process, the translation UI, and BlinkGenPropertyTrees.
+  '--disable-font-subpixel-positioning', // This flag disables subpixel font positioning, which can help save CPU resources.
+  '--disable-gl-drawing-for-tests', // This flag disables the GL drawing tests.
+  '--disable-gl-extensions', // This flag disables all GL extensions.
+  '--disable-gpu', // This flag disables GPU hardware acceleration.
+  '--disable-hang-monitor', // This flag disables the hang monitor.
+  '--disable-histogram-customizer', // This flag disables custom histograms.
+  '--disable-in-process-stack-traces', // This flag disables capturing of stack traces.
+  '--disable-notifications', // to disable native notification window on Mac OS
+  '--disable-popup-blocking', // This flag disables the popup blocking.
+  '--disable-prompt-on-repost', // This flag disables the prompt for re-posting form data.
+  '--disable-renderer-backgrounding', // This flag disables backgrounding renders.
+  '--disable-setuid-sandbox', // This flag disables the SUID sandbox in Chrome, which can help in restricted environments.
+  '--disable-site-isolation-trials',
+  '--disable-sockets', // This flag disables the use of certain types of sockets.
+  '--disable-software-rasterizer', // This flag disables the software rasterizer that is part of headless Chrome.
+  '--disable-sync', // This flag disables syncing to a Google account.
+  '--disable-threaded-animation', // This flag disables threaded animations.
+  '--disable-threaded-scrolling', // This flag disables threaded scrolling.
+  '--disable-web-security', // disabling CORS
+  '--disable-webgl', // This flag disables WebGL.
+  '--enable-features=NetworkService,NetworkServiceInProcess', // This flag runs the network service in the same process as the browser.
+  '--force-color-profile=srgb', // This flag forces the color profile to be sRGB.
+  '--metrics-recording-only', // This flag disables reporting to UMA, but allows local
+  '--mute-audio', // This flag mutes any audio output which might not be necessary in a headless mode.
+  '--no-first-run', // This flag skips the first run experience for the browser.
+  '--no-sandbox', // This flag disables the sandbox security feature. It's necessary in some environments but use it with caution, as it can create security risks.
+  '--no-zygote', // Seems to help avoid zombies https://github.com/puppeteer/puppeteer/issues/1825
+  '--single-process', // <- this one doesn't works in Windows
+  '--ui-disable-partial-swap', // This flag disables using partial swap for compositor frame.
+  '--use-gl=swiftshader', // This flag uses SwiftShader for GPU rasterization.
+  // https://www.bannerbear.com/blog/ways-to-speed-up-puppeteer-screenshots/
+  '--autoplay-policy=user-gesture-required',
+  '--disable-background-networking',
+  '--disable-background-timer-throttling',
+  '--disable-backgrounding-occluded-windows',
+  '--disable-breakpad',
+  '--disable-client-side-phishing-detection',
+  '--disable-component-update',
+  '--disable-default-apps',
+  '--disable-dev-shm-usage',
+  '--disable-domain-reliability',
+  '--disable-extensions',
+  '--disable-features=AudioServiceOutOfProcess',
+  '--disable-hang-monitor',
+  '--disable-ipc-flooding-protection',
+  '--disable-notifications',
+  '--disable-offer-store-unmasked-wallet-cards',
+  '--disable-print-preview',
+  '--disable-renderer-backgrounding',
   '--disable-setuid-sandbox',
-  '--no-sandbox',
+  '--disable-speech-api',
+  '--disable-sync',
+  '--hide-scrollbars',
+  '--ignore-gpu-blacklist',
+  '--metrics-recording-only',
+  '--no-default-browser-check',
+  '--no-pings',
+  '--password-store=basic',
+  '--use-mock-keychain',
 ]
 
-// const pageGotoOptions: WaitForOptions = {
-//   waitUntil: 'networkidle2',
-// }
+const waitForInitialPage = false
+const waitForOptions: WaitForOptions = {
+  waitUntil: 'networkidle2',
+}
+const pageGotoOptions: WaitForOptions | undefined = waitForInitialPage ? waitForOptions : undefined
+
+// Disable warning for using deprecated headless mode as headless: 'new' is measurably slower
+// https://github.com/puppeteer/puppeteer/blob/159513c8dbe2c9f51aa37dbe531d52b5daf1e106/packages/puppeteer-core/src/node/ChromeLauncher.ts#L53
+process.env.PUPPETEER_DISABLE_HEADLESS_WARNING = 'true'
 
 export const usePage = async <T>(
   url: string,
@@ -32,15 +110,24 @@ export const usePage = async <T>(
 ) => {
   if (!options) options = defaultPageRenderingOptions
   const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
-  const browser = await launch({ args, defaultViewport, headless: 'new' })
+  const browser = await launch({
+    args,
+    defaultViewport,
+    devtools: false,
+    headless: true,
+    ignoreHTTPSErrors: true,
+    slowMo: 0,
+    userDataDir: './puppeteer/cache',
+    // waitForInitialPage: true,
+  })
   try {
-    const [page] = await browser.pages()
-    // await page.goto(url, pageGotoOptions)
-    await page.goto(url)
+    const page = await browser.newPage()
+    await page.goto(url, pageGotoOptions)
+    // await page.goto(url)
     return await pageCallback(page)
   } catch (err) {
     console.log(err)
   } finally {
-    await browser.close()
+    void browser.close()
   }
 }

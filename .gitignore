@@ -28,3 +28,4 @@ dist
 docs
 node_modules
 storybook-static
+puppeteer

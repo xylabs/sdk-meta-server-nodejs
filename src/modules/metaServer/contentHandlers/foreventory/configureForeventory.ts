@@ -49,7 +49,8 @@ const getPageHandler = (baseDir: string) => {
 
 const imageHandler: RequestHandler = (req, res, next) => {
   try {
-    const image = imageCache.get(req.originalUrl)
+    const uri = getUriBehindProxy(req)
+    const image = imageCache.get(uri)
     if (image) {
       res.type('png').set('Cache-Control', indexHtmlCacheControlHeader).send(image)
       return

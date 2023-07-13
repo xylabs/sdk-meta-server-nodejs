@@ -27,6 +27,7 @@ describe('usePageMetaWithImage', () => {
       expect(newHtml).toContain('<meta property="og:image:type" content="image/png">')
       expect(newHtml).toContain(`<meta property="og:image:url" content="${imageUrl}">`)
       expect(newHtml).toContain(`<meta property="og:image:width" content="${width}">`)
+      expect(newHtml).toContain('<meta property="twitter:card" content="summary_large_image">')
       expect(newHtml).toContain(`<meta property="twitter:image" content="${imageUrl}">`)
     })
   })

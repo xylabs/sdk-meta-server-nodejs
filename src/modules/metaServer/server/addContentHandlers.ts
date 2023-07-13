@@ -1,10 +1,12 @@
 import { Express } from 'express'
 
-import { configureArchivistBlock, configureProxyOriginal, foreventoryImageHandler, foreventoryPageHandler } from '../contentHandlers'
+import { configureArchivistBlock, configureProxyOriginal, debugRoutes, foreventoryImageHandler, foreventoryPageHandler } from '../contentHandlers'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../types'
 
 export const addContentHandlers = (app: Express, opts: ApplicationMiddlewareOptions) => {
   const knownRequestTypeHandlers: MountPathAndMiddleware[] = [
+    // Debug routes
+    ...debugRoutes,
     // Foreventory handlers
     foreventoryImageHandler(),
     foreventoryPageHandler(opts),

@@ -7,7 +7,7 @@ import { MountPathAndMiddleware } from '../../types'
 
 const handleStatusCode: RequestHandler = (req, res, _next) => {
   const { code } = req.params
-  res.status(parseInt(code)).send(`Status code ${code}`)
+  res.sendStatus(parseInt(code))
   return
 }
 
@@ -23,7 +23,7 @@ const handleTimeout: RequestHandler = asyncHandler(async (req, res, _next) => {
   const { timeout } = req.params
   const time = parseInt(timeout)
   await delay(time)
-  res.status(StatusCodes.OK).send()
+  res.sendStatus(StatusCodes.OK)
   return
 })
 

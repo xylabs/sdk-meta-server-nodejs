@@ -22,6 +22,8 @@ export const server = (port = 80, baseDir = defaultDirectory) => {
   const server = app.listen(port, () => {
     console.log(`Server listening at http://localhost:${port}`)
   })
-  server.setTimeout(3000)
+  // This is higher than normal because we rely on CloudFront to timeout
+  // before this timeout is ever reached.
+  server.setTimeout(10000)
   return server
 }

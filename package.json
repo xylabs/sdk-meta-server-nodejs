@@ -119,7 +119,7 @@
   },
   "sideEffects": false,
   "types": "dist/types/index.d.ts",
-  "version": "2.0.18",
+  "version": "2.0.19",
   "engines": {
     "node": ">=18.13.0"
   },

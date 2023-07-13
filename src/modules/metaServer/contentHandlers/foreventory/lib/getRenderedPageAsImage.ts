@@ -30,7 +30,7 @@ export const getRenderedPageAsImage = async (url: string, imageCache: ImageCache
       imageCache.set(imageUrl, image)
       console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image meta`)
       const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
-      const twitter: TwitterMeta = { image: { '': imageUrl }, card: 'summary_large_image' }
+      const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
       const meta: Meta = { og, twitter }
       console.log(`[foreventory][getRenderedPageAsImage][${url}]: returning image meta`)
       return meta

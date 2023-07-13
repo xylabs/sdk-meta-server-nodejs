@@ -7,7 +7,7 @@ import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, getPageCache, getRenderedPageAsImage } from './lib'
+import { getImageCache, getPageCache, getPreviewAsImage as getPagePreviewAsImage, getPreviewMeta, getRenderedPageAsImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -37,18 +37,14 @@ const getPageHandler = (baseDir: string) => {
           return
         } else {
           console.log(`[foreventory][pageHandler][${uri}]: rendering`)
-          const previewUrl = join(uri, 'preview')
-          const meta = await getRenderedPageAsImage(previewUrl, imageCache)
-          console.log(`[foreventory][pageHandler][${uri}]: rendered`)
-          if (meta) {
-            console.log(`[foreventory][pageHandler][${uri}]: merging`)
-            const updatedHtml = metaBuilder(indexHtml, meta)
-            console.log(`[foreventory][pageHandler][${uri}]: caching`)
-            pageCache.set(uri, updatedHtml)
-            console.log(`[foreventory][pageHandler][${uri}]: return html`)
-            res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
-            return
-          }
+          await getPagePreviewAsImage(uri, imageCache)
+          console.log(`[foreventory][pageHandler][${uri}]: merging`)
+          const updatedHtml = metaBuilder(indexHtml, getPreviewMeta(uri))
+          console.log(`[foreventory][pageHandler][${uri}]: caching`)
+          pageCache.set(uri, updatedHtml)
+          console.log(`[foreventory][pageHandler][${uri}]: return html`)
+          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+          return
         }
       } catch (error) {
         console.log(error)

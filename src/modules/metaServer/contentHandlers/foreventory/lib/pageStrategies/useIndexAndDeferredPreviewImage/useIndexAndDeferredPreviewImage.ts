@@ -5,7 +5,7 @@ import { join } from '../../../../../lib'
 import { ImageCache } from '../../cache'
 import { getPagePreviewImageMeta, getRenderedPageAsImage } from '../../image'
 
-export const useIndexAndDeferredPreviewImage = (url: string, imageCache: ImageCache, indexHtml: string): string | undefined => {
+export const useIndexAndDeferredPreviewImage = (url: string, imageCache: ImageCache, indexHtml: string): string => {
   try {
     console.log(`[foreventory][useIndexAndDeferredPreviewImage][${url}]: rendering in background`)
     forget(getRenderedPageAsImage(join(url, 'preview'), imageCache))
@@ -16,6 +16,6 @@ export const useIndexAndDeferredPreviewImage = (url: string, imageCache: ImageCa
   } catch (error) {
     console.log(error)
   }
-  console.log(`[foreventory][useIndexAndDeferredPreviewImage][${url}]: missing html or preview image`)
-  return undefined
+  console.log(`[foreventory][useIndexAndDeferredPreviewImage][${url}]: error, returning index.html`)
+  return indexHtml
 }

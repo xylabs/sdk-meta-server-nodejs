@@ -7,7 +7,7 @@ import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, getPageCache, getPagePreviewImage, getPagePreviewImageMeta } from './lib'
+import { getImageCache, getPageCache, getPagePreviewImage, getPagePreviewImageMeta, useIndexAndPreviewImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -37,9 +37,7 @@ const getPageHandler = (baseDir: string) => {
           return
         } else {
           console.log(`[foreventory][pageHandler][${uri}]: rendering`)
-          await getPagePreviewImage(uri, imageCache)
-          console.log(`[foreventory][pageHandler][${uri}]: merging`)
-          const updatedHtml = metaBuilder(indexHtml, getPagePreviewImageMeta(uri))
+          const updatedHtml = await useIndexAndPreviewImage(uri, imageCache, indexHtml)
           console.log(`[foreventory][pageHandler][${uri}]: caching`)
           pageCache.set(uri, updatedHtml)
           console.log(`[foreventory][pageHandler][${uri}]: return html`)

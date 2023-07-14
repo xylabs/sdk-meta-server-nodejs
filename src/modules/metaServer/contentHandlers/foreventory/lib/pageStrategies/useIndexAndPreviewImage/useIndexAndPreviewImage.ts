@@ -4,7 +4,7 @@ import { join } from '../../../../../lib'
 import { ImageCache } from '../../cache'
 import { getRenderedPageAsImage } from '../../image'
 
-export const useIndexAndPreviewImage = async (url: string, imageCache: ImageCache, indexHtml: string): Promise<string | undefined> => {
+export const useIndexAndPreviewImage = async (url: string, imageCache: ImageCache, indexHtml: string): Promise<string> => {
   try {
     console.log(`[foreventory][useIndexAndPreviewImage][${url}]: rendering`)
     const previewUrl = join(url, 'preview')
@@ -16,6 +16,6 @@ export const useIndexAndPreviewImage = async (url: string, imageCache: ImageCach
   } catch (error) {
     console.log(error)
   }
-  console.log(`[foreventory][useIndexAndPreviewImage][${url}]: missing html or preview image`)
-  return undefined
+  console.log(`[foreventory][useIndexAndPreviewImage][${url}]: error, returning index.html`)
+  return indexHtml
 }

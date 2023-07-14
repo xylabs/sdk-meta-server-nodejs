@@ -1,6 +1,6 @@
 export * from './cache'
 export * from './getImageUrl'
-export * from './getPreviewAsImage'
+export * from './getPagePreviewImage'
 export * from './getRenderedHtml'
 export * from './getRenderedPageAsImage'
 export * from './usePageMetaWithImage'

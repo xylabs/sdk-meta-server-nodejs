@@ -6,9 +6,9 @@ import {
   summaryCardWithLargeImageFromPage,
   summaryCardWithLargeImageViewport,
   usePage,
-} from '../../../lib'
-import { ImageCache } from './cache'
-import { getImageUrl } from './getImageUrl'
+} from '../../../../lib'
+import { ImageCache } from '../cache'
+import { getImageUrl } from '../getImageUrl'
 
 /**
  * If true, use the large, rectangular image card. If false, use the small,

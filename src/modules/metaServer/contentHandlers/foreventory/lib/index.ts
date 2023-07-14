@@ -1,6 +1,3 @@
 export * from './cache'
 export * from './getImageUrl'
-export * from './getRenderedPageAsImage'
 export * from './pageStrategies'
-export * from './pageStrategies'
-export * from './usePageMetaWithImage'

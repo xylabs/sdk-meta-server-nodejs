@@ -1,1 +1,1 @@
-export * from './getPagePreviewImage'
+export * from './useIndexAndPreviewImage'

@@ -1,13 +1,12 @@
 import { assertEx } from '@xylabs/assert'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
-import { metaBuilder } from '@xyo-network/sdk-meta'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, getPageCache, getPagePreviewImage, getPagePreviewImageMeta, useIndexAndPreviewImage } from './lib'
+import { getImageCache, getPageCache, useIndexAndPreviewImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)

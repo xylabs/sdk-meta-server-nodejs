@@ -1,3 +1,3 @@
 export * from './cache'
-export * from './getImageUrl'
+export * from './image'
 export * from './pageStrategies'

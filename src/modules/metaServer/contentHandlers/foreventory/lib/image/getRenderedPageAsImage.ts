@@ -8,7 +8,7 @@ import {
   usePage,
 } from '../../../../lib'
 import { ImageCache } from '../cache'
-import { getImageUrl } from '../getImageUrl'
+import { getImageUrl } from './getImageUrl'
 
 /**
  * If true, use the large, rectangular image card. If false, use the small,

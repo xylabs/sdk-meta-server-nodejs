@@ -1,7 +1,7 @@
 import { mock } from 'jest-mock-extended'
 
 import { ImageCache } from '../../../cache'
-import { getImageUrl } from '../../../getImageUrl'
+import { getImageUrl } from '../../../image'
 import { getRenderedPageHtmlAndPreviewImage } from '../getRenderedPageHtmlAndPreviewImage'
 
 describe('getRenderedPageHtmlAndPreviewImage', () => {

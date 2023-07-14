@@ -1,6 +1,6 @@
-import { join } from '../../../../lib'
-import { ImageCache } from '../cache'
-import { getRenderedPageAsImage } from '../getRenderedPageAsImage'
+import { join } from '../../../../../lib'
+import { ImageCache } from '../../cache'
+import { getRenderedPageAsImage } from '../../getRenderedPageAsImage'
 
 export const getPagePreviewImage = async (uri: string, imageCache: ImageCache): Promise<void> => {
   console.log(`[foreventory][getPagePreviewImage][${uri}]: rendering`)

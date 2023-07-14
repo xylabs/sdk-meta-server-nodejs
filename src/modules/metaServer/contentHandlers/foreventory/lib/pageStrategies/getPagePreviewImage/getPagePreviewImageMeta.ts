@@ -1,7 +1,7 @@
 import { Meta, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 
-import { join } from '../../../../lib'
-import { getImageUrl } from '../getImageUrl'
+import { join } from '../../../../../lib'
+import { getImageUrl } from '../../getImageUrl'
 
 export const getPagePreviewImageMeta = (url: string, width = 1600, height = 900): Meta => {
   const previewUrl = join(url, 'preview')

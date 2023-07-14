@@ -1,11 +1,12 @@
 import { assertEx } from '@xylabs/assert'
+import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, getPageCache, useIndexAndDeferredPreviewImage } from './lib'
+import { getImageCache, getPageCache, getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -51,21 +52,26 @@ const getPageHandler = (baseDir: string) => {
   return pageHandler
 }
 
-const imageHandler: RequestHandler = (req, res, next) => {
+const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   try {
     const uri = getUriBehindProxy(req)
-    const image = imageCache.get(uri)
-    if (image) {
-      res.type('png').set('Cache-Control', indexHtmlCacheControlHeader).send(image)
-      return
-    } else {
-      // TODO: Handle this case by rendering the page and then returning the image
+    console.log(`[foreventory][pageHandler][${uri}]: called`)
+    let image = imageCache.get(uri)
+    if (!image) {
+      console.log(`[foreventory][pageHandler][${uri}]: generating image`)
+      // Render the page and generate the image
+      const pageUrl = getPageUrlFromImageUrl(uri)
+      await getPagePreviewImage(pageUrl, imageCache)
+      image = imageCache.get(uri)
     }
+    console.log(`[foreventory][pageHandler][${uri}]: returning image`)
+    res.type('png').set('Cache-Control', indexHtmlCacheControlHeader).send(image)
+    return
   } catch (error) {
     console.log(error)
   }
   next()
-}
+})
 
 /**
  * Middleware for augmenting HTML metadata for Foreventory shares

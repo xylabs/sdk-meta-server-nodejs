@@ -1,10 +1,9 @@
-import { launch, Page, Viewport, WaitForOptions } from 'puppeteer'
+import { Browser, Page, Viewport, WaitForOptions } from 'puppeteer'
 
+import { useBrowser } from '../../browser'
 import { PageRenderingOptions } from '../PageRenderingOptions'
 import { defaultViewportSize } from '../ViewPortSize'
-import { getBrowserArgs } from './getBrowserArgs'
 import { getBrowserPage } from './getBrowserPage'
-import { getUserDataDir } from './getUserDataDir'
 
 export const viewPortDefaults: Viewport = {
   ...defaultViewportSize,
@@ -37,17 +36,9 @@ export const usePage = async <T>(
 ) => {
   if (!options) options = defaultPageRenderingOptions
   const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
-  const browser = await launch({
-    args: getBrowserArgs(),
-    defaultViewport,
-    devtools: false,
-    headless: true,
-    ignoreHTTPSErrors: true,
-    // slowMo: 0,
-    userDataDir: getUserDataDir(),
-    waitForInitialPage,
-  })
+  let browser: Browser | undefined = undefined
   try {
+    browser = await useBrowser(defaultViewport)
     const page = await getBrowserPage(browser)
     await page.goto(url, pageGotoOptions)
     // await page.goto(url)
@@ -56,6 +47,6 @@ export const usePage = async <T>(
     console.log(err)
   } finally {
     // TODO: Is is safe to background this?
-    void browser.close()
+    void browser?.close()
   }
 }

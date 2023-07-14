@@ -1,4 +1,4 @@
-import { usePage } from '../../../lib'
+import { usePage } from '../../../../../lib'
 
 export const getRenderedHtml = async (url: string): Promise<string | undefined> => {
   try {

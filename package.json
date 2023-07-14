@@ -22,6 +22,7 @@
     "@xyo-network/archivist-wrapper": "^2.65.2",
     "@xyo-network/boundwitness-model": "^2.65.2",
     "@xyo-network/http-bridge": "^2.65.2",
+    "@xyo-network/payload-model": "^2.65.5",
     "@xyo-network/payload-wrapper": "^2.65.2",
     "@xyo-network/sdk-meta": "^2.9.2",
     "body-parser": "^1.20.2",

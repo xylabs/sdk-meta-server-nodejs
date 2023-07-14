@@ -4355,6 +4355,7 @@ __metadata:
     "@xyo-network/archivist-wrapper": ^2.65.2
     "@xyo-network/boundwitness-model": ^2.65.2
     "@xyo-network/http-bridge": ^2.65.2
+    "@xyo-network/payload-model": ^2.65.5
     "@xyo-network/payload-wrapper": ^2.65.2
     "@xyo-network/sdk-meta": ^2.9.2
     axios: ^1.4.0
@@ -5189,6 +5190,13 @@ __metadata:
   version: 2.65.2
   resolution: "@xyo-network/payload-model@npm:2.65.2"
   checksum: 290cd6d61216dd978fee896f528ead1b66eaacf5ed45abbbc6b1c548a3b27c439141da4b6fcd3f53766c9264247ab8727507a92976e3d67f3f15e000a1982873
+  languageName: node
+  linkType: hard
+
+"@xyo-network/payload-model@npm:^2.65.5":
+  version: 2.65.5
+  resolution: "@xyo-network/payload-model@npm:2.65.5"
+  checksum: 9c36b92b11c9ed1d2b6d3bd17065379e4aa81f28050548d614d173b36ad7528851563d14333e5c9e170abc7194bd80eddfb6513a645f6093453cb8d79b2fba56
   languageName: node
   linkType: hard
 

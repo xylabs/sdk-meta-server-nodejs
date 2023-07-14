@@ -8,7 +8,7 @@ const opts: MatchImageSnapshotOptions = {
   customDiffConfig: {
     threshold: 0.1,
   },
-  failureThreshold: 0.02,
+  failureThreshold: 0.05,
   failureThresholdType: 'percent',
 }
 

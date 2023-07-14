@@ -3,8 +3,8 @@ import { PayloadWrapper } from '@xyo-network/payload-wrapper'
 import { Meta, metaBuilder } from '@xyo-network/sdk-meta'
 import cloneDeep from 'lodash/cloneDeep'
 
+import { getArchivistForDomain } from '../../../lib'
 import { PayloadInfo } from '../../../types'
-import { getArchivistForDomain } from './getArchivistForDomain'
 
 export const setHtmlMetaData = async (info: PayloadInfo, html: string, config: Meta): Promise<string> => {
   const { apiDomain, hash, path } = info

@@ -62,6 +62,8 @@ const imageHandler: RequestHandler = (req, res, next) => {
     if (image) {
       res.type('png').set('Cache-Control', indexHtmlCacheControlHeader).send(image)
       return
+    } else {
+      // TODO: Handle this case by rendering the page and then returning the image
     }
   } catch (error) {
     console.log(error)

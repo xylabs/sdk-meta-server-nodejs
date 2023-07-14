@@ -4,7 +4,7 @@ export const getRenderedPageHtml = async (url: string): Promise<string | undefin
   try {
     console.log(`[foreventory][getRenderedPageHtml][${url}]: rendering`)
     const html = await usePage(url, undefined, async (page) => await page.content())
-    console.log(`[foreventory][getRenderedPageHtml][${url}]: returning`)
+    console.log(`[foreventory][getRenderedPageHtml][${url}]: rendered`)
     return html
   } catch (error) {
     console.log(error)

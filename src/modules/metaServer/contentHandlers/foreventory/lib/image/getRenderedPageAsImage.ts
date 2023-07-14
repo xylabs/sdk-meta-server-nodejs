@@ -6,8 +6,8 @@ import {
   summaryCardWithLargeImageFromPage,
   summaryCardWithLargeImageViewport,
   usePage,
-} from '../../../lib'
-import { ImageCache } from './cache'
+} from '../../../../lib'
+import { ImageCache } from '../cache'
 import { getImageUrl } from './getImageUrl'
 
 /**

@@ -1,8 +1,7 @@
 import { Browser, Page, Viewport, WaitForOptions } from 'puppeteer'
 
-import { useBrowser } from '../../browser'
+import { defaultViewportSize, useBrowser } from '../../browser'
 import { PageRenderingOptions } from '../PageRenderingOptions'
-import { defaultViewportSize } from '../ViewPortSize'
 import { getBrowserPage } from './getBrowserPage'
 
 export const viewPortDefaults: Viewport = {

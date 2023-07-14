@@ -1,3 +1,4 @@
+import { forget } from '@xylabs/forget'
 import { Browser, Page, Viewport, WaitForOptions } from 'puppeteer'
 
 import { defaultViewportSize, useBrowser } from '../../browser'
@@ -24,10 +25,6 @@ const waitForOptions: WaitForOptions = {
 }
 const pageGotoOptions: WaitForOptions | undefined = waitForInitialPage ? waitForOptions : undefined
 
-// Disable warning for using deprecated headless mode as headless: 'new' is measurably slower
-// https://github.com/puppeteer/puppeteer/blob/159513c8dbe2c9f51aa37dbe531d52b5daf1e106/packages/puppeteer-core/src/node/ChromeLauncher.ts#L53
-process.env.PUPPETEER_DISABLE_HEADLESS_WARNING = 'true'
-
 export const usePage = async <T>(
   url: string,
   options: PageRenderingOptions | undefined = defaultPageRenderingOptions,
@@ -36,16 +33,16 @@ export const usePage = async <T>(
   if (!options) options = defaultPageRenderingOptions
   const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
   let browser: Browser | undefined = undefined
+  let page: Page | undefined = undefined
   try {
     browser = await useBrowser(defaultViewport)
-    const page = await getBrowserPage(browser)
+    page = await getBrowserPage(browser)
     await page.goto(url, pageGotoOptions)
-    // await page.goto(url)
     return await pageCallback(page)
   } catch (err) {
     console.log(err)
   } finally {
-    // TODO: Is is safe to background this?
-    void browser?.close()
+    if (page) forget(page?.close())
+    if (browser) forget(browser?.close())
   }
 }

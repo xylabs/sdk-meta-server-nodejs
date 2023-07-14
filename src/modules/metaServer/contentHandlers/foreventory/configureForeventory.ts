@@ -1,12 +1,11 @@
 import { assertEx } from '@xylabs/assert'
-import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, getPageCache, useIndexAndPreviewImage } from './lib'
+import { getImageCache, getPageCache, useIndexAndDeferredPreviewImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -23,7 +22,7 @@ const getPageHandler = (baseDir: string) => {
   const indexHtml = readFileSync(filePath, { encoding: 'utf-8' })
   const pageCache = getPageCache()
 
-  const pageHandler = asyncHandler(async (req, res, next) => {
+  const pageHandler: RequestHandler = (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
     if (extname(adjustedPath) === '.html') {
       try {
@@ -36,7 +35,7 @@ const getPageHandler = (baseDir: string) => {
           return
         } else {
           console.log(`[foreventory][pageHandler][${uri}]: rendering`)
-          const updatedHtml = await useIndexAndPreviewImage(uri, imageCache, indexHtml)
+          const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageCache, indexHtml)
           console.log(`[foreventory][pageHandler][${uri}]: caching`)
           pageCache.set(uri, updatedHtml)
           console.log(`[foreventory][pageHandler][${uri}]: return html`)
@@ -48,7 +47,7 @@ const getPageHandler = (baseDir: string) => {
       }
     }
     next()
-  })
+  }
   return pageHandler
 }
 

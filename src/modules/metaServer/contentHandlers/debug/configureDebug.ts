@@ -30,8 +30,8 @@ const handleTimeout: RequestHandler = asyncHandler(async (req, res, _next) => {
 /**
  * Middleware for augmenting HTML metadata for debug routes
  */
-export const statusCodeHandler: MountPathAndMiddleware = ['get', ['/debug/statusCode/:code', handleStatusCode]]
-export const syncThrowHandler: MountPathAndMiddleware = ['get', ['/debug/sync/throw', handleSyncThrow]]
-export const asyncThrowHandler: MountPathAndMiddleware = ['get', ['/debug/async/throw', handleAsyncThrow]]
-export const timeoutHandler: MountPathAndMiddleware = ['get', ['/debug/timeout/:timeout', handleTimeout]]
+const statusCodeHandler: MountPathAndMiddleware = ['get', ['/debug/statusCode/:code', handleStatusCode]]
+const syncThrowHandler: MountPathAndMiddleware = ['get', ['/debug/sync/throw', handleSyncThrow]]
+const asyncThrowHandler: MountPathAndMiddleware = ['get', ['/debug/async/throw', handleAsyncThrow]]
+const timeoutHandler: MountPathAndMiddleware = ['get', ['/debug/timeout/:timeout', handleTimeout]]
 export const debugRoutes = [statusCodeHandler, syncThrowHandler, asyncThrowHandler, timeoutHandler]

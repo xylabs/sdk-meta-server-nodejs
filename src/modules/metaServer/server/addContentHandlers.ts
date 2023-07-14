@@ -1,12 +1,6 @@
 import { Express } from 'express'
 
-import {
-  configureArchivistBlock,
-  configureProxyOriginal,
-  debugRoutes,
-  foreventoryImageHandler,
-  foreventorySharePageHandler,
-} from '../contentHandlers'
+import { configureArchivistBlock, configureProxyOriginal, debugRoutes, foreventoryHandlers } from '../contentHandlers'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../types'
 
 const debugHandlers = process.env.NODE_ENV === 'development' ? debugRoutes : []
@@ -16,8 +10,7 @@ export const addContentHandlers = (app: Express, opts: ApplicationMiddlewareOpti
     // Debug routes
     ...debugHandlers,
     // Foreventory handlers
-    foreventoryImageHandler(),
-    foreventorySharePageHandler(opts),
+    ...foreventoryHandlers(opts),
     // Explore/Node handlers
     configureArchivistBlock(opts),
   ]

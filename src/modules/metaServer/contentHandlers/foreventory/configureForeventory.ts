@@ -72,10 +72,10 @@ const imageHandler: RequestHandler = (req, res, next) => {
 /**
  * Middleware for augmenting HTML metadata for Foreventory shares
  */
-export const foreventorySharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => [
+const foreventorySharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => [
   'get',
   ['/netflix/insights/:hash', getPageHandler(opts.baseDir)],
 ]
-export const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
+const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
 
 export const foreventoryHandlers = (opts: ApplicationMiddlewareOptions) => [foreventorySharePageHandler(opts), foreventoryImageHandler()]

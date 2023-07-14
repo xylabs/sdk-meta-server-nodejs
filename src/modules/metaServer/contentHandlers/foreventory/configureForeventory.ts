@@ -7,7 +7,7 @@ import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, getPageCache, getPreviewAsImage as getPagePreviewAsImage, getPreviewMeta, getRenderedPageAsImage } from './lib'
+import { getImageCache, getPageCache, getPagePreviewImage, getPagePreviewImageMeta } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -37,9 +37,9 @@ const getPageHandler = (baseDir: string) => {
           return
         } else {
           console.log(`[foreventory][pageHandler][${uri}]: rendering`)
-          await getPagePreviewAsImage(uri, imageCache)
+          await getPagePreviewImage(uri, imageCache)
           console.log(`[foreventory][pageHandler][${uri}]: merging`)
-          const updatedHtml = metaBuilder(indexHtml, getPreviewMeta(uri))
+          const updatedHtml = metaBuilder(indexHtml, getPagePreviewImageMeta(uri))
           console.log(`[foreventory][pageHandler][${uri}]: caching`)
           pageCache.set(uri, updatedHtml)
           console.log(`[foreventory][pageHandler][${uri}]: return html`)
@@ -72,8 +72,10 @@ const imageHandler: RequestHandler = (req, res, next) => {
 /**
  * Middleware for augmenting HTML metadata for Foreventory shares
  */
-export const foreventoryPageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => [
+export const foreventorySharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => [
   'get',
   ['/netflix/insights/:hash', getPageHandler(opts.baseDir)],
 ]
 export const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
+
+export const foreventoryHandlers = (opts: ApplicationMiddlewareOptions) => [foreventorySharePageHandler(opts), foreventoryImageHandler()]

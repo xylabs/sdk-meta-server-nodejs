@@ -4,7 +4,9 @@ import { Meta } from '@xyo-network/sdk-meta'
 
 import { getArchivistDomainFromUri, getArchivistForDomain, getUriBehindProxy } from '../../../../lib'
 import { MetaLocals } from './MetaLocals'
-
+/**
+ * This middleware will query the archivist for the meta data if the meta query param is present
+ */
 export const metaQueryHandler = asyncHandler<NoReqParams, Empty, Empty, { meta?: string }, MetaLocals>(async (req, res, next) => {
   if (req.query.meta) {
     const hash = req.query.meta

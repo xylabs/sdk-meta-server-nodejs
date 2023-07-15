@@ -1,6 +1,6 @@
-import { LruMetaCache } from './LruMetaCache'
 import { MetaCache } from './MetaCache'
+import { SimpleMetaCache } from './SimpleMetaCache'
 
-const metaCache = new LruMetaCache()
+const metaCache = new SimpleMetaCache()
 
 export const getMetaCache = (): MetaCache => metaCache

@@ -5,7 +5,7 @@ import { MetaCache } from './MetaCache'
 
 const defaultHtml = '<!DOCTYPE html><head></head></html>'
 
-export class LruMetaCache implements MetaCache {
+export class SimpleMetaCache implements MetaCache {
   protected readonly metaCache = new LRUCache<string, string>({ max: 1000 })
 
   public entries(): [string, string][] {

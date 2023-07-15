@@ -37,7 +37,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/lib/uri/spec/join.spec.ts",
+        "src/modules/metaServer/contentHandlers/archivistBlock/lib/spec/archivistBlock.spec.ts",
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

@@ -37,7 +37,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/contentHandlers/archivistBlock/lib/spec/archivistBlock.spec.ts",
+        "src/modules/metaServer/middleware/metaCache/spec/SimpleMetaCache.spec.ts",
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

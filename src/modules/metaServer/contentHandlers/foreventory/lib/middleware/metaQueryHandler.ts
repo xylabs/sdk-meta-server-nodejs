@@ -3,8 +3,7 @@ import { Payload } from '@xyo-network/payload-model'
 import { Meta } from '@xyo-network/sdk-meta'
 
 import { getArchivistDomainFromUri, getArchivistForDomain, getUriBehindProxy } from '../../../../lib'
-
-type MetaLocals = Record<'meta', Meta>
+import { MetaLocals } from './MetaLocals'
 
 export const metaQueryHandler = asyncHandler<NoReqParams, Empty, Empty, { meta?: string }, MetaLocals>(async (req, res, next) => {
   if (req.query.meta) {

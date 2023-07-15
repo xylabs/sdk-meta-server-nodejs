@@ -1,4 +1,5 @@
 export * from './cache'
 export * from './image'
+export * from './middleware'
 export * from './pageStrategies'
 export * from './url'

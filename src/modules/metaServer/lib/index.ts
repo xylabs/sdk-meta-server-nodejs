@@ -1,3 +1,4 @@
+export * from './archivist'
 export * from './domain'
 export * from './file'
 export * from './head'

@@ -1,8 +1,6 @@
-import { Meta } from '@xyo-network/sdk-meta'
-import { LRUCache } from 'lru-cache'
-
+import { LruMetaCache } from './LruMetaCache'
 import { MetaCache } from './MetaCache'
 
-const metaCache = new LRUCache<string, Meta>({ max: 1000 })
+const metaCache = new LruMetaCache()
 
 export const getMetaCache = (): MetaCache => metaCache

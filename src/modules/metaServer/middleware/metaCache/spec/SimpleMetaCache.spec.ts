@@ -1,5 +1,12 @@
 import { SimpleMetaCache } from '../SimpleMetaCache'
 
+const path1 = '/providers/netflix'
+const path2 = '/providers/hulu'
+
+const value1 = '<!DOCTYPE html><head><meta property="og:image:width" content="1600"></head></html>'
+const value2 = '<!DOCTYPE html><head><meta property="og:image:height" content="900"></head></html>'
+const merged = '<!DOCTYPE html><head><meta property="og:image:width" content="900"><meta property="og:image:height" content="900"></head></html>'
+
 describe('SimpleMetaCache', () => {
   let cache: SimpleMetaCache
 
@@ -7,50 +14,62 @@ describe('SimpleMetaCache', () => {
     cache = new SimpleMetaCache()
   })
 
-  test('set and get', () => {
-    cache.set('key1', 'value1')
-    expect(cache.get('key1')).toBe('value1')
-
-    // Edge case: key doesn't exist
-    expect(cache.get('key2')).toBeUndefined()
+  describe('set', () => {
+    it('should set the value', () => {
+      cache.set(path1, value1)
+      expect(cache.get(path1)).toBe(value1)
+    })
+  })
+  describe('get', () => {
+    describe('with existing value', () => {
+      it('should get the value', () => {
+        cache.set(path1, value1)
+        expect(cache.get(path1)).toBe(value1)
+      })
+    })
+    describe('with non-existent value', () => {
+      it('should get return undefined', () => {
+        expect(cache.get(path2)).toBeUndefined()
+      })
+    })
   })
 
-  test('patch', () => {
-    // Trying to patch key that doesn't exist should do nothing
-    cache.patch('key1', 'value1')
-    expect(cache.get('key1')).toBeUndefined()
-
-    // Set key1
-    cache.set('key1', 'initialValue')
-    // Patch existing key
-    cache.patch('key1', 'patchedValue')
-    expect(cache.get('key1')).toBe('patchedValue')
+  describe('patch', () => {
+    describe('with existing value', () => {
+      it('should update the value', () => {
+        cache.set(path1, value1)
+        cache.patch(path1, value2)
+        expect(cache.get(path1)).toBe(merged)
+      })
+    })
+    describe('with non-existent value', () => {
+      test('should set the value', () => {
+        cache.patch(path1, value1)
+        expect(cache.get(path1)).toBe(value1)
+      })
+    })
   })
 
-  test('entries', () => {
-    cache.set('key1', 'value1')
-    cache.set('key2', 'value2')
-
-    const entries = cache.entries()
-    expect(entries).toContainEqual(['key1', 'value1'])
-    expect(entries).toContainEqual(['key2', 'value2'])
-  })
-
-  test('keys', () => {
-    cache.set('key1', 'value1')
-    cache.set('key2', 'value2')
-
-    const keys = cache.keys()
-    expect(keys).toContain('key1')
-    expect(keys).toContain('key2')
-  })
-
-  test('values', () => {
-    cache.set('key1', 'value1')
-    cache.set('key2', 'value2')
-
-    const values = cache.values()
-    expect(values).toContain('value1')
-    expect(values).toContain('value2')
+  describe('Object-like helpers', () => {
+    beforeEach(() => {
+      cache = new SimpleMetaCache()
+      cache.set(path1, value1)
+      cache.set(path2, value2)
+    })
+    test('entries', () => {
+      const entries = cache.entries()
+      expect(entries).toContainEqual([path1, value1])
+      expect(entries).toContainEqual([path2, value2])
+    })
+    test('keys', () => {
+      const keys = cache.keys()
+      expect(keys).toContain(path1)
+      expect(keys).toContain(path1)
+    })
+    test('values', () => {
+      const values = cache.values()
+      expect(values).toContain(value1)
+      expect(values).toContain(value2)
+    })
   })
 })

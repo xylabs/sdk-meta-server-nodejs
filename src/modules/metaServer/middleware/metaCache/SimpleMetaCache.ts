@@ -3,7 +3,12 @@ import { LRUCache } from 'lru-cache'
 
 import { MetaCache } from './MetaCache'
 
-const defaultHtml = '<!DOCTYPE html><head></head></html>'
+const defaultHtml = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  </head>
+</html>`
 
 export class SimpleMetaCache implements MetaCache {
   protected readonly metaCache = new LRUCache<string, string>({ max: 1000 })
@@ -26,7 +31,8 @@ export class SimpleMetaCache implements MetaCache {
     const incoming = typeof value === 'string' ? value : metaBuilder(defaultHtml, value)
     const existing = this.metaCache.get(key)
     if (existing) {
-      this.metaCache.set(key, mergeDocumentHead(existing, incoming))
+      const merged = mergeDocumentHead(existing, incoming)
+      this.metaCache.set(key, merged)
     } else {
       this.metaCache.set(key, incoming)
     }

@@ -53,18 +53,26 @@ describe('SimpleMetaCache', () => {
   describe('Object-like helpers', () => {
     beforeEach(() => {
       cache = new SimpleMetaCache()
-      cache.set(path1, value1)
       cache.set(path2, value2)
+      cache.set(path1, value1)
     })
-    test('entries', () => {
-      const entries = cache.entries()
-      expect(entries).toContainEqual([path1, value1])
-      expect(entries).toContainEqual([path2, value2])
+    describe('entries', () => {
+      it('contains all entries', () => {
+        const entries = cache.entries()
+        expect(entries).toContainEqual([path1, value1])
+        expect(entries).toContainEqual([path2, value2])
+      })
     })
-    test('keys', () => {
-      const keys = cache.keys()
-      expect(keys).toContain(path1)
-      expect(keys).toContain(path1)
+    describe('keys', () => {
+      it('returns all keys', () => {
+        const keys = cache.keys()
+        expect(keys).toContain(path1)
+        expect(keys).toContain(path1)
+      })
+      it('returns keys in alphabetical order', () => {
+        const keys = cache.keys()
+        expect(keys).toEqual([path2, path1].sort())
+      })
     })
     test('values', () => {
       const values = cache.values()

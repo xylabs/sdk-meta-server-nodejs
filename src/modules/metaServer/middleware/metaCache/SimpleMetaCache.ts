@@ -17,8 +17,7 @@ export class SimpleMetaCache implements MetaCache {
     const values = this.metaCache.entries()
     const sorted = Array.from(values)
       .filter((value): value is [string, string] => typeof value[0] === 'string')
-      // .sort(([a], [b]) => a.localeCompare(b))
-      .sort()
+      .sort(([a], [b]) => a.localeCompare(b))
     return sorted
   }
   public get(key: string): string | undefined {

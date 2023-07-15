@@ -1,15 +1,12 @@
 import { NoLocals } from '@xylabs/sdk-api-express-ecs'
-import { Meta } from '@xyo-network/sdk-meta'
 
-interface MetaCacheProperties {
+import { MetaCache } from './MetaCache'
+
+export type MetaCacheProperties = {
   /**
-   * Returns the HTML metadata for the current response
+   * The cache uses to augment HTML metadata for HTML routes
    */
-  getResponseMeta(): Meta
-  /**
-   * Patches the HTML metadata for the current response
-   */
-  patchResponseMeta(meta: Meta): void
+  metaCache: MetaCache
 }
 
 export type MetaLocals = NoLocals & MetaCacheProperties

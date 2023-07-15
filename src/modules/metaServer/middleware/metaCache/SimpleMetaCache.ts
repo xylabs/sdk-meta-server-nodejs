@@ -23,6 +23,9 @@ export class SimpleMetaCache implements MetaCache {
   public get(key: string): string | undefined {
     return this.metaCache.get(key)
   }
+  public has(key: string): boolean {
+    return this.metaCache.has(key)
+  }
   public keys(): string[] {
     return this.entries().map(([key]) => key)
   }

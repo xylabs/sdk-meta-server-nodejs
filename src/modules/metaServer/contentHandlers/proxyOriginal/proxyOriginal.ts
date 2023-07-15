@@ -1,5 +1,6 @@
 import { assertEx } from '@xylabs/assert'
-import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
+import { asyncHandler, Empty, NoReqParams, NoReqQuery } from '@xylabs/sdk-api-express-ecs'
+import { mergeDocumentHead } from '@xyo-network/sdk-meta'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { StatusCodes } from 'http-status-codes'
@@ -8,6 +9,7 @@ import { join } from 'path'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
 import { getAdjustedPath, isHtmlLike } from '../../lib'
+import { MetaLocals } from '../../middleware'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 import { exists } from './lib'
 
@@ -40,8 +42,16 @@ const getHandler = (baseDir: string) => {
   assertEx(existsSync(filePath), 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf-8' })
   const proxy = serveStatic(baseDir, options)
-  const serveIndex: RequestHandler = (_req, res, _next) => res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
-  const handler: RequestHandler = async (req, res, next) => {
+  const serveIndex: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaLocals> = (req, res, _next) => {
+    let updated = html
+    const path = getAdjustedPath(req)
+    const updatedHead = res?.locals?.metaCache?.get?.(path)
+    if (updatedHead) {
+      updated = mergeDocumentHead(html, updatedHead)
+    }
+    res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updated)
+  }
+  const handler: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaLocals> = async (req, res, next) => {
     try {
       // Check if file exists on disk (cache check for performance)
       const file = getAdjustedPath(req)
@@ -69,7 +79,7 @@ const getHandler = (baseDir: string) => {
       res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR)
     }
   }
-  return asyncHandler(handler)
+  return asyncHandler(handler) as unknown as RequestHandler
 }
 
 /**

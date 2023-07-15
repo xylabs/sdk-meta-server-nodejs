@@ -6,8 +6,8 @@ import { MetaCache } from './MetaCache'
 const defaultHtml = `
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-  </head>
+<head>
+</head>
 </html>`
 
 export class SimpleMetaCache implements MetaCache {

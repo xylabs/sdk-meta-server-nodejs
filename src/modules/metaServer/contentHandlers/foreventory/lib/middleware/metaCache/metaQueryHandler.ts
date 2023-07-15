@@ -2,7 +2,7 @@ import { asyncHandler, Empty, NoReqParams } from '@xylabs/sdk-api-express-ecs'
 import { Payload } from '@xyo-network/payload-model'
 import { Meta } from '@xyo-network/sdk-meta'
 
-import { getArchivistDomainFromUri, getArchivistForDomain, getUriBehindProxy } from '../../../../lib'
+import { getArchivistDomainFromUri, getArchivistForDomain, getUriBehindProxy } from '../../../../../lib'
 import { MetaLocals } from './MetaLocals'
 /**
  * This middleware will query the archivist for the meta data if the meta query param is present

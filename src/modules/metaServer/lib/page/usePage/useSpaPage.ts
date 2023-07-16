@@ -27,6 +27,22 @@ export const useSpaPageWaitForOptions: WaitForOptions = {
   waitUntil: 'networkidle0',
 }
 
+/**
+ * Helper for navigating to a url within a SPA (like React). This
+ * helper first navigates to the root, then uses the browser history
+ * to navigate to the relative path. This also prevents an infinite
+ * cycle where:
+ *  - the the server intercepts the request for the route
+ *  - the server attempts to render the route by making a request for the route
+ *  - the server intercepts it's own request for the route
+ * by first navigating to the root, then using the browser history
+ * to navigate to the relative path within the app.
+ * @param url The url to navigate to
+ * @param pageCallback Function to execute using the browser page
+ * @param browserOptions options for the browser
+ * @param waitForOptions options for waiting for page navigation
+ * @returns The result of the pageCallback
+ */
 export const useSpaPage = async <T>(
   url: string,
   pageCallback: (page: Page) => Promise<T> | T,

@@ -8,6 +8,8 @@ import { MetaCacheLocals } from './MetaCacheLocals'
 import { MetaCacheQueryParams } from './MetaCacheQueryParams'
 import { SimpleMetaCache } from './SimpleMetaCache'
 
+const augmentMetaViaQueryHash = false
+
 const getMetaFromHash = async (req: Request<NoReqParams, Empty, Empty, MetaCacheQueryParams>, res: Response): Promise<void> => {
   if (req.query.meta) {
     const hash = req.query.meta
@@ -16,6 +18,7 @@ const getMetaFromHash = async (req: Request<NoReqParams, Empty, Empty, MetaCache
     const archivist = await getArchivistForDomain(domain)
     const results = await archivist.get([hash])
     const payload = results?.[0]
+    // TODO: Validate schema
     if (payload) {
       delete (payload as Partial<Payload>)?.schema
       const meta: Meta = { ...payload } as Meta
@@ -28,7 +31,7 @@ export const metaCache = (): RequestHandler<NoReqParams, Empty, Empty, MetaCache
   const cache = new SimpleMetaCache()
   return asyncHandler(async (req, res, next) => {
     res.locals.metaCache = cache
-    await getMetaFromHash(req, res)
+    if (augmentMetaViaQueryHash) await getMetaFromHash(req, res)
     next()
   })
 }

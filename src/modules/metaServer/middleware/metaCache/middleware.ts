@@ -8,8 +8,6 @@ import { MetaCacheLocals } from './MetaCacheLocals'
 import { MetaCacheQueryParams } from './MetaCacheQueryParams'
 import { SimpleMetaCache } from './SimpleMetaCache'
 
-const cache = new SimpleMetaCache()
-
 const getMetaFromHash = async (req: Request<NoReqParams, Empty, Empty, MetaCacheQueryParams>, res: Response): Promise<void> => {
   if (req.query.meta) {
     const hash = req.query.meta
@@ -26,9 +24,11 @@ const getMetaFromHash = async (req: Request<NoReqParams, Empty, Empty, MetaCache
   }
 }
 
-export const metaCache = (): RequestHandler<NoReqParams, Empty, Empty, MetaCacheQueryParams, MetaCacheLocals> =>
-  asyncHandler(async (req, res, next) => {
+export const metaCache = (): RequestHandler<NoReqParams, Empty, Empty, MetaCacheQueryParams, MetaCacheLocals> => {
+  const cache = new SimpleMetaCache()
+  return asyncHandler(async (req, res, next) => {
     res.locals.metaCache = cache
     await getMetaFromHash(req, res)
     next()
   })
+}

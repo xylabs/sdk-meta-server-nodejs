@@ -1,4 +1,4 @@
 export * from './MetaCache'
-export * from './MetaLocals'
-export * from './metaQueryHandler'
+export * from './MetaCacheLocals'
+export * from './middleware'
 export * from './SimpleMetaCache'

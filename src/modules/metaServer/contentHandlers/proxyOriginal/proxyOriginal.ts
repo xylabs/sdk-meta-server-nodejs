@@ -9,7 +9,7 @@ import { join } from 'path'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
 import { getAdjustedPath, isHtmlLike } from '../../lib'
-import { MetaLocals } from '../../middleware'
+import { MetaCacheLocals } from '../../middleware'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 import { exists } from './lib'
 
@@ -42,7 +42,7 @@ const getHandler = (baseDir: string) => {
   assertEx(existsSync(filePath), 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf-8' })
   const proxy = serveStatic(baseDir, options)
-  const serveIndex: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaLocals> = (req, res, _next) => {
+  const serveIndex: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaCacheLocals> = (req, res, _next) => {
     let updated = html
     const path = getAdjustedPath(req)
     const updatedHead = res?.locals?.metaCache?.get?.(path)
@@ -51,7 +51,7 @@ const getHandler = (baseDir: string) => {
     }
     res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updated)
   }
-  const handler: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaLocals> = async (req, res, next) => {
+  const handler: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaCacheLocals> = async (req, res, next) => {
     try {
       // Check if file exists on disk (cache check for performance)
       const file = getAdjustedPath(req)

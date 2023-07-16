@@ -1,4 +1,4 @@
-import { usePage } from '../../../../../lib'
+import { useSpaPage } from '../../../../../lib'
 
 /**
  * Gets the rendered page html
@@ -6,10 +6,10 @@ import { usePage } from '../../../../../lib'
  * @param navigateToRootFirst Should navigate to the root of the url first, then navigate to the relative path
  * @returns The rendered page html
  */
-export const getRenderedPageHtml = async (url: string): Promise<string | undefined> => {
+export const getRenderedSpaPageHtml = async (url: string): Promise<string | undefined> => {
   try {
     console.log(`[foreventory][getRenderedPageHtml][${url}]: rendering`)
-    const html = await usePage(url, undefined, async (page) => {
+    const html = await useSpaPage(url, async (page) => {
       console.log(`[foreventory][getRenderedPageHtml][${url}]: navigated to ${url}`)
       return await page.content()
     })

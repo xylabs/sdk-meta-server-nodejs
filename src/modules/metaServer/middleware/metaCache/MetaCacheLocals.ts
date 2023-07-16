@@ -9,4 +9,4 @@ export type MetaCacheProperties = {
   metaCache: MetaCache
 }
 
-export type MetaLocals = NoLocals & MetaCacheProperties
+export type MetaCacheLocals = NoLocals & MetaCacheProperties

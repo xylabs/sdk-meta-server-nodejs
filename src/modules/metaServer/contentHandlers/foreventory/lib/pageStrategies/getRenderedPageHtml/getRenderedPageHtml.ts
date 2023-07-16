@@ -12,7 +12,7 @@ export const getRenderedPageHtml = async (url: string, navigateToRootFirst = fal
       console.log(`[foreventory][getRenderedPageHtml][${url}]: navigated to ${urlToNavigateTo}`)
       if (navigateToRootFirst) {
         await page.evaluate((path) => window.history.pushState(null, '', path), relativeUrl)
-        console.log(`[foreventory][getRenderedPageHtml][${url}]: navigated to ${relativeUrl}`)
+        console.log(`[foreventory][getRenderedPageHtml][${url}]: navigated browser history to ${relativeUrl}`)
       }
       await page.waitForNavigation(opts)
       const content = await page.content()

@@ -37,7 +37,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/middleware/metaCache/spec/SimpleMetaCache.spec.ts",
+        "src/modules/metaServer/contentHandlers/foreventory/lib/pageStrategies/getRenderedPageHtml/spec/getRenderedPageHtml.spec.ts",
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

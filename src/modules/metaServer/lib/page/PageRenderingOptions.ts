@@ -1,5 +1,7 @@
+import { WaitForOptions } from 'puppeteer'
+
 import { ViewPortSize } from '../browser'
 
-export interface PageRenderingOptions {
+export type PageRenderingOptions = WaitForOptions & {
   viewportSize?: ViewPortSize
 }

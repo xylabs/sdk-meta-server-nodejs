@@ -1,4 +1,4 @@
-import { getFacebookAppId, getFacebookAppSecret } from '../config'
+import { tryGetAuthInfo } from './tryGetAuthInfo'
 
 /**
  * Obtains an access token for the app.
@@ -6,7 +6,6 @@ import { getFacebookAppId, getFacebookAppSecret } from '../config'
  * @returns An access token for the app
  */
 export const canGetAppAccessToken = (): boolean => {
-  const client_id = getFacebookAppId()
-  const client_secret = getFacebookAppSecret()
+  const { client_id, client_secret } = tryGetAuthInfo()
   return client_id && client_secret ? true : false
 }

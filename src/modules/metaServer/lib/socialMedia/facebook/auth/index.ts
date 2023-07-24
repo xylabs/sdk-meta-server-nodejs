@@ -1,2 +1,3 @@
 export * from './canGetAppAccessToken'
-export * from './getAppAccessToken'
+export * from './tryGetAppAccessToken'
+export * from './tryGetAuthInfo'

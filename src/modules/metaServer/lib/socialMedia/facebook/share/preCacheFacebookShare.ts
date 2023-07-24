@@ -1,6 +1,6 @@
 import { axios } from '@xyo-network/axios'
 
-import { getAppAccessToken } from '../auth'
+import { tryGetAppAccessToken } from '../auth'
 
 const openApiUrl = 'https://graph.facebook.com/'
 
@@ -31,7 +31,7 @@ export interface PreCacheFacebookShareResponse {
  * @param url The url to pre-cache
  */
 export const preCacheFacebookShare = async (url: string): Promise<PreCacheFacebookShareResponse | undefined> => {
-  const access_token = await getAppAccessToken()
+  const access_token = await tryGetAppAccessToken()
   if (!access_token) return
   const params = { access_token, id: url, scrape }
   const response = await axios.post<PreCacheFacebookShareResponse>(openApiUrl, null, { params })

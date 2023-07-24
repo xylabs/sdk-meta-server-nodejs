@@ -28,11 +28,11 @@ export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Met
     usePage(url, undefined, async (page) => {
       try {
         console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: beginning`)
-        const imagePromise = twitterCardGenerator(page)
+        const imageTask = twitterCardGenerator(page)
         console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: caching`)
-        imageCache.set(imageUrl, imagePromise)
+        imageCache.set(imageUrl, imageTask)
         console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: awaiting generation`)
-        await imagePromise
+        await imageTask
         console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: complete`)
       } catch (error) {
         console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: error`)

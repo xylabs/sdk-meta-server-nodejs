@@ -7,6 +7,7 @@ const grant_type = 'client_credentials'
 
 interface AppAccessTokenResponse {
   access_token: string
+  token_type: 'bearer'
 }
 
 /**

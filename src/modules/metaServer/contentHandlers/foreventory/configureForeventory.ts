@@ -6,7 +6,7 @@ import { existsSync, readFileSync } from 'fs'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { extname, join } from 'path'
 
-import { getAdjustedPath, getUriBehindProxy } from '../../lib'
+import { getAdjustedPath, getUriBehindProxy, preCacheFacebookShare } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 import { getImageCache, getPageCache, getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
 
@@ -41,7 +41,7 @@ const getPageHandler = (baseDir: string) => {
   const indexHtml = readFileSync(filePath, { encoding: 'utf-8' })
   const pageCache = getPageCache()
 
-  const pageHandler: RequestHandler = (req, res, next) => {
+  const pageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
     if (extname(adjustedPath) === '.html') {
       try {
@@ -57,6 +57,8 @@ const getPageHandler = (baseDir: string) => {
           const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageCache, indexHtml)
           console.log(`[foreventory][pageHandler][${uri}]: caching`)
           pageCache.set(uri, updatedHtml)
+          console.log(`[foreventory][pageHandler][${uri}]: pre-caching social media share image`)
+          await preCacheFacebookShare(uri)
           console.log(`[foreventory][pageHandler][${uri}]: return html`)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
           return
@@ -66,7 +68,7 @@ const getPageHandler = (baseDir: string) => {
       }
     }
     next()
-  }
+  })
   return pageHandler
 }
 

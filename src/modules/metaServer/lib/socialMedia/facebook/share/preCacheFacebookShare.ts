@@ -30,10 +30,10 @@ export interface PreCacheFacebookShareResponse {
  * This results in essentially a "pre-scrape" of the potential share url.
  * @param url The url to pre-cache
  */
-export const preCacheFacebookShare = async (url: string): Promise<PreCacheFacebookShareResponse | undefined> => {
+export const preCacheFacebookShare = async (url: string): Promise<Partial<PreCacheFacebookShareResponse> | undefined> => {
   const access_token = await tryGetAppAccessToken()
   if (!access_token) return
   const params = { access_token, id: url, scrape }
-  const response = await axios.post<PreCacheFacebookShareResponse>(openApiUrl, null, { params })
+  const response = await axios.post<Partial<PreCacheFacebookShareResponse>>(openApiUrl, null, { params })
   return response.data
 }

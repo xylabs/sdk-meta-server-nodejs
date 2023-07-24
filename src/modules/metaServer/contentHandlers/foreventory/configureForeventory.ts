@@ -85,7 +85,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
         await delay(imageGenerationCompletionPollingInterval)
         imageGenerationWait += imageGenerationCompletionPollingInterval
         imageTask = imageCache.get(uri)
-      } while (imageTask === undefined || imageGenerationWait < maxImageGenerationWait)
+      } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
     }
     console.log(`[foreventory][imageHandler][${uri}]: awaiting image generation`)
     const image = await imageTask

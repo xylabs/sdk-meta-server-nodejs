@@ -4353,6 +4353,7 @@ __metadata:
     "@xylabs/tsconfig-dom-jest": ^2.18.11
     "@xylabs/tsconfig-jest": ^2.18.11
     "@xyo-network/archivist-wrapper": ^2.65.2
+    "@xyo-network/axios": ^2.66.9
     "@xyo-network/boundwitness-model": ^2.66.0
     "@xyo-network/http-bridge": ^2.65.2
     "@xyo-network/payload-model": ^2.66.0
@@ -4747,6 +4748,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xyo-network/axios@npm:^2.66.9":
+  version: 2.66.9
+  resolution: "@xyo-network/axios@npm:2.66.9"
+  dependencies:
+    "@xyo-network/shared": ~2.66.9
+    axios: ^1.4.0
+    pako: ^2.1.0
+  checksum: 29745d1b14f15ca994d1d4c303ea139f9db9d3c788e5b5788fa28c52d4810ac408918bd046630ecb3f63d8a544b77f2fb026a47a3b08e0554cf3415b863adf3b
+  languageName: node
+  linkType: hard
+
 "@xyo-network/bip39@npm:^2.65.2":
   version: 2.65.2
   resolution: "@xyo-network/bip39@npm:2.65.2"
@@ -4953,6 +4965,13 @@ __metadata:
   version: 2.66.0
   resolution: "@xyo-network/error@npm:2.66.0"
   checksum: 06708424511436179aac14c0cab7b8c306e43cc3f919e7ef9937dcf3aed7dc07d466f1b2cbdceee5c191fded6415c018c5cc49481b61b93d311157f35e05cc2b
+  languageName: node
+  linkType: hard
+
+"@xyo-network/error@npm:~2.66.9":
+  version: 2.66.9
+  resolution: "@xyo-network/error@npm:2.66.9"
+  checksum: f00f2749dd9c73b78cc205850edec955c694574a5a83442983a8c8bde77f2c813a3e7d7e3b258c2bb4c5f79821eb47989bd9b30dff276ffd1e663ad687730b13
   languageName: node
   linkType: hard
 
@@ -5317,6 +5336,15 @@ __metadata:
   dependencies:
     "@xyo-network/error": ^2.66.0
   checksum: bca96ef42160ecafbe2fcbea5058972168fe7ae98086abbfea07bb6d1547f8177e415cc6c90fe41808429c8a6d52b4c3b3136218fba27a41b678778428d52b3f
+  languageName: node
+  linkType: hard
+
+"@xyo-network/shared@npm:~2.66.9":
+  version: 2.66.9
+  resolution: "@xyo-network/shared@npm:2.66.9"
+  dependencies:
+    "@xyo-network/error": ~2.66.9
+  checksum: a9ec78a012fa2f0df39be02ae915b1462a8420b73f1dfc5a8d10991e79d1e59399f5e45e12a99fa52bc3dd1caf12f97a27b7be050eb4f95cf135e7158a6981ac
   languageName: node
   linkType: hard
 

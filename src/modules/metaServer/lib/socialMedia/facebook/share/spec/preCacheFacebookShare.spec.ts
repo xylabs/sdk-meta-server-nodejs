@@ -1,8 +1,10 @@
+import { describeIf } from '@xylabs/jest-helpers'
+
+import { canGetAppAccessToken } from '../../auth'
 import { preCacheFacebookShare } from '../preCacheFacebookShare'
 
-const urls = ['https://www.youtube.com/watch?v=Kauv7MVPcsA']
-
-describe('preCacheFacebookShare', () => {
+describeIf(canGetAppAccessToken())('preCacheFacebookShare', () => {
+  const urls = ['https://www.youtube.com/watch?v=Kauv7MVPcsA']
   it.each(urls)('Returns element from page', async (url) => {
     const response = await preCacheFacebookShare(url)
     expect(response).toBeDefined()

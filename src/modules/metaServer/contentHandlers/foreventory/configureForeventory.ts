@@ -1,4 +1,5 @@
 import { assertEx } from '@xylabs/assert'
+import { delay } from '@xylabs/delay'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
@@ -20,6 +21,9 @@ const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
  */
 const imageMaxAge = 60 * 10
 const imageCacheControlHeader = `public, max-age=${imageMaxAge}`
+
+const maxImageGenerationWait = 8000
+const imageGenerationPollingInterval = 100
 
 const imageCache = getImageCache()
 
@@ -69,9 +73,15 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
       // Render the page and generate the image
       const pageUrl = getPageUrlFromImageUrl(uri)
       getPagePreviewImage(pageUrl, imageCache)
-      imageTask = imageCache.get(uri)
+      let imageGenerationWait = 0
+
+      do {
+        await delay(imageGenerationPollingInterval)
+        imageGenerationWait += imageGenerationPollingInterval
+        imageTask = imageCache.get(uri)
+      } while (imageTask === undefined || imageGenerationWait < maxImageGenerationWait)
     }
-    console.log(`[foreventory][imageHandler][${uri}]: returning image`)
+    console.log(`[foreventory][imageHandler][${uri}]: awaiting image generation`)
     const image = await imageTask
     if (image) {
       console.log(`[foreventory][imageHandler][${uri}]: returning image`)

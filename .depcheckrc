@@ -3,6 +3,7 @@ ignores: [
   "@types/jest",
   "@types/supertest",
   "@xylabs/eslint-config-react",
+  "@xylabs/jest-helpers",
   "@xylabs/tsconfig-dom-jest",
   "jest-extended",
   "jest-image-snapshot",

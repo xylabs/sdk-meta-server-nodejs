@@ -3,6 +3,7 @@ import { delay } from '@xylabs/delay'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
@@ -22,8 +23,14 @@ const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 const imageMaxAge = 60 * 10
 const imageCacheControlHeader = `public, max-age=${imageMaxAge}`
 
+/**
+ * How often to poll for the completion of image generation
+ */
+const imageGenerationCompletionPollingInterval = 100
+/**
+ * The maximum amount of time to wait for image generation
+ */
 const maxImageGenerationWait = 8000
-const imageGenerationPollingInterval = 100
 
 const imageCache = getImageCache()
 
@@ -74,10 +81,9 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
       const pageUrl = getPageUrlFromImageUrl(uri)
       getPagePreviewImage(pageUrl, imageCache)
       let imageGenerationWait = 0
-
       do {
-        await delay(imageGenerationPollingInterval)
-        imageGenerationWait += imageGenerationPollingInterval
+        await delay(imageGenerationCompletionPollingInterval)
+        imageGenerationWait += imageGenerationCompletionPollingInterval
         imageTask = imageCache.get(uri)
       } while (imageTask === undefined || imageGenerationWait < maxImageGenerationWait)
     }
@@ -87,8 +93,8 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
       console.log(`[foreventory][imageHandler][${uri}]: returning image`)
       res.type('png').set('Cache-Control', imageCacheControlHeader).send(image)
     } else {
-      console.log(`[foreventory][imageHandler][${uri}]: returning 404`)
-      res.status(404).send()
+      console.log(`[foreventory][imageHandler][${uri}]: returning ${ReasonPhrases.GATEWAY_TIMEOUT}}`)
+      res.sendStatus(StatusCodes.GATEWAY_TIMEOUT)
     }
     return
   } catch (error) {

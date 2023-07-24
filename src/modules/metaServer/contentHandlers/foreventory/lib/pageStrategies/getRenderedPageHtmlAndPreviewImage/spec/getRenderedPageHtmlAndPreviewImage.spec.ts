@@ -1,3 +1,4 @@
+import { ForgetPromise } from '@xylabs/forget'
 import { mock } from 'jest-mock-extended'
 
 import { ImageCache } from '../../../cache'
@@ -30,5 +31,8 @@ describe('getRenderedPageHtmlAndPreviewImage', () => {
       expect(newHtml).toContain('<meta property="twitter:card" content="summary_large_image">')
       expect(newHtml).toContain(`<meta property="twitter:image" content="${imageUrl}">`)
     })
+  })
+  afterAll(async () => {
+    await ForgetPromise.awaitInactive()
   })
 })

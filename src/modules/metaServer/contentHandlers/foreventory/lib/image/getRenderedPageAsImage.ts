@@ -27,15 +27,18 @@ export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Met
   forget(
     usePage(url, undefined, async (page) => {
       try {
-        console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image`)
-        const image = twitterCardGenerator(page)
-        await image
-        console.log(`[foreventory][getRenderedPageAsImage][${url}]: caching image`)
-        imageCache.set(imageUrl, image)
-        console.log(`[foreventory][getRenderedPageAsImage][${url}]: cached image`)
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: beginning`)
+        const imagePromise = twitterCardGenerator(page)
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: caching`)
+        imageCache.set(imageUrl, imagePromise)
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: awaiting generation`)
+        await imagePromise
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: complete`)
       } catch (error) {
-        console.log(`[foreventory][getRenderedPageAsImage][${url}]: error generating image`)
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: error`)
         console.log(error)
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation: removing cached`)
+        imageCache.delete(imageUrl)
       }
     }),
   )

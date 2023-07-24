@@ -6,6 +6,21 @@ const openApiUrl = 'https://graph.facebook.com/'
 
 const scrape = true
 
+export interface PreCacheFacebookShareResponse {
+  application: {
+    id: string
+    name: string
+    url: string
+  }
+  description: string
+  image: [{ url: string }]
+  site_name: string
+  title: string
+  type: string
+  updated_time: string
+  url: string
+}
+
 /**
  * Pre-cache a shared url. Used to ensure that the first person who shares
  * a url has a good experience as, from the facebook docs:
@@ -15,8 +30,10 @@ const scrape = true
  * This results in essentially a "pre-scrape" of the potential share url.
  * @param url The url to pre-cache
  */
-export const preCacheFacebookShare = async (url: string): Promise<void> => {
+export const preCacheFacebookShare = async (url: string): Promise<PreCacheFacebookShareResponse | undefined> => {
   const access_token = await getAppAccessToken()
+  if (!access_token) return
   const params = { access_token, id: url, scrape }
-  await axios.post(openApiUrl, null, { params })
+  const response = await axios.post<PreCacheFacebookShareResponse>(openApiUrl, null, { params })
+  return response.data
 }

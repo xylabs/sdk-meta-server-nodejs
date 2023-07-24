@@ -14,15 +14,3 @@ export const preCacheFacebookShare = async (url: string): Promise<void> => {
   const params = { access_token, id: url, scrape: true }
   await axios.post(openApiUrl, null, { params })
 }
-
-const getAppAccessToken = async () => {
-  const response = await axios.get('https://graph.facebook.com/oauth/access_token', {
-    params: {
-      client_id: getFacebookAppId(),
-      client_secret: getFacebookAppSecret(),
-      grant_type: 'client_credentials',
-    },
-  })
-
-  return response.data.access_token
-}

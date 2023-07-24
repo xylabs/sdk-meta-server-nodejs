@@ -1,3 +1,4 @@
+import { forget } from '@xylabs/forget'
 import { Meta, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 
 import {
@@ -20,22 +21,28 @@ const { height, width } = useLargeImage ? summaryCardWithLargeImageViewport : su
 const twitterCardGenerator = useLargeImage ? summaryCardWithLargeImageFromPage : summaryCardImageFromPage
 
 export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Meta | undefined => {
-  try {
-    console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image url`)
-    const imageUrl = getImageUrl(url, width, height)
-    console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image meta`)
-    const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
-    const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
-    const meta: Meta = { og, twitter }
-    void usePage(url, undefined, (page) => {
-      console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image`)
-      imageCache.set(imageUrl, twitterCardGenerator(page))
-      console.log(`[foreventory][getRenderedPageAsImage][${url}]: caching image`)
-    })
-    console.log(`[foreventory][getRenderedPageAsImage][${url}]: returning image meta`)
-    return meta
-  } catch (error) {
-    console.log(error)
-  }
-  return undefined
+  console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image url`)
+  const imageUrl = getImageUrl(url, width, height)
+  console.log(`[foreventory][getRenderedPageAsImage][${url}]: backgrounding image generation`)
+  forget(
+    usePage(url, undefined, async (page) => {
+      try {
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image`)
+        const image = twitterCardGenerator(page)
+        await image
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: caching image`)
+        imageCache.set(imageUrl, image)
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: cached image`)
+      } catch (error) {
+        console.log(`[foreventory][getRenderedPageAsImage][${url}]: error generating image`)
+        console.log(error)
+      }
+    }),
+  )
+  console.log(`[foreventory][getRenderedPageAsImage][${url}]: generating image meta`)
+  const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
+  const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
+  const meta: Meta = { og, twitter }
+  console.log(`[foreventory][getRenderedPageAsImage][${url}]: returning image meta`)
+  return meta
 }

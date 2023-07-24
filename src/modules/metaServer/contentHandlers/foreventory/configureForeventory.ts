@@ -1,7 +1,9 @@
 import { assertEx } from '@xylabs/assert'
+import { delay } from '@xylabs/delay'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy } from '../../lib'
@@ -14,6 +16,22 @@ import { getImageCache, getPageCache, getPagePreviewImage, getPageUrlFromImageUr
  */
 const indexHtmlMaxAge = 60 * 10
 const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
+/**
+ * The max-age cache control header time (in seconds)
+ * to set for html files
+ */
+const imageMaxAge = 60 * 10
+const imageCacheControlHeader = `public, max-age=${imageMaxAge}`
+
+/**
+ * How often to poll for the completion of image generation
+ */
+const imageGenerationCompletionPollingInterval = 100
+/**
+ * The maximum amount of time to wait for image generation
+ */
+const maxImageGenerationWait = 8000
+
 const imageCache = getImageCache()
 
 const getPageHandler = (baseDir: string) => {
@@ -55,17 +73,29 @@ const getPageHandler = (baseDir: string) => {
 const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   try {
     const uri = getUriBehindProxy(req)
-    console.log(`[foreventory][pageHandler][${uri}]: called`)
-    let image = imageCache.get(uri)
-    if (!image) {
-      console.log(`[foreventory][pageHandler][${uri}]: generating image`)
+    console.log(`[foreventory][imageHandler][${uri}]: called`)
+    let imageTask = imageCache.get(uri)
+    if (!imageTask) {
+      console.log(`[foreventory][imageHandler][${uri}]: generating image`)
       // Render the page and generate the image
       const pageUrl = getPageUrlFromImageUrl(uri)
-      await getPagePreviewImage(pageUrl, imageCache)
-      image = imageCache.get(uri)
+      getPagePreviewImage(pageUrl, imageCache)
+      let imageGenerationWait = 0
+      do {
+        await delay(imageGenerationCompletionPollingInterval)
+        imageGenerationWait += imageGenerationCompletionPollingInterval
+        imageTask = imageCache.get(uri)
+      } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
     }
-    console.log(`[foreventory][pageHandler][${uri}]: returning image`)
-    res.type('png').set('Cache-Control', indexHtmlCacheControlHeader).send(image)
+    console.log(`[foreventory][imageHandler][${uri}]: awaiting image generation`)
+    const image = await imageTask
+    if (image) {
+      console.log(`[foreventory][imageHandler][${uri}]: returning image`)
+      res.type('png').set('Cache-Control', imageCacheControlHeader).send(image)
+    } else {
+      console.log(`[foreventory][imageHandler][${uri}]: returning ${ReasonPhrases.GATEWAY_TIMEOUT}}`)
+      res.sendStatus(StatusCodes.GATEWAY_TIMEOUT)
+    }
     return
   } catch (error) {
     console.log(error)

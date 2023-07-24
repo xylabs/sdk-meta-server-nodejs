@@ -1,4 +1,5 @@
 export interface ImageCache {
-  get(key: string): Buffer | undefined
-  set(key: string, value: Buffer): void
+  delete(key: string): void
+  get(key: string): Promise<Buffer> | undefined
+  set(key: string, value: Promise<Buffer> | undefined): void
 }

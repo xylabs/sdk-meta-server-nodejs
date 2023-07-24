@@ -17,6 +17,7 @@ interface AppAccessTokenResponse {
 export const getAppAccessToken = async (): Promise<string | undefined> => {
   const client_id = getFacebookAppId()
   const client_secret = getFacebookAppSecret()
+  if (!client_id || !client_secret) return undefined
   const params = { client_id, client_secret, grant_type }
   const response = await axios.get<AppAccessTokenResponse>(tokenUrl, { params })
   return response.data.access_token

@@ -1,9 +1,12 @@
 import { preCacheFacebookShare } from '../preCacheFacebookShare'
 
-const uris = ['https://www.youtube.com/watch?v=Kauv7MVPcsA']
+const urls = ['https://www.youtube.com/watch?v=Kauv7MVPcsA']
 
 describe('preCacheFacebookShare', () => {
-  it.each(uris)('Returns element from page', async (uri) => {
-    await preCacheFacebookShare(uri)
+  it.each(urls)('Returns element from page', async (url) => {
+    const response = await preCacheFacebookShare(url)
+    expect(response).toBeDefined()
+    expect(response).toBeObject()
+    expect(response?.url).toBe(url)
   })
 })

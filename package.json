@@ -36,7 +36,7 @@
     "lru-cache": "^10.0.0",
     "mime": "^3.0.0",
     "node-cache": "^5.1.2",
-    "puppeteer": "^20.8.2",
+    "puppeteer": "^20.9.0",
     "rollbar": "^2.26.2",
     "serve-static": "^1.15.0",
     "winston": "^3.10.0",

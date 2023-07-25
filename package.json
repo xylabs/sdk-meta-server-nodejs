@@ -18,9 +18,10 @@
     "@xylabs/assert": "^2.9.3",
     "@xylabs/delay": "^2.9.3",
     "@xylabs/forget": "^2.9.3",
+    "@xyo-network/axios": "^2.67.0-rc.3",
+    "@xyo-network/account": "^2.67.0-rc.3",
     "@xylabs/sdk-api-express-ecs": "^1.3.0",
     "@xyo-network/archivist-model": "^2.67.0-rc.3",
-    "@xyo-network/archivist-wrapper": "^2.67.0-rc.3",
     "@xyo-network/boundwitness-model": "^2.67.0-rc.3",
     "@xyo-network/http-bridge": "^2.67.0-rc.3",
     "@xyo-network/payload-model": "^2.67.0-rc.3",
@@ -123,7 +124,7 @@
   },
   "sideEffects": false,
   "types": "dist/types/index.d.ts",
-  "version": "2.1.0",
+  "version": "2.2.0-rc.1",
   "engines": {
     "node": ">=18.13.0"
   },
@@ -131,5 +132,6 @@
     "node": "18.13.0",
     "yarn": "1.22.19"
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.1",
+  "stableVersion": "2.1.0"
 }

@@ -5,12 +5,7 @@
 .gif
 .git
 .github
-.jpg
-.png
-.pnp.*
-.storybook
-.svg
-.tsconfig.*
+docs
 .vscode
 .yarn/*
 jest.config.cjs

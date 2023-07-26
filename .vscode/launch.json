@@ -37,7 +37,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/contentHandlers/foreventory/lib/pageStrategies/getRenderedPageHtml/spec/getRenderedPageHtml.spec.ts",
+        "src/modules/metaServer/contentHandlers/archivistBlock/lib/spec/archivistBlock.spec.ts",
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

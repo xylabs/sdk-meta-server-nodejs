@@ -29,6 +29,7 @@ describe('archivistBlock', () => {
   it.each(payloadUris)('Modifies the head with block information', async (payloadUri) => {
     // Get this file via server
     const response = await agent.get(payloadUri).expect(200)
+
     expect(response).toBeTruthy()
 
     // Validate HTML headers

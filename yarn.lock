@@ -4911,7 +4911,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/boundwitness-model@npm:^2.67.0, @xyo-network/boundwitness-model@npm:~2.67.0":
+"@xyo-network/boundwitness-model@npm:^2.67.0":
+  version: 2.71.11
+  resolution: "@xyo-network/boundwitness-model@npm:2.71.11"
+  dependencies:
+    "@xyo-network/payload-model": ~2.71.11
+  checksum: a71c78535b325eec228e71f44120cd60d9a5373613cf5aa907926682e9ec777a1d4fd5751260d39e8c1c586f45bba59718130b665cfce396efda8740b63dec4e
+  languageName: node
+  linkType: hard
+
+"@xyo-network/boundwitness-model@npm:~2.67.0":
   version: 2.67.0
   resolution: "@xyo-network/boundwitness-model@npm:2.67.0"
   dependencies:
@@ -5338,6 +5347,13 @@ __metadata:
   version: 2.67.0
   resolution: "@xyo-network/payload-model@npm:2.67.0"
   checksum: 5a693dcfb462bfd440a266c32f14e62894d07060c5ab701ad59963c9b91f722b59ea0f0b45250610302abd48e4e1d06e29b0cd82a0749550df0f80cb05b5acc2
+  languageName: node
+  linkType: hard
+
+"@xyo-network/payload-model@npm:~2.71.11":
+  version: 2.71.11
+  resolution: "@xyo-network/payload-model@npm:2.71.11"
+  checksum: 97511301c14266059b60173a1388cbcaa9d07a3a05a537192dd21eed1ecee06fa01f68e1d688aac19640cf845addf7d1e83a2f548a4ea91d15ec42f41ec4a30c
   languageName: node
   linkType: hard
 

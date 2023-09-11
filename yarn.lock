@@ -4868,7 +4868,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/axios@npm:^2.67.0, @xyo-network/axios@npm:~2.67.0":
+"@xyo-network/axios@npm:^2.67.0":
+  version: 2.73.3
+  resolution: "@xyo-network/axios@npm:2.73.3"
+  dependencies:
+    "@xyo-network/shared": ~2.73.3
+    axios: ^1.5.0
+    pako: ^2.1.0
+  checksum: 036e2863fede38e751b73bcdc958858f3c63b6d7f7e9b78d5bc356352eff6ebb2279363d675926b3d5c3fdd16d5256bf360afa8d329a3c220367106815eb9a46
+  languageName: node
+  linkType: hard
+
+"@xyo-network/axios@npm:~2.67.0":
   version: 2.67.0
   resolution: "@xyo-network/axios@npm:2.67.0"
   dependencies:
@@ -5085,6 +5096,13 @@ __metadata:
   version: 2.67.0
   resolution: "@xyo-network/error@npm:2.67.0"
   checksum: be34b41f3cac168ef45fb44bd1a1dc3c2f0dfd8e2a347bc5bcadc3790e2f67d1ec7d5df83f68e601e60b52e784074b82814bc24d3501edb69a27e0d404714834
+  languageName: node
+  linkType: hard
+
+"@xyo-network/error@npm:~2.73.3":
+  version: 2.73.3
+  resolution: "@xyo-network/error@npm:2.73.3"
+  checksum: 35f3f19ebe42e2baef98e71dcc5ac4fe0576619754598ee7be1272d8a7b385982089591d80a845e9781eccf89628597c8ab1e848f5439b3f5952e5c8451ca858
   languageName: node
   linkType: hard
 
@@ -5465,6 +5483,15 @@ __metadata:
   dependencies:
     "@xyo-network/error": ~2.67.0
   checksum: 9f3f5f72e8980fc83b01b22994362352c927330153056abd950aaf9a377b0979246df739ee45320b5194211dffa1eb473f09d17a84fac756589e477af3875aae
+  languageName: node
+  linkType: hard
+
+"@xyo-network/shared@npm:~2.73.3":
+  version: 2.73.3
+  resolution: "@xyo-network/shared@npm:2.73.3"
+  dependencies:
+    "@xyo-network/error": ~2.73.3
+  checksum: b9125c44cb1d810cea3522e8333167d3b3122c453839b6bcae74e8c420f0f4f23698c156d2b534c7cd4b183e7f76455cd4f292bedda395fbd3ceba3f148ce1c4
   languageName: node
   linkType: hard
 
@@ -6049,6 +6076,17 @@ __metadata:
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
   checksum: 7fb6a4313bae7f45e89d62c70a800913c303df653f19eafec88e56cea2e3821066b8409bc68be1930ecca80e861c52aa787659df0ffec6ad4d451c7816b9386b
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "axios@npm:1.5.0"
+  dependencies:
+    follow-redirects: ^1.15.0
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: e7405a5dbbea97760d0e6cd58fecba311b0401ddb4a8efbc4108f5537da9b3f278bde566deb777935a960beec4fa18e7b8353881f2f465e4f2c0e949fead35be
   languageName: node
   linkType: hard
 

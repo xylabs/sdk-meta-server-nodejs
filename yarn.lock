@@ -5334,7 +5334,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/payload-model@npm:^2.67.0, @xyo-network/payload-model@npm:~2.67.0":
+"@xyo-network/payload-model@npm:^2.67.0":
+  version: 2.73.3
+  resolution: "@xyo-network/payload-model@npm:2.73.3"
+  checksum: bb0feec492345666975d2cd7b6aabe1714a7dd2fd3ca3b174553dda6e13c29fb64b8183250123df64d91a818c141dcbf6a51350cc9c2a9dd548c4478284b639a
+  languageName: node
+  linkType: hard
+
+"@xyo-network/payload-model@npm:~2.67.0":
   version: 2.67.0
   resolution: "@xyo-network/payload-model@npm:2.67.0"
   checksum: 5a693dcfb462bfd440a266c32f14e62894d07060c5ab701ad59963c9b91f722b59ea0f0b45250610302abd48e4e1d06e29b0cd82a0749550df0f80cb05b5acc2

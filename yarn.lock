@@ -4337,6 +4337,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/assert@npm:^2.12.14":
+  version: 2.12.14
+  resolution: "@xylabs/assert@npm:2.12.14"
+  checksum: 177b464971606ab5b779df1d5fbc3123772400c0a9bbe0f29e636a15e780ec4f9a48f0785a390b434efa101c94f2a7bf3422bd7632f91c43975a47e20f3d1128
+  languageName: node
+  linkType: hard
+
 "@xylabs/assert@npm:^2.9.3, @xylabs/assert@npm:~2.9.3":
   version: 2.9.3
   resolution: "@xylabs/assert@npm:2.9.3"
@@ -5141,6 +5148,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xyo-network/logger@npm:~2.75.6":
+  version: 2.75.6
+  resolution: "@xyo-network/logger@npm:2.75.6"
+  checksum: 6ff443a7f95d04600043a95d5a9b76642b41ab44966f6326ceecdb0ea4a2c6cb724e94fbdb70b3f0939e0a8c9cdb4eb1bf7fa312ee6515a82e6f0fca31c25019
+  languageName: node
+  linkType: hard
+
 "@xyo-network/manifest-model@npm:~2.67.0":
   version: 2.67.0
   resolution: "@xyo-network/manifest-model@npm:2.67.0"
@@ -5324,6 +5338,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xyo-network/object@npm:^2.75.6":
+  version: 2.75.6
+  resolution: "@xyo-network/object@npm:2.75.6"
+  dependencies:
+    "@xylabs/assert": ^2.12.14
+    "@xyo-network/logger": ~2.75.6
+  checksum: a6d0141b8379084b7b71658703328024bf0eb31987b3ca9d176d99ca2b0c10cb81e1a58fd025e81ddd36fb2f56e5361e31ed2d79f5bae955a49e82dbbe0bed0d
+  languageName: node
+  linkType: hard
+
 "@xyo-network/payload-builder@npm:~2.67.0":
   version: 2.67.0
   resolution: "@xyo-network/payload-builder@npm:2.67.0"
@@ -5334,7 +5358,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/payload-model@npm:^2.67.0, @xyo-network/payload-model@npm:~2.67.0":
+"@xyo-network/payload-model@npm:^2.67.0":
+  version: 2.75.6
+  resolution: "@xyo-network/payload-model@npm:2.75.6"
+  dependencies:
+    "@xyo-network/object": ^2.75.6
+  checksum: a52b2d6c4df4be7c63eec983d4229f1dd138788662c016a96a7d8fac527bd70e6e554e7bdea188a0bcdc0155d04982edfe08b1467712a6c670885d39152b50f8
+  languageName: node
+  linkType: hard
+
+"@xyo-network/payload-model@npm:~2.67.0":
   version: 2.67.0
   resolution: "@xyo-network/payload-model@npm:2.67.0"
   checksum: 5a693dcfb462bfd440a266c32f14e62894d07060c5ab701ad59963c9b91f722b59ea0f0b45250610302abd48e4e1d06e29b0cd82a0749550df0f80cb05b5acc2

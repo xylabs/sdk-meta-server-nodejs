@@ -25,6 +25,7 @@ words:
   - swiftshader
   - templating
   - Trouw
+  - Tsup
   - xylabs
   - XYO
 ignoreWords: []

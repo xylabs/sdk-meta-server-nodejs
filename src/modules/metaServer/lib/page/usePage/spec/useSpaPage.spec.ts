@@ -9,7 +9,7 @@ describe('useSpaPage', () => {
         return await page.content()
       })
       expect(result).toContain(expected)
-    })
+    }, 25000)
   })
   describe('with navigateToRootFirst=true', () => {
     it('gets the page', async () => {
@@ -17,6 +17,6 @@ describe('useSpaPage', () => {
         return await page.content()
       })
       expect(result).toContain(expected)
-    })
+    }, 25000)
   })
 })

@@ -1,5 +1,6 @@
 import { assertEx } from '@xylabs/assert'
 import { delay } from '@xylabs/delay'
+import { exists } from '@xylabs/exists'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
@@ -105,6 +106,19 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   next()
 })
 
+const getXyConfigHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
+  const filePath = join(opts.baseDir, 'xy.config.json')
+  if (existsSync(filePath)) {
+    // Read file in
+    const xyConfig = readFileSync(filePath, { encoding: 'utf-8' })
+    // TODO: Validate xyConfig
+    // TODO: Create regex from config
+    // TODO: Write helmet handler
+    return ['get', ['/*', (req, res, next) => next()]]
+  }
+  return undefined
+}
+
 /**
  * Middleware for augmenting HTML metadata for Foreventory shares
  */
@@ -114,4 +128,5 @@ const foreventorySharePageHandler = (opts: ApplicationMiddlewareOptions): MountP
 ]
 const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
 
-export const foreventoryHandlers = (opts: ApplicationMiddlewareOptions) => [foreventorySharePageHandler(opts), foreventoryImageHandler()]
+export const foreventoryHandlers = (opts: ApplicationMiddlewareOptions) =>
+  [foreventorySharePageHandler(opts), foreventoryImageHandler(), getXyConfigHandler(opts)].filter(exists)

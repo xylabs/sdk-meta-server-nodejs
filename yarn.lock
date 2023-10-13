@@ -4726,6 +4726,7 @@ __metadata:
     "@xylabs/delay": ^2.12.24
     "@xylabs/eslint-config": ^3.1.9
     "@xylabs/eslint-config-react": ^3.1.9
+    "@xylabs/exists": ^2.12.24
     "@xylabs/forget": ^2.12.24
     "@xylabs/jest-helpers": ^2.12.24
     "@xylabs/sdk-api-express-ecs": ^1.4.0

@@ -17,6 +17,7 @@
     "@aws-sdk/client-secrets-manager": "^3.428.0",
     "@xylabs/assert": "^2.12.24",
     "@xylabs/delay": "^2.12.24",
+    "@xylabs/exists": "^2.12.24",
     "@xylabs/forget": "^2.12.24",
     "@xylabs/sdk-api-express-ecs": "^1.4.0",
     "@xyo-network/account": "^2.76.0",

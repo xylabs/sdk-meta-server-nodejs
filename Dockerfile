@@ -6,7 +6,8 @@ ARG NODE_OPTIONS="--max_old_space_size=5120"
 WORKDIR /app
 COPY . .
 RUN yarn install
-RUN yarn xy build
+# If a local yarn script for build exists, use that override. Otherwise, use the default.
+RUN if yarn run | yarn run | awk '{print $3}'| grep -q "^build$"; then yarn build; else yarn xy build; fi
 
 # Just install the production dependencies here
 FROM node:18 AS dependencies

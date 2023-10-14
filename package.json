@@ -38,6 +38,7 @@
     "lru-cache": "^10.0.1",
     "mime": "^3.0.0",
     "node-cache": "^5.1.2",
+    "path-to-regexp": "^6.2.1",
     "puppeteer": "^21.3.8",
     "rollbar": "^2.26.2",
     "serve-static": "^1.15.0",

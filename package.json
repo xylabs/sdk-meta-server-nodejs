@@ -9,9 +9,9 @@
     "url": "https://github.com/xylabs/sdk-meta-server-nodejs/issues"
   },
   "bin": {
-    "docker-build": "dist/cjs/bin/docker-build.js",
-    "generate-dotenv": "dist/cjs/bin/generate-dotenv.js",
-    "start-meta": "dist/cjs/bin/start-meta.js"
+    "docker-build": "dist/node/bin/docker-build.js",
+    "generate-dotenv": "dist/node/bin/generate-dotenv.js",
+    "start-meta": "dist/node/bin/start-meta.js"
   },
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.428.0",
@@ -83,12 +83,12 @@
     ".": {
       "node": {
         "require": {
-          "types": "./dist/node/index.d.ts",
-          "default": "./dist/node/index.js"
+          "types": "./dist/node/index.d.cts",
+          "default": "./dist/node/index.cjs"
         },
         "import": {
           "types": "./dist/node/index.d.mts",
-          "default": "./dist/node/index.mjs"
+          "default": "./dist/node/index.js"
         }
       }
     },
@@ -97,8 +97,8 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/node/index.js",
-  "module": "dist/node/index.mjs",
+  "main": "dist/node/index.cjs",
+  "module": "dist/node/index.js",
   "homepage": "https://xylabs.com",
   "keywords": [
     "xylabs",
@@ -126,7 +126,7 @@
   },
   "scripts": {
     "coverage": "yarn jest --coverage",
-    "start": "node dist/cjs/bin/start-meta.js",
+    "start": "nodemon",
     "test": "yarn jest"
   },
   "sideEffects": false,
@@ -136,8 +136,9 @@
     "node": ">=18.13.0"
   },
   "volta": {
-    "node": "18.13.0",
+    "node": "18.17.1",
     "yarn": "1.22.19"
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.1",
+  "type": "module"
 }

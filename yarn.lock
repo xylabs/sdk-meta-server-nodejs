@@ -4775,9 +4775,9 @@ __metadata:
   peerDependencies:
     axios: ^1
   bin:
-    docker-build: dist/cjs/bin/docker-build.js
-    generate-dotenv: dist/cjs/bin/generate-dotenv.js
-    start-meta: dist/cjs/bin/start-meta.js
+    docker-build: dist/node/bin/docker-build.js
+    generate-dotenv: dist/node/bin/generate-dotenv.js
+    start-meta: dist/node/bin/start-meta.js
   languageName: unknown
   linkType: soft
 

@@ -123,32 +123,33 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   next()
 })
 
-const getXyConfigHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
-  const { baseDir } = opts
-  const filePath = join(baseDir, 'xy.config.json')
-  if (existsSync(filePath)) {
-    // Read in config file
-    const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf-8' }))
-    // TODO: Validate xyConfig
-    if (xyConfig.liveShare) {
-      const { include, exclude } = xyConfig.liveShare
-      const matchesIncluded: RouteMatcher = include ? createMatcher(include) : () => true
-      const matchesExcluded: RouteMatcher = exclude ? createMatcher(exclude) : () => false
+// const liveShareHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
+//   const { baseDir } = opts
+//   const filePath = join(baseDir, 'xy.config.json')
+//   if (existsSync(filePath)) {
+//     // Read in config file
+//     const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf-8' }))
+//     // TODO: Validate xyConfig
+//     if (xyConfig.liveShare) {
+//       const { include, exclude } = xyConfig.liveShare
+//       const matchesIncluded: RouteMatcher = include ? createMatcher(include) : () => true
+//       const matchesExcluded: RouteMatcher = exclude ? createMatcher(exclude) : () => false
 
-      const handler: RequestHandler = asyncHandler(async (req, res, next) => {
-        const adjustedPath = getAdjustedPath(req)
-        await Promise.resolve()
-        if (matchesIncluded(adjustedPath) && !matchesExcluded(adjustedPath)) {
-          // TODO: Grab helmet head data
-        } else {
-          next()
-        }
-      })
-      return ['get', ['/*', handler]]
-    }
-    return undefined
-  }
-}
+//       const handler: RequestHandler = asyncHandler(async (req, res, next) => {
+//         const adjustedPath = getAdjustedPath(req)
+//         await Promise.resolve()
+//         if (matchesIncluded(adjustedPath) && !matchesExcluded(adjustedPath)) {
+//           // TODO: Grab helmet head data, next for now
+//           next()
+//         } else {
+//           next()
+//         }
+//       })
+//       return ['get', ['/*', handler]]
+//     }
+//     return undefined
+//   }
+// }
 
 /**
  * Middleware for augmenting HTML metadata for Foreventory shares
@@ -160,4 +161,5 @@ const foreventorySharePageHandler = (opts: ApplicationMiddlewareOptions): MountP
 const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
 
 export const foreventoryHandlers = (opts: ApplicationMiddlewareOptions) =>
-  [foreventorySharePageHandler(opts), foreventoryImageHandler(), getXyConfigHandler(opts)].filter(exists)
+  // [foreventorySharePageHandler(opts), foreventoryImageHandler(), liveShareHandler(opts)].filter(exists)
+  [foreventorySharePageHandler(opts), foreventoryImageHandler()].filter(exists)

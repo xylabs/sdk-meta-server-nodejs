@@ -6,6 +6,7 @@ import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { extname, join } from 'path'
+import { pathToRegexp } from 'path-to-regexp'
 
 import { getAdjustedPath, getUriBehindProxy, preCacheFacebookShare } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
@@ -34,6 +35,22 @@ const imageGenerationCompletionPollingInterval = 100
 const maxImageGenerationWait = 8000
 
 const imageCache = getImageCache()
+
+/**
+ * Function which checks if a route matches any of the included glob patterns
+ */
+type RouteMatcher = (route: string) => boolean
+
+/**
+ * Higher order function which creates precompiled RegEx matchers
+ * from a list of Glob Patterns
+ * @param patterns Glob patterns for route paths to match against
+ * @returns
+ */
+const createMatcher = (patterns: string[]): RouteMatcher => {
+  const regexes = patterns.map((pattern) => pathToRegexp(pattern))
+  return (route: string) => regexes.some((regex) => regex.test(route))
+}
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
@@ -107,16 +124,30 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
 })
 
 const getXyConfigHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
-  const filePath = join(opts.baseDir, 'xy.config.json')
+  const { baseDir } = opts
+  const filePath = join(baseDir, 'xy.config.json')
   if (existsSync(filePath)) {
-    // Read file in
-    const xyConfig = readFileSync(filePath, { encoding: 'utf-8' })
+    // Read in config file
+    const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf-8' }))
     // TODO: Validate xyConfig
-    // TODO: Create regex from config
-    // TODO: Write helmet handler
-    return ['get', ['/*', (req, res, next) => next()]]
+    if (xyConfig.liveShare) {
+      const { include, exclude } = xyConfig.liveShare
+      const matchesIncluded: RouteMatcher = include ? createMatcher(include) : () => true
+      const matchesExcluded: RouteMatcher = exclude ? createMatcher(exclude) : () => false
+
+      const handler: RequestHandler = asyncHandler(async (req, res, next) => {
+        const adjustedPath = getAdjustedPath(req)
+        await Promise.resolve()
+        if (matchesIncluded(adjustedPath) && !matchesExcluded(adjustedPath)) {
+          // TODO: Grab helmet head data
+        } else {
+          next()
+        }
+      })
+      return ['get', ['/*', handler]]
+    }
+    return undefined
   }
-  return undefined
 }
 
 /**

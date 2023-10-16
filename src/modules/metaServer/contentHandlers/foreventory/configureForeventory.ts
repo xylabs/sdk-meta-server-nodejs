@@ -142,9 +142,12 @@ const liveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndM
       const matchesExcluded: RouteMatcher = exclude ? createMatcher(exclude) : () => false
 
       const handler: RequestHandler = asyncHandler(async (req, res, next) => {
-        const adjustedPath = getAdjustedPath(req)
+        // Exclude query string from glob via req.path
+        const uri = req.path
+        // // NOTE: Uncomment if we want to also include query string
+        // const uri = req.originalUrl
         await Promise.resolve()
-        if (matchesIncluded(adjustedPath) && !matchesExcluded(adjustedPath)) {
+        if (matchesIncluded(uri) && !matchesExcluded(uri)) {
           // TODO: Grab helmet head data, next for now
           next()
         } else {

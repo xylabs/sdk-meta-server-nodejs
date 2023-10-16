@@ -9,8 +9,12 @@
       "request": "launch",
       "name": "Debug",
       "program": "${workspaceFolder}/src/bin/start-meta.ts",
+      "args": [
+        "ts-node-script",
+        "${workspaceFolder}/src/bin/start-meta.ts"
+      ],
       "outFiles": [
-        "${workspaceFolder}/dist/**/*.js"
+        "${workspaceFolder}/dist/**/*.*",
       ],
       "env": {
         "NODE_OPTIONS": "-r ts-node/register --loader ts-node/esm --max-old-space-size=8192"

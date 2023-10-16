@@ -129,7 +129,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   next()
 })
 
-const liveShareHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
+const liveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
   const filePath = join(baseDir, 'xy.config.json')
   if (existsSync(filePath)) {
@@ -160,11 +160,11 @@ const liveShareHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddl
 /**
  * Middleware for augmenting HTML metadata for Foreventory shares
  */
-const foreventorySharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => [
+const netflixInsightsSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => [
   'get',
   ['/netflix/insights/:hash', getPageHandler(opts.baseDir)],
 ]
-const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
+const netflixInsightsImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
 
 export const foreventoryHandlers = (opts: ApplicationMiddlewareOptions) =>
-  [foreventorySharePageHandler(opts), foreventoryImageHandler(), liveShareHandler(opts)].filter(exists)
+  [netflixInsightsSharePageHandler(opts), netflixInsightsImageHandler(), liveSharePageHandler(opts)].filter(exists)

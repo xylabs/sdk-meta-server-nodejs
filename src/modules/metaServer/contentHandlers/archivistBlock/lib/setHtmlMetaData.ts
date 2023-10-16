@@ -1,7 +1,7 @@
+import { cloneDeep } from '@xylabs/lodash'
 import { BoundWitnessSchema } from '@xyo-network/boundwitness-model'
 import { PayloadWrapper } from '@xyo-network/payload-wrapper'
 import { Meta, metaBuilder } from '@xyo-network/sdk-meta'
-import cloneDeep from 'lodash/cloneDeep'
 
 import { getArchivistForDomain } from '../../../lib'
 import { PayloadInfo } from '../../../types'

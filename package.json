@@ -60,11 +60,11 @@
     "@xylabs/eslint-config": "^3.1.9",
     "@xylabs/eslint-config-react": "^3.1.9",
     "@xylabs/jest-helpers": "^2.12.24",
-    "@xylabs/ts-scripts-yarn3": "^3.1.9",
-    "@xylabs/tsconfig": "^3.1.9",
-    "@xylabs/tsconfig-dom": "^3.1.9",
-    "@xylabs/tsconfig-dom-jest": "^3.1.9",
-    "@xylabs/tsconfig-jest": "^3.1.9",
+    "@xylabs/ts-scripts-yarn3": "^3.1.12",
+    "@xylabs/tsconfig": "^3.1.12",
+    "@xylabs/tsconfig-dom": "^3.1.12",
+    "@xylabs/tsconfig-dom-jest": "^3.1.12",
+    "@xylabs/tsconfig-jest": "^3.1.12",
     "axios": "^1.5.1",
     "eslint": "^8.51.0",
     "jest": "^29.7.0",
@@ -84,7 +84,7 @@
       "node": {
         "require": {
           "types": "./dist/node/index.d.cts",
-          "default": "./dist/node/index.cjs"
+          "default": "./dist/node/index.js"
         },
         "import": {
           "types": "./dist/node/index.d.mts",
@@ -97,8 +97,8 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/node/index.cjs",
-  "module": "dist/node/index.js",
+  "main": "dist/node/index.js",
+  "module": "dist/node/index.mjs",
   "homepage": "https://xylabs.com",
   "keywords": [
     "xylabs",
@@ -141,6 +141,5 @@
     "node": "18.17.1",
     "yarn": "1.22.19"
   },
-  "packageManager": "yarn@3.6.1",
-  "type": "module"
+  "packageManager": "yarn@3.6.1"
 }

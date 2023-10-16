@@ -19,6 +19,7 @@ words:
   - pako
   - printenv
   - proxied
+  - regexes
   - repost
   - sandboxing
   - snyk

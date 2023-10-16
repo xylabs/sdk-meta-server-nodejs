@@ -38,6 +38,7 @@
     "lodash": "^4.17.21",
     "lru-cache": "^10.0.1",
     "mime": "^3.0.0",
+    "minimatch": "^9.0.3",
     "node-cache": "^5.1.2",
     "path-to-regexp": "^6.2.1",
     "puppeteer": "^21.3.8",

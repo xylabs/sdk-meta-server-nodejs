@@ -5,8 +5,8 @@ import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { makeRe, MMRegExp } from 'minimatch'
 import { extname, join } from 'path'
-import { pathToRegexp } from 'path-to-regexp'
 
 import { getAdjustedPath, getUriBehindProxy, preCacheFacebookShare } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
@@ -48,7 +48,8 @@ type RouteMatcher = (route: string) => boolean
  * @returns
  */
 const createMatcher = (patterns: string[]): RouteMatcher => {
-  const regexes = patterns.map((pattern) => pathToRegexp(pattern))
+  const regexesOrFalse = patterns.map((pattern) => makeRe(pattern))
+  const regexes = regexesOrFalse.filter((regex): regex is MMRegExp => regex !== false)
   return (route: string) => regexes.some((regex) => regex.test(route))
 }
 
@@ -123,33 +124,33 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   next()
 })
 
-// const liveShareHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
-//   const { baseDir } = opts
-//   const filePath = join(baseDir, 'xy.config.json')
-//   if (existsSync(filePath)) {
-//     // Read in config file
-//     const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf-8' }))
-//     // TODO: Validate xyConfig
-//     if (xyConfig.liveShare) {
-//       const { include, exclude } = xyConfig.liveShare
-//       const matchesIncluded: RouteMatcher = include ? createMatcher(include) : () => true
-//       const matchesExcluded: RouteMatcher = exclude ? createMatcher(exclude) : () => false
+const liveShareHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
+  const { baseDir } = opts
+  const filePath = join(baseDir, 'xy.config.json')
+  if (existsSync(filePath)) {
+    // Read in config file
+    const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf-8' }))
+    // TODO: Validate xyConfig
+    if (xyConfig.liveShare) {
+      const { include, exclude } = xyConfig.liveShare
+      const matchesIncluded: RouteMatcher = include ? createMatcher(include) : () => true
+      const matchesExcluded: RouteMatcher = exclude ? createMatcher(exclude) : () => false
 
-//       const handler: RequestHandler = asyncHandler(async (req, res, next) => {
-//         const adjustedPath = getAdjustedPath(req)
-//         await Promise.resolve()
-//         if (matchesIncluded(adjustedPath) && !matchesExcluded(adjustedPath)) {
-//           // TODO: Grab helmet head data, next for now
-//           next()
-//         } else {
-//           next()
-//         }
-//       })
-//       return ['get', ['/*', handler]]
-//     }
-//     return undefined
-//   }
-// }
+      const handler: RequestHandler = asyncHandler(async (req, res, next) => {
+        const adjustedPath = getAdjustedPath(req)
+        await Promise.resolve()
+        if (matchesIncluded(adjustedPath) && !matchesExcluded(adjustedPath)) {
+          // TODO: Grab helmet head data, next for now
+          next()
+        } else {
+          next()
+        }
+      })
+      return ['get', ['/*', handler]]
+    }
+    return undefined
+  }
+}
 
 /**
  * Middleware for augmenting HTML metadata for Foreventory shares
@@ -161,5 +162,4 @@ const foreventorySharePageHandler = (opts: ApplicationMiddlewareOptions): MountP
 const foreventoryImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
 
 export const foreventoryHandlers = (opts: ApplicationMiddlewareOptions) =>
-  // [foreventorySharePageHandler(opts), foreventoryImageHandler(), liveShareHandler(opts)].filter(exists)
-  [foreventorySharePageHandler(opts), foreventoryImageHandler()].filter(exists)
+  [foreventorySharePageHandler(opts), foreventoryImageHandler(), liveShareHandler(opts)].filter(exists)

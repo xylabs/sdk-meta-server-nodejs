@@ -4718,7 +4718,6 @@ __metadata:
     "@types/express": ^4.17.19
     "@types/jest": ^29.5.5
     "@types/jest-image-snapshot": ^6.2.1
-    "@types/lodash": ^4.14.199
     "@types/node": ^20.8.5
     "@types/serve-static": ^1.15.3
     "@types/supertest": ^2.0.14
@@ -4729,6 +4728,7 @@ __metadata:
     "@xylabs/exists": ^2.12.24
     "@xylabs/forget": ^2.12.24
     "@xylabs/jest-helpers": ^2.12.24
+    "@xylabs/lodash": ^2.12.24
     "@xylabs/sdk-api-express-ecs": ^1.4.0
     "@xylabs/ts-scripts-yarn3": ^3.1.12
     "@xylabs/tsconfig": ^3.1.12

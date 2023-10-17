@@ -78,7 +78,7 @@ const getPageHandler = (baseDir: string) => {
           return
         } else {
           console.log(`[liveShare][pageHandler][${uri}]: rendering`)
-          const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageCache, indexHtml)
+          const updatedHtml = await useIndexAndDeferredPreviewImage(uri, imageCache, indexHtml)
           console.log(`[liveShare][pageHandler][${uri}]: caching`)
           pageCache.set(uri, updatedHtml)
           console.log(`[liveShare][pageHandler][${uri}]: pre-caching social media share image`)

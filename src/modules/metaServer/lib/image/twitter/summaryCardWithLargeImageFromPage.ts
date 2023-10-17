@@ -23,7 +23,7 @@ export const summaryCardWithLargeImageViewport: Viewport = {
   deviceScaleFactor: 1,
   height: 900,
   isLandscape: false,
-  isMobile: false,
+  isMobile: true,
   width: 1600,
 }
 

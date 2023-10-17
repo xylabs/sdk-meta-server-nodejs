@@ -26,7 +26,7 @@ export const summaryCardViewport: Viewport = {
   deviceScaleFactor: 1,
   height: dimensions,
   isLandscape: false,
-  isMobile: false,
+  isMobile: true,
   width: dimensions,
 }
 

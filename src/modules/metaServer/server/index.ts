@@ -24,6 +24,6 @@ export const server = (port = 80, baseDir = defaultDirectory) => {
   })
   // This is higher than normal because we rely on CloudFront to timeout
   // before this timeout is ever reached.
-  server.setTimeout(10000)
+  server.setTimeout(20000)
   return server
 }

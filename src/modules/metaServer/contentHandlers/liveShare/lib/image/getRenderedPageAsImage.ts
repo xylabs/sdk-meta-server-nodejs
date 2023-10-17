@@ -2,6 +2,7 @@ import { forget } from '@xylabs/forget'
 import { Meta, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 
 import {
+  join,
   summaryCardImageFromPage,
   summaryCardViewport,
   summaryCardWithLargeImageFromPage,
@@ -9,6 +10,7 @@ import {
   usePage,
 } from '../../../../lib'
 import { ImageCache } from '../cache'
+import { getImageUrl } from './getImageUrl'
 
 /**
  * If true, use the large, rectangular image card. If false, use the small,
@@ -27,7 +29,9 @@ export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Met
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: beginning`)
         const imageTask = twitterCardGenerator(page)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: caching`)
-        imageCache.set(url, imageTask)
+        const previewUrl = join(url, 'preview')
+        const imageUrl = getImageUrl(previewUrl, width, height)
+        imageCache.set(imageUrl, imageTask)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: awaiting generation`)
         await imageTask
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: complete`)

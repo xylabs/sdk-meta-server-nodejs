@@ -6,13 +6,14 @@
 .gif
 .git
 .github
-.png
 .pnp.*
 .tsconfig*
 .vscode
 .yarn/*
 *.eslintcache
 *.tsbuildinfo
+**/*.html
+**/*.png
 **/*.snap
 **/*.spec.ts
 coverage
@@ -20,6 +21,7 @@ cspell.json
 docs
 jest.config.js
 node_modules
+puppeteer
 rollup.config.ts
 tsconfig*
 yarn.lock

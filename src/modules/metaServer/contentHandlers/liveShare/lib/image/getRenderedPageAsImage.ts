@@ -9,7 +9,6 @@ import {
   usePage,
 } from '../../../../lib'
 import { ImageCache } from '../cache'
-import { getImageUrl } from './getImageUrl'
 
 /**
  * If true, use the large, rectangular image card. If false, use the small,
@@ -21,8 +20,6 @@ const { height, width } = useLargeImage ? summaryCardWithLargeImageViewport : su
 const twitterCardGenerator = useLargeImage ? summaryCardWithLargeImageFromPage : summaryCardImageFromPage
 
 export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Meta | undefined => {
-  console.log(`[liveShare][getRenderedPageAsImage][${url}]: generating image url`)
-  const imageUrl = getImageUrl(url, width, height)
   console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation`)
   forget(
     usePage(url, undefined, async (page) => {
@@ -30,7 +27,7 @@ export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Met
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: beginning`)
         const imageTask = twitterCardGenerator(page)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: caching`)
-        imageCache.set(imageUrl, imageTask)
+        imageCache.set(url, imageTask)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: awaiting generation`)
         await imageTask
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: complete`)
@@ -38,13 +35,13 @@ export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Met
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: error`)
         console.log(error)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: removing cached`)
-        imageCache.delete(imageUrl)
+        imageCache.delete(url)
       }
     }),
   )
   console.log(`[liveShare][getRenderedPageAsImage][${url}]: generating image meta`)
-  const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
-  const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
+  const og: OpenGraphMeta = { image: { '': url, height, secure_url: url, type: 'image/png', url: url, width } }
+  const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': url } }
   const meta: Meta = { og, twitter }
   console.log(`[liveShare][getRenderedPageAsImage][${url}]: returning image meta`)
   return meta

@@ -18,6 +18,8 @@ import { getImageUrl } from './getImageUrl'
  */
 const useLargeImage = true
 
+const selector = '#preview-container'
+
 const { height, width } = useLargeImage ? summaryCardWithLargeImageViewport : summaryCardViewport
 const twitterCardGenerator = useLargeImage ? summaryCardWithLargeImageFromPage : summaryCardImageFromPage
 
@@ -26,7 +28,7 @@ export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Met
   forget(
     usePage(url, undefined, async (page) => {
       try {
-        await page.waitForSelector('#preview-component', { timeout: 30000 })
+        await page.waitForSelector(selector, { timeout: 30000 })
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: beginning`)
         const imageTask = twitterCardGenerator(page)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: caching`)

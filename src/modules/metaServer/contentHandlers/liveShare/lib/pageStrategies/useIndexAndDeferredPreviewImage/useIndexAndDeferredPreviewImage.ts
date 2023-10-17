@@ -2,9 +2,9 @@ import { assertEx } from '@xylabs/assert'
 import { metaBuilder } from '@xyo-network/sdk-meta'
 import { decode } from 'he'
 
+import { usePage } from '../../../../../lib'
 import { ImageCache } from '../../cache'
 import { getPagePreviewImageMeta, getRenderedPageAsImage } from '../../image'
-import { getRenderedPageHtml } from '../getRenderedPageHtml'
 
 /**
  * The property name of the meta element
@@ -19,7 +19,13 @@ export const useIndexAndDeferredPreviewImage = async (url: string, imageCache: I
   try {
     console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: rendering in background`)
     // TODO: Optimize this with something like React SSR
-    const html = assertEx(await getRenderedPageHtml(url), `[liveShare][useIndexAndDeferredPreviewImage][${url}]: error retrieving html`)
+    const content = await usePage(url, undefined, async (page) => {
+      console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: navigated to ${url}`)
+      await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 15000 })
+      console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: found meta property ${xyoOgImageProperty}`)
+      return await page.content()
+    })
+    const html = assertEx(content, `[liveShare][useIndexAndDeferredPreviewImage][${url}]: error retrieving html`)
     // Use the regex to extract the expected meta element
     const match = html.match(xyoOgImageElementRegex)
     // Extract the preview image URL from the meta element & decode it

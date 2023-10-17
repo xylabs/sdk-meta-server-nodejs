@@ -3,8 +3,8 @@ import { ImageCache } from '../../cache'
 import { getRenderedPageAsImage } from '../../image'
 
 export const getPagePreviewImage = (uri: string, imageCache: ImageCache): void => {
-  console.log(`[foreventory][getPagePreviewImage][${uri}]: rendering`)
+  console.log(`[liveShare][getPagePreviewImage][${uri}]: rendering`)
   const previewUrl = join(uri, 'preview')
   getRenderedPageAsImage(previewUrl, imageCache)
-  console.log(`[foreventory][getPagePreviewImage][${uri}]: rendered`)
+  console.log(`[liveShare][getPagePreviewImage][${uri}]: rendered`)
 }

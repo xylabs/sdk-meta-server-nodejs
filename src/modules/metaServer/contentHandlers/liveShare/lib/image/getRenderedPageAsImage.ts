@@ -26,6 +26,7 @@ export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Met
   forget(
     usePage(url, undefined, async (page) => {
       try {
+        await page.waitForSelector('#preview-component', { timeout: 30000 })
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: beginning`)
         const imageTask = twitterCardGenerator(page)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: caching`)

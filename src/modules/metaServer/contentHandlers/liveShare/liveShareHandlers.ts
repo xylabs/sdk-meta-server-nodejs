@@ -70,20 +70,20 @@ const getPageHandler = (baseDir: string) => {
     if (extname(adjustedPath) === '.html') {
       try {
         const uri = getUriBehindProxy(req)
-        console.log(`[foreventory][pageHandler][${uri}]: called`)
+        console.log(`[liveShare][pageHandler][${uri}]: called`)
         const cachedHtml = pageCache.get(uri)
         if (cachedHtml) {
-          console.log(`[foreventory][pageHandler][${uri}]: return cached`)
+          console.log(`[liveShare][pageHandler][${uri}]: return cached`)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(cachedHtml)
           return
         } else {
-          console.log(`[foreventory][pageHandler][${uri}]: rendering`)
+          console.log(`[liveShare][pageHandler][${uri}]: rendering`)
           const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageCache, indexHtml)
-          console.log(`[foreventory][pageHandler][${uri}]: caching`)
+          console.log(`[liveShare][pageHandler][${uri}]: caching`)
           pageCache.set(uri, updatedHtml)
-          console.log(`[foreventory][pageHandler][${uri}]: pre-caching social media share image`)
+          console.log(`[liveShare][pageHandler][${uri}]: pre-caching social media share image`)
           await preCacheFacebookShare(uri)
-          console.log(`[foreventory][pageHandler][${uri}]: return html`)
+          console.log(`[liveShare][pageHandler][${uri}]: return html`)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
           return
         }
@@ -99,10 +99,10 @@ const getPageHandler = (baseDir: string) => {
 const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   try {
     const uri = getUriBehindProxy(req)
-    console.log(`[foreventory][imageHandler][${uri}]: called`)
+    console.log(`[liveShare][imageHandler][${uri}]: called`)
     let imageTask = imageCache.get(uri)
     if (!imageTask) {
-      console.log(`[foreventory][imageHandler][${uri}]: generating image`)
+      console.log(`[liveShare][imageHandler][${uri}]: generating image`)
       // Render the page and generate the image
       const pageUrl = getPageUrlFromImageUrl(uri)
       getPagePreviewImage(pageUrl, imageCache)
@@ -113,13 +113,13 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
         imageTask = imageCache.get(uri)
       } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
     }
-    console.log(`[foreventory][imageHandler][${uri}]: awaiting image generation`)
+    console.log(`[liveShare][imageHandler][${uri}]: awaiting image generation`)
     const image = await imageTask
     if (image) {
-      console.log(`[foreventory][imageHandler][${uri}]: returning image`)
+      console.log(`[liveShare][imageHandler][${uri}]: returning image`)
       res.type('png').set('Cache-Control', imageCacheControlHeader).send(image)
     } else {
-      console.log(`[foreventory][imageHandler][${uri}]: returning ${ReasonPhrases.GATEWAY_TIMEOUT}}`)
+      console.log(`[liveShare][imageHandler][${uri}]: returning ${ReasonPhrases.GATEWAY_TIMEOUT}}`)
       res.sendStatus(StatusCodes.GATEWAY_TIMEOUT)
     }
     return
@@ -129,7 +129,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   next()
 })
 
-const liveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
+const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
   const filePath = join(baseDir, 'xy.config.json')
   if (existsSync(filePath)) {
@@ -140,21 +140,24 @@ const liveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndM
       const { include, exclude } = xyConfig.liveShare
       const matchesIncluded: RouteMatcher = include ? createMatcher(include) : () => true
       const matchesExcluded: RouteMatcher = exclude ? createMatcher(exclude) : () => false
-
-      const handler: RequestHandler = asyncHandler(async (req, res, next) => {
+      const pageHandler = getPageHandler(baseDir)
+      const liveSharePageHandler: RequestHandler = (req, res, next) => {
         // Exclude query string from glob via req.path
         const uri = req.path
         // // NOTE: Uncomment if we want to also include query string
         // const uri = req.originalUrl
-        await Promise.resolve()
         if (matchesIncluded(uri) && !matchesExcluded(uri)) {
-          // TODO: Grab helmet head data, next for now
-          next()
+          // TODO: Better way to determine page vs image handler
+          if (uri.endsWith('img.png')) {
+            imageHandler(req, res, next)
+          } else {
+            pageHandler(req, res, next)
+          }
         } else {
           next()
         }
-      })
-      return ['get', ['/*', handler]]
+      }
+      return ['get', ['/*', liveSharePageHandler]]
     }
     return undefined
   }
@@ -163,4 +166,11 @@ const liveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndM
 /**
  * Middleware for augmenting HTML metadata for Live Shares
  */
-export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [liveSharePageHandler(opts)].filter(exists)
+
+// const liveShareSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => [
+//   'get',
+//   ['/netflix/insights/:hash', getPageHandler(opts.baseDir)],
+// ]
+// const liveShareImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
+
+export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts)].filter(exists)

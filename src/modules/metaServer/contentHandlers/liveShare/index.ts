@@ -1,1 +1,1 @@
-export * from './configureLiveShare'
+export * from './liveShareHandlers'

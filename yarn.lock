@@ -3951,6 +3951,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/he@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@types/he@npm:1.2.1"
+  checksum: 9acb0e115c22507bbff6c9400ee8c66616c5443236bd078fc55befe9fbc23f8abafc4c8fa86f0682791271397135720f83d027bfac99e11cde74ec6941aa8790
+  languageName: node
+  linkType: hard
+
 "@types/http-cache-semantics@npm:^4.0.1":
   version: 4.0.1
   resolution: "@types/http-cache-semantics@npm:4.0.1"
@@ -4716,6 +4723,7 @@ __metadata:
     "@babel/core": ^7.23.2
     "@babel/preset-env": ^7.23.2
     "@types/express": ^4.17.19
+    "@types/he": ^1.2.1
     "@types/jest": ^29.5.5
     "@types/jest-image-snapshot": ^6.2.1
     "@types/node": ^20.8.5
@@ -4750,6 +4758,7 @@ __metadata:
     eslint: ^8.51.0
     express: ^4.18.2
     express-mung: ^0.5.1
+    he: ^1.2.0
     http-status-codes: ^2.3.0
     jest: ^29.7.0
     jest-extended: ^4.0.2
@@ -10259,6 +10268,15 @@ __metadata:
     inherits: ^2.0.3
     minimalistic-assert: ^1.0.1
   checksum: e350096e659c62422b85fa508e4b3669017311aa4c49b74f19f8e1bc7f3a54a584fdfd45326d4964d6011f2b2d882e38bea775a96046f2a61b7779a979629d8f
+  languageName: node
+  linkType: hard
+
+"he@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "he@npm:1.2.0"
+  bin:
+    he: bin/he
+  checksum: 3d4d6babccccd79c5c5a3f929a68af33360d6445587d628087f39a965079d84f18ce9c3d3f917ee1e3978916fc833bb8b29377c3b403f919426f91bc6965e7a7
   languageName: node
   linkType: hard
 

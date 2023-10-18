@@ -133,9 +133,13 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
 const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
   const filePath = join(baseDir, 'xy.config.json')
+  console.log(`[liveShare][init][locating xy.config.json at ${filePath}]`)
   if (existsSync(filePath)) {
+    console.log('[liveShare][init][located xy.config.json]')
     // Read in config file
+    console.log('[liveShare][init][parsing xy.config.json]')
     const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf-8' }))
+    console.log('[liveShare][init][parsed xy.config.json]')
     // TODO: Validate xyConfig
     if (xyConfig.liveShare) {
       const { include, exclude } = xyConfig.liveShare

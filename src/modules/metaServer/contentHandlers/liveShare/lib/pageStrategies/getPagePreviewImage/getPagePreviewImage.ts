@@ -1,9 +1,11 @@
-import { ImageCache, join } from '../../../../../lib'
-import { getRenderedPageAsImage } from '../../image'
+import { ImageCache } from '../../../../../lib'
+import { getLiveSharePreviewUrlFromHtmlMeta, getRenderedPageAsImage } from '../../image'
 
-export const getPagePreviewImage = (uri: string, imageCache: ImageCache): void => {
-  console.log(`[liveShare][getPagePreviewImage][${uri}]: rendering`)
-  const previewUrl = join(uri, 'preview')
+export const getPagePreviewImage = async (url: string, imageCache: ImageCache): Promise<void> => {
+  console.log(`[liveShare][getPagePreviewImage][${url}]: getting preview URL from page`)
+  // Extract the preview image URL from the meta element & decode it
+  const previewUrl = await getLiveSharePreviewUrlFromHtmlMeta(url)
+  console.log(`[liveShare][getPagePreviewImage][${url}]: rendering in background`)
+  // Initiate the image generation but don't await it
   getRenderedPageAsImage(previewUrl, imageCache)
-  console.log(`[liveShare][getPagePreviewImage][${uri}]: rendered`)
 }

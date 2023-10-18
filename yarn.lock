@@ -3881,15 +3881,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^4.17.19":
-  version: 4.17.19
-  resolution: "@types/express@npm:4.17.19"
+"@types/express@npm:^4.17.20":
+  version: 4.17.20
+  resolution: "@types/express@npm:4.17.20"
   dependencies:
     "@types/body-parser": "*"
     "@types/express-serve-static-core": ^4.17.33
     "@types/qs": "*"
     "@types/serve-static": "*"
-  checksum: 3d39d0655eb0825d96fec100985a38737767ddd6da2dbda1e330a3adf36c98a9b7cd8d9539db32876d1fbb47a09343cad7b38c30c8dd7c291271fcb9b85cb21b
+  checksum: bf8a97d283128e5129f9ccabbeef728ff3f0484465e0ae74a304bd0588fa6cb715ae68845650caba9a641944b7791ba125d02ddbd47a7e62aaefdd036570c6c5
   languageName: node
   linkType: hard
 
@@ -3921,10 +3921,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/he@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@types/he@npm:1.2.1"
-  checksum: 9acb0e115c22507bbff6c9400ee8c66616c5443236bd078fc55befe9fbc23f8abafc4c8fa86f0682791271397135720f83d027bfac99e11cde74ec6941aa8790
+"@types/he@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@types/he@npm:1.2.2"
+  checksum: dd00311004007d9224f94ee4e7cdc9c2efd53b69d005d7fdb4397c320071058e07f00633ba5ad43555e5d5e690ff804b0aecdea022daee3b70c37aa84b293791
   languageName: node
   linkType: hard
 
@@ -3967,24 +3967,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest-image-snapshot@npm:^6.2.1":
-  version: 6.2.1
-  resolution: "@types/jest-image-snapshot@npm:6.2.1"
+"@types/jest-image-snapshot@npm:^6.2.2":
+  version: 6.2.2
+  resolution: "@types/jest-image-snapshot@npm:6.2.2"
   dependencies:
     "@types/jest": "*"
     "@types/pixelmatch": "*"
     ssim.js: ^3.1.1
-  checksum: 6e736bf7f75751420964be11af8b03666ee5f135442051b5f023f350aca5ab5727e5723cc1ec8481e29e29422fc1ae61c4dd73615a18989a666bf5cb27206578
+  checksum: 165842f61db774edfddc0f4ad3a1dd5710a2bae732893c02523ce72b5563c2961dd79264f8471f846fffe7a5cf7dc0b45afe8e63d2c7e21ed19d2be425b7d320
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:^29.5.5":
-  version: 29.5.5
-  resolution: "@types/jest@npm:29.5.5"
+"@types/jest@npm:*, @types/jest@npm:^29.5.5, @types/jest@npm:^29.5.6":
+  version: 29.5.6
+  resolution: "@types/jest@npm:29.5.6"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: 56e55cde9949bcc0ee2fa34ce5b7c32c2bfb20e53424aa4ff3a210859eeaaa3fdf6f42f81a3f655238039cdaaaf108b054b7a8602f394e6c52b903659338d8c6
+  checksum: fa13a27bd1c8efd0381a419478769d0d6d3a8e93e1952d7ac3a16274e8440af6f73ed6f96ac1ff00761198badf2ee226b5ab5583a5d87a78d609ea78da5c5a24
   languageName: node
   linkType: hard
 
@@ -4069,12 +4069,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.8.6":
-  version: 20.8.6
-  resolution: "@types/node@npm:20.8.6"
+"@types/node@npm:*, @types/node@npm:^20.8.6, @types/node@npm:^20.8.7":
+  version: 20.8.7
+  resolution: "@types/node@npm:20.8.7"
   dependencies:
     undici-types: ~5.25.1
-  checksum: ccfb7ac482c5a96edeb239893c5c099f5257fcc2ed9ae62fefdfbc782b79e16dbc2af9a85b379665237bf759904b44ca2be68e75d239e0297882aad42f61905c
+  checksum: 2173c0c03daefcb60c03a61b1371b28c8fe412e7a40dc6646458b809d14a85fbc7aeb369d957d57f0aaaafd99964e77436f29b3b579232d8f2b20c58abbd1d25
   languageName: node
   linkType: hard
 
@@ -4693,11 +4693,11 @@ __metadata:
     "@aws-sdk/client-secrets-manager": ^3.430.0
     "@babel/core": ^7.23.2
     "@babel/preset-env": ^7.23.2
-    "@types/express": ^4.17.19
-    "@types/he": ^1.2.1
-    "@types/jest": ^29.5.5
-    "@types/jest-image-snapshot": ^6.2.1
-    "@types/node": ^20.8.6
+    "@types/express": ^4.17.20
+    "@types/he": ^1.2.2
+    "@types/jest": ^29.5.6
+    "@types/jest-image-snapshot": ^6.2.2
+    "@types/node": ^20.8.7
     "@types/serve-static": ^1.15.3
     "@types/supertest": ^2.0.14
     "@xylabs/assert": ^2.12.31

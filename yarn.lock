@@ -4550,10 +4550,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/assert@npm:^2.12.29, @xylabs/assert@npm:^2.12.31":
-  version: 2.12.31
-  resolution: "@xylabs/assert@npm:2.12.31"
-  checksum: f285760574c2ba474aa6e534a8dd88fb76cf51278592409ab18f520aa549771b01099db7b9d5e6541d66c60af64c057ad1a2ace0224f89e2571bd97bf151c83a
+"@xylabs/assert@npm:^2.12.29, @xylabs/assert@npm:^2.13.0":
+  version: 2.13.0
+  resolution: "@xylabs/assert@npm:2.13.0"
+  checksum: 2015e9d96ab0ea0655a3315322f462986a1859e6babb4533cf00baff7e0e6dd245462b2d571968fd2cb8a8b4090e764032daf3b82d6e3b1188044abb276dad48
   languageName: node
   linkType: hard
 
@@ -4576,10 +4576,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/delay@npm:^2.12.31, @xylabs/delay@npm:~2.12.31":
-  version: 2.12.31
-  resolution: "@xylabs/delay@npm:2.12.31"
-  checksum: 9b0fc11f65f1b03b6943c48d8a6ee302ec1b4b0af769a83a662b61b6e5e58a260bb8fbd8cd7b938ffdcc2bf63290349a653f85b5f2c1ec86b2c9a1a03b16e33f
+"@xylabs/delay@npm:^2.13.0, @xylabs/delay@npm:~2.13.0":
+  version: 2.13.0
+  resolution: "@xylabs/delay@npm:2.13.0"
+  checksum: 0fe96b58111f02b811b82762b3fdea57ec6480cbb8ac2e2c27056d3702f7a84579baa2e63a501bb8035496aaddd48e05d992d2c60ab352b0167aee6d0a8213ed
   languageName: node
   linkType: hard
 
@@ -4644,34 +4644,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/exists@npm:^2.12.29, @xylabs/exists@npm:^2.12.31, @xylabs/exists@npm:~2.12.31":
+"@xylabs/exists@npm:^2.12.29, @xylabs/exists@npm:^2.13.0":
+  version: 2.13.0
+  resolution: "@xylabs/exists@npm:2.13.0"
+  checksum: 7fbc0563302f00b98f0a2d925b35b98e284f03c827fa855c494c785b6b99761f0c2ccdcce0db38c01e710ae430ed8e088bbfedf205a71710e74094f83ea68e51
+  languageName: node
+  linkType: hard
+
+"@xylabs/exists@npm:~2.12.31":
   version: 2.12.31
   resolution: "@xylabs/exists@npm:2.12.31"
   checksum: 9d0c65258a1301c3824ce0662bcfe4a284e951e51a148aba0a96855a524e1f1a59335da99b175a6f00e84cab320d13ed736553ab90125e09bcca54fc4254517d
   languageName: node
   linkType: hard
 
-"@xylabs/forget@npm:^2.12.29, @xylabs/forget@npm:^2.12.31":
-  version: 2.12.31
-  resolution: "@xylabs/forget@npm:2.12.31"
+"@xylabs/forget@npm:^2.12.29, @xylabs/forget@npm:^2.13.0":
+  version: 2.13.0
+  resolution: "@xylabs/forget@npm:2.13.0"
   dependencies:
-    "@xylabs/delay": ~2.12.31
-  checksum: e568c4c237271ea4fdeac010eb543c31de82558448af8b8cab8a1ea5082e2adc3416c6b5a6c606b4bd3f23f7d750535ef13fa3b1628e19bfd58dbb6a8eea999a
+    "@xylabs/delay": ~2.13.0
+  checksum: 6545994beaa7942fa96a932ef7f85c603408324df647994711e943b68f453e2cc5293399834a46951bc5fa4e4eb0c9f31f1a5a012268ff33a722ff788dbbc66c
   languageName: node
   linkType: hard
 
-"@xylabs/jest-helpers@npm:^2.12.31":
-  version: 2.12.31
-  resolution: "@xylabs/jest-helpers@npm:2.12.31"
+"@xylabs/jest-helpers@npm:^2.13.0":
+  version: 2.13.0
+  resolution: "@xylabs/jest-helpers@npm:2.13.0"
   peerDependencies:
     jest: "*"
-  checksum: 25e52ac5c2fe21838435110ddd4d879795ebe3cc33ae5e003a827601f128bd0f00d86df4726202f95542c2c885a9b43267dd6de6b796e3f1754e6db3e4ccb571
+  checksum: d19017ea3d3e833be8152e733b404ccffd46fc38c84f862e5cdf2cc4d5dcecef4bf6f7f335813e6ec3ae7b9dc6d1b1d230e8d006f9b87f0d3dfd0131e32d64d2
   languageName: node
   linkType: hard
 
-"@xylabs/lodash@npm:^2.12.29, @xylabs/lodash@npm:^2.12.31":
-  version: 2.12.31
-  resolution: "@xylabs/lodash@npm:2.12.31"
+"@xylabs/lodash@npm:^2.12.29, @xylabs/lodash@npm:^2.13.0":
+  version: 2.13.0
+  resolution: "@xylabs/lodash@npm:2.13.0"
   dependencies:
     "@types/lodash": ^4.14.199
     "@types/lodash-es": ^4.17.9
@@ -4682,7 +4689,7 @@ __metadata:
       optional: true
     lodash-es:
       optional: true
-  checksum: a943a384eabae1e63c37f86484ee9bb8ea8a9d878e6961e8f4c17944da5b94e72fdce5eb7a0166fc3f2d08ad481e67970b2b41f7f2496109b086f90e3e042a1c
+  checksum: 5db42df3a5b7d4b85257575157e92474c8ef315f3c6687f85b4032b36f4fdfc0dd9175e2cb8fe8ef4239e06648a7115e48a959fc50f483c7d65182285c5ea8bb
   languageName: node
   linkType: hard
 
@@ -4700,14 +4707,14 @@ __metadata:
     "@types/node": ^20.8.7
     "@types/serve-static": ^1.15.3
     "@types/supertest": ^2.0.14
-    "@xylabs/assert": ^2.12.31
-    "@xylabs/delay": ^2.12.31
+    "@xylabs/assert": ^2.13.0
+    "@xylabs/delay": ^2.13.0
     "@xylabs/eslint-config": ^3.1.12
     "@xylabs/eslint-config-react": ^3.1.12
-    "@xylabs/exists": ^2.12.31
-    "@xylabs/forget": ^2.12.31
-    "@xylabs/jest-helpers": ^2.12.31
-    "@xylabs/lodash": ^2.12.31
+    "@xylabs/exists": ^2.13.0
+    "@xylabs/forget": ^2.13.0
+    "@xylabs/jest-helpers": ^2.13.0
+    "@xylabs/lodash": ^2.13.0
     "@xylabs/sdk-api-express-ecs": ^1.4.0
     "@xylabs/ts-scripts-yarn3": ^3.1.12
     "@xylabs/tsconfig": ^3.1.12

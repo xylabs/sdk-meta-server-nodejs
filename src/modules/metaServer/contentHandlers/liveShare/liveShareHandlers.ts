@@ -1,6 +1,7 @@
 import { assertEx } from '@xylabs/assert'
 import { delay } from '@xylabs/delay'
 import { exists } from '@xylabs/exists'
+import { forget } from '@xylabs/forget'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
@@ -105,7 +106,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
       console.log(`[liveShare][imageHandler][${uri}]: generating image`)
       // Render the page and generate the image
       const pageUrl = getPageUrlFromImageUrl(uri)
-      getPagePreviewImage(pageUrl, imageCache)
+      forget(getPagePreviewImage(pageUrl, imageCache))
       let imageGenerationWait = 0
       do {
         await delay(imageGenerationCompletionPollingInterval)

@@ -40,7 +40,7 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 COPY --from=dependencies /app/node_modules ./node_modules
 
 # Use Node to read in the package.json and determine the Node output dist dir
-RUN SDK_META_SERVER_DIST_DIR_RELATIVE=$(node -p "path.dirname(require('${SDK_META_SERVER_DIR}/package').exports['.'].node.require)") \
+RUN SDK_META_SERVER_DIST_DIR_RELATIVE=$(node -p "path.dirname(require('${SDK_META_SERVER_DIR}/package').exports['.'].node.require.default)") \
   && SDK_META_SERVER_DIST_DIR=$(node -p "path.join('${SDK_META_SERVER_DIR}', '${SDK_META_SERVER_DIST_DIR_RELATIVE}')") \
   # create the expected destination directory
   && mkdir -p ${SDK_META_SERVER_DIST_DIR_RELATIVE} \

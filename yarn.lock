@@ -4700,6 +4700,7 @@ __metadata:
     "@aws-sdk/client-secrets-manager": ^3.430.0
     "@babel/core": ^7.23.2
     "@babel/preset-env": ^7.23.2
+    "@bitauth/libauth": ^1.19.1
     "@types/express": ^4.17.20
     "@types/he": ^1.2.2
     "@types/jest": ^29.5.6

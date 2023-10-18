@@ -23,8 +23,8 @@ export const useSpaPageRenderingOptions: PageRenderingOptions = {
  * https://cloudlayer.io/blog/puppeteer-waituntil-options/
  */
 export const useSpaPageWaitForOptions: WaitForOptions = {
-  // waitUntil: 'domcontentloaded',
-  waitUntil: 'networkidle0',
+  waitUntil: 'domcontentloaded',
+  // waitUntil: 'networkidle0',
 }
 
 /**
@@ -56,9 +56,21 @@ export const useSpaPage = async <T>(
   try {
     browser = await useBrowser(browserOptions)
     page = await getBrowserPage(browser)
-    await page.goto(origin)
-    await page.evaluate((pathname) => window.history.pushState(null, '', pathname), pathname)
-    await page.waitForNavigation(waitForOptions)
+    // First navigate to the root
+    await page.goto(origin, { waitUntil: 'domcontentloaded' })
+
+    // Wait for the div with id "root" to have at least one child.
+    // This assumes the child is a direct descendant (using '>').
+    // This assumes React will mount in a div with id="root" .
+    await page.waitForSelector('#root > *', { timeout: 10000 })
+
+    // Then use the browser history to navigate to the relative path
+    await Promise.all([
+      // Wait for the navigation to complete
+      page.waitForNavigation({ ...waitForOptions, timeout: 10000, waitUntil: 'networkidle0' }),
+      // Cause the navigation via push state
+      page.evaluate((pathname) => window.history.pushState(null, '', pathname), pathname),
+    ])
     return await pageCallback(page)
   } catch (err) {
     console.log(err)

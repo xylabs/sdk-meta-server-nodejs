@@ -54,4 +54,4 @@ COPY --from=builder /app/${BUILD_OUTPUT_DIR} ./bin/build
 WORKDIR /app/bin
 
 # Start the meta-server pointed to the static app
-CMD ["node", "/app/node_modules/@xylabs/meta-server/dist/cjs/bin/start-meta.js"]
+CMD ["node", "/app/node_modules/@xylabs/meta-server/dist/node/bin/start-meta.js"]

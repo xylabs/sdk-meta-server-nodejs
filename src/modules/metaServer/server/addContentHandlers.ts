@@ -1,6 +1,6 @@
 import { Express } from 'express'
 
-import { configureArchivistBlock, configureProxyOriginal, debugRoutes, foreventoryHandlers, liveShareHandlers } from '../contentHandlers'
+import { configureProxyOriginal, debugRoutes, foreventoryHandlers, liveShareHandlers } from '../contentHandlers'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../types'
 
 const debugHandlers = process.env.NODE_ENV === 'development' ? debugRoutes : []
@@ -14,7 +14,7 @@ export const addContentHandlers = (app: Express, opts: ApplicationMiddlewareOpti
     // Live Share handlers
     ...liveShareHandlers(opts),
     // Explore/Node handlers
-    configureArchivistBlock(opts),
+    // configureArchivistBlock(opts),
   ]
   // Add catch-all pass-through handler last to ensure
   // all unknown/unsupported requests are simply proxied

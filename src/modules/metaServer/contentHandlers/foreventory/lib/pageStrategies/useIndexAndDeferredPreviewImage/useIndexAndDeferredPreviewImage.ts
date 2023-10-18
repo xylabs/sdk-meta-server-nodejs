@@ -1,6 +1,6 @@
 import { metaBuilder } from '@xyo-network/sdk-meta'
 
-import { ImageCache } from '../../cache'
+import { ImageCache } from '../../../../../lib'
 import { getPagePreviewImageMeta, getRenderedPageAsImage } from '../../image'
 import { getPreviewUrl } from '../../url'
 

@@ -1,5 +1,4 @@
-import { join } from '../../../../../lib'
-import { ImageCache } from '../../cache'
+import { ImageCache, join } from '../../../../../lib'
 import { getRenderedPageAsImage } from '../../image'
 
 export const getPagePreviewImage = (uri: string, imageCache: ImageCache): void => {

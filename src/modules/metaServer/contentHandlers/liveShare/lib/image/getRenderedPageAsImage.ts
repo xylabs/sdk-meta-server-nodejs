@@ -2,6 +2,7 @@ import { forget } from '@xylabs/forget'
 import { Meta, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 
 import {
+  ImageCache,
   join,
   summaryCardImageFromPage,
   summaryCardViewport,
@@ -9,7 +10,6 @@ import {
   summaryCardWithLargeImageViewport,
   usePage,
 } from '../../../../lib'
-import { ImageCache } from '../cache'
 import { getImageUrl } from './getImageUrl'
 
 /**

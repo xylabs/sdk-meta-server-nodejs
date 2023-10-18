@@ -1,7 +1,7 @@
 import { ForgetPromise } from '@xylabs/forget'
 import { mock } from 'jest-mock-extended'
 
-import { ImageCache } from '../../../cache'
+import { ImageCache } from '../../../../../../lib'
 import { getImageUrl } from '../../../image'
 import { getRenderedPageHtmlAndPreviewImage } from '../getRenderedPageHtmlAndPreviewImage'
 

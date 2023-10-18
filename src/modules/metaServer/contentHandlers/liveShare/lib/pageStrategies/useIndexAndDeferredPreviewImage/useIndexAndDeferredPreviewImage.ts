@@ -2,8 +2,7 @@ import { assertEx } from '@xylabs/assert'
 import { metaBuilder } from '@xyo-network/sdk-meta'
 import { decode } from 'he'
 
-import { usePage } from '../../../../../lib'
-import { ImageCache } from '../../cache'
+import { ImageCache, usePage } from '../../../../../lib'
 import { getPagePreviewImageMeta, getRenderedPageAsImage } from '../../image'
 
 /**

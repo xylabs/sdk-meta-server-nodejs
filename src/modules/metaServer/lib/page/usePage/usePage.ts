@@ -3,7 +3,7 @@ import { Browser, Page, Viewport, WaitForOptions } from 'puppeteer'
 
 import { defaultViewportSize, useBrowser } from '../../browser'
 import { PageRenderingOptions } from '../PageRenderingOptions'
-import { timeout, waitUntil } from './defaults'
+import { waitUntil } from './defaults'
 import { getBrowserPage } from './getBrowserPage'
 
 export const viewPortDefaults: Viewport = {
@@ -20,7 +20,6 @@ export const defaultPageRenderingOptions: PageRenderingOptions = {
 
 const waitForInitialPage = false
 const waitForOptions: WaitForOptions = {
-  timeout,
   waitUntil,
   // waitUntil: 'domcontentloaded',
   // waitUntil: 'networkidle0',

@@ -1,36 +1,14 @@
-import { assertEx } from '@xylabs/assert'
 import { metaBuilder } from '@xyo-network/sdk-meta'
-import { decode } from 'he'
 
-import { ImageCache, usePage } from '../../../../../lib'
-import { getPagePreviewImageMeta, getRenderedPageAsImage } from '../../image'
-
-/**
- * The property name of the meta element
- * which contains the preview image URL
- */
-const xyoOgImageProperty = 'xyo:og:image'
-
-// Define the regex pattern to match the meta element
-const xyoOgImageElementRegex = /<meta[^>]*property="xyo:og:image"[^>]*content="([^"]*)"[^>]*>/
+import { ImageCache } from '../../../../../lib'
+import { getLiveSharePreviewUrlFromHtmlMeta, getPagePreviewImageMeta, getRenderedPageAsImage } from '../../image'
 
 export const useIndexAndDeferredPreviewImage = async (url: string, imageCache: ImageCache, indexHtml: string): Promise<string> => {
   try {
     console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: rendering in background`)
-    // TODO: Optimize this with something like React SSR
-    const content = await usePage(url, undefined, async (page) => {
-      console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: navigated to ${url}`)
-      await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 15000 })
-      console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: found meta property ${xyoOgImageProperty}`)
-      return await page.content()
-    })
-    const html = assertEx(content, `[liveShare][useIndexAndDeferredPreviewImage][${url}]: error retrieving html`)
-    // Use the regex to extract the expected meta element
-    const match = html.match(xyoOgImageElementRegex)
     // Extract the preview image URL from the meta element & decode it
-    const previewUrl = decode(
-      assertEx(match?.[1], `[liveShare][useIndexAndDeferredPreviewImage][${url}]: error, missing meta element with ${xyoOgImageProperty} property`),
-    )
+    const previewUrl = await getLiveSharePreviewUrlFromHtmlMeta(url)
+    // Initiate the image generation but don't await it
     getRenderedPageAsImage(previewUrl, imageCache)
     const meta = getPagePreviewImageMeta(url)
     // TODO: Use page meta since we already took the hit to render

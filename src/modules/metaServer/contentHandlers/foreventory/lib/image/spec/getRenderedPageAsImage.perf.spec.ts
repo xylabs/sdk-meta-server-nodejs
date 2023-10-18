@@ -1,6 +1,6 @@
 import { mock } from 'jest-mock-extended'
 
-import { ImageCache } from '../../cache'
+import { ImageCache } from '../../../../../lib'
 import { getRenderedPageAsImage } from '../getRenderedPageAsImage'
 
 describe.skip('getRenderedPageAsImage', () => {

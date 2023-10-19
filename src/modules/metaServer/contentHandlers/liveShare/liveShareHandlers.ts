@@ -149,9 +149,10 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
       const liveSharePageHandler: RequestHandler = (req, res, next) => {
         // Exclude query string from glob via req.path
         const uri = req.path
+        const render = req.params.render
         // // NOTE: Uncomment if we want to also include query string
         // const uri = req.originalUrl
-        if (matchesIncluded(uri) && !matchesExcluded(uri)) {
+        if (render !== 'preview' && matchesIncluded(uri) && !matchesExcluded(uri)) {
           // TODO: Better way to determine page vs image handler
           if (uri.endsWith('img.png')) {
             imageHandler(req, res, next)

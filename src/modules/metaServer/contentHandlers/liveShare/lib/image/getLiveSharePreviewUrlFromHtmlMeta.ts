@@ -1,7 +1,7 @@
 import { assertEx } from '@xylabs/assert'
 import { decode } from 'he'
 
-import { usePage } from '../../../../lib'
+import { useSpaPage } from '../../../../lib'
 
 /**
  * The property name of the meta element
@@ -19,7 +19,7 @@ const xyoOgImageElementRegex = /<meta[^>]*property="xyo:og:image"[^>]*content="(
  */
 export const getLiveSharePreviewUrlFromHtmlMeta = async (url: string): Promise<string> => {
   // TODO: Optimize this with something like React SSR
-  const content = await usePage(url, undefined, async (page) => {
+  const content = await useSpaPage(url, async (page) => {
     console.log(`[liveShare][getLiveSharePreviewUrlFromHtmlMeta][${url}]: navigated to ${url}`)
     await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 15000 })
     console.log(`[liveShare][getLiveSharePreviewUrlFromHtmlMeta][${url}]: found meta property ${xyoOgImageProperty}`)

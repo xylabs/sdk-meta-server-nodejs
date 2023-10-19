@@ -8,7 +8,7 @@ import {
   summaryCardViewport,
   summaryCardWithLargeImageFromPage,
   summaryCardWithLargeImageViewport,
-  usePage,
+  useSpaPage,
 } from '../../../../lib'
 import { getImageUrl } from './getImageUrl'
 
@@ -24,7 +24,7 @@ const twitterCardGenerator = useLargeImage ? summaryCardWithLargeImageFromPage :
 export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Meta | undefined => {
   console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation`)
   forget(
-    usePage(url, undefined, async (page) => {
+    useSpaPage(url, async (page) => {
       try {
         // TODO: Get from request, html-meta prop, or xyo.config
         const selector = '#preview-container'

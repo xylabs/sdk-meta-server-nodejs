@@ -149,7 +149,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
       const liveSharePageHandler: RequestHandler = (req, res, next) => {
         // Exclude query string from glob via req.path
         const uri = req.path
-        const render = req.params.render
+        const render = req.params?.render
         // // NOTE: Uncomment if we want to also include query string
         // const uri = req.originalUrl
         if (render !== 'preview' && matchesIncluded(uri) && !matchesExcluded(uri)) {

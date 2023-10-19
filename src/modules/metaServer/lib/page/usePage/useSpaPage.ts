@@ -49,7 +49,7 @@ export const useSpaPage = async <T>(
   url: string,
   pageCallback: (page: Page) => Promise<T> | T,
   browserOptions: Viewport = viewPortDefaults,
-  waitForOptions: WaitForOptions = useSpaPageWaitForOptions,
+  _waitForOptions: WaitForOptions = useSpaPageWaitForOptions,
 ) => {
   const parsed = new URL(url)
   const { origin, pathname } = parsed
@@ -59,14 +59,14 @@ export const useSpaPage = async <T>(
     browser = await useBrowser(browserOptions)
     page = await getBrowserPage(browser)
     // First navigate to the root
-    await page.goto(origin, { waitUntil })
+    await page.goto(origin, { timeout, waitUntil })
 
     // Wait for the div with id "root" to have at least one child.
     // This assumes the child is a direct descendant (using '>').
     // This assumes React will mount in a div with id="root" .
     await page.waitForSelector('#root > *', { timeout })
 
-    // React Router DOM seems to no listen to pushState but does
+    // React Router DOM seems to not listen to pushState but does
     // listen to back.  So we push state to the desired path twice,
     // then go back once to trigger the navigation.
     await page.evaluate((pathname) => window.history.pushState(null, '', pathname), pathname)

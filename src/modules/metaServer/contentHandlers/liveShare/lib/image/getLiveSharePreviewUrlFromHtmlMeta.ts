@@ -20,17 +20,17 @@ const xyoOgImageElementRegex = /<meta[^>]*property="xyo:og:image"[^>]*content="(
 export const getLiveSharePreviewUrlFromHtmlMeta = async (url: string): Promise<string> => {
   // TODO: Optimize this with something like React SSR
   const content = await usePage(url, undefined, async (page) => {
-    console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: navigated to ${url}`)
+    console.log(`[liveShare][getLiveSharePreviewUrlFromHtmlMeta][${url}]: navigated to ${url}`)
     await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 15000 })
-    console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: found meta property ${xyoOgImageProperty}`)
+    console.log(`[liveShare][getLiveSharePreviewUrlFromHtmlMeta][${url}]: found meta property ${xyoOgImageProperty}`)
     return await page.content()
   })
-  const html = assertEx(content, `[liveShare][useIndexAndDeferredPreviewImage][${url}]: error retrieving html`)
+  const html = assertEx(content, `[liveShare][getLiveSharePreviewUrlFromHtmlMeta][${url}]: error retrieving html`)
   // Use the regex to extract the expected meta element
   const match = html.match(xyoOgImageElementRegex)
   // Extract the preview image URL from the meta element & decode it
   const previewUrl = decode(
-    assertEx(match?.[1], `[liveShare][useIndexAndDeferredPreviewImage][${url}]: error, missing meta element with ${xyoOgImageProperty} property`),
+    assertEx(match?.[1], `[liveShare][getLiveSharePreviewUrlFromHtmlMeta][${url}]: error, missing meta element with ${xyoOgImageProperty} property`),
   )
   return previewUrl
 }

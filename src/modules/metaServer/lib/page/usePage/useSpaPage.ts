@@ -66,13 +66,13 @@ export const useSpaPage = async <T>(
     // This assumes React will mount in a div with id="root" .
     await page.waitForSelector('#root > *', { timeout })
 
-    // Then use the browser history to navigate to the relative path
-    await Promise.all([
-      // Wait for the navigation to complete
-      page.waitForNavigation({ ...waitForOptions, timeout, waitUntil }),
-      // Cause the navigation via push state
-      page.evaluate((pathname) => window.history.pushState(null, '', pathname), pathname),
-    ])
+    // React Router DOM seems to no listen to pushState but does
+    // listen to back.  So we push state to the desired path twice,
+    // then go back once to trigger the navigation.
+    await page.evaluate((pathname) => window.history.pushState(null, '', pathname), pathname)
+    await page.evaluate((pathname) => window.history.pushState(null, '', pathname), pathname)
+    await page.evaluate(() => window.history.back())
+
     return await pageCallback(page)
   } catch (err) {
     console.log(err)

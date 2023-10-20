@@ -6,7 +6,7 @@ import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { makeRe, MMRegExp } from 'minimatch'
+import { makeRe, minimatch, MMRegExp } from 'minimatch'
 import { extname, join } from 'path'
 
 import { getAdjustedPath, getUriBehindProxy, preCacheFacebookShare } from '../../lib'
@@ -48,7 +48,7 @@ type RouteMatcher = (route: string) => boolean
  * @param patterns Glob patterns for route paths to match against
  * @returns
  */
-const createMatcher = (patterns: string[]): RouteMatcher => {
+const createRegexMatcher = (patterns: string[]): RouteMatcher => {
   const regexesOrFalse = patterns.map((pattern) => makeRe(pattern))
   const invalidGlobPatternIndexes = regexesOrFalse.reduce<number[]>((acc, curr, idx) => {
     if (curr === false) acc.push(idx)
@@ -57,6 +57,11 @@ const createMatcher = (patterns: string[]): RouteMatcher => {
   assertEx(invalidGlobPatternIndexes.length === 0, `Invalid glob pattern(s): ${invalidGlobPatternIndexes.map((i) => patterns[i]).join(', ')}`)
   const regexes = regexesOrFalse.filter((regex): regex is MMRegExp => assertEx(regex !== false))
   return (route: string) => regexes.some((regex) => regex.test(route))
+}
+
+const createMatcher = (patterns: string[]): RouteMatcher => {
+  const matchers = patterns.map((pattern) => (str: string) => minimatch(str, pattern))
+  return (route: string) => matchers.some((matcher) => matcher(route))
 }
 
 const getPageHandler = (baseDir: string) => {

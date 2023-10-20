@@ -12,7 +12,7 @@ export const useIndexAndDeferredPreviewImage = async (url: string, imageCache: I
     // Initiate the image generation but don't await it
     getRenderedPageAsImage(previewUrl, imageCache)
     console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: generating preview image meta`)
-    const meta = getPagePreviewImageMeta(url)
+    const meta = getPagePreviewImageMeta(previewUrl)
     // TODO: Use page meta since we already took the hit to render
     const updatedHtml = metaBuilder(indexHtml, meta)
     console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: returning index.html & preview image meta`)

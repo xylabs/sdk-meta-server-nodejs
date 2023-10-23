@@ -1,9 +1,14 @@
 import { getImageUrl } from '../getImageUrl'
 
 describe('getImageUrl', () => {
-  it('generates image URL', () => {
+  const cases: [width: number, height: number][] = [
+    [1600, 900],
+    [1200, 630],
+    [600, 315],
+  ]
+  it.each(cases)('generates image URL', (width, height) => {
     const url = 'https://www.google.com'
-    const imageUrl = getImageUrl(url, 1600, 900)
-    expect(imageUrl).toEqual('https://www.google.com/1600/900/img.png')
+    const imageUrl = getImageUrl(url, width, height)
+    expect(imageUrl).toEqual(`https://www.google.com/${width}/${height}/img.png`)
   })
 })

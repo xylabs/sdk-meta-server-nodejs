@@ -1,5 +1,6 @@
 import { Page, ScreenshotOptions, Viewport } from 'puppeteer'
 
+import { defaultViewportSize } from '../../browser'
 import { generateImageBufferFromPage } from '../generateImageFromPage'
 
 const opts: ScreenshotOptions = {
@@ -20,11 +21,10 @@ const opts: ScreenshotOptions = {
  * supported.
  */
 export const summaryCardWithLargeImageViewport: Viewport = {
+  ...defaultViewportSize,
   deviceScaleFactor: 1,
-  height: 900,
   isLandscape: false,
   isMobile: true,
-  width: 1600,
 }
 
 export const summaryCardWithLargeImageFromPage = async (page: Page) => {

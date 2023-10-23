@@ -2090,13 +2090,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@bitauth/libauth@npm:^1.19.1":
-  version: 1.19.1
-  resolution: "@bitauth/libauth@npm:1.19.1"
-  checksum: d6f1ed0aaa36014529eb7e095a96644f8d06ec5f80f223b74d30414a19e2516a194d165d90fee09a96ed51d3bff6d80406b3ecaff194489579dbea4ae1c9f93c
-  languageName: node
-  linkType: hard
-
 "@colors/colors@npm:1.5.0":
   version: 1.5.0
   resolution: "@colors/colors@npm:1.5.0"
@@ -4365,7 +4358,6 @@ __metadata:
     "@aws-sdk/client-secrets-manager": ^3.433.0
     "@babel/core": ^7.23.2
     "@babel/preset-env": ^7.23.2
-    "@bitauth/libauth": ^1.19.1
     "@types/express": ^4.17.20
     "@types/he": ^1.2.2
     "@types/jest": ^29.5.6

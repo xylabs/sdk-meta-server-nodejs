@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.433.0",
-    "@bitauth/libauth": "^1.19.1",
     "@xylabs/assert": "^2.13.3",
     "@xylabs/delay": "^2.13.3",
     "@xylabs/exists": "^2.13.3",

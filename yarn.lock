@@ -4676,7 +4676,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/lodash@npm:^2.12.29, @xylabs/lodash@npm:^2.13.0":
+"@xylabs/lodash@npm:^2.12.29":
   version: 2.13.0
   resolution: "@xylabs/lodash@npm:2.13.0"
   dependencies:
@@ -4715,7 +4715,6 @@ __metadata:
     "@xylabs/exists": ^2.13.0
     "@xylabs/forget": ^2.13.0
     "@xylabs/jest-helpers": ^2.13.0
-    "@xylabs/lodash": ^2.13.0
     "@xylabs/sdk-api-express-ecs": ^1.4.0
     "@xylabs/ts-scripts-yarn3": ^3.1.12
     "@xylabs/tsconfig": ^3.1.12
@@ -4725,10 +4724,8 @@ __metadata:
     "@xyo-network/account": ^2.77.1
     "@xyo-network/archivist-model": ^2.77.1
     "@xyo-network/axios": ^2.77.1
-    "@xyo-network/boundwitness-model": ^2.77.1
     "@xyo-network/http-bridge": ^2.77.1
     "@xyo-network/payload-model": ^2.77.1
-    "@xyo-network/payload-wrapper": ^2.77.1
     "@xyo-network/sdk-meta": ^2.10.1
     axios: ^1.5.1
     body-parser: ^1.20.2
@@ -5148,7 +5145,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/boundwitness-model@npm:^2.77.1, @xyo-network/boundwitness-model@npm:~2.77.1":
+"@xyo-network/boundwitness-model@npm:~2.77.1":
   version: 2.77.1
   resolution: "@xyo-network/boundwitness-model@npm:2.77.1"
   dependencies:
@@ -5610,7 +5607,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/payload-wrapper@npm:^2.77.1, @xyo-network/payload-wrapper@npm:~2.77.1":
+"@xyo-network/payload-wrapper@npm:~2.77.1":
   version: 2.77.1
   resolution: "@xyo-network/payload-wrapper@npm:2.77.1"
   dependencies:

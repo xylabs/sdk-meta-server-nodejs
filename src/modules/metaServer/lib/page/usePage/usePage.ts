@@ -6,7 +6,7 @@ import { PageRenderingOptions } from '../PageRenderingOptions'
 import { waitUntil } from './defaults'
 import { getBrowserPage } from './getBrowserPage'
 
-export const viewPortDefaults: Viewport = {
+export const pageViewPortDefaults: Viewport = {
   ...defaultViewportSize,
   deviceScaleFactor: 1,
   hasTouch: false,
@@ -15,7 +15,7 @@ export const viewPortDefaults: Viewport = {
 }
 
 export const defaultPageRenderingOptions: PageRenderingOptions = {
-  viewportSize: viewPortDefaults,
+  viewportSize: pageViewPortDefaults,
 }
 
 const waitForInitialPage = false
@@ -33,7 +33,7 @@ export const usePage = async <T>(
   pageCallback: (page: Page) => Promise<T> | T,
 ) => {
   if (!options) options = defaultPageRenderingOptions
-  const defaultViewport: Viewport = options?.viewportSize ? { ...viewPortDefaults, ...options.viewportSize } : { ...viewPortDefaults }
+  const defaultViewport: Viewport = options?.viewportSize ? { ...pageViewPortDefaults, ...options.viewportSize } : { ...pageViewPortDefaults }
   let browser: Browser | undefined = undefined
   let page: Page | undefined = undefined
   try {

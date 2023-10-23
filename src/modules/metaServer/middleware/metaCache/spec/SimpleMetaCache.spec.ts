@@ -3,10 +3,10 @@ import { SimpleMetaCache } from '../SimpleMetaCache'
 const path1 = '/providers/netflix'
 const path2 = '/providers/hulu'
 
-const value1 = '<!DOCTYPE html><html lang="en"><head><meta property="og:image:width" content="1600"></head><body></body></html>'
-const value2 = '<!DOCTYPE html><html lang="en"><head><meta property="og:image:height" content="900"></head><body></body></html>'
+const value1 = '<!DOCTYPE html><html lang="en"><head><meta property="og:image:width" content="1200"></head><body></body></html>'
+const value2 = '<!DOCTYPE html><html lang="en"><head><meta property="og:image:height" content="630"></head><body></body></html>'
 const merged =
-  '<!DOCTYPE html><html lang="en"><head><meta property="og:image:width" content="1600"><meta property="og:image:height" content="900"></head><body></body></html>'
+  '<!DOCTYPE html><html lang="en"><head><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"></head><body></body></html>'
 
 describe('SimpleMetaCache', () => {
   let cache: SimpleMetaCache

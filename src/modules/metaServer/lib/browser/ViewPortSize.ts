@@ -3,9 +3,9 @@ export interface ViewPortSize {
   width: number
 }
 
-// NOTE: Should we use 16:9 ratio instead?
 // https://developers.facebook.com/docs/sharing/best-practices/
+// https://developers.facebook.com/docs/sharing/webmasters/images/
 export const defaultViewportSize: ViewPortSize = {
-  height: 1080,
-  width: 1080,
+  height: 630,
+  width: 1200,
 }

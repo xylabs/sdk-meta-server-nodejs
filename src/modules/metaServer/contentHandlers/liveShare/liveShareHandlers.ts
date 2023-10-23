@@ -6,10 +6,9 @@ import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { makeRe, minimatch, MMRegExp } from 'minimatch'
 import { extname, join } from 'path'
 
-import { getAdjustedPath, getUriBehindProxy, preCacheFacebookShare } from '../../lib'
+import { createGlobMatcher, getAdjustedPath, getUriBehindProxy, preCacheFacebookShare, RouteMatcher } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 import { getImageCache, getPageCache, getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
 
@@ -36,33 +35,6 @@ const imageGenerationCompletionPollingInterval = 100
 const maxImageGenerationWait = 8000
 
 const imageCache = getImageCache()
-
-/**
- * Function which checks if a route matches any of the included glob patterns
- */
-type RouteMatcher = (route: string) => boolean
-
-/**
- * Higher order function which creates precompiled RegEx matchers
- * from a list of Glob Patterns
- * @param patterns Glob patterns for route paths to match against
- * @returns
- */
-const createRegexMatcher = (patterns: string[]): RouteMatcher => {
-  const regexesOrFalse = patterns.map((pattern) => makeRe(pattern))
-  const invalidGlobPatternIndexes = regexesOrFalse.reduce<number[]>((acc, curr, idx) => {
-    if (curr === false) acc.push(idx)
-    return acc
-  }, [])
-  assertEx(invalidGlobPatternIndexes.length === 0, `Invalid glob pattern(s): ${invalidGlobPatternIndexes.map((i) => patterns[i]).join(', ')}`)
-  const regexes = regexesOrFalse.filter((regex): regex is MMRegExp => assertEx(regex !== false))
-  return (route: string) => regexes.some((regex) => regex.test(route))
-}
-
-const createMatcher = (patterns: string[]): RouteMatcher => {
-  const matchers = patterns.map((pattern) => (str: string) => minimatch(str, pattern))
-  return (route: string) => matchers.some((matcher) => matcher(route))
-}
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
@@ -148,8 +120,8 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
     // TODO: Validate xyConfig
     if (xyConfig.liveShare) {
       const { include, exclude } = xyConfig.liveShare
-      const matchesIncluded: RouteMatcher = include ? createMatcher(include) : () => true
-      const matchesExcluded: RouteMatcher = exclude ? createMatcher(exclude) : () => false
+      const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
+      const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
       const pageHandler = getPageHandler(baseDir)
       const liveSharePageHandler: RequestHandler = (req, res, next) => {
         // Exclude query string from glob via req.path

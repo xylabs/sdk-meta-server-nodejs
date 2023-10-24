@@ -128,7 +128,7 @@
   },
   "sideEffects": false,
   "types": "dist/node/index.d.ts",
-  "version": "3.0.14",
+  "version": "3.0.15",
   "engines": {
     "node": ">=18.13.0"
   },

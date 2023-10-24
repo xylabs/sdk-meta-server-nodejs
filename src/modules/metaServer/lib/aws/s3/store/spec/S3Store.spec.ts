@@ -1,37 +1,44 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
 import { describeIf } from '@xylabs/jest-helpers'
+import { readFile } from 'fs/promises'
 import { join } from 'path'
 
 import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig'
 import { hasAwsS3ClientConfig } from '../../hasAwsS3ClientConfig'
 import { S3Store } from '../S3Store'
 
-const TEST_BUCKET = 'your-test-bucket'
+const TEST_BUCKET = process.env.TEST_BUCKET || 'meta-server-unit-tests'
 
 describeIf(hasAwsS3ClientConfig())('S3Store', () => {
   let config: S3ClientConfig
   let sut: S3Store
+  let testData: Uint8Array
+  let testKey: string
 
   // Helper function to generate unique keys for testing
   const generateUniqueKey = (): string => `test-key-${Date.now()}-${Math.random()}`
-  const cases: [file: string, contentType: string, contentEncoding: string][] = [
+  const cases: [file: string, contentType: string][] = [
     // TODO: Add file types here for image, html, etc.
-    [join(__dirname, 'index.html'), 'text/html', 'gzip'],
+    [join(__dirname, 'index.html'), 'text/html'],
   ]
 
-  describe.each(cases)('set', (file, contentType, contentEncoding) => {
-    beforeAll(() => {
+  describe.each(cases)('set', (file, contentType) => {
+    beforeAll(async () => {
       config = getAwsS3ClientConfig()
+      const data = await readFile(file, null)
+      testData = new Uint8Array(data.buffer)
+      testKey = generateUniqueKey()
     })
     beforeEach(() => {
       sut = new S3Store(TEST_BUCKET, config)
     })
+    afterEach(async () => {
+      await sut.delete(testKey)
+    })
     describe('delete', () => {
       it('should delete an object', async () => {
-        const testKey = generateUniqueKey()
-
         // First, set a value
-        await sut.set(testKey, new Uint8Array([1, 2, 3]))
+        await sut.set(testKey, testData, contentType)
 
         // Now, delete it
         await sut.delete(testKey)
@@ -43,10 +50,7 @@ describeIf(hasAwsS3ClientConfig())('S3Store', () => {
     })
     describe('get', () => {
       it('should get an object', async () => {
-        const testKey = generateUniqueKey()
-        const testData = new Uint8Array([1, 2, 3])
-
-        await sut.set(testKey, testData)
+        await sut.set(testKey, testData, contentType)
 
         const result = await sut.get(testKey)
 
@@ -60,19 +64,15 @@ describeIf(hasAwsS3ClientConfig())('S3Store', () => {
     })
     describe('set', () => {
       it('should set an object', async () => {
-        const testKey = generateUniqueKey()
-        const testData = new Uint8Array([1, 2, 3])
-
-        await sut.set(testKey, testData)
+        await sut.set(testKey, testData, contentType)
 
         const result = await sut.get(testKey)
         expect(result).toEqual(testData)
       })
       it('should delete an object if value is not provided', async () => {
-        const testKey = generateUniqueKey()
-        await sut.set(testKey, new Uint8Array([1, 2, 3]))
+        await sut.set(testKey, testData, contentType)
 
-        await sut.set(testKey, undefined)
+        await sut.set(testKey, undefined, contentType)
 
         const result = await sut.get(testKey)
         expect(result).toBeUndefined()

@@ -1,8 +1,6 @@
 import { DeleteObjectCommand, GetObjectCommand, GetObjectCommandOutput, PutObjectCommand, S3Client, S3ClientConfig } from '@aws-sdk/client-s3'
 
-import { Cache } from '../Cache'
-
-export class S3Cache implements Cache<Uint8Array> {
+export class S3Store {
   private bucketName: string
   private s3: S3Client
 
@@ -37,24 +35,19 @@ export class S3Cache implements Cache<Uint8Array> {
       }
       throw error
     }
+    return undefined
   }
 
-  async set(key: string, value?: Promise<Uint8Array | undefined>): Promise<void> {
+  async set(key: string, value?: Uint8Array, contentType: string = 'application/octet-stream'): Promise<void> {
     // If they handed us undefined, we should delete the key
     if (!value) {
       await this.delete(key)
       return
     }
-    const resolvedValue = await value
-    // TODO: If the promise handed to us resolved to undefined, we should delete the key
-    // if (!resolvedValue) {
-    //   await this.delete(key)
-    //   return
-    // }
     const command = new PutObjectCommand({
-      Body: resolvedValue,
+      Body: value,
       Bucket: this.bucketName,
-      ContentType: 'application/json',
+      ContentType: contentType,
       Key: key,
     })
 

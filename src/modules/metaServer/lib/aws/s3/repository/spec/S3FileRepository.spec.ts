@@ -5,14 +5,14 @@ import { basename, join } from 'path'
 
 import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig'
 import { hasAwsS3ClientConfig } from '../../hasAwsS3ClientConfig'
-import { S3Store } from '../S3Store'
+import { S3FileRepository } from '../S3FileRepository'
 
 const TEST_BUCKET = process.env.TEST_BUCKET || 'meta-server-unit-tests'
 
-describeIf(hasAwsS3ClientConfig())('S3Store', () => {
+describeIf(hasAwsS3ClientConfig())('S3FileRepository', () => {
   let config: S3ClientConfig
-  let sut: S3Store
-  let testData: Uint8Array
+  let sut: S3FileRepository
+  let data: ArrayBuffer
   let testKey: string
 
   // Helper function to generate unique keys for testing
@@ -23,60 +23,54 @@ describeIf(hasAwsS3ClientConfig())('S3Store', () => {
     ['image/svg+xml', join(__dirname, 'logo.svg')],
   ]
 
-  describe.each(cases)('with content type %s', (contentType, file) => {
+  describe.each(cases)('with content type %s', (type, file) => {
     beforeAll(async () => {
       config = getAwsS3ClientConfig()
-      const data = await readFile(file, null)
-      testData = new Uint8Array(data.buffer)
+      data = (await readFile(file, null)).buffer
       testKey = `${generateUniqueKey(basename(file))}`
     })
     beforeEach(() => {
-      sut = new S3Store(TEST_BUCKET, config)
+      sut = new S3FileRepository(TEST_BUCKET, config)
     })
     afterEach(async () => {
-      await sut.delete(testKey)
+      await sut.removeFile(testKey)
     })
     describe('delete', () => {
       it('should delete an object', async () => {
         // First, set a value
-        await sut.set(testKey, testData, contentType)
+        const file = { data, type, uri: testKey }
+        await sut.addFile(file)
 
         // Now, delete it
-        await sut.delete(testKey)
+        await sut.removeFile(testKey)
 
         // Check if it's really deleted
-        const result = await sut.get(testKey)
+        const result = await sut.findFile(testKey)
         expect(result).toBeUndefined()
       })
     })
     describe('get', () => {
       it('should get an object', async () => {
-        await sut.set(testKey, testData, contentType)
+        const file = { data, type, uri: testKey }
+        await sut.addFile(file)
 
-        const result = await sut.get(testKey)
+        const result = await sut.findFile(testKey)
 
-        expect(result).toEqual(testData)
+        expect(result).toEqual(file)
       })
 
       it('should return undefined when object is not found', async () => {
-        const result = await sut.get(generateUniqueKey('foo.html'))
+        const result = await sut.findFile(generateUniqueKey('foo.html'))
         expect(result).toBeUndefined()
       })
     })
     describe('set', () => {
       it('should set an object', async () => {
-        await sut.set(testKey, testData, contentType)
+        const file = { data, type, uri: testKey }
+        await sut.addFile(file)
 
-        const result = await sut.get(testKey)
-        expect(result).toEqual(testData)
-      })
-      it('should delete an object if value is not provided', async () => {
-        await sut.set(testKey, testData, contentType)
-
-        await sut.set(testKey, undefined, contentType)
-
-        const result = await sut.get(testKey)
-        expect(result).toBeUndefined()
+        const result = await sut.findFile(testKey)
+        expect(result).toEqual(file)
       })
     })
   })

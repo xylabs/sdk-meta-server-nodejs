@@ -6,6 +6,7 @@
 !.yarn/versions
 **/*.jpeg
 **/*.png
+**/*.svg
 !**/__image_snapshots__/*.png
 **/*.webp
 *.log

@@ -18,6 +18,7 @@ words:
   - networkidle
   - pako
   - printenv
+  - Promisable
   - proxied
   - regexes
   - repost

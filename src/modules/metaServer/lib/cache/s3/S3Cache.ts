@@ -1,8 +1,8 @@
-import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client, S3ClientConfig } from '@aws-sdk/client-s3'
+import { DeleteObjectCommand, GetObjectCommand, GetObjectCommandOutput, PutObjectCommand, S3Client, S3ClientConfig } from '@aws-sdk/client-s3'
 
 import { Cache } from '../Cache'
 
-export class S3Cache<T> implements Cache<T> {
+export class S3Cache implements Cache<Uint8Array> {
   private bucketName: string
   private s3: S3Client
 
@@ -19,22 +19,17 @@ export class S3Cache<T> implements Cache<T> {
     await this.s3.send(command)
   }
 
-  async get(key: string): Promise<T | undefined> {
+  async get(key: string): Promise<Uint8Array | undefined> {
     const command = new GetObjectCommand({
       Bucket: this.bucketName,
       Key: key,
     })
 
     try {
-      const data = await this.s3.send(command)
-      if (data.Body) {
-        return new Promise((resolve, reject) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const chunks: any[] = []
-          data.Body?.on('data', (chunk) => chunks.push(chunk))
-          data.Body?.on('end', () => resolve(JSON.parse(Buffer.concat(chunks).toString())))
-          data.Body?.on('error', reject)
-        }) as Promise<T>
+      const data: GetObjectCommandOutput = await this.s3.send(command)
+      const transform = data.Body?.transformToByteArray
+      if (transform) {
+        return await transform()
       }
     } catch (error) {
       if ((error as { name?: string })?.name === 'NoSuchKey') {
@@ -44,15 +39,14 @@ export class S3Cache<T> implements Cache<T> {
     }
   }
 
-  async set(key: string, value: Promise<T> | undefined): Promise<void> {
+  async set(key: string, value: Promise<Uint8Array>): Promise<void> {
     if (!value) {
       await this.delete(key)
       return
     }
-
     const resolvedValue = await value
     const command = new PutObjectCommand({
-      Body: JSON.stringify(resolvedValue),
+      Body: resolvedValue,
       Bucket: this.bucketName,
       ContentType: 'application/json',
       Key: key,

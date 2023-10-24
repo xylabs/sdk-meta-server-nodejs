@@ -2,7 +2,7 @@ import { S3ClientConfig } from '@aws-sdk/client-s3'
 import { assertEx } from '@xylabs/assert'
 import { describeIf } from '@xylabs/jest-helpers'
 
-import { hasAwsS3ClientConfig } from '../../../aws'
+import { hasAwsS3ClientConfig } from '../../hasAwsS3ClientConfig'
 import { S3Store } from '../S3Store'
 
 const TEST_BUCKET = 'your-test-bucket'

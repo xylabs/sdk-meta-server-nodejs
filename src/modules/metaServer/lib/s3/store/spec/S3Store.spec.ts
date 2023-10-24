@@ -2,11 +2,12 @@ import { S3ClientConfig } from '@aws-sdk/client-s3'
 import { assertEx } from '@xylabs/assert'
 import { describeIf } from '@xylabs/jest-helpers'
 
+import { hasAwsS3ClientConfig } from '../../../aws'
 import { S3Store } from '../S3Store'
 
 const TEST_BUCKET = 'your-test-bucket'
 
-describeIf(hasAwsClientConfig()).skip('S3Store', () => {
+describeIf(hasAwsS3ClientConfig()).skip('S3Store', () => {
   let config: S3ClientConfig
   let sut: S3Store
 
@@ -82,6 +83,3 @@ describeIf(hasAwsClientConfig()).skip('S3Store', () => {
     })
   })
 })
-function hasAwsClientConfig(): any {
-  throw new Error('Function not implemented.')
-}

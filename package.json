@@ -14,6 +14,7 @@
     "start-meta": "dist/node/bin/start-meta.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.433.0",
     "@aws-sdk/client-secrets-manager": "^3.433.0",
     "@xylabs/assert": "^2.13.3",
     "@xylabs/delay": "^2.13.3",

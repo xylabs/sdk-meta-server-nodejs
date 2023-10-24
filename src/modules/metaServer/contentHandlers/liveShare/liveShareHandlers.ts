@@ -154,6 +154,6 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
 //   'get',
 //   ['/netflix/insights/:hash', getPageHandler(opts.baseDir)],
 // ]
-// const liveShareImageHandler = (): MountPathAndMiddleware => ['get', ['/netflix/insights/:hash/preview/:width/:height/img.png', imageHandler]]
+const liveShareImageHandler = (): MountPathAndMiddleware => ['get', ['*/preview/:width/:height/img.png', imageHandler]]
 
-export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts)].filter(exists)
+export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts), liveShareImageHandler()].filter(exists)

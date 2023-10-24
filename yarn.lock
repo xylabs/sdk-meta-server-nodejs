@@ -4699,6 +4699,7 @@ __metadata:
     "@xylabs/exists": ^2.13.3
     "@xylabs/forget": ^2.13.3
     "@xylabs/jest-helpers": ^2.13.3
+    "@xylabs/promise": ^2.13.3
     "@xylabs/sdk-api-express-ecs": ^1.4.0
     "@xylabs/ts-scripts-yarn3": ^3.1.13
     "@xylabs/tsconfig": ^3.1.13
@@ -4745,6 +4746,13 @@ __metadata:
     start-meta: dist/node/bin/start-meta.js
   languageName: unknown
   linkType: soft
+
+"@xylabs/promise@npm:^2.13.3":
+  version: 2.13.3
+  resolution: "@xylabs/promise@npm:2.13.3"
+  checksum: 2fd298589300db781c763cf503237f1419d7c977140a2159da7619b157b8c7432927677a97c9975ac2b17c8d4212e57716147e2e37d23b6889e668db3d73f4ec
+  languageName: node
+  linkType: hard
 
 "@xylabs/sdk-api-express-ecs@npm:^1.4.0":
   version: 1.4.0

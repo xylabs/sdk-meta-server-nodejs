@@ -1,4 +1,5 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
+import { Promisable } from '@xylabs/promise'
 import { lookup } from 'mime-types'
 
 import { S3Store } from '../store'
@@ -10,7 +11,7 @@ export interface File {
   /**
    * The file data.
    */
-  data: ArrayBuffer
+  data: Promisable<ArrayBuffer>
   /**
    * The content type of the file. If not provided, we'll try to determine it from the file ID.
    */
@@ -56,7 +57,7 @@ export class S3FileRepository implements FileRepository {
    */
   async addFile(file: File): Promise<void> {
     const key = file.uri
-    const value = new Uint8Array(file.data)
+    const value = new Uint8Array(await file.data)
     // If contentType isn't provided, determine it from the file uri (which should have the extension)
     const type = file.type || lookup(file.uri) || 'application/octet-stream'
     await this.store.set(key, value, type)

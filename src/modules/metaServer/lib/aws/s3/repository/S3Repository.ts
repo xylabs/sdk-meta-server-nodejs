@@ -1,6 +1,6 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
-import { lookup } from 'mime-types' // Make sure to install the mime-types package
 
+// import { lookup } from 'mime-types'
 import { S3Store } from '../store'
 
 export interface File {
@@ -19,7 +19,7 @@ export class S3Repository {
   async addFile(file: File): Promise<void> {
     // If contentType isn't provided, determine it from the file ID (which should have the extension)
     if (!file.contentType) {
-      const contentType = lookup(file.id) || 'application/octet-stream'
+      const contentType = 'application/octet-stream'
       file.contentType = contentType
     }
     await this.store.set(file.id, file.data, file.contentType)
@@ -30,7 +30,7 @@ export class S3Repository {
     if (!data) {
       return undefined
     }
-    const contentType = lookup(fileId) || 'application/octet-stream'
+    const contentType = 'application/octet-stream'
     return {
       contentType: contentType,
       data: data,

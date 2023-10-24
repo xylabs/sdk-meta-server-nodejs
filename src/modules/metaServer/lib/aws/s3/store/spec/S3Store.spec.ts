@@ -1,7 +1,7 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
-import { assertEx } from '@xylabs/assert'
 import { describeIf } from '@xylabs/jest-helpers'
 
+import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig'
 import { hasAwsS3ClientConfig } from '../../hasAwsS3ClientConfig'
 import { S3Store } from '../S3Store'
 
@@ -15,13 +15,7 @@ describeIf(hasAwsS3ClientConfig()).skip('S3Store', () => {
   const generateUniqueKey = (): string => `test-key-${Date.now()}-${Math.random()}`
 
   beforeAll(() => {
-    config = {
-      credentials: {
-        accessKeyId: assertEx(process.env.AWS_ACCESS_KEY_ID, 'AWS_ACCESS_KEY_ID is not defined'),
-        secretAccessKey: assertEx(process.env.AWS_SECRET_ACCESS_KEY, 'AWS_SECRET_ACCESS_KEY is not defined'),
-      },
-      region: 'us-east-1',
-    }
+    config = getAwsS3ClientConfig()
   })
   beforeEach(() => {
     sut = new S3Store(TEST_BUCKET, config)

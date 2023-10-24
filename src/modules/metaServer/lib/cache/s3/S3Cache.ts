@@ -39,12 +39,18 @@ export class S3Cache implements Cache<Uint8Array> {
     }
   }
 
-  async set(key: string, value: Promise<Uint8Array>): Promise<void> {
+  async set(key: string, value?: Promise<Uint8Array | undefined>): Promise<void> {
+    // If they handed us undefined, we should delete the key
     if (!value) {
       await this.delete(key)
       return
     }
     const resolvedValue = await value
+    // TODO: If the promise handed to us resolved to undefined, we should delete the key
+    // if (!resolvedValue) {
+    //   await this.delete(key)
+    //   return
+    // }
     const command = new PutObjectCommand({
       Body: resolvedValue,
       Bucket: this.bucketName,

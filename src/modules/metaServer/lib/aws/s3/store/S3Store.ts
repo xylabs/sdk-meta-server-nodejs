@@ -38,7 +38,7 @@ export class S3Store {
     return undefined
   }
 
-  async set(key: string, value?: Uint8Array, contentType: string = 'application/octet-stream', contentEncoding: string = 'gzip'): Promise<void> {
+  async set(key: string, value?: Uint8Array, contentType: string = 'application/octet-stream'): Promise<void> {
     // If they handed us undefined, we should delete the key
     if (!value) {
       await this.delete(key)
@@ -47,7 +47,6 @@ export class S3Store {
     const command = new PutObjectCommand({
       Body: value,
       Bucket: this.bucketName,
-      ContentEncoding: contentEncoding,
       ContentType: contentType,
       Key: key,
     })

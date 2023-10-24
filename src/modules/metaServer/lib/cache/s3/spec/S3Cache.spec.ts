@@ -1,15 +1,18 @@
+import { S3ClientConfig } from '@aws-sdk/client-s3'
+
 import { S3Cache } from '../S3Cache'
 
-const TEST_BUCKET = 'your-test-bucket' // Replace with your test bucket name
+const TEST_BUCKET = 'your-test-bucket'
 
 describe.skip('S3Cache', () => {
+  let config: S3ClientConfig
   let s3Cache: S3Cache
 
   // Helper function to generate unique keys for testing
   const generateUniqueKey = (): string => `test-key-${Date.now()}-${Math.random()}`
 
-  beforeEach(() => {
-    s3Cache = new S3Cache(TEST_BUCKET, {
+  beforeAll(() => {
+    config = {
       credentials:
         process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY
           ? {
@@ -18,7 +21,10 @@ describe.skip('S3Cache', () => {
             }
           : undefined,
       region: 'us-east-1',
-    })
+    }
+  })
+  beforeEach(() => {
+    s3Cache = new S3Cache(TEST_BUCKET, config)
   })
 
   describe('delete', () => {

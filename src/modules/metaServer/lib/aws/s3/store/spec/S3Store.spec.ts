@@ -17,12 +17,14 @@ describeIf(hasAwsS3ClientConfig())('S3Store', () => {
 
   // Helper function to generate unique keys for testing
   const generateUniqueKey = (): string => `test-key-${Date.now()}-${Math.random()}`
-  const cases: [file: string, contentType: string][] = [
+  const cases: [contentType: string, file: string][] = [
     // TODO: Add file types here for image, html, etc.
-    [join(__dirname, 'index.html'), 'text/html'],
+    ['text/html', join(__dirname, 'index.html')],
+    ['image/png', join(__dirname, 'coin-dark-phone.png')],
+    ['image/svg+xml', join(__dirname, 'logo.svg')],
   ]
 
-  describe.each(cases)('set', (file, contentType) => {
+  describe.each(cases)('with content type %s', (contentType, file) => {
     beforeAll(async () => {
       config = getAwsS3ClientConfig()
       const data = await readFile(file, null)

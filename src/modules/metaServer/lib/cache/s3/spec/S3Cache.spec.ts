@@ -10,8 +10,14 @@ describe.skip('S3Cache', () => {
 
   beforeEach(() => {
     s3Cache = new S3Cache(TEST_BUCKET, {
-      region: 'your-region', // Replace with your region
-      // ... any other AWS config you want to specify (e.g. credentials if they're not in environment variables or default AWS config)
+      credentials:
+        process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY
+          ? {
+              accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+              secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+            }
+          : undefined,
+      region: 'us-east-1',
     })
   })
 
@@ -64,7 +70,7 @@ describe.skip('S3Cache', () => {
       const testKey = generateUniqueKey()
       await s3Cache.set(testKey, Promise.resolve(new Uint8Array([1, 2, 3])))
 
-      await s3Cache.set(testKey, undefined as any) // Force it to undefined for the test
+      await s3Cache.set(testKey, undefined)
 
       const result = await s3Cache.get(testKey)
       expect(result).toBeUndefined()

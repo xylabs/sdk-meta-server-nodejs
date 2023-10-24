@@ -1,7 +1,7 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
 import { describeIf } from '@xylabs/jest-helpers'
 import { readFile } from 'fs/promises'
-import { join } from 'path'
+import { basename, join } from 'path'
 
 import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig'
 import { hasAwsS3ClientConfig } from '../../hasAwsS3ClientConfig'
@@ -16,9 +16,8 @@ describeIf(hasAwsS3ClientConfig())('S3Store', () => {
   let testKey: string
 
   // Helper function to generate unique keys for testing
-  const generateUniqueKey = (): string => `test-key-${Date.now()}-${Math.random()}`
+  const generateUniqueKey = (file: string): string => `test/${Date.now()}/${file}`
   const cases: [contentType: string, file: string][] = [
-    // TODO: Add file types here for image, html, etc.
     ['text/html', join(__dirname, 'index.html')],
     ['image/png', join(__dirname, 'coin-dark-phone.png')],
     ['image/svg+xml', join(__dirname, 'logo.svg')],
@@ -29,7 +28,7 @@ describeIf(hasAwsS3ClientConfig())('S3Store', () => {
       config = getAwsS3ClientConfig()
       const data = await readFile(file, null)
       testData = new Uint8Array(data.buffer)
-      testKey = generateUniqueKey()
+      testKey = `${generateUniqueKey(basename(file))}`
     })
     beforeEach(() => {
       sut = new S3Store(TEST_BUCKET, config)
@@ -60,7 +59,7 @@ describeIf(hasAwsS3ClientConfig())('S3Store', () => {
       })
 
       it('should return undefined when object is not found', async () => {
-        const result = await sut.get(generateUniqueKey())
+        const result = await sut.get(generateUniqueKey('foo.html'))
         expect(result).toBeUndefined()
       })
     })

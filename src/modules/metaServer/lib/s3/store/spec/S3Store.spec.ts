@@ -1,10 +1,16 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
+import { assertEx } from '@xylabs/assert'
+import { describeIf } from '@xylabs/jest-helpers'
 
 import { S3Store } from '../S3Store'
 
 const TEST_BUCKET = 'your-test-bucket'
 
-describe.skip('S3Store', () => {
+const hasAwsCredentials = (): boolean => {
+  return process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY ? true : false
+}
+
+describeIf(hasAwsCredentials()).skip('S3Store', () => {
   let config: S3ClientConfig
   let sut: S3Store
 
@@ -13,13 +19,10 @@ describe.skip('S3Store', () => {
 
   beforeAll(() => {
     config = {
-      credentials:
-        process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY
-          ? {
-              accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-              secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-            }
-          : undefined,
+      credentials: {
+        accessKeyId: assertEx(process.env.AWS_ACCESS_KEY_ID, 'AWS_ACCESS_KEY_ID is not defined'),
+        secretAccessKey: assertEx(process.env.AWS_SECRET_ACCESS_KEY, 'AWS_SECRET_ACCESS_KEY is not defined'),
+      },
       region: 'us-east-1',
     }
   })

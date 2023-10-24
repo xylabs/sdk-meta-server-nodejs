@@ -1,6 +1,6 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
 
-import { S3Cache } from '../S3Cache'
+import { S3Cache } from '../S3Store'
 
 const TEST_BUCKET = 'your-test-bucket'
 

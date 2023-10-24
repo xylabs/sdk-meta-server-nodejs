@@ -1,8 +1,6 @@
 import { DeleteObjectCommand, GetObjectCommand, GetObjectCommandOutput, PutObjectCommand, S3Client, S3ClientConfig } from '@aws-sdk/client-s3'
 
-import { Cache } from '../Cache'
-
-export class S3Cache implements Cache<Uint8Array> {
+export class S3Store {
   private bucketName: string
   private s3: S3Client
 

@@ -6,11 +6,7 @@ import { S3Store } from '../S3Store'
 
 const TEST_BUCKET = 'your-test-bucket'
 
-const hasAwsCredentials = (): boolean => {
-  return process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY ? true : false
-}
-
-describeIf(hasAwsCredentials()).skip('S3Store', () => {
+describeIf(hasAwsClientConfig()).skip('S3Store', () => {
   let config: S3ClientConfig
   let sut: S3Store
 
@@ -86,3 +82,6 @@ describeIf(hasAwsCredentials()).skip('S3Store', () => {
     })
   })
 })
+function hasAwsClientConfig(): any {
+  throw new Error('Function not implemented.')
+}

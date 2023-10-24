@@ -7,7 +7,7 @@ import { S3Store } from '../S3Store'
 
 const TEST_BUCKET = 'your-test-bucket'
 
-describeIf(hasAwsS3ClientConfig()).skip('S3Store', () => {
+describeIf(hasAwsS3ClientConfig())('S3Store', () => {
   let config: S3ClientConfig
   let sut: S3Store
 

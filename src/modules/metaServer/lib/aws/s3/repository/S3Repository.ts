@@ -3,10 +3,22 @@ import { S3ClientConfig } from '@aws-sdk/client-s3'
 // import { lookup } from 'mime-types'
 import { S3Store } from '../store'
 
+/**
+ * A file to be stored in S3.
+ */
 export interface File {
-  contentType?: string // Now optional, we can determine it from the file extension if not provided
+  /**
+   * The content type of the file. If not provided, we'll try to determine it from the file ID.
+   */
+  contentType?: string
+  /**
+   * The file data.
+   */
   data: Uint8Array
-  id: string
+  /**
+   * The file URI.
+   */
+  uri: string
 }
 
 export class S3Repository {
@@ -22,23 +34,19 @@ export class S3Repository {
       const contentType = 'application/octet-stream'
       file.contentType = contentType
     }
-    await this.store.set(file.id, file.data, file.contentType)
+    await this.store.set(file.uri, file.data, file.contentType)
   }
 
-  async getFile(fileId: string): Promise<File | undefined> {
-    const data = await this.store.get(fileId)
+  async findFile(uri: string): Promise<File | undefined> {
+    const data = await this.store.get(uri)
     if (!data) {
       return undefined
     }
     const contentType = 'application/octet-stream'
-    return {
-      contentType: contentType,
-      data: data,
-      id: fileId,
-    }
+    return { contentType, data, uri }
   }
 
-  async removeFile(fileId: string): Promise<void> {
-    await this.store.delete(fileId)
+  async removeFile(uri: string): Promise<void> {
+    await this.store.delete(uri)
   }
 }

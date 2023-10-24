@@ -5,7 +5,10 @@ import { lookup } from 'mime-types'
 import { S3Store } from '../store'
 
 /**
- * A file to be stored in the repository.
+ * A file to be stored in the repository. Striving for similarity to the Browser
+ * File interface. If not to enable easy migration to the browser, at least to
+ * make it easier to understand initially.
+ * https://developer.mozilla.org/en-US/docs/Web/API/File
  */
 export interface RepositoryFile {
   /**

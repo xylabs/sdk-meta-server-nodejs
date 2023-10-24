@@ -35,9 +35,15 @@ export class S3Store {
       }
       throw error
     }
+    return undefined
   }
 
-  async set(key: string, value?: Promise<Uint8Array | undefined>): Promise<void> {
+  async set(
+    key: string,
+    value?: Promise<Uint8Array | undefined>,
+    contentType: string = 'application/octet-stream',
+    contentEncoding: string = 'gzip',
+  ): Promise<void> {
     // If they handed us undefined, we should delete the key
     if (!value) {
       await this.delete(key)
@@ -52,7 +58,8 @@ export class S3Store {
     const command = new PutObjectCommand({
       Body: resolvedValue,
       Bucket: this.bucketName,
-      ContentType: 'application/json',
+      ContentEncoding: contentEncoding,
+      ContentType: contentType,
       Key: key,
     })
 

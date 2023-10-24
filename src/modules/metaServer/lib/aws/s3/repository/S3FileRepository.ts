@@ -7,7 +7,7 @@ import { S3Store } from '../store'
 /**
  * A file to be stored in the repository.
  */
-export interface File {
+export interface RepositoryFile {
   /**
    * The file data.
    */
@@ -30,13 +30,13 @@ export interface FileRepository {
    * Adds a file to the repository.
    * @param file The file to add.
    */
-  addFile(file: File): Promise<void>
+  addFile(file: RepositoryFile): Promise<void>
   /**
    * Finds a file in the repository.
    * @param uri The URI of the file to find.
    * @returns The file, if found. Otherwise, undefined.
    */
-  findFile(uri: string): Promise<File | undefined>
+  findFile(uri: string): Promise<RepositoryFile | undefined>
   /**
    * Removes a file from the repository.
    * @param uri The URI of the file to remove.
@@ -55,7 +55,7 @@ export class S3FileRepository implements FileRepository {
    * Adds a file to the repository.
    * @param file The file to add.
    */
-  async addFile(file: File): Promise<void> {
+  async addFile(file: RepositoryFile): Promise<void> {
     const key = file.uri
     const value = new Uint8Array(await file.data)
     // If contentType isn't provided, determine it from the file uri (which should have the extension)
@@ -68,14 +68,14 @@ export class S3FileRepository implements FileRepository {
    * @param uri The URI of the file to find.
    * @returns The file, if found. Otherwise, undefined.
    */
-  async findFile(uri: string): Promise<File | undefined> {
+  async findFile(uri: string): Promise<RepositoryFile | undefined> {
     const result = await this.store.get(uri)
     if (!result) {
       return undefined
     }
     const type = lookup(uri) || 'application/octet-stream'
     const data: ArrayBuffer = result.buffer
-    const file: File = { data, type, uri }
+    const file: RepositoryFile = { data, type, uri }
     return file
   }
 

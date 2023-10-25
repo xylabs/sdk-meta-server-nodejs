@@ -7,7 +7,8 @@ export class MemoryFileRepository implements FileRepository {
   protected files = new LRUCache<string, RepositoryFile>({ max: 1000 })
   constructor() {}
 
-  addFile(file: RepositoryFile): Promise<void> {
+  async addFile(file: RepositoryFile): Promise<void> {
+    await file.data
     this.files.set(file.uri, file)
     return Promise.resolve()
   }

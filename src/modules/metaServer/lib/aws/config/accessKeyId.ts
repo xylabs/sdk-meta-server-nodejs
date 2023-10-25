@@ -1,13 +1,3 @@
-import { hasEnvVar, tryGetEnvVar } from '../../env'
+import { generateEnvVarHelpers } from '../../env'
 
-/**
- * Checks if the AWS_ACCESS_KEY_ID environment variable is defined
- * @returns true if the AWS_ACCESS_KEY_ID environment variable is defined
- */
-export const hasAccessKeyId = (): boolean => hasEnvVar('AWS_ACCESS_KEY_ID')
-
-/**
- * Checks if the AWS_ACCESS_KEY_ID environment variable is defined
- * @returns true if the AWS_ACCESS_KEY_ID environment variable is defined
- */
-export const getAccessKeyId = (): string | undefined => tryGetEnvVar('AWS_ACCESS_KEY_ID')
+export const { hasEnvVar: hasAccessKeyId, tryGetEnvVar: tryGetAccessKeyId, getEnvVar: getAccessKeyId } = generateEnvVarHelpers('AWS_ACCESS_KEY_ID')

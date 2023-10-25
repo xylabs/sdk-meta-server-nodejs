@@ -10,6 +10,8 @@ interface AppAccessTokenResponse {
   token_type: 'bearer'
 }
 
+// TODO: We could reflect in on the token and find the expiration and cache until expired
+
 /**
  * Obtains an access token for the app.
  * https://developers.facebook.com/docs/facebook-login/guides/access-tokens#generating-an-app-access-token

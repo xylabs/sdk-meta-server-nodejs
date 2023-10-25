@@ -3,8 +3,7 @@ import { describeIf } from '@xylabs/jest-helpers'
 import { readFile } from 'fs/promises'
 import { basename, join } from 'path'
 
-import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig'
-import { hasAwsS3ClientConfig } from '../../hasAwsS3ClientConfig'
+import { getAwsS3ClientConfig, hasAwsS3ClientConfig } from '../../../../aws'
 import { S3FileRepository } from '../S3FileRepository'
 
 const TEST_BUCKET = process.env.TEST_BUCKET || 'meta-server-unit-tests'

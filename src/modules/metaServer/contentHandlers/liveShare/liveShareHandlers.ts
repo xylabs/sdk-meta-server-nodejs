@@ -14,6 +14,7 @@ import {
   getFileRepository,
   getUriBehindProxy,
   ImageCache,
+  MemoryFileRepository,
   preCacheFacebookShare,
   RepositoryFile,
   RouteMatcher,
@@ -44,6 +45,7 @@ const imageGenerationCompletionPollingInterval = 100
 const maxImageGenerationWait = 8000
 
 const imageCache: ImageCache = getImageCache()
+const imageRepository = getFileRepository()
 
 function stringToArrayBuffer(str: string): ArrayBuffer {
   const encoder = new TextEncoder() // Typically UTF-8 encoding by default
@@ -61,7 +63,7 @@ const getPageHandler = (baseDir: string) => {
   const filePath = join(baseDir, 'index.html')
   assertEx(existsSync(filePath), 'Missing index.html')
   const indexHtml = readFileSync(filePath, { encoding: 'utf-8' })
-  const pageRepository = getFileRepository()
+  const pageRepository = new MemoryFileRepository()
 
   const pageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
@@ -69,7 +71,7 @@ const getPageHandler = (baseDir: string) => {
       try {
         const uri = getUriBehindProxy(req)
         console.log(`[liveShare][pageHandler][${uri}]: called`)
-        const cachedHtml = await pageRepository.findFile(uri)
+        const cachedHtml = await pageRepository.findFile(adjustedPath)
         if (cachedHtml) {
           console.log(`[liveShare][pageHandler][${uri}]: return cached`)
           const html = arrayBufferToString(await cachedHtml.data)
@@ -80,7 +82,7 @@ const getPageHandler = (baseDir: string) => {
           const updatedHtml = await useIndexAndDeferredPreviewImage(uri, imageCache, indexHtml)
           console.log(`[liveShare][pageHandler][${uri}]: caching`)
           const data = stringToArrayBuffer(updatedHtml)
-          const file: RepositoryFile = { data, type: 'text/html', uri }
+          const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
           await pageRepository.addFile(file)
           console.log(`[liveShare][pageHandler][${uri}]: pre-caching social media share image`)
           await preCacheFacebookShare(uri)

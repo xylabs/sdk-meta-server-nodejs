@@ -8,9 +8,18 @@ import { existsSync, readFileSync } from 'fs'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { extname, join } from 'path'
 
-import { createGlobMatcher, getAdjustedPath, getUriBehindProxy, ImageCache, preCacheFacebookShare, RouteMatcher } from '../../lib'
+import {
+  createGlobMatcher,
+  getAdjustedPath,
+  getFileRepository,
+  getUriBehindProxy,
+  ImageCache,
+  preCacheFacebookShare,
+  RepositoryFile,
+  RouteMatcher,
+} from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, getPageCache, getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
+import { getImageCache, getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -36,12 +45,23 @@ const maxImageGenerationWait = 8000
 
 const imageCache: ImageCache = getImageCache()
 
+function stringToArrayBuffer(str: string): ArrayBuffer {
+  const encoder = new TextEncoder() // Typically UTF-8 encoding by default
+  const uint8Array = encoder.encode(str)
+  return uint8Array.buffer
+}
+
+function arrayBufferToString(buffer: ArrayBuffer): string {
+  const decoder = new TextDecoder() // Typically UTF-8 decoding by default
+  return decoder.decode(buffer)
+}
+
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
   const filePath = join(baseDir, 'index.html')
   assertEx(existsSync(filePath), 'Missing index.html')
   const indexHtml = readFileSync(filePath, { encoding: 'utf-8' })
-  const pageCache = getPageCache()
+  const pageRepository = getFileRepository()
 
   const pageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
@@ -49,16 +69,19 @@ const getPageHandler = (baseDir: string) => {
       try {
         const uri = getUriBehindProxy(req)
         console.log(`[liveShare][pageHandler][${uri}]: called`)
-        const cachedHtml = pageCache.get(uri)
+        const cachedHtml = await pageRepository.findFile(uri)
         if (cachedHtml) {
           console.log(`[liveShare][pageHandler][${uri}]: return cached`)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(cachedHtml)
+          const html = arrayBufferToString(await cachedHtml.data)
+          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
           return
         } else {
           console.log(`[liveShare][pageHandler][${uri}]: rendering`)
           const updatedHtml = await useIndexAndDeferredPreviewImage(uri, imageCache, indexHtml)
           console.log(`[liveShare][pageHandler][${uri}]: caching`)
-          pageCache.set(uri, updatedHtml)
+          const data = stringToArrayBuffer(updatedHtml)
+          const file: RepositoryFile = { data, type: 'text/html', uri }
+          await pageRepository.addFile(file)
           console.log(`[liveShare][pageHandler][${uri}]: pre-caching social media share image`)
           await preCacheFacebookShare(uri)
           console.log(`[liveShare][pageHandler][${uri}]: return html`)

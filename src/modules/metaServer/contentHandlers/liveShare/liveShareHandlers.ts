@@ -48,6 +48,8 @@ const maxImageGenerationWait = 8000
  */
 const imageRepository = getFileRepository()
 
+const disableCaching = true
+
 function stringToArrayBuffer(str: string): ArrayBuffer {
   const encoder = new TextEncoder() // Typically UTF-8 encoding by default
   const uint8Array = encoder.encode(str)
@@ -73,7 +75,7 @@ const getPageHandler = (baseDir: string) => {
         const uri = getUriBehindProxy(req)
         console.log(`[liveShare][pageHandler][${uri}]: called`)
         const cachedHtml = await pageRepository.findFile(adjustedPath)
-        if (cachedHtml) {
+        if (cachedHtml && !disableCaching) {
           console.log(`[liveShare][pageHandler][${uri}]: return cached`)
           const html = arrayBufferToString(await cachedHtml.data)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)

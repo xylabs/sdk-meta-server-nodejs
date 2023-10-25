@@ -1,4 +1,4 @@
-import { getContentType, getContentTypeViaLookup } from '../getContentType'
+import { getContentType } from '../getContentType'
 
 const pathsWithRealExtensions = [
   'index.html',
@@ -23,13 +23,12 @@ const pathsWithFakeExtensions = [
   'https://beta.explore.xyo.network/schema/network.xyo.domain',
 ]
 
-describe.each([getContentType, getContentTypeViaLookup])('getContentType', (sut) => {
+describe('getContentType', () => {
   it.each(pathsWithRealExtensions)('Returns string for known file extensions', (uri) => {
-    const actual = sut(uri)
+    const actual = getContentType(uri)
     expect(actual).toBeString()
-    console.log(actual)
   })
   it.each(pathsWithFakeExtensions)('Returns false for unrecognized file extensions', (uri) => {
-    expect(sut(uri)).toBe(false)
+    expect(getContentType(uri)).toBe(false)
   })
 })

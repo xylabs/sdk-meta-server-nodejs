@@ -8,7 +8,7 @@ import { existsSync, readFileSync } from 'fs'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { extname, join } from 'path'
 
-import { createGlobMatcher, getAdjustedPath, getUriBehindProxy, preCacheFacebookShare, RouteMatcher } from '../../lib'
+import { createGlobMatcher, getAdjustedPath, getUriBehindProxy, ImageCache, preCacheFacebookShare, RouteMatcher } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 import { getImageCache, getPageCache, getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
 
@@ -34,7 +34,7 @@ const imageGenerationCompletionPollingInterval = 100
  */
 const maxImageGenerationWait = 8000
 
-const imageCache = getImageCache()
+const imageCache: ImageCache = getImageCache()
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists

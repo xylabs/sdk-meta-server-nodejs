@@ -3,10 +3,8 @@ import { describeIf } from '@xylabs/jest-helpers'
 import { readFile } from 'fs/promises'
 import { basename, join } from 'path'
 
-import { getAwsS3ClientConfig, hasAwsS3ClientConfig } from '../../../../aws'
+import { getAwsS3ClientConfig, getDefaultTestBucket, hasAwsS3ClientConfig } from '../../../../aws'
 import { S3FileRepository } from '../S3FileRepository'
-
-const TEST_BUCKET = process.env.TEST_BUCKET || 'meta-server-unit-tests'
 
 describeIf(hasAwsS3ClientConfig())('S3FileRepository', () => {
   let config: S3ClientConfig
@@ -29,7 +27,7 @@ describeIf(hasAwsS3ClientConfig())('S3FileRepository', () => {
       testKey = `${generateUniqueKey(basename(file))}`
     })
     beforeEach(() => {
-      sut = new S3FileRepository(TEST_BUCKET, config)
+      sut = new S3FileRepository(getDefaultTestBucket(), config)
     })
     afterEach(async () => {
       await sut.removeFile(testKey)

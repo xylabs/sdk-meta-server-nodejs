@@ -4,10 +4,9 @@ import { readFile } from 'fs/promises'
 import { basename, join } from 'path'
 
 import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig'
+import { getDefaultTestBucket } from '../../getDefaultBucket'
 import { hasAwsS3ClientConfig } from '../../hasAwsS3ClientConfig'
 import { S3Store } from '../S3Store'
-
-const TEST_BUCKET = process.env.TEST_BUCKET || 'meta-server-unit-tests'
 
 describeIf(hasAwsS3ClientConfig())('S3Store', () => {
   let config: S3ClientConfig
@@ -31,7 +30,7 @@ describeIf(hasAwsS3ClientConfig())('S3Store', () => {
       testKey = `${generateUniqueKey(basename(file))}`
     })
     beforeEach(() => {
-      sut = new S3Store(TEST_BUCKET, config)
+      sut = new S3Store(getDefaultTestBucket(), config)
     })
     afterEach(async () => {
       await sut.delete(testKey)

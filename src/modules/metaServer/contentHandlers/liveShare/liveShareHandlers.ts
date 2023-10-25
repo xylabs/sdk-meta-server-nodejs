@@ -104,7 +104,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   try {
     const uri = getUriBehindProxy(req)
     console.log(`[liveShare][imageHandler][${uri}]: called`)
-    let imageTask = imageRepository.findFile(uri)
+    let imageTask = await imageRepository.findFile(uri)
     if (!imageTask) {
       console.log(`[liveShare][imageHandler][${uri}]: generating image`)
       // Render the page and generate the image
@@ -114,11 +114,11 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
       do {
         await delay(imageGenerationCompletionPollingInterval)
         imageGenerationWait += imageGenerationCompletionPollingInterval
-        imageTask = imageRepository.findFile(uri)
+        imageTask = await imageRepository.findFile(uri)
       } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
     }
     console.log(`[liveShare][imageHandler][${uri}]: awaiting image generation`)
-    const image = await imageTask
+    const image = await imageTask?.data
     if (image) {
       console.log(`[liveShare][imageHandler][${uri}]: returning image`)
       res.type('png').set('Cache-Control', imageCacheControlHeader).send(image)

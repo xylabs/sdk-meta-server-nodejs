@@ -1,7 +1,7 @@
-import { ImageCache } from '../../../../../lib'
+import { FileRepository } from '../../../../../lib'
 import { getLiveSharePreviewUrlFromHtmlMeta, getRenderedPageAsImage } from '../../image'
 
-export const getPagePreviewImage = async (url: string, imageCache: ImageCache): Promise<void> => {
+export const getPagePreviewImage = async (url: string, imageCache: FileRepository): Promise<void> => {
   console.log(`[liveShare][getPagePreviewImage][${url}]: getting preview URL from page`)
   // Extract the preview image URL from the meta element & decode it
   const previewUrl = await getLiveSharePreviewUrlFromHtmlMeta(url)

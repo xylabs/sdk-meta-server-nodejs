@@ -1,10 +1,10 @@
 import { metaBuilder } from '@xyo-network/sdk-meta'
 
-import { ImageCache } from '../../../../../lib'
+import { FileRepository } from '../../../../../lib'
 import { getRenderedPageAsImage } from '../../image'
 import { getPreviewUrl } from '../../url'
 
-export const useIndexAndPreviewImage = async (url: string, imageCache: ImageCache, indexHtml: string): Promise<string> => {
+export const useIndexAndPreviewImage = async (url: string, imageCache: FileRepository, indexHtml: string): Promise<string> => {
   try {
     console.log(`[liveShare][useIndexAndPreviewImage][${url}]: rendering`)
     const previewUrl = getPreviewUrl(url)

@@ -1,9 +1,9 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
 import { lookup } from 'mime-types'
 
-import { S3Store } from '../store'
-import { FileRepository } from './FileRepository'
-import { RepositoryFile } from './RepositoryFile'
+import { S3Store } from '../../../aws'
+import { FileRepository } from '../FileRepository'
+import { RepositoryFile } from '../RepositoryFile'
 
 export class S3FileRepository implements FileRepository {
   private store: S3Store

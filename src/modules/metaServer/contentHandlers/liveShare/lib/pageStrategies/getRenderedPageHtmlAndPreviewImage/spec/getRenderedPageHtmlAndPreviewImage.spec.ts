@@ -1,7 +1,7 @@
 import { ForgetPromise } from '@xylabs/forget'
 import { mock } from 'jest-mock-extended'
 
-import { defaultViewportSize, ImageCache } from '../../../../../../lib'
+import { defaultViewportSize, FileRepository } from '../../../../../../lib'
 import { getImageUrl } from '../../../image'
 import { getRenderedPageHtmlAndPreviewImage } from '../getRenderedPageHtmlAndPreviewImage'
 
@@ -18,7 +18,7 @@ describe.skip('getRenderedPageHtmlAndPreviewImage', () => {
       const { width, height } = defaultViewportSize
       const url = `${domain}/netflix/insights/${hash}`
       const imageUrl = getImageUrl(`${url}/preview`, width, height)
-      const imageCache = mock<ImageCache>()
+      const imageCache = mock<FileRepository>()
       const newHtml = await getRenderedPageHtmlAndPreviewImage(url, imageCache)
       expect(newHtml).toBeString()
       expect(newHtml).toContain(`<meta property="og:image" content="${imageUrl}">`)

@@ -1,6 +1,6 @@
 import { mock } from 'jest-mock-extended'
 
-import { ImageCache } from '../../../../../lib'
+import { FileRepository } from '../../../../../lib'
 import { getRenderedPageAsImage } from '../getRenderedPageAsImage'
 
 describe.skip('getRenderedPageAsImage', () => {
@@ -17,7 +17,7 @@ describe.skip('getRenderedPageAsImage', () => {
     console.error(`Average: ${average}ms`)
   })
   it('perf test', async () => {
-    const imageCache = mock<ImageCache>()
+    const imageCache = mock<FileRepository>()
     const url = 'https://www.google.com'
     const start = Date.now()
     const iterations = 10

@@ -2,8 +2,9 @@ import { forget } from '@xylabs/forget'
 import { Meta, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 
 import {
-  ImageCache,
+  FileRepository,
   join,
+  RepositoryFile,
   summaryCardImageFromPage,
   summaryCardViewport,
   summaryCardWithLargeImageFromPage,
@@ -21,8 +22,9 @@ const useLargeImage = true
 const { height, width } = useLargeImage ? summaryCardWithLargeImageViewport : summaryCardViewport
 const twitterCardGenerator = useLargeImage ? summaryCardWithLargeImageFromPage : summaryCardImageFromPage
 
-export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Meta | undefined => {
+export const getRenderedPageAsImage = (url: string, imageCache: FileRepository): Meta | undefined => {
   console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation`)
+  let imageUrl: string | undefined = undefined
   forget(
     useSpaPage(url, async (page) => {
       try {
@@ -33,8 +35,9 @@ export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Met
         const imageTask = twitterCardGenerator(page)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: caching`)
         const previewUrl = join(url, 'preview')
-        const imageUrl = getImageUrl(previewUrl, width, height)
-        imageCache.set(imageUrl, imageTask)
+        imageUrl = getImageUrl(previewUrl, width, height)
+        const file: RepositoryFile = { data: imageTask, type: 'image/png', uri: imageUrl }
+        await imageCache.addFile(file)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: awaiting generation`)
         await imageTask
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: complete`)
@@ -42,7 +45,9 @@ export const getRenderedPageAsImage = (url: string, imageCache: ImageCache): Met
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: error`)
         console.log(error)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: removing cached`)
-        imageCache.delete(url)
+        if (imageUrl) {
+          await imageCache.removeFile(imageUrl)
+        }
       }
     }),
   )

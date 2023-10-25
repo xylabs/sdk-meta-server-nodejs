@@ -13,14 +13,13 @@ import {
   getAdjustedPath,
   getFileRepository,
   getUriBehindProxy,
-  ImageCache,
   MemoryFileRepository,
   preCacheFacebookShare,
   RepositoryFile,
   RouteMatcher,
 } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getImageCache, getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
+import { getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -44,7 +43,9 @@ const imageGenerationCompletionPollingInterval = 100
  */
 const maxImageGenerationWait = 8000
 
-const imageCache: ImageCache = getImageCache()
+/**
+ * Repository used for caching generated images
+ */
 const imageRepository = getFileRepository()
 
 function stringToArrayBuffer(str: string): ArrayBuffer {
@@ -79,7 +80,7 @@ const getPageHandler = (baseDir: string) => {
           return
         } else {
           console.log(`[liveShare][pageHandler][${uri}]: rendering`)
-          const updatedHtml = await useIndexAndDeferredPreviewImage(uri, imageCache, indexHtml)
+          const updatedHtml = await useIndexAndDeferredPreviewImage(uri, imageRepository, indexHtml)
           console.log(`[liveShare][pageHandler][${uri}]: caching`)
           const data = stringToArrayBuffer(updatedHtml)
           const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
@@ -103,17 +104,17 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   try {
     const uri = getUriBehindProxy(req)
     console.log(`[liveShare][imageHandler][${uri}]: called`)
-    let imageTask = imageCache.get(uri)
+    let imageTask = imageRepository.findFile(uri)
     if (!imageTask) {
       console.log(`[liveShare][imageHandler][${uri}]: generating image`)
       // Render the page and generate the image
       const pageUrl = getPageUrlFromImageUrl(uri)
-      forget(getPagePreviewImage(pageUrl, imageCache))
+      forget(getPagePreviewImage(pageUrl, imageRepository))
       let imageGenerationWait = 0
       do {
         await delay(imageGenerationCompletionPollingInterval)
         imageGenerationWait += imageGenerationCompletionPollingInterval
-        imageTask = imageCache.get(uri)
+        imageTask = imageRepository.findFile(uri)
       } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
     }
     console.log(`[liveShare][imageHandler][${uri}]: awaiting image generation`)

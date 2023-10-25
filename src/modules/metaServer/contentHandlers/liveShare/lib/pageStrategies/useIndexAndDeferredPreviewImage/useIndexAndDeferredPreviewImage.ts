@@ -1,9 +1,9 @@
 import { metaBuilder } from '@xyo-network/sdk-meta'
 
-import { ImageCache } from '../../../../../lib'
+import { FileRepository } from '../../../../../lib'
 import { getLiveSharePreviewUrlFromHtmlMeta, getPagePreviewImageMeta, getRenderedPageAsImage } from '../../image'
 
-export const useIndexAndDeferredPreviewImage = async (url: string, imageCache: ImageCache, indexHtml: string): Promise<string> => {
+export const useIndexAndDeferredPreviewImage = async (url: string, imageCache: FileRepository, indexHtml: string): Promise<string> => {
   try {
     console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: getting preview URL from page`)
     // Extract the preview image URL from the meta element & decode it

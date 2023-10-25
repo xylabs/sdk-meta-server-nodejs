@@ -1,7 +1,7 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
-import { lookup } from 'mime-types'
 
 import { S3Store } from '../../../aws'
+import { getContentType } from '../../../file'
 import { FileRepository } from '../FileRepository'
 import { RepositoryFile } from '../RepositoryFile'
 
@@ -20,7 +20,7 @@ export class S3FileRepository implements FileRepository {
     const key = file.uri
     const value = new Uint8Array(await file.data)
     // If contentType isn't provided, determine it from the file uri (which should have the extension)
-    const type = file.type || lookup(file.uri) || 'application/octet-stream'
+    const type = file.type || getContentType(file.uri) || 'application/octet-stream'
     await this.store.set(key, value, type)
   }
 
@@ -34,7 +34,7 @@ export class S3FileRepository implements FileRepository {
     if (!result) {
       return undefined
     }
-    const type = lookup(uri) || 'application/octet-stream'
+    const type = getContentType(uri) || 'application/octet-stream'
     const data: ArrayBuffer = result.buffer
     const file: RepositoryFile = { data, type, uri }
     return file

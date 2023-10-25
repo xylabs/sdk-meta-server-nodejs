@@ -1,3 +1,3 @@
 declare module 'mime' {
-  export function getType(path: string): string
+  export function getType(path: string): string | null
 }

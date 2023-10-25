@@ -121,7 +121,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     const image = await imageTask?.data
     if (image) {
       console.log(`[liveShare][imageHandler][${uri}]: returning image`)
-      res.type('png').set('Cache-Control', imageCacheControlHeader).send(image)
+      res.type('png').set('Cache-Control', imageCacheControlHeader).send(Buffer.from(image))
     } else {
       console.log(`[liveShare][imageHandler][${uri}]: returning ${ReasonPhrases.GATEWAY_TIMEOUT}}`)
       res.sendStatus(StatusCodes.GATEWAY_TIMEOUT)

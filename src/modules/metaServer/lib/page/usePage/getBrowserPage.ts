@@ -1,11 +1,23 @@
 import { Browser, Page } from 'puppeteer'
 
-const useFirstTab = false
+const useFirstTab = true
 
-export type GetBrowserPage = (browser: Browser) => Promise<Page>
+export type GetBrowserPage = (browser: Browser, origin: string) => Promise<Page>
 
-const getFirstTab: GetBrowserPage = async (browser: Browser) => (await browser.pages())[0]
-const getNewPage: GetBrowserPage = (browser: Browser) => browser.newPage()
+const getFirstTab: GetBrowserPage = async (browser: Browser, origin: string) => {
+  let page = (await browser.pages())[0]
+  console.log(`getFirstTab: [${page.url()}] [${origin}]`)
+  if (page.url() !== origin) {
+    page = await browser.newPage()
+    await page.goto(origin)
+  }
+  return page
+}
+const getNewPage: GetBrowserPage = async (browser: Browser, origin: string) => {
+  const page = await browser.newPage()
+  await page.goto(origin)
+  return page
+}
 
 const pageGetter = useFirstTab ? getFirstTab : getNewPage
 
@@ -15,4 +27,4 @@ const pageGetter = useFirstTab ? getFirstTab : getNewPage
  * or new page without changing the calling code.
  * @returns A function to get a page from the browser
  */
-export const getBrowserPage = (browser: Browser) => pageGetter(browser)
+export const getBrowserPage = (browser: Browser, origin: string) => pageGetter(browser, origin)

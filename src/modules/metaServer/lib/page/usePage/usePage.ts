@@ -38,7 +38,7 @@ export const usePage = async <T>(
   let page: Page | undefined = undefined
   try {
     browser = await useBrowser(defaultViewport)
-    page = await getBrowserPage(browser)
+    page = await getBrowserPage(browser, url)
     await page.goto(url, pageGotoOptions)
     return await pageCallback(page)
   } catch (err) {

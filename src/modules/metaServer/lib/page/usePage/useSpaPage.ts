@@ -1,4 +1,5 @@
-import { forget } from '@xylabs/forget'
+/* eslint-disable max-statements */
+import { Mutex } from 'async-mutex'
 import { Browser, Page, Viewport, WaitForOptions } from 'puppeteer'
 
 import { defaultViewportSize, useBrowser } from '../../browser'
@@ -29,6 +30,13 @@ export const useSpaPageWaitForOptions: WaitForOptions = {
   // waitUntil: 'domcontentloaded',
 }
 
+let _browser: Browser | undefined = undefined
+let _page: Page | undefined = undefined
+
+const pageMutex = new Mutex()
+const reusePage = true
+const reuseBrowser = true
+
 /**
  * Helper for navigating to a url within a SPA (like React). This
  * helper first navigates to the root, then uses the browser history
@@ -50,17 +58,21 @@ export const useSpaPage = async <T>(
   pageCallback: (page: Page) => Promise<T> | T,
   browserOptions: Viewport = viewPortDefaults,
   _waitForOptions: WaitForOptions = useSpaPageWaitForOptions,
-) => {
-  const parsed = new URL(url)
-  const { origin, pathname, search } = parsed
-  const relativePath = search ? `${pathname}${search}` : pathname
-  let browser: Browser | undefined = undefined
-  let page: Page | undefined = undefined
+  tryCount = 2,
+): Promise<T | undefined> => {
+  await pageMutex.acquire()
   try {
-    browser = await useBrowser(browserOptions)
-    page = await getBrowserPage(browser)
+    if (tryCount < 1) {
+      return undefined
+    }
+    const parsed = new URL(url)
+    const { origin, pathname, search } = parsed
+    const relativePath = search ? `${pathname}${search}` : pathname
+    const start = Date.now()
+    _browser = _browser ?? (await useBrowser(browserOptions))
+    _page = _page ?? (await getBrowserPage(_browser, origin))
     // First navigate to the root
-    await page.goto(origin)
+    //await page.goto(origin)
 
     // Wait for the div with id "root" to have at least one child.
     // This assumes the child is a direct descendant (using '>').
@@ -70,15 +82,39 @@ export const useSpaPage = async <T>(
     // React Router DOM seems to not listen to pushState but does
     // listen to back.  So we push state to the desired path twice,
     // then go back once to trigger the navigation.
-    await page.evaluate((relativePath) => window.history.pushState(null, '', relativePath), relativePath)
-    await page.evaluate((relativePath) => window.history.pushState(null, '', relativePath), relativePath)
-    await page.evaluate(() => window.history.back())
 
-    return await pageCallback(page)
+    console.log(`Trying relative path: ${relativePath}`)
+
+    await _page.evaluate((relativePath) => window.history.pushState(null, '', relativePath), relativePath)
+    await _page.evaluate((relativePath) => window.history.pushState(null, '', relativePath), relativePath)
+    await _page.evaluate(() => window.history.back())
+
+    const duration = Date.now() - start
+
+    console.log(`useSpaPage:profile: ${duration}ms`)
+
+    return await pageCallback(_page)
   } catch (err) {
+    //if it crashed, we restart the browser
+    await _page?.close()
+    await _browser?.close()
+    _page = undefined
+    _browser = undefined
+    pageMutex.release()
     console.log(err)
+    //we retry with a fresh browser and page
+    const result = await useSpaPage(url, pageCallback, browserOptions, _waitForOptions, tryCount - 1)
+    await pageMutex.acquire()
+    return result
   } finally {
-    if (page) forget(page?.close())
-    if (browser) forget(browser?.close())
+    if (!reusePage || !reuseBrowser) {
+      await _page?.close()
+      _page = undefined
+    }
+    if (!reuseBrowser) {
+      await _browser?.close()
+      _browser = undefined
+    }
+    pageMutex.release()
   }
 }

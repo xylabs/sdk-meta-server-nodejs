@@ -43,7 +43,8 @@ yarn add @xylabs/meta-server
 
 ## License
 
-See the [LICENSE](https://github.com/xylabs/sdk-meta-server-nodejs/blob/main/LICENSE) file for license details
+See the [LICENSE](https://github.com/xylabs/sdk-meta-server-nodejs/blob/main/LICENSE)
+file for license details
 
 ## Credits
 

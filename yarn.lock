@@ -4708,7 +4708,7 @@ __metadata:
     "@xylabs/tsconfig-dom": ^3.1.13
     "@xylabs/tsconfig-dom-jest": ^3.1.13
     "@xylabs/tsconfig-jest": ^3.1.13
-    "@xyo-network/axios": ^2.77.7
+    "@xyo-network/axios": ^2.77.9
     "@xyo-network/sdk-meta": ^2.10.1
     async-mutex: ^0.4.0
     axios: ^1.5.1
@@ -4920,21 +4920,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/axios@npm:^2.77.7":
-  version: 2.77.7
-  resolution: "@xyo-network/axios@npm:2.77.7"
+"@xyo-network/axios@npm:^2.77.9":
+  version: 2.77.9
+  resolution: "@xyo-network/axios@npm:2.77.9"
   dependencies:
-    "@xyo-network/shared": ~2.77.7
+    "@xyo-network/shared": ~2.77.9
     axios: ^1.5.1
     pako: ^2.1.0
-  checksum: f787f463ea9aad177014741e0d53f2fd27649ccb990a449169c5082346044c1784f40b590124b576d19ef52fef3d0795a2bbb9beaab337b41a9f884153d382c9
+  checksum: 962fe19ac13aa7129311fd692a4c0361eb6d6003455c9cc7fb536cf5d69ca1b83fdb4cd76fc4a1ca498e90d6aee5e4aa260577c1e16d4bd40403b7c7825d9985
   languageName: node
   linkType: hard
 
-"@xyo-network/error@npm:~2.77.7":
-  version: 2.77.7
-  resolution: "@xyo-network/error@npm:2.77.7"
-  checksum: e454733e232916561ebd7869ba39f74dda7881d8b735186f33ffb6124e8b4caf91b64f239c04107cc3a3853d396095a20cf259e8686cf8ebe53b456e58e8a449
+"@xyo-network/error@npm:~2.77.9":
+  version: 2.77.9
+  resolution: "@xyo-network/error@npm:2.77.9"
+  checksum: ea3c6863e633c72f02b09adf18199b97515250661290f3cd48f566efc6be803ba8662c84e6316581873bde46ac9059645e8c5e51af810c6c7b72e55685ac5df1
   languageName: node
   linkType: hard
 
@@ -4947,12 +4947,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/shared@npm:~2.77.7":
-  version: 2.77.7
-  resolution: "@xyo-network/shared@npm:2.77.7"
+"@xyo-network/shared@npm:~2.77.9":
+  version: 2.77.9
+  resolution: "@xyo-network/shared@npm:2.77.9"
   dependencies:
-    "@xyo-network/error": ~2.77.7
-  checksum: 556af0d22eaa7ae01eeb4169b05b759076ff33af02524ad2989ae907327cab74af0bff435f851a5ad85500b746f798b5c8be102748402adb611e789b1d0683fd
+    "@xyo-network/error": ~2.77.9
+  checksum: 96b2602ab670f13dbf410c27ae1df889626f5a8dd7bfda0a1e4b805f1af8b2357cc37415c53e03519464a6767e5461b24d96f931d76e47b501ec0579f03b1f68
   languageName: node
   linkType: hard
 

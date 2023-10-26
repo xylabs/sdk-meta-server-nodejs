@@ -48,7 +48,7 @@ const maxImageGenerationWait = 8000
  */
 const imageRepository = getFileRepository()
 
-const disableCaching = true
+const disableCaching = false
 
 function stringToArrayBuffer(str: string): ArrayBuffer {
   const encoder = new TextEncoder() // Typically UTF-8 encoding by default

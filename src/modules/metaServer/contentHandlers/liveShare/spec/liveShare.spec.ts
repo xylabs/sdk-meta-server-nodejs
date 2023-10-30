@@ -25,25 +25,25 @@ describe('liveShare', () => {
     server.close(() => done())
   })
   describe('page meta', () => {
-    const extractContentFromMeta = (property: string, html: string) => {
-      const regex = new RegExp(`<meta property="${property}" content="(.*?)">`)
-      const match = regex.exec(html)
-      return match && match[1]
-    }
     const tests = [
-      { expected: 'http://127.0.0.1:12345/#test', prop: 'xyo:og:image' },
-      { expected: 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png', prop: 'og:image' },
-      { expected: '630', prop: 'og:image:height' },
-      { expected: 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png', prop: 'og:image:secure_url' },
-      { expected: 'image/png', prop: 'og:image:type' },
-      { expected: 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png', prop: 'og:image:url' },
-      { expected: '1200', prop: 'og:image:width' },
-      { expected: 'summary_large_image', prop: 'twitter:card' },
-      { expected: 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png', prop: 'twitter:image' },
+      ['xyo:og:image', 'http://127.0.0.1:12345/#test'],
+      ['og:image', 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png'],
+      ['og:image:height', '630'],
+      ['og:image:secure_url', 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png'],
+      ['og:image:type', 'image/png'],
+      ['og:image:url', 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png'],
+      ['og:image:width', '1200'],
+      ['twitter:card', 'summary_large_image'],
+      ['twitter:image', 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png'],
     ]
-    it.each(tests)('should match the meta properties with the expected values', (test) => {
-      const actual = extractContentFromMeta(test.prop, html)
-      expect(actual).toBe(test.expected)
+    it.each(tests)('should match the meta property %s set to %s', (prop, expected) => {
+      const actual = extractContentFromMeta(prop)
+      expect(actual).toBe(expected)
+    })
+  })
+  describe.skip('page preview image', () => {
+    it('should return the preview image', async () => {
+      const result = await testClient.get('/other.html/preview/1200/630/img.png').expect(StatusCodes.OK)
     })
   })
 })

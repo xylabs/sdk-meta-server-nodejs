@@ -60,7 +60,7 @@ describe('liveShare', () => {
   })
   describe('page preview image', () => {
     it('should return the preview image', async () => {
-      const result = await testClient.get(`/${requestedPage}/preview/${width}/${height}/img.png`).expect(StatusCodes.OK)
+      const result = await testClient.get(previewImagePath).expect(StatusCodes.OK)
       expect(result.body).toBeDefined()
       const image = Buffer.from(result.body)
       expect(image).toBeDefined()

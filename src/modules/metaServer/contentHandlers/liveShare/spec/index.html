@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React SPA with React Router v5 and HashRouter</title>
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- React Router DOM from CDN -->
+  <script crossorigin src="https://unpkg.com/react-router-dom@5/umd/react-router-dom.js"></script>
+  <meta property="xyo:og:image" content="#test">
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    const { HashRouter, Route, Switch, Link } = ReactRouterDOM;
+
+    function Home() {
+      return <h1>Home Page</h1>;
+    }
+
+    function Test() {
+      return <h1>Test Page</h1>;
+    }
+
+    function App() {
+      return (
+        <HashRouter>
+          <div>
+            <nav>
+              <ul>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/test">Test</Link></li>
+              </ul>
+            </nav>
+            <Switch>
+              <Route path="/test">
+                <Test />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </div>
+        </HashRouter>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('app'));
+  </script>
+</body>
+
+</html>

@@ -19,10 +19,11 @@ describe.skip('getRenderedPageAsImage', () => {
     const previewUrl = 'https://www.google.com'
     const iterations = 10
     const start = Date.now()
-    // NOTE: This is generally more work that we want to do in the body
-    // of a perf test.  However, what we want here it to get a general
-    // feel as to what the performance will be like when we are generating
-    // under load.  This is a good approximation of that.
+    // NOTE: This is more work than we want to do in the body
+    // of a perf test.  However, what we want here is to get a
+    // general feel as to what the performance will be like
+    // when we are operating under load.  This is a good
+    // place for the approximation of that.
     for (let i = 0; i < iterations; i++) {
       // Generate test url
       const url = `https://www.google.com/preview/${i}`

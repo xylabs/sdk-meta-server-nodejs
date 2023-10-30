@@ -1,0 +1,6 @@
+{
+  "liveShare": {
+    "exclude": ["/index.html"],
+    "include": ["/other.html"]
+  }
+}

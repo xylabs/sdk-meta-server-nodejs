@@ -44,7 +44,7 @@ export const getRenderedPageAsImage = (url: string, previewUrl: string, imageRep
         const data = twitterCardGenerator(page)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: caching`)
         imageUrl = getImageUrl(join(url, 'preview'), width, height)
-        const file: RepositoryFile = { data, type, uri: url }
+        const file: RepositoryFile = { data, type, uri: imageUrl }
         await imageRepository.addFile(file)
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: awaiting generation`)
         await data

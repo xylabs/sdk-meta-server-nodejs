@@ -26,7 +26,7 @@ describe('liveShare', () => {
   })
   describe('page meta', () => {
     const tests = [
-      ['xyo:og:image', 'http://127.0.0.1:12345/#test'],
+      ['xyo:og:image', 'http://127.0.0.1:12345/index.html'],
       ['og:image', 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png'],
       ['og:image:height', '630'],
       ['og:image:secure_url', 'http://127.0.0.1:12345/other.html/preview/1200/630/img.png'],
@@ -41,7 +41,7 @@ describe('liveShare', () => {
       expect(actual).toBe(expected)
     })
   })
-  describe.skip('page preview image', () => {
+  describe('page preview image', () => {
     it('should return the preview image', async () => {
       const result = await testClient.get('/other.html/preview/1200/630/img.png').expect(StatusCodes.OK)
     })

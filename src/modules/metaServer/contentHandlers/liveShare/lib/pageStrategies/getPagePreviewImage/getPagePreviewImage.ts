@@ -7,5 +7,5 @@ export const getPagePreviewImage = async (url: string, imageCache: FileRepositor
   const previewUrl = await getLiveSharePreviewUrlFromHtmlMeta(url)
   console.log(`[liveShare][getPagePreviewImage][${url}]: rendering in background`)
   // Initiate the image generation but don't await it
-  getRenderedPageAsImage(previewUrl, imageCache)
+  getRenderedPageAsImage(url, previewUrl, imageCache)
 }

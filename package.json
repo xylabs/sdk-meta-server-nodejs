@@ -125,7 +125,7 @@
     "start": "nodemon",
     "start-cjs": "node ./dist/node/bin/start-meta.js",
     "start-esm": "node ./dist/node/bin/start-meta.mjs",
-    "test": "yarn jest"
+    "test": "yarn jest --forceExit"
   },
   "sideEffects": false,
   "types": "dist/node/index.d.ts",

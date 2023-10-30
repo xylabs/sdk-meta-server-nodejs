@@ -1,11 +1,11 @@
 import { FileRepository } from '../../../../../lib'
 import { getLiveSharePreviewUrlFromHtmlMeta, getRenderedPageAsImage } from '../../image'
 
-export const getPagePreviewImage = async (url: string, imageCache: FileRepository): Promise<void> => {
+export const getPagePreviewImage = async (url: string, imageRepository: FileRepository): Promise<void> => {
   console.log(`[liveShare][getPagePreviewImage][${url}]: getting preview URL from page`)
   // Extract the preview image URL from the meta element & decode it
   const previewUrl = await getLiveSharePreviewUrlFromHtmlMeta(url)
   console.log(`[liveShare][getPagePreviewImage][${url}]: rendering in background`)
   // Initiate the image generation but don't await it
-  getRenderedPageAsImage(url, previewUrl, imageCache)
+  getRenderedPageAsImage(url, previewUrl, imageRepository)
 }

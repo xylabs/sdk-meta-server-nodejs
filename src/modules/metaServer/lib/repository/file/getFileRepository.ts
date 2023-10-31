@@ -13,10 +13,10 @@ let repository: FileRepository | undefined
 export const getFileRepository: () => FileRepository = () => {
   if (repository === undefined) {
     if (hasBucket()) {
-      console.log('Using S3 file repository')
+      console.log('[getFileRepository][init] Using S3 file repository')
       repository = new S3FileRepository(getBucket(), getAwsS3ClientConfig())
     } else {
-      console.log('Using Memory file repository')
+      console.log('[getFileRepository][init] Using Memory file repository')
       repository = new MemoryFileRepository()
     }
   }

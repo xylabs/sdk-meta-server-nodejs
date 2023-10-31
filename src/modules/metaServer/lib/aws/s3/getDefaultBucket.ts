@@ -1,10 +1,9 @@
+import { generateEnvVarHelpers } from '../../env'
+
 /**
  * Determines the default AWS S3 bucket to use.
- * @returns The default AWS S3 bucket to use.
  */
-export const getDefaultBucket = () => {
-  return process.env.AWS_S3_BUCKET || process.env.PUBLIC_ORIGIN || 'meta-server'
-}
+export const { hasEnvVar: hasDefaultBucket, tryGetEnvVar: tryGetDefaultBucket, getEnvVar: getDefaultBucket } = generateEnvVarHelpers('AWS_S3_BUCKET')
 
 /**
  * Determines the default AWS S3 bucket to use for testing.

@@ -4149,12 +4149,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.8.7, @types/node@npm:^20.8.9":
-  version: 20.8.9
-  resolution: "@types/node@npm:20.8.9"
+"@types/node@npm:*, @types/node@npm:^20.8.10, @types/node@npm:^20.8.7":
+  version: 20.8.10
+  resolution: "@types/node@npm:20.8.10"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 0c05f3502a9507ff27e91dd6fd574fa6f391b3fafedcfe8e0c8d33351fb22d02c0121f854e5b6b3ecb9a8a468407ddf6e7ac0029fb236d4c7e1361ffc758a01f
+  checksum: 7c61190e43e8074a1b571e52ff14c880bc67a0447f2fe5ed0e1a023eb8a23d5f815658edb98890f7578afe0f090433c4a635c7c87311762544e20dd78723e515
   languageName: node
   linkType: hard
 
@@ -4740,7 +4740,7 @@ __metadata:
     "@types/he": ^1.2.2
     "@types/jest": ^29.5.7
     "@types/jest-image-snapshot": ^6.2.2
-    "@types/node": ^20.8.9
+    "@types/node": ^20.8.10
     "@types/serve-static": ^1.15.4
     "@types/supertest": ^2.0.15
     "@xylabs/assert": ^2.13.3
@@ -6169,9 +6169,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001541":
-  version: 1.0.30001558
-  resolution: "caniuse-lite@npm:1.0.30001558"
-  checksum: 1bd6ef855a0de6ff052234912910d699e58edabcf2f34848b7df1f97ee40b059bbdf1901ac919d19360a0603e32e2ac30ae89670ceca8f118e750be3280ef5b1
+  version: 1.0.30001559
+  resolution: "caniuse-lite@npm:1.0.30001559"
+  checksum: 17c7af10244dca2c7ca41c884df19fc4c7313b9b03ed1f9b1f352bffbc871701f35431f766838f669ebe1f9d20627c0c6f2d760a0837538bd1d21de5833020f4
   languageName: node
   linkType: hard
 
@@ -7371,9 +7371,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.535":
-  version: 1.4.570
-  resolution: "electron-to-chromium@npm:1.4.570"
-  checksum: 5b727cedc83215f30a95d17bd2469e87ebd0bed9bae2a1c5835fbb7a0bd22f439f371cf5c68b32c8905676b77d19bf8aa3471baac05f7554c45c08e1abf63b71
+  version: 1.4.571
+  resolution: "electron-to-chromium@npm:1.4.571"
+  checksum: 4e0900ef08e941be51e727fb51ef9375157806de2d6888ec52bdea933a8cd672ad8b68746c9f84d396780b75140fb279e06c5c197a865794436c6c9271fddaa2
   languageName: node
   linkType: hard
 

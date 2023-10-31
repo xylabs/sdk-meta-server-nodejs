@@ -51,7 +51,7 @@
     "@types/he": "^1.2.2",
     "@types/jest": "^29.5.7",
     "@types/jest-image-snapshot": "^6.2.2",
-    "@types/node": "^20.8.9",
+    "@types/node": "^20.8.10",
     "@types/serve-static": "^1.15.4",
     "@types/supertest": "^2.0.15",
     "@xylabs/eslint-config": "^3.1.13",

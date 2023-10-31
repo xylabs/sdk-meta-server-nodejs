@@ -107,6 +107,8 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     const uri = getUriBehindProxy(req)
     console.log(`[liveShare][imageHandler][${uri}]: called`)
     let imageTask = await imageRepository.findFile(uri)
+    // TODO: We can just return a 404 if the image doesn't exist
+    // once we're happy with the persistence-backed caching
     if (!imageTask) {
       console.log(`[liveShare][imageHandler][${uri}]: generating image`)
       // Render the page and generate the image

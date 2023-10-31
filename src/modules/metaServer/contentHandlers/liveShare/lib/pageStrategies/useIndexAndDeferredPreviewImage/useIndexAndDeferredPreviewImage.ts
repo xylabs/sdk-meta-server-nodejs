@@ -10,9 +10,15 @@ export const useIndexAndDeferredPreviewImage = async (url: string, imageReposito
     // Extract the preview image URL from the meta element & decode it
     const previewUrl = await getLiveSharePreviewUrlFromHtmlMeta(url)
 
-    console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: rendering in background`)
-    // Initiate the image generation but don't await it
-    getRenderedPageAsImage(url, previewUrl, imageRepository)
+    // Check if we've already got a preview for this URL
+    const existingImage = await imageRepository.findFile(url)
+    if (existingImage?.data) {
+      console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: image already exists, skipping rendering`)
+    } else {
+      console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: rendering in background`)
+      // Initiate the image generation but don't await it
+      getRenderedPageAsImage(url, previewUrl, imageRepository)
+    }
 
     console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: generating preview image meta`)
     const meta = getPagePreviewImageMeta(url)

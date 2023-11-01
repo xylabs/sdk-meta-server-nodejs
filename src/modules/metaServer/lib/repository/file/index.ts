@@ -1,5 +1,7 @@
+export * from './arrayBufferToString'
 export * from './FileRepository'
 export * from './getFileRepository'
 export * from './memory'
 export * from './RepositoryFile'
 export * from './s3'
+export * from './stringToArrayBuffer'

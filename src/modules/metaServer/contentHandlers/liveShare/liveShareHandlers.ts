@@ -9,6 +9,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { extname, join } from 'path'
 
 import {
+  arrayBufferToString,
   createGlobMatcher,
   getAdjustedPath,
   getFileRepository,
@@ -17,6 +18,7 @@ import {
   preCacheFacebookShare,
   RepositoryFile,
   RouteMatcher,
+  stringToArrayBuffer,
 } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
 import { getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
@@ -48,17 +50,6 @@ const maxImageGenerationWait = 8000
  */
 const imageRepository = () => getFileRepository()
 const disableCaching = false
-
-function stringToArrayBuffer(str: string): ArrayBuffer {
-  const encoder = new TextEncoder() // Typically UTF-8 encoding by default
-  const uint8Array = encoder.encode(str)
-  return uint8Array.buffer
-}
-
-function arrayBufferToString(buffer: ArrayBuffer): string {
-  const decoder = new TextDecoder() // Typically UTF-8 decoding by default
-  return decoder.decode(buffer)
-}
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists

@@ -31,7 +31,7 @@ const indexHtmlMaxAge = 60 * 10
 const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 /**
  * The max-age cache control header time (in seconds)
- * to set for html files
+ * to set for image files
  */
 const imageMaxAge = 60 * 10
 const imageCacheControlHeader = `public, max-age=${imageMaxAge}`
@@ -46,7 +46,13 @@ const imageGenerationCompletionPollingInterval = 100
 const maxImageGenerationWait = 8000
 
 /**
- * Repository used for caching generated images
+ * Repository used for caching generated images.
+ * NOTE: This is lazy loaded to allow for the
+ * environment to be initialized before the
+ * repository is created. Code bundling and
+ * async loading of ENV from AWS can cause
+ * issues if the repository is created before
+ * the environment is fully initialized.
  */
 const imageRepository = () => getFileRepository()
 const disableCaching = false
@@ -130,13 +136,13 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
 const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
   const filePath = join(baseDir, 'xy.config.json')
-  console.log(`[liveShare][init][locating xy.config.json at ${filePath}]`)
+  console.log(`[liveShare][init] Locating xy.config.json at ${filePath}`)
   if (existsSync(filePath)) {
-    console.log('[liveShare][init][located xy.config.json]')
+    console.log('[liveShare][init] Located xy.config.json')
     // Read in config file
-    console.log('[liveShare][init][parsing xy.config.json]')
+    console.log('[liveShare][init] Parsing xy.config.json')
     const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf-8' }))
-    console.log('[liveShare][init][parsed xy.config.json]')
+    console.log('[liveShare][init] Parsed xy.config.json')
     // TODO: Validate xyConfig
     if (xyConfig.liveShare) {
       const { include, exclude } = xyConfig.liveShare
@@ -170,10 +176,6 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
  * Middleware for augmenting HTML metadata for Live Shares
  */
 
-// const liveShareSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => [
-//   'get',
-//   ['/netflix/insights/:hash', getPageHandler(opts.baseDir)],
-// ]
 const liveShareImageHandler = (): MountPathAndMiddleware => ['get', ['*/preview/:width/:height/img.png', imageHandler]]
 
 export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts), liveShareImageHandler()].filter(exists)

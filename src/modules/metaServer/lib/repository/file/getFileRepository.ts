@@ -1,4 +1,4 @@
-import { getAwsS3ClientConfig, getBucket, hasBucket } from '../../aws'
+import { getAwsS3ClientConfig, getBucket, hasBucket, tryGetBucket } from '../../aws'
 import { FileRepository } from './FileRepository'
 import { MemoryFileRepository } from './memory'
 import { S3FileRepository } from './s3'
@@ -12,6 +12,7 @@ let repository: FileRepository | undefined
  */
 export const getFileRepository: () => FileRepository = () => {
   if (repository === undefined) {
+    console.log(`[getFileRepository][init] Configuration for S3 bucket: ${tryGetBucket()}`)
     if (hasBucket()) {
       console.log('[getFileRepository][init] Using S3 file repository')
       repository = new S3FileRepository(getBucket(), getAwsS3ClientConfig())

@@ -46,8 +46,7 @@ const maxImageGenerationWait = 8000
 /**
  * Repository used for caching generated images
  */
-const imageRepository = getFileRepository()
-
+const imageRepository = () => getFileRepository()
 const disableCaching = false
 
 function stringToArrayBuffer(str: string): ArrayBuffer {
@@ -82,7 +81,7 @@ const getPageHandler = (baseDir: string) => {
           return
         } else {
           console.log(`[liveShare][pageHandler][${uri}]: rendering`)
-          const updatedHtml = await useIndexAndDeferredPreviewImage(uri, imageRepository, indexHtml)
+          const updatedHtml = await useIndexAndDeferredPreviewImage(uri, imageRepository(), indexHtml)
           console.log(`[liveShare][pageHandler][${uri}]: caching`)
           const data = stringToArrayBuffer(updatedHtml)
           const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
@@ -106,19 +105,19 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   try {
     const uri = getUriBehindProxy(req)
     console.log(`[liveShare][imageHandler][${uri}]: called`)
-    let imageTask = await imageRepository.findFile(uri)
+    let imageTask = await imageRepository().findFile(uri)
     // TODO: We can just return a 404 if the image doesn't exist
     // once we're happy with the persistence-backed caching
     if (!imageTask) {
       console.log(`[liveShare][imageHandler][${uri}]: generating image`)
       // Render the page and generate the image
       const pageUrl = getPageUrlFromImageUrl(uri)
-      forget(getPagePreviewImage(pageUrl, imageRepository))
+      forget(getPagePreviewImage(pageUrl, imageRepository()))
       let imageGenerationWait = 0
       do {
         await delay(imageGenerationCompletionPollingInterval)
         imageGenerationWait += imageGenerationCompletionPollingInterval
-        imageTask = await imageRepository.findFile(uri)
+        imageTask = await imageRepository().findFile(uri)
       } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
     }
     console.log(`[liveShare][imageHandler][${uri}]: awaiting image generation`)

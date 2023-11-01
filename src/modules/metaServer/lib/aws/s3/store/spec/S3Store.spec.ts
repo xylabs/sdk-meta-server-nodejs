@@ -4,11 +4,10 @@ import { readFile } from 'fs/promises'
 import { basename, join } from 'path'
 
 import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig'
-import { getDefaultTestBucket } from '../../getDefaultBucket'
-import { hasAwsS3ClientConfig } from '../../hasAwsS3ClientConfig'
+import { getDefaultTestBucket, hasBucket } from '../../getDefaultBucket'
 import { S3Store } from '../S3Store'
 
-describeIf(hasAwsS3ClientConfig())('S3Store', () => {
+describeIf(hasBucket())('S3Store', () => {
   let config: S3ClientConfig
   let sut: S3Store
   let testData: Uint8Array

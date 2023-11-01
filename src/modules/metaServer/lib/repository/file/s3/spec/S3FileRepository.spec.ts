@@ -3,10 +3,10 @@ import { describeIf } from '@xylabs/jest-helpers'
 import { readFile } from 'fs/promises'
 import { basename, join } from 'path'
 
-import { getAwsS3ClientConfig, getDefaultTestBucket, hasAwsS3ClientConfig } from '../../../../aws'
+import { getAwsS3ClientConfig, getDefaultTestBucket, hasBucket } from '../../../../aws'
 import { S3FileRepository } from '../S3FileRepository'
 
-describeIf(hasAwsS3ClientConfig())('S3FileRepository', () => {
+describeIf(hasBucket())('S3FileRepository', () => {
   let config: S3ClientConfig
   let sut: S3FileRepository
   let data: ArrayBuffer

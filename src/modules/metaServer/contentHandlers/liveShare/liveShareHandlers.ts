@@ -145,6 +145,10 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
     console.log('[liveShare][init] Parsed xy.config.json')
     // TODO: Validate xyConfig
     if (xyConfig.liveShare) {
+      console.log('[liveShare][init] Initialize repository')
+      imageRepository()
+      console.log('[liveShare][init] Initialized repository')
+      console.log('[liveShare][init] Creating page handler')
       const { include, exclude } = xyConfig.liveShare
       const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
       const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
@@ -166,6 +170,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
           next()
         }
       }
+      console.log('[liveShare][init] Created page handler')
       return ['get', ['/*', liveSharePageHandler]]
     }
     return undefined

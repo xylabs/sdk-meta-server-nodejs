@@ -4969,20 +4969,20 @@ __metadata:
   linkType: hard
 
 "@xyo-network/axios@npm:^2.77.15":
-  version: 2.77.15
-  resolution: "@xyo-network/axios@npm:2.77.15"
+  version: 2.78.2
+  resolution: "@xyo-network/axios@npm:2.78.2"
   dependencies:
-    "@xyo-network/shared": ~2.77.15
+    "@xyo-network/shared": ~2.78.2
     axios: ^1.6.0
     pako: ^2.1.0
-  checksum: 574f0b0fd728a30d9070e253cabec385cfd70939a2a9986d535b25bda3259e813a2e34278806813863bdd4b8d64c0c54323a3a20acf6f4f09d77d6abb09ef606
+  checksum: c9bf7cee4a15702451c78940bb9d1926621ce18c391dda2ee1d896ea5fa8fa445988d5e76cc46e7345d7421d3beda18e72627cf1b510ba4b8e4c7e37a09fb137
   languageName: node
   linkType: hard
 
-"@xyo-network/error@npm:~2.77.15":
-  version: 2.77.15
-  resolution: "@xyo-network/error@npm:2.77.15"
-  checksum: 236931bcf4ba04e7f5a511d682b662fb9e2313f9f29fd458b8730ed40895e0671960d9f6507e7611b0786b5d23e4acabcd02c32a49f9454cad3d7f9699321687
+"@xyo-network/error@npm:~2.78.2":
+  version: 2.78.2
+  resolution: "@xyo-network/error@npm:2.78.2"
+  checksum: bc5729dfc4cfa441d85f2850f5a950e1725bca0d315b7f12adc8e06e5f70592f17f2b21d06aa0fcc03a4facf951706a058ea6f2a4afd1290de883b2f3d76bf47
   languageName: node
   linkType: hard
 
@@ -4995,12 +4995,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/shared@npm:~2.77.15":
-  version: 2.77.15
-  resolution: "@xyo-network/shared@npm:2.77.15"
+"@xyo-network/shared@npm:~2.78.2":
+  version: 2.78.2
+  resolution: "@xyo-network/shared@npm:2.78.2"
   dependencies:
-    "@xyo-network/error": ~2.77.15
-  checksum: 0d94c9b7fec3d1046dac1ba00cce2087b416f748c6b7719418eb371af1c216a182fab176b50110c43c5a0eecf5b40a3fbef61f2907cc347cc8077483bcb66c6b
+    "@xyo-network/error": ~2.78.2
+  checksum: 368d61537cc275d8dd468293760eb8ebf736c60e322cbe3a348f99ce832dea121fefc9c643948d0b8ebfc8766b9b5032e9e875ba85f412a2d8d36c68f9086fc1
   languageName: node
   linkType: hard
 

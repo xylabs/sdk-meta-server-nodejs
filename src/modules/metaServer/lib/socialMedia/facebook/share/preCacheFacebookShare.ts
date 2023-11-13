@@ -34,6 +34,11 @@ export const preCacheFacebookShare = async (url: string): Promise<Partial<PreCac
   const access_token = await tryGetAppAccessToken()
   if (!access_token) return
   const params = { access_token, id: url, scrape }
-  const response = await axios.post<Partial<PreCacheFacebookShareResponse>>(openApiUrl, null, { params })
-  return response.data
+  try {
+    const response = await axios.post<Partial<PreCacheFacebookShareResponse>>(openApiUrl, null, { params })
+    return response.data
+  } catch (error) {
+    console.log(`[preCacheFacebookShare][Error] pre-caching facebook share for ${url}`)
+    console.log(`[preCacheFacebookShare][Error] ${error}`)
+  }
 }

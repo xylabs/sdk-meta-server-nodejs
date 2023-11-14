@@ -10,7 +10,8 @@ import {
   useSpaPage,
 } from '../../../../lib'
 import { getImageUrlFromPageUrl } from '../url'
-import { getPreviewUrlFromPage } from './getPreviewUrlFromPage'
+import { tryGetPreviewUrlFromPage } from './getPreviewUrlFromPage'
+import { pageImageExists } from './pageImageExists'
 
 /**
  * If true, use the large, rectangular image card. If false, use the small,
@@ -33,66 +34,41 @@ const type = 'image/png'
 export const ensureImageExists = (url: string, imageRepository: FileRepository) => {
   console.log(`[liveShare][ensureImageExists][${url}]: backgrounding image task`)
   const task = async () => {
-    const imageUrl: string = getImageUrlFromPageUrl(url, width, height)
-    let previewUrl: string | undefined = undefined
-    try {
-      console.log(`[liveShare][ensureImageExists][${url}]: checking for cached image`)
-      // Check if we've already got a preview for this URL
-      if (imageUrl && (await imageRepository.findFile(imageUrl))) {
-        console.log(`[liveShare][ensureImageExists][${url}]: image already exists, skipping rendering`)
-        return
-      } else {
-        console.log(`[liveShare][ensureImageExists][${url}]: getting preview URL from page`)
-        // Extract the preview image URL from the meta element & decode it
-        previewUrl = await getPreviewUrlFromPage(url)
-      }
-    } catch (error) {
-      console.log(`[liveShare][ensureImageExists][${url}]: error getting preview URL from page`)
-      console.log(`[liveShare][ensureImageExists][${url}]: ${error}`)
-      return
-    }
-    if (!previewUrl) {
-      console.log(`[liveShare][ensureImageExists][${url}]: unable to obtain preview URL from page`)
-      return
-    }
-    console.log(`[liveShare][ensureImageExists][${url}]: rendering`)
-    useSpaPage(previewUrl, async (page) => {
-      try {
-        // TODO: Get selector from request, html-meta prop, or xyo.config
-        const selector = '#preview-container'
-        await page.waitForSelector(selector, { timeout: 30000 })
-        console.log(`[liveShare][ensureImageExists][${url}]: image generation: beginning`)
-        const data = twitterCardGenerator(page)
-        console.log(`[liveShare][ensureImageExists][${url}]: image generation: caching`)
-        const file: RepositoryFile = { data, type, uri: imageUrl }
-        await imageRepository.addFile(file)
-        console.log(`[liveShare][ensureImageExists][${url}]: image generation: awaiting generation`)
-        await data
-        console.log(`[liveShare][ensureImageExists][${url}]: image generation: complete`)
-      } catch (error) {
-        console.log(`[liveShare][ensureImageExists][${url}]: image generation: error`)
-        console.log(error)
-        console.log(`[liveShare][ensureImageExists][${url}]: image generation: removing cached`)
-        if (imageUrl) {
-          await imageRepository.removeFile(imageUrl)
-        }
-      }
-    })
+    console.log(`[liveShare][ensureImageExists][${url}]: checking for cached image`)
+    if (await pageImageExists(url, imageRepository, width, height)) return
+    console.log(`[liveShare][ensureImageExists][${url}]: getting preview url`)
+    const previewUrl: string | undefined = await tryGetPreviewUrlFromPage(url)
+    if (!previewUrl) return
+    console.log(`[liveShare][ensureImageExists][${url}]: generating image`)
+    await getImageFromPreviewUrl(url, previewUrl, imageRepository)
   }
   forget(task())
   console.log(`[liveShare][ensureImageExists][${url}]: backgrounded image task`)
   return
 }
 
-const checkForCachedPageImage = async (url: string, imageRepository: FileRepository): Promise<boolean> => {
-  console.log(`[liveShare][checkForCachedPageImage][${url}]: Checking cache`)
-  const imageUrl: string = getImageUrlFromPageUrl(url, width, height)
-  const image = await imageRepository.findFile(imageUrl)
-  if (image) {
-    console.log(`[liveShare][checkForCachedPageImage][${url}]: Image exists`)
-    return true
-  } else {
-    console.log(`[liveShare][checkForCachedPageImage][${url}]: Image does not exist`)
-    return false
-  }
+const getImageFromPreviewUrl = async (url: string, previewUrl: string, imageRepository: FileRepository) => {
+  await useSpaPage(previewUrl, async (page) => {
+    const imageUrl: string = getImageUrlFromPageUrl(url, width, height)
+    try {
+      // TODO: Get selector from request, html-meta prop, or xyo.config
+      const selector = '#preview-container'
+      await page.waitForSelector(selector, { timeout: 30000 })
+      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: rendering`)
+      const data = twitterCardGenerator(page)
+      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: caching`)
+      const file: RepositoryFile = { data, type, uri: imageUrl }
+      await imageRepository.addFile(file)
+      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: awaiting generation`)
+      await data
+      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: complete`)
+    } catch (error) {
+      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: error`)
+      console.log(error)
+      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: removing cached`)
+      if (imageUrl) {
+        await imageRepository.removeFile(imageUrl)
+      }
+    }
+  })
 }

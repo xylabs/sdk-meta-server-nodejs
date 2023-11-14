@@ -34,3 +34,18 @@ export const getPreviewUrlFromPage = async (url: string): Promise<string> => {
   )
   return previewUrl
 }
+
+/**
+ * Returns the URL of the preview image from within the Live Share page's meta tags
+ * or undefined if the preview image URL could not be obtained
+ * @param url The URL of the Live Share page
+ * @returns The URL of the preview image from within the Live Share page's meta tags
+ * or undefined if the preview image URL could not be obtained
+ */
+export const tryGetPreviewUrlFromPage = async (url: string): Promise<string | undefined> => {
+  try {
+    return await getPreviewUrlFromPage(url)
+  } catch (error) {
+    return undefined
+  }
+}

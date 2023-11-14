@@ -114,7 +114,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
         imageTask = await imageRepository().findFile(uri)
       } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
     }
-    console.log(`[liveShare][imageHandler][${uri}]: awaiting image generation`)
+    console.log(`[liveShare][imageHandler][${uri}]: awaiting image`)
     const image = await imageTask?.data
     if (image) {
       console.log(`[liveShare][imageHandler][${uri}]: returning image`)

@@ -8,6 +8,6 @@ import { join, removeQueryParam } from '../../../../lib'
  * @returns The url of the preview image for a Live Share page
  */
 export const getImageUrl = (url: string, width: string | number, height: string | number): string => {
-  // TODO: Only remove render if it's preview?
-  return removeQueryParam(join(url, `${width}`, `${height}`, 'img.png'), 'render')
+  // TODO: Only remove render if it's render=preview?
+  return removeQueryParam(join(url, 'preview', `${width}`, `${height}`, 'img.png'), 'render')
 }

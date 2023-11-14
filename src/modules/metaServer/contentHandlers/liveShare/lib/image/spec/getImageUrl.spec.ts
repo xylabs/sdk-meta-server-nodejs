@@ -9,6 +9,6 @@ describe('getImageUrl', () => {
   it.each(cases)('generates image URL', (width, height) => {
     const url = 'https://www.google.com'
     const imageUrl = getImageUrl(url, width, height)
-    expect(imageUrl).toEqual(`https://www.google.com/${width}/${height}/img.png`)
+    expect(imageUrl).toEqual(`https://www.google.com/preview/${width}/${height}/img.png`)
   })
 })

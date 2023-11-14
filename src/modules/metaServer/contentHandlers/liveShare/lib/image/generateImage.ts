@@ -9,18 +9,18 @@ export const generateImage = (url: string, previewUrl: string, imageRepository: 
       // TODO: Get selector from request, html-meta prop, or xyo.config
       const selector = '#preview-container'
       await page.waitForSelector(selector, { timeout: 30000 })
-      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: rendering`)
+      console.log(`[liveShare][generateImage][${url}]: image generation: rendering`)
       const data = imageGenerator(page)
-      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: caching`)
+      console.log(`[liveShare][generateImage][${url}]: image generation: caching`)
       const file: RepositoryFile = { data, type, uri: imageUrl }
       await imageRepository.addFile(file)
-      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: awaiting generation`)
+      console.log(`[liveShare][generateImage][${url}]: image generation: awaiting generation`)
       await data
-      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: complete`)
+      console.log(`[liveShare][generateImage][${url}]: image generation: complete`)
     } catch (error) {
-      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: error`)
+      console.log(`[liveShare][generateImage][${url}]: image generation: error`)
       console.log(error)
-      console.log(`[liveShare][getImageFromPreviewUrl][${url}]: image generation: removing cached`)
+      console.log(`[liveShare][generateImage][${url}]: image generation: removing cached`)
       if (imageUrl) {
         await imageRepository.removeFile(imageUrl)
       }

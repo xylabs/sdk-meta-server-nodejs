@@ -2,7 +2,6 @@ import { forget } from '@xylabs/forget'
 
 import {
   FileRepository,
-  join,
   RepositoryFile,
   summaryCardImageFromPage,
   summaryCardViewport,
@@ -32,9 +31,9 @@ const type = 'image/png'
  * @returns
  */
 export const ensureImageExists = (url: string, imageRepository: FileRepository) => {
+  console.log(`[liveShare][ensureImageExists][${url}]: backgrounding image task`)
   const task = async () => {
-    console.log(`[liveShare][ensureImageExists][${url}]: backgrounding image generation`)
-    const imageUrl: string = getImageUrlFromPageUrl(join(url, 'preview'), width, height)
+    const imageUrl: string = getImageUrlFromPageUrl(url, width, height)
     let previewUrl: string | undefined = undefined
     try {
       console.log(`[liveShare][ensureImageExists][${url}]: checking for cached image`)
@@ -56,25 +55,24 @@ export const ensureImageExists = (url: string, imageRepository: FileRepository) 
       console.log(`[liveShare][ensureImageExists][${url}]: unable to obtain preview URL from page`)
       return
     }
-    // Initiate the image generation but don't await it
-    console.log(`[liveShare][ensureImageExists][${url}]: rendering in background`)
+    console.log(`[liveShare][ensureImageExists][${url}]: rendering`)
     useSpaPage(previewUrl, async (page) => {
       try {
         // TODO: Get selector from request, html-meta prop, or xyo.config
         const selector = '#preview-container'
         await page.waitForSelector(selector, { timeout: 30000 })
-        console.log(`[liveShare][ensureImageExists][${url}]: backgrounding image generation: beginning`)
+        console.log(`[liveShare][ensureImageExists][${url}]: image generation: beginning`)
         const data = twitterCardGenerator(page)
-        console.log(`[liveShare][ensureImageExists][${url}]: backgrounding image generation: caching`)
+        console.log(`[liveShare][ensureImageExists][${url}]: image generation: caching`)
         const file: RepositoryFile = { data, type, uri: imageUrl }
         await imageRepository.addFile(file)
-        console.log(`[liveShare][ensureImageExists][${url}]: backgrounding image generation: awaiting generation`)
+        console.log(`[liveShare][ensureImageExists][${url}]: image generation: awaiting generation`)
         await data
-        console.log(`[liveShare][ensureImageExists][${url}]: backgrounding image generation: complete`)
+        console.log(`[liveShare][ensureImageExists][${url}]: image generation: complete`)
       } catch (error) {
-        console.log(`[liveShare][ensureImageExists][${url}]: backgrounding image generation: error`)
+        console.log(`[liveShare][ensureImageExists][${url}]: image generation: error`)
         console.log(error)
-        console.log(`[liveShare][ensureImageExists][${url}]: backgrounding image generation: removing cached`)
+        console.log(`[liveShare][ensureImageExists][${url}]: image generation: removing cached`)
         if (imageUrl) {
           await imageRepository.removeFile(imageUrl)
         }
@@ -82,5 +80,19 @@ export const ensureImageExists = (url: string, imageRepository: FileRepository) 
     })
   }
   forget(task())
+  console.log(`[liveShare][ensureImageExists][${url}]: backgrounded image task`)
   return
+}
+
+const checkForCachedPageImage = async (url: string, imageRepository: FileRepository): Promise<boolean> => {
+  console.log(`[liveShare][checkForCachedPageImage][${url}]: Checking cache`)
+  const imageUrl: string = getImageUrlFromPageUrl(url, width, height)
+  const image = await imageRepository.findFile(imageUrl)
+  if (image) {
+    console.log(`[liveShare][checkForCachedPageImage][${url}]: Image exists`)
+    return true
+  } else {
+    console.log(`[liveShare][checkForCachedPageImage][${url}]: Image does not exist`)
+    return false
+  }
 }

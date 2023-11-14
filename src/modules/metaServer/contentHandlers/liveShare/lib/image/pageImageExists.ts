@@ -1,6 +1,14 @@
 import { FileRepository } from '../../../../lib'
 import { getImageUrlFromPageUrl } from '../url'
 
+/**
+ * Checks if the page image exists in the cache
+ * @param url The url of the page to check
+ * @param imageRepository The image repository to check for the page image
+ * @param width The width of the page image
+ * @param height The height of the page image
+ * @returns True if the page image exists in the cache, false otherwise
+ */
 export const pageImageExists = async (url: string, imageRepository: FileRepository, width: number, height: number): Promise<boolean> => {
   console.log(`[liveShare][pageImageExists][${url}]: Checking cache`)
   const imageUrl = getImageUrlFromPageUrl(url, width, height)

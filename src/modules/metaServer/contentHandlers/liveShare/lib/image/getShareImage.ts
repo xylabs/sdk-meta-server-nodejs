@@ -31,50 +31,50 @@ const type = 'image/png'
  * @param imageRepository The image repository to store the generated page preview image in
  * @returns
  */
-export const getLiveShareImage = (url: string, imageRepository: FileRepository) => {
+export const getShareImage = (url: string, imageRepository: FileRepository) => {
   const task = async () => {
-    console.log(`[liveShare][getLiveShareImage][${url}]: backgrounding image generation`)
+    console.log(`[liveShare][getShareImage][${url}]: backgrounding image generation`)
     const imageUrl: string = getImageUrl(join(url, 'preview'), width, height)
     let previewUrl: string | undefined = undefined
     try {
-      console.log(`[liveShare][getLiveShareImage][${url}]: checking for cached image`)
+      console.log(`[liveShare][getShareImage][${url}]: checking for cached image`)
       // Check if we've already got a preview for this URL
       if (imageUrl && (await imageRepository.findFile(imageUrl))) {
-        console.log(`[liveShare][getLiveShareImage][${url}]: image already exists, skipping rendering`)
+        console.log(`[liveShare][getShareImage][${url}]: image already exists, skipping rendering`)
         return
       } else {
-        console.log(`[liveShare][getLiveShareImage][${url}]: getting preview URL from page`)
+        console.log(`[liveShare][getShareImage][${url}]: getting preview URL from page`)
         // Extract the preview image URL from the meta element & decode it
         previewUrl = await getLiveSharePreviewUrl(url)
       }
     } catch (error) {
-      console.log(`[liveShare][getLiveShareImage][${url}]: error getting preview URL from page`)
-      console.log(`[liveShare][getLiveShareImage][${url}]: ${error}`)
+      console.log(`[liveShare][getShareImage][${url}]: error getting preview URL from page`)
+      console.log(`[liveShare][getShareImage][${url}]: ${error}`)
       return
     }
     if (!previewUrl) {
-      console.log(`[liveShare][getLiveShareImage][${url}]: unable to obtain preview URL from page`)
+      console.log(`[liveShare][getShareImage][${url}]: unable to obtain preview URL from page`)
       return
     }
     // Initiate the image generation but don't await it
-    console.log(`[liveShare][getLiveShareImage][${url}]: rendering in background`)
+    console.log(`[liveShare][getShareImage][${url}]: rendering in background`)
     useSpaPage(previewUrl, async (page) => {
       try {
         // TODO: Get selector from request, html-meta prop, or xyo.config
         const selector = '#preview-container'
         await page.waitForSelector(selector, { timeout: 30000 })
-        console.log(`[liveShare][getLiveShareImage][${url}]: backgrounding image generation: beginning`)
+        console.log(`[liveShare][getShareImage][${url}]: backgrounding image generation: beginning`)
         const data = twitterCardGenerator(page)
-        console.log(`[liveShare][getLiveShareImage][${url}]: backgrounding image generation: caching`)
+        console.log(`[liveShare][getShareImage][${url}]: backgrounding image generation: caching`)
         const file: RepositoryFile = { data, type, uri: imageUrl }
         await imageRepository.addFile(file)
-        console.log(`[liveShare][getLiveShareImage][${url}]: backgrounding image generation: awaiting generation`)
+        console.log(`[liveShare][getShareImage][${url}]: backgrounding image generation: awaiting generation`)
         await data
-        console.log(`[liveShare][getLiveShareImage][${url}]: backgrounding image generation: complete`)
+        console.log(`[liveShare][getShareImage][${url}]: backgrounding image generation: complete`)
       } catch (error) {
-        console.log(`[liveShare][getLiveShareImage][${url}]: backgrounding image generation: error`)
+        console.log(`[liveShare][getShareImage][${url}]: backgrounding image generation: error`)
         console.log(error)
-        console.log(`[liveShare][getLiveShareImage][${url}]: backgrounding image generation: removing cached`)
+        console.log(`[liveShare][getShareImage][${url}]: backgrounding image generation: removing cached`)
         if (imageUrl) {
           await imageRepository.removeFile(imageUrl)
         }

@@ -10,7 +10,7 @@ import {
   summaryCardWithLargeImageViewport,
   useSpaPage,
 } from '../../../../lib'
-import { getImageUrl } from './getImageUrl'
+import { getImageUrl } from '../url'
 import { getPreviewUrlFromPage } from './getPreviewUrlFromPage'
 
 /**

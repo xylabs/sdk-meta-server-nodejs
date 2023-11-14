@@ -1,7 +1,7 @@
 import { Meta, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 
 import { defaultViewportSize } from '../../../../lib'
-import { getImageUrl } from './getImageUrl'
+import { getImageUrl } from '../url'
 
 /**
  * Generates the expected metadata for the resultant preview image of a Live Share page

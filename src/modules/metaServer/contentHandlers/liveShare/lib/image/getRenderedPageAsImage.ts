@@ -60,7 +60,7 @@ export const getRenderedPageAsImage = (url: string, imageRepository: FileReposit
     console.log(`[liveShare][getRenderedPageAsImage][${url}]: rendering in background`)
     useSpaPage(previewUrl, async (page) => {
       try {
-        // TODO: Get from request, html-meta prop, or xyo.config
+        // TODO: Get selector from request, html-meta prop, or xyo.config
         const selector = '#preview-container'
         await page.waitForSelector(selector, { timeout: 30000 })
         console.log(`[liveShare][getRenderedPageAsImage][${url}]: backgrounding image generation: beginning`)

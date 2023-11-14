@@ -20,7 +20,7 @@ import {
   stringToArrayBuffer,
 } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
+import { getPageUrlFromImageUrl, getRenderedPageAsImage, useIndexAndDeferredPreviewImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -108,7 +108,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
       console.log(`[liveShare][imageHandler][${uri}]: generating image`)
       // Render the page and generate the image
       const pageUrl = getPageUrlFromImageUrl(uri)
-      getPagePreviewImage(pageUrl, imageRepository())
+      getRenderedPageAsImage(pageUrl, imageRepository())
       let imageGenerationWait = 0
       do {
         await delay(imageGenerationCompletionPollingInterval)

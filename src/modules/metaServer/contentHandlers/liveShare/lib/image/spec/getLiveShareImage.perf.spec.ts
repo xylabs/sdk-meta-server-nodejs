@@ -1,7 +1,7 @@
 import { MemoryFileRepository } from '../../../../../lib'
-import { getRenderedPageAsImage } from '../getRenderedPageAsImage'
+import { getLiveShareImage } from '../getLiveShareImage'
 
-describe.skip('getRenderedPageAsImage', () => {
+describe.skip('getLiveShareImage', () => {
   let average = 0
   let duration = 0
   beforeAll(() => {
@@ -27,7 +27,7 @@ describe.skip('getRenderedPageAsImage', () => {
       // Generate test url
       const url = `https://www.google.com/preview/${i}`
       // Get and cache the page preview image
-      getRenderedPageAsImage(url, repository)
+      getLiveShareImage(url, repository)
       // Retrieve the cached page preview image task
       const file = await repository.findFile(url)
       expect(file).toBeDefined()

@@ -11,7 +11,7 @@ import {
   useSpaPage,
 } from '../../../../lib'
 import { getImageUrl } from './getImageUrl'
-import { getLiveSharePreviewUrl } from './getLiveSharePreviewUrl'
+import { getSharePreviewUrl } from './getSharePreviewUrl'
 
 /**
  * If true, use the large, rectangular image card. If false, use the small,
@@ -45,7 +45,7 @@ export const getShareImage = (url: string, imageRepository: FileRepository) => {
       } else {
         console.log(`[liveShare][getShareImage][${url}]: getting preview URL from page`)
         // Extract the preview image URL from the meta element & decode it
-        previewUrl = await getLiveSharePreviewUrl(url)
+        previewUrl = await getSharePreviewUrl(url)
       }
     } catch (error) {
       console.log(`[liveShare][getShareImage][${url}]: error getting preview URL from page`)

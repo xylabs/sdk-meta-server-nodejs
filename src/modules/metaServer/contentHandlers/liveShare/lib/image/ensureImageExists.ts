@@ -10,7 +10,7 @@ import {
   summaryCardWithLargeImageViewport,
   useSpaPage,
 } from '../../../../lib'
-import { getImageUrl } from '../url'
+import { getImageUrlFromPageUrl } from '../url'
 import { getPreviewUrlFromPage } from './getPreviewUrlFromPage'
 
 /**
@@ -34,7 +34,7 @@ const type = 'image/png'
 export const ensureImageExists = (url: string, imageRepository: FileRepository) => {
   const task = async () => {
     console.log(`[liveShare][getShareImage][${url}]: backgrounding image generation`)
-    const imageUrl: string = getImageUrl(join(url, 'preview'), width, height)
+    const imageUrl: string = getImageUrlFromPageUrl(join(url, 'preview'), width, height)
     let previewUrl: string | undefined = undefined
     try {
       console.log(`[liveShare][getShareImage][${url}]: checking for cached image`)

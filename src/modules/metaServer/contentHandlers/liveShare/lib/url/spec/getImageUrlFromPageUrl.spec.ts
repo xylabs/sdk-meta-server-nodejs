@@ -1,4 +1,4 @@
-import { getImageUrl } from '../getImageUrl'
+import { getImageUrlFromPageUrl } from '../getImageUrlFromPageUrl'
 
 describe('getImageUrl', () => {
   const cases: [width: number, height: number][] = [
@@ -8,7 +8,7 @@ describe('getImageUrl', () => {
   ]
   it.each(cases)('generates image URL', (width, height) => {
     const url = 'https://www.google.com'
-    const imageUrl = getImageUrl(url, width, height)
+    const imageUrl = getImageUrlFromPageUrl(url, width, height)
     expect(imageUrl).toEqual(`https://www.google.com/preview/${width}/${height}/img.png`)
   })
 })

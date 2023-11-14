@@ -1,7 +1,7 @@
 import { Meta, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 
 import { defaultViewportSize } from '../../../../lib'
-import { getImageUrl } from '../url'
+import { getImageUrlFromPageUrl } from '../url'
 
 /**
  * Generates the expected metadata for the resultant preview image of a Live Share page
@@ -12,7 +12,7 @@ import { getImageUrl } from '../url'
  */
 export const getShareImageMeta = (url: string, width = defaultViewportSize.width, height = defaultViewportSize.height): Meta => {
   console.log(`[liveShare][getShareImageMeta][${url}]: generating`)
-  const imageUrl = getImageUrl(url, width, height)
+  const imageUrl = getImageUrlFromPageUrl(url, width, height)
   const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
   const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
   const meta = { og, twitter }

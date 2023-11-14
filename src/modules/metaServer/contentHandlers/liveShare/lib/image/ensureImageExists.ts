@@ -1,6 +1,6 @@
 import { forget } from '@xylabs/forget'
 
-import { FileRepository } from '../../../../lib'
+import { FileRepository, preCacheFacebookShare } from '../../../../lib'
 import { generateImage } from './generateImage'
 import { tryGetPreviewUrlFromPage } from './getPreviewUrlFromPage'
 import { height, width } from './imageGenerator'
@@ -24,6 +24,8 @@ export const ensureImageExists = (url: string, imageRepository: FileRepository) 
     if (!previewUrl) return
     console.log(`[liveShare][ensureImageExists][${url}]: generating image`)
     await generateImage(url, previewUrl, imageRepository, width, height)
+    console.log(`[liveShare][ensureImageExists][${url}]: pre-caching social media share image`)
+    await preCacheFacebookShare(url)
   }
   forget(task())
   console.log(`[liveShare][ensureImageExists][${url}]: backgrounded image task`)

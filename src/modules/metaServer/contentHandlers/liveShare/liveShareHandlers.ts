@@ -82,8 +82,6 @@ const getPageHandler = (baseDir: string) => {
           const data = stringToArrayBuffer(updatedHtml)
           const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
           await pageRepository.addFile(file)
-          console.log(`[liveShare][pageHandler][${uri}]: pre-caching social media share image`)
-          await preCacheFacebookShare(uri)
           console.log(`[liveShare][pageHandler][${uri}]: return html`)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
           return

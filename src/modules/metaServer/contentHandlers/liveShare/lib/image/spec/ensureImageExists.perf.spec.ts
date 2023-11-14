@@ -1,7 +1,7 @@
 import { MemoryFileRepository } from '../../../../../lib'
-import { getShareImage } from '../getShareImage'
+import { ensureImageExists } from '../ensureImageExists'
 
-describe.skip('getShareImage', () => {
+describe.skip('ensureImageExists', () => {
   let average = 0
   let duration = 0
   beforeAll(() => {
@@ -27,7 +27,7 @@ describe.skip('getShareImage', () => {
       // Generate test url
       const url = `https://www.google.com/preview/${i}`
       // Get and cache the page preview image
-      getShareImage(url, repository)
+      ensureImageExists(url, repository)
       // Retrieve the cached page preview image task
       const file = await repository.findFile(url)
       expect(file).toBeDefined()

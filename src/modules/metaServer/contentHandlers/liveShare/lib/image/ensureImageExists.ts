@@ -31,7 +31,7 @@ const type = 'image/png'
  * @param imageRepository The image repository to store the generated page preview image in
  * @returns
  */
-export const getShareImage = (url: string, imageRepository: FileRepository) => {
+export const ensureImageExists = (url: string, imageRepository: FileRepository) => {
   const task = async () => {
     console.log(`[liveShare][getShareImage][${url}]: backgrounding image generation`)
     const imageUrl: string = getImageUrl(join(url, 'preview'), width, height)

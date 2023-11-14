@@ -1,2 +1,2 @@
+export * from './getImageUrlFromPageUrl'
 export * from './getPageUrlFromImageUrl'
-export * from './getPreviewUrl'

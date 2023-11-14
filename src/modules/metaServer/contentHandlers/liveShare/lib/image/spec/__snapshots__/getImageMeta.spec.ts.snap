@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getPagePreviewImageMeta generates page preview image Meta 1`] = `
+exports[`getImageMeta generates page preview image Meta 1`] = `
 {
   "og": {
     "image": {
@@ -21,7 +21,7 @@ exports[`getPagePreviewImageMeta generates page preview image Meta 1`] = `
 }
 `;
 
-exports[`getPagePreviewImageMeta generates page preview image Meta 2`] = `
+exports[`getImageMeta generates page preview image Meta 2`] = `
 {
   "og": {
     "image": {

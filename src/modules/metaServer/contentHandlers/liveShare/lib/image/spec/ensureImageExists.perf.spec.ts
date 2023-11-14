@@ -1,7 +1,7 @@
 import { MemoryFileRepository } from '../../../../../lib'
-import { getRenderedPageAsImage } from '../getRenderedPageAsImage'
+import { ensureImageExists } from '../ensureImageExists'
 
-describe.skip('getRenderedPageAsImage', () => {
+describe.skip('ensureImageExists', () => {
   let average = 0
   let duration = 0
   beforeAll(() => {
@@ -16,7 +16,6 @@ describe.skip('getRenderedPageAsImage', () => {
   })
   it('perf test', async () => {
     const repository = new MemoryFileRepository()
-    const previewUrl = 'https://www.google.com'
     const iterations = 10
     const start = Date.now()
     // NOTE: This is more work than we want to do in the body
@@ -28,7 +27,7 @@ describe.skip('getRenderedPageAsImage', () => {
       // Generate test url
       const url = `https://www.google.com/preview/${i}`
       // Get and cache the page preview image
-      getRenderedPageAsImage(url, previewUrl, repository)
+      ensureImageExists(url, repository)
       // Retrieve the cached page preview image task
       const file = await repository.findFile(url)
       expect(file).toBeDefined()

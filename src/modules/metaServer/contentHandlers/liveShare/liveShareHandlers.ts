@@ -1,7 +1,6 @@
 import { assertEx } from '@xylabs/assert'
 import { delay } from '@xylabs/delay'
 import { exists } from '@xylabs/exists'
-import { forget } from '@xylabs/forget'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { existsSync, readFileSync } from 'fs'
@@ -21,7 +20,7 @@ import {
   stringToArrayBuffer,
 } from '../../lib'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { getPagePreviewImage, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
+import { ensureImageExists, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -78,13 +77,11 @@ const getPageHandler = (baseDir: string) => {
           return
         } else {
           console.log(`[liveShare][pageHandler][${uri}]: rendering`)
-          const updatedHtml = await useIndexAndDeferredPreviewImage(uri, imageRepository(), indexHtml)
+          const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageRepository(), indexHtml)
           console.log(`[liveShare][pageHandler][${uri}]: caching`)
           const data = stringToArrayBuffer(updatedHtml)
           const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
           await pageRepository.addFile(file)
-          console.log(`[liveShare][pageHandler][${uri}]: pre-caching social media share image`)
-          await preCacheFacebookShare(uri)
           console.log(`[liveShare][pageHandler][${uri}]: return html`)
           res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
           return
@@ -109,7 +106,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
       console.log(`[liveShare][imageHandler][${uri}]: generating image`)
       // Render the page and generate the image
       const pageUrl = getPageUrlFromImageUrl(uri)
-      forget(getPagePreviewImage(pageUrl, imageRepository()))
+      ensureImageExists(pageUrl, imageRepository())
       let imageGenerationWait = 0
       do {
         await delay(imageGenerationCompletionPollingInterval)
@@ -117,7 +114,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
         imageTask = await imageRepository().findFile(uri)
       } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
     }
-    console.log(`[liveShare][imageHandler][${uri}]: awaiting image generation`)
+    console.log(`[liveShare][imageHandler][${uri}]: awaiting image`)
     const image = await imageTask?.data
     if (image) {
       console.log(`[liveShare][imageHandler][${uri}]: returning image`)

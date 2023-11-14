@@ -1,4 +1,2 @@
-export * from './getImageUrl'
-export * from './getLiveSharePreviewUrlFromHtmlMeta'
-export * from './getPagePreviewImageMeta'
-export * from './getRenderedPageAsImage'
+export * from './ensureImageExists'
+export * from './getImageMeta'

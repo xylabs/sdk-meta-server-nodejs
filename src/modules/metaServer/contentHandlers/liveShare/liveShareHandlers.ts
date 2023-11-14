@@ -14,7 +14,6 @@ import {
   getFileRepository,
   getUriBehindProxy,
   MemoryFileRepository,
-  preCacheFacebookShare,
   RepositoryFile,
   RouteMatcher,
   stringToArrayBuffer,

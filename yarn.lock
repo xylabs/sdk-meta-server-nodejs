@@ -5000,11 +5000,11 @@ __metadata:
   linkType: hard
 
 "@xyo-network/sdk-meta@npm:^2.10.1":
-  version: 2.10.1
-  resolution: "@xyo-network/sdk-meta@npm:2.10.1"
+  version: 2.11.1
+  resolution: "@xyo-network/sdk-meta@npm:2.11.1"
   dependencies:
     cheerio: ^1.0.0-rc.12
-  checksum: 15cf0aa240bd185170187562540e3df1aa20cab8d890e48251cead9f6fa85b189d25cfb3e526cf8401aafeb6aa300b9e6eb6f5207e11b34cd2fdd68ade2b7512
+  checksum: de08016800d748f16550d73170848ca7eb20f36550b7612702386b3fdc93a4ac6fb3e57239c26296a17049dabbcf40671eaf4e9424289a09c038d55334ce2300
   languageName: node
   linkType: hard
 

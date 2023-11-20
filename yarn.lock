@@ -4655,6 +4655,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/error@npm:^2.13.9":
+  version: 2.13.9
+  resolution: "@xylabs/error@npm:2.13.9"
+  checksum: 0a37bef09b9a519a007735369263ae2d4e0549181efbd06e1209c1cbad64b238cfc93ed6e88181cef0b54f69d171b50e67246a780c2e6b6ce9b8561b1c1d7a31
+  languageName: node
+  linkType: hard
+
 "@xylabs/eslint-config-react@npm:^3.1.21":
   version: 3.1.21
   resolution: "@xylabs/eslint-config-react@npm:3.1.21"
@@ -4982,20 +4989,13 @@ __metadata:
   linkType: hard
 
 "@xyo-network/axios@npm:^2.79.4":
-  version: 2.79.4
-  resolution: "@xyo-network/axios@npm:2.79.4"
+  version: 2.81.2
+  resolution: "@xyo-network/axios@npm:2.81.2"
   dependencies:
-    "@xyo-network/shared": ~2.79.4
-    axios: ^1.6.1
+    "@xyo-network/shared": ~2.81.2
+    axios: ^1.6.2
     pako: ^2.1.0
-  checksum: 3361ddaa361757398815a4b15d7a2bd2889624a53cf06e711cefe543a967481734223f356c9336a0fdd19d345449200b1bb756d7f72ccf460e5c6bda91ebc9f9
-  languageName: node
-  linkType: hard
-
-"@xyo-network/error@npm:~2.79.4":
-  version: 2.79.4
-  resolution: "@xyo-network/error@npm:2.79.4"
-  checksum: f5ca9389aff5889cae0f927866d92a070ffac34c5eea8ffa8f09fd4762af07b032795cebba88fd0e706e626ed3520396e05ceff99b49a477cef472841dbce1fd
+  checksum: 72a0d9dd2132e6618e8f8711b5201d06591ae8efadd5da2892881e68712b5e298063535323d10fea5b763d8b75550ff78d9a9d600e34bc1693a8bd20d48cbeb7
   languageName: node
   linkType: hard
 
@@ -5008,12 +5008,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/shared@npm:~2.79.4":
-  version: 2.79.4
-  resolution: "@xyo-network/shared@npm:2.79.4"
+"@xyo-network/shared@npm:~2.81.2":
+  version: 2.81.2
+  resolution: "@xyo-network/shared@npm:2.81.2"
   dependencies:
-    "@xyo-network/error": ~2.79.4
-  checksum: 1506b801494ee5d76b95840ddaf02e63633340decb3796671eb206c81e67581a0e0a740bd0fe62fe1316ce17e982548862704469efd012b9eda8d5f99302019b
+    "@xylabs/error": ^2.13.9
+  checksum: b27d90842af0bfae16e56ab6c8a5c03b5cf94d9da18d7bb9349d4d1ed81702d90c360f6cad9b79a3a784816cec804183d2ded63e2af8fb83e3bcc91e43c84110
   languageName: node
   linkType: hard
 
@@ -5543,7 +5543,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.1, axios@npm:^1.6.2":
+"axios@npm:^1.6.2":
   version: 1.6.2
   resolution: "axios@npm:1.6.2"
   dependencies:

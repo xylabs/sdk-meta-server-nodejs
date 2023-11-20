@@ -4811,9 +4811,9 @@ __metadata:
   linkType: soft
 
 "@xylabs/promise@npm:^2.13.7":
-  version: 2.13.7
-  resolution: "@xylabs/promise@npm:2.13.7"
-  checksum: e1e4ac2caa9db5e1cb7ac84eaf8d0fe1ba6ce62147cd1ce70ec3d08173fe8d4bd4a354a146ee5c6235e21acf0fdad15f33fe3971f0d39ccd715928a7e64f0991
+  version: 2.13.9
+  resolution: "@xylabs/promise@npm:2.13.9"
+  checksum: b676d9cd83412e8350afd07e76ec781ec46f634a0cc054d56ed7e3c3e06e0db77b251974985777127b7a5ccbf06db1fd922bf8d3d8611719e5693af3c97fd32e
   languageName: node
   linkType: hard
 

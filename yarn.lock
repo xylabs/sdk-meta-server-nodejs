@@ -4962,15 +4962,15 @@ __metadata:
   linkType: hard
 
 "@xylabs/tsconfig-jest@npm:^3.1.21":
-  version: 3.1.21
-  resolution: "@xylabs/tsconfig-jest@npm:3.1.21"
+  version: 3.2.8
+  resolution: "@xylabs/tsconfig-jest@npm:3.2.8"
   dependencies:
-    "@xylabs/tsconfig": ~3.1.21
+    "@xylabs/tsconfig": ~3.2.8
     jest-extended: ^4.0.2
     jest-sorted: ^1.0.14
   peerDependencies:
     typescript: ^5
-  checksum: 44481692ac5d982e9e61d6006bfa420ec4b1f791dcb5ec36866d8a56818c8c605716ee843b4499676bd26f098db92a167257ed553fb06f6e12e3f8e99c0694ee
+  checksum: cf2edfcb505f5d0dd4199e2bec7787635696713f7dbb8094a6d0e7266530936ef212acc7d22a041db0deba204c31a54423e2a02831c30c6dac810a736a900d91
   languageName: node
   linkType: hard
 
@@ -4978,6 +4978,13 @@ __metadata:
   version: 3.1.21
   resolution: "@xylabs/tsconfig@npm:3.1.21"
   checksum: 2d7cf30172f30f3c84453df5b68f8c79838205ee7afa0b94fd1e0490903fc427a5d7ae97e932706837d0a9f6c082823b35c528ed6c2a45292b344ef8c79597cc
+  languageName: node
+  linkType: hard
+
+"@xylabs/tsconfig@npm:~3.2.8":
+  version: 3.2.8
+  resolution: "@xylabs/tsconfig@npm:3.2.8"
+  checksum: 6e12d477f33304c53d1d69b5e5efc0d15018d58ded99f2b0e078bd6d6e86b0e1b4be8d40b4ffbd3fddf54dad3219860f5d17e7e07c4585bb73e9299e530ed47c
   languageName: node
   linkType: hard
 

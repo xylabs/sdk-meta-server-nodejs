@@ -4952,7 +4952,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig-dom@npm:^3.1.21, @xylabs/tsconfig-dom@npm:~3.1.21":
+"@xylabs/tsconfig-dom@npm:^3.1.21":
+  version: 3.2.29
+  resolution: "@xylabs/tsconfig-dom@npm:3.2.29"
+  dependencies:
+    "@xylabs/tsconfig": ~3.2.29
+  checksum: 314ddb23df128f2396f09b19eaaf1a678176ca097d3b452caaf31640604ecaae7a8d61d92ae85ae454e6eeca468f63fa5a0f6a930f946d7fd9c54449a6094e10
+  languageName: node
+  linkType: hard
+
+"@xylabs/tsconfig-dom@npm:~3.1.21":
   version: 3.1.21
   resolution: "@xylabs/tsconfig-dom@npm:3.1.21"
   dependencies:
@@ -4978,6 +4987,13 @@ __metadata:
   version: 3.1.21
   resolution: "@xylabs/tsconfig@npm:3.1.21"
   checksum: 2d7cf30172f30f3c84453df5b68f8c79838205ee7afa0b94fd1e0490903fc427a5d7ae97e932706837d0a9f6c082823b35c528ed6c2a45292b344ef8c79597cc
+  languageName: node
+  linkType: hard
+
+"@xylabs/tsconfig@npm:~3.2.29":
+  version: 3.2.29
+  resolution: "@xylabs/tsconfig@npm:3.2.29"
+  checksum: 6b9c0e32566767c630a809262c8b2c12a789a55b7fddb31f4c3b678223b917c70c94bf55c7a96af39995e0370ff9c7205a3c6b275a5e60ec986dd4fdbd612610
   languageName: node
   linkType: hard
 

@@ -62,7 +62,14 @@ Sample `xy.config.json`
 
 #### Live Share
 
-Clients are required to provide a meta tag with the property `xyo:og:image` with a content attribute that contains the URL of the preferred route for rendering the preview. The URL specified for the preview must be valid and lead to a route where an element with the ID 'preview-container' is present. This pages is then rendered, snapshot, and used as the `og:image` for the page original page.
+For LiveShare routes, pages are required to provide a meta tag with the property `xyo:og:image` with a content attribute that contains the URL of the preferred route for rendering the preview. The URL specified for the preview must be valid and lead to a route where an element with the ID 'preview-container' is present. The MetaServer wil:
+
+- render the page rendered
+- read the `xyo:og:image` attribute
+- navigate to the URL provided in the `xyo:og:image` attribue
+- wait for the DOM to contain an element with the ID `preview-container`
+- snapshot the page and cache the image
+- update the document head to point to the `og:image` (and associated properties like height/width) to point to the cached snapshot
 
 ## Maintainers
 

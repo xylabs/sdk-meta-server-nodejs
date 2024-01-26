@@ -16,7 +16,9 @@
   - [Description](#description)
   - [Install](#install)
   - [Usage](#usage)
-    - [Client Usage](#client-usage)
+    - [Development](#development)
+    - [Deployment](#deployment)
+    - [Client](#client)
       - [Live Share](#live-share)
   - [Maintainers](#maintainers)
   - [License](#license)
@@ -44,7 +46,25 @@ yarn add @xylabs/meta-server
 
 ## Usage
 
-### Client Usage
+### Development
+
+The build output can be hosted/served via the MetaServer by running the included script. Configuration is available via
+
+```
+npm run start-meta
+```
+
+```
+yarn start-meta
+```
+
+You can configure the root directory from which your app is served via the ENV VAR `SERVE_DIRECTORY` which defaults to `'./build'` if not supplied
+
+### Deployment
+
+To allow for containerized deployment the included script `docker-build` is provided which creates a production build of the app and outputs a container with the Meta Server which proxies the built app.
+
+### Client
 
 - Add `xy.config.json` to the root of your build output (see sample below)
 

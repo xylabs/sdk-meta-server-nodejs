@@ -24,7 +24,7 @@
 
 ## Description
 
-Express server for properly rendering HTML metadata on React sites when scraped/shared. Since React requires JS to execute in order to manipulate the DOM, page content and HTML metadata often looks different when viewed in a browser vs when scraped/shared. The MetaServer attempts to ensure that shared/scraped links render the HTML just as it would be rendered when viewed in the browser. This is accomplished by intercepting route requests and rendering the HTML in headless Chrome then returning the resultant HTML instead of the typical React-hosting flow of just redirecting to the root of the site.
+Express server for properly rendering HTML metadata on React sites when scraped/shared. Since React requires JS to execute in order to manipulate the DOM, page content and HTML metadata often looks different when viewed in a browser vs when scraped/shared. Likewise, client routes created via the History pushState API are client-side only and will return Not Found when requested to the server. The MetaServer attempts to ensure that shared/scraped links render the HTML just as it would be rendered when viewed in the browser. This is accomplished by intercepting route requests and rendering the HTML in headless Chrome then returning the resultant HTML instead of the typical React-hosting flow of just redirecting to the root of the site.
 
 ## Install
 

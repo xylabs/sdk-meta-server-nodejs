@@ -1,5 +1,6 @@
+import { extname } from 'node:path'
+
 import { Request } from 'express'
-import { extname } from 'path'
 
 import { isKnownFileExtension } from '../file'
 

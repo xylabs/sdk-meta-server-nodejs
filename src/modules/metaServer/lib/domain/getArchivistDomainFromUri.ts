@@ -1,5 +1,5 @@
-import { parse } from 'querystring'
-import { URL } from 'url'
+import { parse } from 'node:querystring'
+import { URL } from 'node:url'
 
 export const networkToArchivistUri: Record<string, string> = {
   kerplunk: 'https://beta.api.archivist.xyo.network',
@@ -19,7 +19,7 @@ export const originToArchivistUri: Record<string, string> = {
 
 const fromQuery = (parsed: URL): string | undefined => {
   try {
-    const queryParams = parse(parsed.search.substring(1))
+    const queryParams = parse(parsed.search.slice(1))
     const network = queryParams?.network as string | undefined
     if (network) {
       return networkToArchivistUri[network]

@@ -1,13 +1,14 @@
-import { readFile } from 'fs/promises'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
+
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { join } from 'path'
 import { SuperTest, Test } from 'supertest'
 
 import { getServer } from '../../../spec'
 
 const expectToEqualFileContents = async (actual: string, filePath: string = join(__dirname, 'index.html')) => {
   // Get index.html file by reading it directly from the filesystem
-  const expected = await readFile(filePath, { encoding: 'utf-8' })
+  const expected = await readFile(filePath, { encoding: 'utf8' })
   expect(expected).toBeTruthy()
 
   // Compare served up version with actual for equality

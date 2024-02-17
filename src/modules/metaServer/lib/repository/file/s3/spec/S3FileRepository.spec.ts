@@ -1,7 +1,8 @@
+import { readFile } from 'node:fs/promises'
+import { basename, join } from 'node:path'
+
 import { S3ClientConfig } from '@aws-sdk/client-s3'
 import { describeIf } from '@xylabs/jest-helpers'
-import { readFile } from 'fs/promises'
-import { basename, join } from 'path'
 
 import { getAwsS3ClientConfig, getDefaultTestBucket, hasBucket } from '../../../../aws'
 import { S3FileRepository } from '../S3FileRepository'

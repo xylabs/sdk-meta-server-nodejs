@@ -34,8 +34,8 @@ export const usePage = async <T>(
 ) => {
   if (!options) options = defaultPageRenderingOptions
   const defaultViewport: Viewport = options?.viewportSize ? { ...pageViewPortDefaults, ...options.viewportSize } : { ...pageViewPortDefaults }
-  let browser: Browser | undefined = undefined
-  let page: Page | undefined = undefined
+  let browser: Browser | undefined
+  let page: Page | undefined
   try {
     browser = await useBrowser(defaultViewport)
     page = await getBrowserPage(browser, url)

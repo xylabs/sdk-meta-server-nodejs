@@ -21,7 +21,7 @@ export const getPreviewUrlFromPage = async (url: string): Promise<string> => {
   // TODO: Optimize this with something like React SSR
   const content = await useSpaPage(url, async (page) => {
     console.log(`[liveShare][getPreviewUrlFromPage][${url}]: navigated to ${url}`)
-    await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 15000 })
+    await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 15_000 })
     console.log(`[liveShare][getPreviewUrlFromPage][${url}]: found meta property ${xyoOgImageProperty}`)
     return await page.content()
   })
@@ -45,7 +45,7 @@ export const getPreviewUrlFromPage = async (url: string): Promise<string> => {
 export const tryGetPreviewUrlFromPage = async (url: string): Promise<string | undefined> => {
   try {
     return await getPreviewUrlFromPage(url)
-  } catch (error) {
+  } catch {
     return undefined
   }
 }

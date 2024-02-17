@@ -36,5 +36,5 @@ describe.skip('ensureImageExists', () => {
     }
     duration = Date.now() - start
     average = duration / iterations
-  }, 60000)
+  }, 60_000)
 })

@@ -7,21 +7,23 @@ import { MountPathAndMiddleware } from '../../types'
 
 const handleStatusCode: RequestHandler = (req, res, _next) => {
   const { code } = req.params
-  res.sendStatus(parseInt(code))
+  res.sendStatus(Number.parseInt(code))
   return
 }
 
 const handleSyncThrow: RequestHandler = (_req, _res, _next) => {
   throw new Error('This is a synchronous error')
 }
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 const handleAsyncThrow: RequestHandler = asyncHandler(async (_req, _res, _next) => {
   await Promise.resolve()
   throw new Error('This is an asynchronous error')
 })
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 const handleTimeout: RequestHandler = asyncHandler(async (req, res, _next) => {
   const { timeout } = req.params
-  const time = parseInt(timeout)
+  const time = Number.parseInt(timeout)
   await delay(time)
   res.sendStatus(StatusCodes.OK)
   return

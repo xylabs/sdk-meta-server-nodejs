@@ -1,5 +1,6 @@
+import { sep } from 'node:path'
+
 import { Request } from 'express'
-import { sep } from 'path'
 
 import { getAdjustedPath } from '../getAdjustedPath'
 

@@ -1,11 +1,12 @@
+import { existsSync, readFileSync } from 'node:fs'
+import { extname, join } from 'node:path'
+
 import { assertEx } from '@xylabs/assert'
 import { delay } from '@xylabs/delay'
 import { exists } from '@xylabs/exists'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
-import { existsSync, readFileSync } from 'fs'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { extname, join } from 'path'
 
 import {
   arrayBufferToString,
@@ -59,9 +60,10 @@ const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
   const filePath = join(baseDir, 'index.html')
   assertEx(existsSync(filePath), 'Missing index.html')
-  const indexHtml = readFileSync(filePath, { encoding: 'utf-8' })
+  const indexHtml = readFileSync(filePath, { encoding: 'utf8' })
   const pageRepository = new MemoryFileRepository()
 
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const pageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
     if (extname(adjustedPath) === '.html') {
@@ -94,6 +96,7 @@ const getPageHandler = (baseDir: string) => {
   return pageHandler
 }
 
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
   try {
     const uri = getUriBehindProxy(req)
@@ -137,7 +140,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
     console.log('[liveShare][init] Located xy.config.json')
     // Read in config file
     console.log('[liveShare][init] Parsing xy.config.json')
-    const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf-8' }))
+    const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf8' }))
     console.log('[liveShare][init] Parsed xy.config.json')
     // TODO: Validate xyConfig
     if (xyConfig.liveShare) {

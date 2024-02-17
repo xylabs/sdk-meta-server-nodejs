@@ -1,5 +1,6 @@
-import { Server } from 'http'
-import { join } from 'path'
+import { Server } from 'node:http'
+import { join } from 'node:path'
+
 import { agent, SuperTest, Test } from 'supertest'
 
 import { getApp, server } from '../server'

@@ -4,6 +4,7 @@
  * @returns The joined URL
  */
 export const join = (...parts: string[]): string => {
+  // eslint-disable-next-line unicorn/no-array-reduce
   return parts.reduce((acc, part) => {
     const url = new URL(acc)
     // Ensure trailing slash

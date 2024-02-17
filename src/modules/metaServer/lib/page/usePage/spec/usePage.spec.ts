@@ -6,19 +6,19 @@ describe('usePage', () => {
   describe('with navigateToRootFirst=false', () => {
     it('gets the page', async () => {
       const result = await usePage(uri, undefined, async (page) => {
-        await page.waitForSelector('title', { timeout: 10000 })
+        await page.waitForSelector('title', { timeout: 10_000 })
         return page.content()
       })
       expect(result).toContain(expected)
-    }, 60000)
+    }, 60_000)
   })
   describe('with navigateToRootFirst=true', () => {
     it('gets the page', async () => {
       const result = await usePage(uri, undefined, async (page) => {
-        await page.waitForSelector('title', { timeout: 10000 })
+        await page.waitForSelector('title', { timeout: 10_000 })
         return page.content()
       })
       expect(result).toContain(expected)
-    }, 60000)
+    }, 60_000)
   })
 })

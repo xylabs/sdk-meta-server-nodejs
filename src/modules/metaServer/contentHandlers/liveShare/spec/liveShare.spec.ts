@@ -1,4 +1,5 @@
-import { Server } from 'http'
+import { Server } from 'node:http'
+
 import { StatusCodes } from 'http-status-codes'
 import { MatchImageSnapshotOptions, toMatchImageSnapshot } from 'jest-image-snapshot'
 import { SuperTest, Test } from 'supertest'
@@ -6,7 +7,7 @@ import { SuperTest, Test } from 'supertest'
 import { getServerOnPort } from '../../../spec'
 
 describe('liveShare', () => {
-  const port = 12345
+  const port = 12_345
   const serverUrl = `http://127.0.0.1:${port}`
   const requestedPage = 'other.html'
   const previewPage = 'index.html'

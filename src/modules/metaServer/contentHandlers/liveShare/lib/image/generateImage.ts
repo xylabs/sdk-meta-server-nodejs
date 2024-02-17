@@ -8,7 +8,7 @@ export const generateImage = (url: string, previewUrl: string, imageRepository: 
     try {
       // TODO: Get selector from request, html-meta prop, or xyo.config
       const selector = '#preview-container'
-      await page.waitForSelector(selector, { timeout: 30000 })
+      await page.waitForSelector(selector, { timeout: 30_000 })
       console.log(`[liveShare][generateImage][${url}]: image generation: rendering`)
       const data = imageGenerator(page)
       console.log(`[liveShare][generateImage][${url}]: image generation: caching`)

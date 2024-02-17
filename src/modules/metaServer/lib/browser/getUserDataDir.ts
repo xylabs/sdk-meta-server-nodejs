@@ -1,5 +1,6 @@
+import { join } from 'node:path'
+
 import { format } from 'date-fns'
-import { join } from 'path'
 
 const root = './puppeteer/cache'
 

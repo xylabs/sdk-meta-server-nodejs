@@ -30,8 +30,8 @@ export const useSpaPageWaitForOptions: WaitForOptions = {
   // waitUntil: 'domcontentloaded',
 }
 
-let _browser: Browser | undefined = undefined
-let _page: Page | undefined = undefined
+let _browser: Browser | undefined
+let _page: Page | undefined
 
 const pageMutex = new Mutex()
 const reusePage = true

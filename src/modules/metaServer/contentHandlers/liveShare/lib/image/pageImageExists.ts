@@ -20,7 +20,7 @@ export const pageImageExists = async (url: string, imageRepository: FileReposito
     } else {
       console.log(`[liveShare][pageImageExists][${url}]: Image does not exist`)
     }
-  } catch (error) {
+  } catch {
     console.log(`[liveShare][pageImageExists][${url}]: Error checking cache`)
   }
   return false

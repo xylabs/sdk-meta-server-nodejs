@@ -10,13 +10,12 @@ export class MemoryFileRepository implements FileRepository {
   async addFile(file: RepositoryFile): Promise<void> {
     await file.data
     this.files.set(file.uri, file)
-    return Promise.resolve()
   }
-  findFile(uri: string): Promise<RepositoryFile | undefined> {
+
+  async findFile(uri: string): Promise<RepositoryFile | undefined> {
     if (this.files.has(uri)) {
-      return Promise.resolve(this.files.get(uri))
+      return await Promise.resolve(this.files.get(uri))
     }
-    return Promise.resolve(undefined)
   }
   removeFile(uri: string): Promise<void> {
     this.files.delete(uri)

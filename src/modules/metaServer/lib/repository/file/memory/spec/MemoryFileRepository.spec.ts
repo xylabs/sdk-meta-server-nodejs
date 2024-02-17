@@ -1,5 +1,5 @@
-import { readFile } from 'fs/promises'
-import { basename, join } from 'path'
+import { readFile } from 'node:fs/promises'
+import { basename, join } from 'node:path'
 
 import { MemoryFileRepository } from '../MemoryFileRepository'
 

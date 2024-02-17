@@ -1,5 +1,6 @@
+import { join } from 'node:path'
+
 import { Request } from 'express'
-import { join } from 'path'
 
 import { isKnownFileExtension } from '../file'
 

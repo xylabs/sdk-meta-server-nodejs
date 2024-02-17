@@ -1,4 +1,4 @@
-import { stat } from 'fs/promises'
+import { stat } from 'node:fs/promises'
 
 /**
  * A wrapper around the Node.js file stats package to
@@ -12,7 +12,7 @@ export const exists = async (path: string) => {
     // NOTE: Stat throws if file doesn't exist
     const stats = await stat(path)
     return stats.isFile() || stats.isDirectory()
-  } catch (error) {
+  } catch {
     return false
   }
 }

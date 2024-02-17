@@ -11,6 +11,7 @@ import { RouteMatcher } from './RouteMatcher'
  */
 export const createRegexMatcher = (patterns: string[]): RouteMatcher => {
   const regexesOrFalse = patterns.map((pattern) => makeRe(pattern))
+  // eslint-disable-next-line unicorn/no-array-reduce
   const invalidGlobPatternIndexes = regexesOrFalse.reduce<number[]>((acc, curr, idx) => {
     if (curr === false) acc.push(idx)
     return acc

@@ -2,7 +2,7 @@
 
 # Build here and pull down all the devDependencies
 FROM node:18 AS builder
-ARG NODE_OPTIONS="--max_old_space_size=5120"
+ARG NODE_OPTIONS="--max_old_space_size=8192"
 WORKDIR /app
 COPY . .
 RUN yarn install

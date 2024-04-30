@@ -24,5 +24,6 @@ jest.config.js
 node_modules
 puppeteer
 rollup.config.ts
+storybook-static
 tsconfig*
 yarn.lock

@@ -1,5 +1,5 @@
-import mime from 'mime'
+import { getType } from 'mime'
 
 export const getContentType = (filePath: string): string | false => {
-  return mime.getType(filePath) ?? false
+  return getType(filePath) ?? false
 }

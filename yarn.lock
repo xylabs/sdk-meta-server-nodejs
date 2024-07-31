@@ -5060,19 +5060,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/assert@npm:^3.0.14, @xylabs/assert@npm:^3.6.5":
-  version: 3.6.5
-  resolution: "@xylabs/assert@npm:3.6.5"
-  checksum: 6c91f5686209b5e5e722fc1ba35d4808219790be3af6bde01ec464c7f727da3286301df8d243c0163689e014d384059bd7d0c40e1339a036f0f195524d38cc50
+"@xylabs/assert@npm:^3.0.14, @xylabs/assert@npm:^3.6.6":
+  version: 3.6.6
+  resolution: "@xylabs/assert@npm:3.6.6"
+  checksum: e834b6f4e260155ae303ebbec7d08cec0a62a9e68e3ab65bc53d8003aa36f26f8b786e7645ea4f3dd5f6541a559e801c36206da8268bb268ab827df05f6b5d62
   languageName: node
   linkType: hard
 
-"@xylabs/delay@npm:^3.6.5":
-  version: 3.6.5
-  resolution: "@xylabs/delay@npm:3.6.5"
+"@xylabs/delay@npm:^3.6.6":
+  version: 3.6.6
+  resolution: "@xylabs/delay@npm:3.6.6"
   dependencies:
-    "@xylabs/timer": ^3.6.5
-  checksum: a5490aea83e2a547baa37591288ce29d22902969c3f0e1febafccf23b429f6d681ff54b2711494d98a4ac3ad5314a993e98f41f390e8988aaf4cedc5dd3ea009
+    "@xylabs/timer": ^3.6.6
+  checksum: d53e852faa77d546e573eea7821c698875cbc399df1793cfa61703ca5e83e88917788e4411984e01d9cf23551613f5c9f393a8985069c428d924b35fabb790fc
   languageName: node
   linkType: hard
 
@@ -5083,13 +5083,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/eslint-config-react@npm:^3.13.9":
-  version: 3.13.9
-  resolution: "@xylabs/eslint-config-react@npm:3.13.9"
+"@xylabs/eslint-config-react@npm:^3.14.1":
+  version: 3.14.1
+  resolution: "@xylabs/eslint-config-react@npm:3.14.1"
   dependencies:
     "@babel/plugin-syntax-flow": ^7.24.7
     "@babel/plugin-transform-react-jsx": ^7.24.7
-    "@xylabs/eslint-config": ^3.13.9
+    "@xylabs/eslint-config": ^3.14.1
     eslint-config-prettier: ^9.1.0
     eslint-config-react-app: ^7.0.1
     eslint-import-resolver-typescript: ^3.6.1
@@ -5116,13 +5116,13 @@ __metadata:
   peerDependenciesMeta:
     eslint:
       optional: true
-  checksum: 5c86936950b0a6b00b9a93bdf002ef70fe71f96b470e20b81cb1980d869cc027b782771f8bfa8fca80927e2b86d441e89ce3761a61d031a852ca9166ecb1b530
+  checksum: 6a663ee98b5d05e7c73e4912bd3a067a510c02ec4a746388fac035f9fd6024708f8c02aee0f0cc61a962f998209c2a64b877bb8a7a546bfd2fffd9a2379aa4db
   languageName: node
   linkType: hard
 
-"@xylabs/eslint-config@npm:^3.13.9":
-  version: 3.13.9
-  resolution: "@xylabs/eslint-config@npm:3.13.9"
+"@xylabs/eslint-config@npm:^3.14.1":
+  version: 3.14.1
+  resolution: "@xylabs/eslint-config@npm:3.14.1"
   dependencies:
     "@typescript-eslint/eslint-plugin": ^7.16.1
     "@typescript-eslint/parser": ^7.16.1
@@ -5151,32 +5151,32 @@ __metadata:
   peerDependenciesMeta:
     eslint:
       optional: true
-  checksum: 24fc01e607fd1fc8e8ea0323101b23f644598d8e1ddda9c94fe452bb6b76b1767db859761d3a2a15dfd62e94acc2ec0e2c2777d354e36cc4c98a5758ab771072
+  checksum: 6e562182d4dd902cf81f000da2304db4a52b453dbc3dd44ce3674d0ab9ecbb432100d7cf6d9140703678b6ff632746c940713fd936cc0d384d479ad277a3029c
   languageName: node
   linkType: hard
 
-"@xylabs/exists@npm:^3.6.5":
-  version: 3.6.5
-  resolution: "@xylabs/exists@npm:3.6.5"
-  checksum: ea5944c759ef09ed7aea30c17687c7d50b8dedd0d3f3501fe5ebae79724546eb8e285056f0e4966e7a05c2c851ade7e3ceab97909c6144b9d4a352f74a978692
+"@xylabs/exists@npm:^3.6.6":
+  version: 3.6.6
+  resolution: "@xylabs/exists@npm:3.6.6"
+  checksum: 7d95a8f74face1ec94526e1bfd65318f80b307f6c2643a1cd99241c42174135f0184976d4e28f0e0f38483c68f148ddb0c4b9bf8e7aff0c10228c1aca1847799
   languageName: node
   linkType: hard
 
-"@xylabs/forget@npm:^3.6.5":
-  version: 3.6.5
-  resolution: "@xylabs/forget@npm:3.6.5"
+"@xylabs/forget@npm:^3.6.6":
+  version: 3.6.6
+  resolution: "@xylabs/forget@npm:3.6.6"
   dependencies:
-    "@xylabs/delay": ^3.6.5
-  checksum: 72000966ca63edc214ca924d80f8fd1a2ac2a934dac88452ac437b87d4ece6ab745ae6def0b92381aa2a1444363b2af4c863e9795d36e1a77e69eb2fac083b0e
+    "@xylabs/delay": ^3.6.6
+  checksum: 2e3fa5e915f4f84f1f70191e36a3e4d45cc2bc3ce0c51ace793881d316a38ca969bd9cf1627547c1704b26da5782e3033fa45241cead20ca4ac8588f5b39c4d7
   languageName: node
   linkType: hard
 
-"@xylabs/jest-helpers@npm:^3.6.5":
-  version: 3.6.5
-  resolution: "@xylabs/jest-helpers@npm:3.6.5"
+"@xylabs/jest-helpers@npm:^3.6.6":
+  version: 3.6.6
+  resolution: "@xylabs/jest-helpers@npm:3.6.6"
   peerDependencies:
     jest: "*"
-  checksum: 459a36eff09ceb93fa667efce0c8f001016e300beb416021d1690eea8f8ef998c34e993bcc5de0a907264466ede05e67dc617908153037fb65cfcbb717a8b801
+  checksum: 3add865d5a53b7f877920a2890575581c24b4b4cc9cb442099857f6c8491155fb00c60dac4e09f11c27e0e470aa08ff6de4557866aedce6f4b9887189b51987d
   languageName: node
   linkType: hard
 
@@ -5195,20 +5195,20 @@ __metadata:
     "@types/node": ^22.0.0
     "@types/serve-static": ^1.15.7
     "@types/supertest": ^6.0.2
-    "@xylabs/assert": ^3.6.5
-    "@xylabs/delay": ^3.6.5
-    "@xylabs/eslint-config": ^3.13.9
-    "@xylabs/eslint-config-react": ^3.13.9
-    "@xylabs/exists": ^3.6.5
-    "@xylabs/forget": ^3.6.5
-    "@xylabs/jest-helpers": ^3.6.5
-    "@xylabs/promise": ^3.6.5
+    "@xylabs/assert": ^3.6.6
+    "@xylabs/delay": ^3.6.6
+    "@xylabs/eslint-config": ^3.14.1
+    "@xylabs/eslint-config-react": ^3.14.1
+    "@xylabs/exists": ^3.6.6
+    "@xylabs/forget": ^3.6.6
+    "@xylabs/jest-helpers": ^3.6.6
+    "@xylabs/promise": ^3.6.6
     "@xylabs/sdk-api-express-ecs": ^2.0.4
-    "@xylabs/ts-scripts-yarn3": ^3.13.9
-    "@xylabs/tsconfig": ^3.13.9
-    "@xylabs/tsconfig-dom": ^3.13.9
-    "@xylabs/tsconfig-dom-jest": ^3.13.9
-    "@xylabs/tsconfig-jest": ^3.13.9
+    "@xylabs/ts-scripts-yarn3": ^3.14.1
+    "@xylabs/tsconfig": ^3.14.1
+    "@xylabs/tsconfig-dom": ^3.14.1
+    "@xylabs/tsconfig-dom-jest": ^3.14.1
+    "@xylabs/tsconfig-jest": ^3.14.1
     "@xyo-network/axios": ^2.91.3
     "@xyo-network/sdk-meta": ^2.11.4
     async-mutex: ^0.5.0
@@ -5250,10 +5250,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@xylabs/promise@npm:^3.6.5":
-  version: 3.6.5
-  resolution: "@xylabs/promise@npm:3.6.5"
-  checksum: fcdcbd7f770d966c99169d469c60db639aef2c25132e557b644fa2d580f929eba93b5dda1a32348baf4fe489782801b6adf464f5cac698763f503d1b5a5f86bb
+"@xylabs/promise@npm:^3.6.6":
+  version: 3.6.6
+  resolution: "@xylabs/promise@npm:3.6.6"
+  checksum: 677c8b6f2a525a98649c39c42bdb4a2a396af1b5495e37f4cab7ad3f05ef78cc3d5bdcf312f1f32a717bd86d02620b3c49cc829356a085d1bc05715b5bb1e2f9
   languageName: node
   linkType: hard
 
@@ -5277,18 +5277,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/timer@npm:^3.6.5":
-  version: 3.6.5
-  resolution: "@xylabs/timer@npm:3.6.5"
+"@xylabs/timer@npm:^3.6.6":
+  version: 3.6.6
+  resolution: "@xylabs/timer@npm:3.6.6"
   dependencies:
-    "@xylabs/assert": ^3.6.5
-  checksum: 480435d0613018c9f36a9afef1492cecf3ce150a1efcd1fda5a1a3f0c5bf7d189fceef527a1698161025706ced03583ccd7a869f821eb0c76ee4940b31d5715a
+    "@xylabs/assert": ^3.6.6
+  checksum: 1be005ba56b102de4bdd2caba2acc4a068f32f7be720ec4d54f3f9d88799d4dc550c6e757f83027f2543ef67e51b7aa56877b73361774cd2039420631d115f20
   languageName: node
   linkType: hard
 
-"@xylabs/ts-scripts-yarn3@npm:^3.13.9":
-  version: 3.13.9
-  resolution: "@xylabs/ts-scripts-yarn3@npm:3.13.9"
+"@xylabs/ts-scripts-yarn3@npm:^3.14.1":
+  version: 3.14.1
+  resolution: "@xylabs/ts-scripts-yarn3@npm:3.14.1"
   dependencies:
     "@rollup/plugin-commonjs": ^26.0.1
     "@rollup/plugin-json": ^6.1.0
@@ -5298,9 +5298,8 @@ __metadata:
     "@types/yargs": ^17.0.32
     "@typescript-eslint/eslint-plugin": ^7.16.1
     "@typescript-eslint/parser": ^7.16.1
-    "@xylabs/forget": ^3.6.5
-    "@xylabs/tsconfig": ^3.13.9
-    "@xylabs/tsconfig-dom": ^3.13.9
+    "@xylabs/tsconfig": ^3.14.1
+    "@xylabs/tsconfig-dom": ^3.14.1
     async-mutex: ^0.5.0
     chalk: ^4.1.2
     cosmiconfig: ^9.0.0
@@ -5389,50 +5388,50 @@ __metadata:
     xy: dist/bin/xy.js
     xy-ts: src/bin/xy-ts.ts
     yarn3only: dist/bin/yarn3only.js
-  checksum: 48e0234d9927f2f5a56809df19f89a5d3b2b767017d2083810ff1b0f4595a4197be69172a934bbf4af2db4623860c8a917339ab741aab882d05e4d2efdb27eab
+  checksum: cd040d59bf1eaa9d69c3ebd011f1a175ece68284029ac299bd2fdf105ddc869796f71259f5204224afdcf6c88ed2487654be029703c775b5520f372dd2c812a1
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig-dom-jest@npm:^3.13.9":
-  version: 3.13.9
-  resolution: "@xylabs/tsconfig-dom-jest@npm:3.13.9"
+"@xylabs/tsconfig-dom-jest@npm:^3.14.1":
+  version: 3.14.1
+  resolution: "@xylabs/tsconfig-dom-jest@npm:3.14.1"
   dependencies:
     "@types/jest": ^29.5.12
     "@types/node": ^20.14.11
     "@types/reflect-metadata": ^0.1.0
-    "@xylabs/tsconfig-dom": ^3.13.9
+    "@xylabs/tsconfig-dom": ^3.14.1
     jest-extended: ^4.0.2
     jest-sorted: ^1.0.15
-  checksum: c03d454ee5ff6abcbb9e6b7bf3b73b2794c1e428bc5c09bca580e3f9d8876742b76000039320f7b3dcc37c1612d54214dbbf3b36f2331eab6b261b1864620e50
+  checksum: 1d5c809a624b0982cac3f027cdd0c6f01d18e06fd5a4a232e75bbac96964df59775ea28fe2f2482fa9d77522ca80b364737638f0bad953f277871242e10e5f4d
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig-dom@npm:^3.13.9":
-  version: 3.13.9
-  resolution: "@xylabs/tsconfig-dom@npm:3.13.9"
+"@xylabs/tsconfig-dom@npm:^3.14.1":
+  version: 3.14.1
+  resolution: "@xylabs/tsconfig-dom@npm:3.14.1"
   dependencies:
-    "@xylabs/tsconfig": ^3.13.9
-  checksum: 52343c40dc9a1e252dd4525afb9e31b30b0d0bfd38f18511a43be0b1fd18b43af3297eefb641b2f629d03590f9407aaf01ed53de0cc3bde0d42fc705441afdc0
+    "@xylabs/tsconfig": ^3.14.1
+  checksum: 45da2d0f1ca4ef28f23ee6a5fb3962fcb3a8a1caff85c7f8fa9d15d2a847fb7af6c8bdfa98e034e0df13b63eba4743219addd002207f8a175f2115b7b55c4b31
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig-jest@npm:^3.13.9":
-  version: 3.13.9
-  resolution: "@xylabs/tsconfig-jest@npm:3.13.9"
+"@xylabs/tsconfig-jest@npm:^3.14.1":
+  version: 3.14.1
+  resolution: "@xylabs/tsconfig-jest@npm:3.14.1"
   dependencies:
-    "@xylabs/tsconfig": ^3.13.9
+    "@xylabs/tsconfig": ^3.14.1
     jest-extended: ^4.0.2
     jest-sorted: ^1.0.15
   peerDependencies:
     typescript: ^5
-  checksum: 86293eeffca71a9fef24b9d12608187634a014939930568a17209ea76515c09beedfc630e002ce2af6ee94a98f68bff7baf360ac95c9f85b9fdb03f9148a6c0c
+  checksum: b3153cbf8243c5594c8d6592313b78e6c3bb6dc43fc3669f002b70ccee98b548232b7cf2c60c0d2b1680183342315f176b3392d985d775e6fde86bea1fd81e01
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig@npm:^3.13.9":
-  version: 3.13.9
-  resolution: "@xylabs/tsconfig@npm:3.13.9"
-  checksum: 4d4dfc094c6d2c0ec61e3523b4c53c486eb327496813bb7fcb00f8ac0d05a61778c5b2a55428813b5486ebb2041dcde7a06870b0a11bc87a9bd37997b5c7cc14
+"@xylabs/tsconfig@npm:^3.14.1":
+  version: 3.14.1
+  resolution: "@xylabs/tsconfig@npm:3.14.1"
+  checksum: 77ab3eefe3010b3c62828820f141104f8890d04cd6d8853beba7f3c149bfdc61e1beed7bd96769e8325715b709d281d4b01e7d2a2a158e84a5bafa8e6811e783
   languageName: node
   linkType: hard
 
@@ -8785,21 +8784,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esquery@npm:^1.4.2":
+"esquery@npm:^1.4.2, esquery@npm:^1.5.0":
   version: 1.6.0
   resolution: "esquery@npm:1.6.0"
   dependencies:
     estraverse: ^5.1.0
   checksum: 08ec4fe446d9ab27186da274d979558557fbdbbd10968fa9758552482720c54152a5640e08b9009e5a30706b66aba510692054d4129d32d0e12e05bbc0b96fb2
-  languageName: node
-  linkType: hard
-
-"esquery@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "esquery@npm:1.5.0"
-  dependencies:
-    estraverse: ^5.1.0
-  checksum: aefb0d2596c230118656cd4ec7532d447333a410a48834d80ea648b1e7b5c9bc9ed8b5e33a89cb04e487b60d622f44cf5713bf4abed7c97343edefdc84a35900
   languageName: node
   linkType: hard
 

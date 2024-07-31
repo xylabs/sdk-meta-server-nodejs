@@ -1,4 +1,4 @@
-import { generateEnvVarHelpers } from '../../env'
+import { generateEnvVarHelpers } from '../../env/index.js'
 
 /**
  * Determines the default AWS S3 bucket to use.

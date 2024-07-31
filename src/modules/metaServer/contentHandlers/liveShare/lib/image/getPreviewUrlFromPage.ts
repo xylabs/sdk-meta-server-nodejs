@@ -1,7 +1,7 @@
 import { assertEx } from '@xylabs/assert'
 import { decode } from 'he'
 
-import { useSpaPage } from '../../../../lib'
+import { useSpaPage } from '../../../../lib/index.js'
 
 /**
  * The property name of the meta element

@@ -1,4 +1,4 @@
-import { useSpaPage } from '../useSpaPage'
+import { useSpaPage } from '../useSpaPage.js'
 
 describe('useSpaPage', () => {
   const uri = 'https://xyo.network/brand'

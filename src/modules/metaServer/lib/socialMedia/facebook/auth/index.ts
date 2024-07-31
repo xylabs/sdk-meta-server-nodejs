@@ -1,3 +1,3 @@
-export * from './canGetAppAccessToken'
-export * from './tryGetAppAccessToken'
-export * from './tryGetAuthInfo'
+export * from './canGetAppAccessToken.js'
+export * from './tryGetAppAccessToken.js'
+export * from './tryGetAuthInfo.js'

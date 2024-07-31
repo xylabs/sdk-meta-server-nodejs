@@ -1,5 +1,5 @@
 import { execSync } from 'child_process'
-import { safeExit } from './safeExit'
+import { safeExit } from './safeExit.js'
 
 safeExit(() => {
   console.log(`Generate .env [${process.cwd()}]`)

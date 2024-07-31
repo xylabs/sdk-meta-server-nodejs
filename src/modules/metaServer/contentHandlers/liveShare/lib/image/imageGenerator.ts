@@ -1,4 +1,9 @@
-import { summaryCardImageFromPage, summaryCardViewport, summaryCardWithLargeImageFromPage, summaryCardWithLargeImageViewport } from '../../../../lib'
+import {
+  summaryCardImageFromPage,
+  summaryCardViewport,
+  summaryCardWithLargeImageFromPage,
+  summaryCardWithLargeImageViewport,
+} from '../../../../lib/index.js'
 
 /**
  * If true, use the large, rectangular image card. If false, use the small,

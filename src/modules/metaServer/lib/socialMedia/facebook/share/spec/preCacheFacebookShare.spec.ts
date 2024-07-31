@@ -1,7 +1,7 @@
 import { describeIf } from '@xylabs/jest-helpers'
 
-import { canGetAppAccessToken } from '../../auth'
-import { preCacheFacebookShare } from '../preCacheFacebookShare'
+import { canGetAppAccessToken } from '../../auth/index.js'
+import { preCacheFacebookShare } from '../preCacheFacebookShare.js'
 
 describeIf(canGetAppAccessToken())('preCacheFacebookShare', () => {
   const urls = ['https://www.youtube.com/watch?v=Kauv7MVPcsA']

@@ -1,10 +1,10 @@
 import { forget } from '@xylabs/forget'
 
-import { FileRepository, preCacheFacebookShare } from '../../../../lib'
-import { generateImage } from './generateImage'
-import { tryGetPreviewUrlFromPage } from './getPreviewUrlFromPage'
-import { height, width } from './imageGenerator'
-import { pageImageExists } from './pageImageExists'
+import { FileRepository, preCacheFacebookShare } from '../../../../lib/index.js'
+import { generateImage } from './generateImage.js'
+import { tryGetPreviewUrlFromPage } from './getPreviewUrlFromPage.js'
+import { height, width } from './imageGenerator.js'
+import { pageImageExists } from './pageImageExists.js'
 
 /**
  * Ensures a page preview image exists for the supplied uri. If the image does not exist,

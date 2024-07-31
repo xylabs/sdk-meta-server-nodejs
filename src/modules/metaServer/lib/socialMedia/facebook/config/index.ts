@@ -1,2 +1,2 @@
-export * from './appId'
-export * from './appSecret'
+export * from './appId.js'
+export * from './appSecret.js'

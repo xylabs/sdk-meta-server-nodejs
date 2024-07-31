@@ -1,12 +1,12 @@
 import { readFile } from 'node:fs/promises'
-import { basename, join } from 'node:path'
+import Path from 'node:path'
 
 import { S3ClientConfig } from '@aws-sdk/client-s3'
 import { describeIf } from '@xylabs/jest-helpers'
 
-import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig'
-import { getDefaultTestBucket, hasBucket } from '../../getDefaultBucket'
-import { S3Store } from '../S3Store'
+import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig.js'
+import { getDefaultTestBucket, hasBucket } from '../../getDefaultBucket.js'
+import { S3Store } from '../S3Store.js'
 
 describeIf(hasBucket())('S3Store', () => {
   let config: S3ClientConfig
@@ -17,9 +17,9 @@ describeIf(hasBucket())('S3Store', () => {
   // Helper function to generate unique keys for testing
   const generateUniqueKey = (file: string): string => `test/${Date.now()}/${file}`
   const cases: [contentType: string, file: string][] = [
-    ['text/html', join(__dirname, 'index.html')],
-    ['image/png', join(__dirname, 'coin-dark-phone.png')],
-    ['image/svg+xml', join(__dirname, 'logo.svg')],
+    ['text/html', Path.join(__dirname, 'index.html')],
+    ['image/png', Path.join(__dirname, 'coin-dark-phone.png')],
+    ['image/svg+xml', Path.join(__dirname, 'logo.svg')],
   ]
 
   describe.each(cases)('with content type %s', (contentType, file) => {
@@ -27,7 +27,7 @@ describeIf(hasBucket())('S3Store', () => {
       config = getAwsS3ClientConfig()
       const data = await readFile(file, null)
       testData = new Uint8Array(data.buffer)
-      testKey = `${generateUniqueKey(basename(file))}`
+      testKey = `${generateUniqueKey(Path.basename(file))}`
     })
     beforeEach(() => {
       sut = new S3Store(getDefaultTestBucket(), config)

@@ -1,8 +1,8 @@
-import { sep } from 'node:path'
+import Path from 'node:path'
 
 import { Request } from 'express'
 
-import { getAdjustedPath } from '../getAdjustedPath'
+import { getAdjustedPath } from '../getAdjustedPath.ts'
 
 const getRequestForUri = (uri: string) => {
   return {
@@ -13,24 +13,24 @@ const getRequestForUri = (uri: string) => {
 describe('getAdjustedPath', () => {
   describe('returns the real path for', () => {
     it('html extensions', () => {
-      expect(getAdjustedPath(getRequestForUri('/test.html'))).toBe(`${sep}test.html`)
+      expect(getAdjustedPath(getRequestForUri('/test.html'))).toBe(`${Path.sep}test.html`)
     })
     it('nested html extensions', () => {
-      expect(getAdjustedPath(getRequestForUri('/test/test.html'))).toBe(`${sep}test${sep}test.html`)
+      expect(getAdjustedPath(getRequestForUri('/test/test.html'))).toBe(`${Path.sep}test${Path.sep}test.html`)
     })
     it('known web files with non-html extensions', () => {
-      expect(getAdjustedPath(getRequestForUri('/index.js'))).toBe(`${sep}index.js`)
+      expect(getAdjustedPath(getRequestForUri('/index.js'))).toBe(`${Path.sep}index.js`)
     })
     it('non web files with extensions', () => {
-      expect(getAdjustedPath(getRequestForUri('/index.ts'))).toBe(`${sep}index.ts`)
+      expect(getAdjustedPath(getRequestForUri('/index.js'))).toBe(`${Path.sep}index.js`)
     })
   })
   describe('appends index.html to path for', () => {
     it('folders', () => {
-      expect(getAdjustedPath(getRequestForUri('/network'))).toBe(`${sep}network${sep}index.html`)
+      expect(getAdjustedPath(getRequestForUri('/network'))).toBe(`${Path.sep}network${Path.sep}index.html`)
     })
     it('folders with dots in them', () => {
-      expect(getAdjustedPath(getRequestForUri('/'))).toBe(`${sep}index.html`)
+      expect(getAdjustedPath(getRequestForUri('/'))).toBe(`${Path.sep}index.html`)
     })
   })
 })

@@ -1,2 +1,2 @@
-export * from './summaryCardImageFromPage'
-export * from './summaryCardWithLargeImageFromPage'
+export * from './summaryCardImageFromPage.js'
+export * from './summaryCardWithLargeImageFromPage.js'

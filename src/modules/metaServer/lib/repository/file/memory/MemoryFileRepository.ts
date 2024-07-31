@@ -1,7 +1,7 @@
 import { LRUCache } from 'lru-cache'
 
-import { FileRepository } from '../FileRepository'
-import { RepositoryFile } from '../RepositoryFile'
+import { FileRepository } from '../FileRepository.js'
+import { RepositoryFile } from '../RepositoryFile.js'
 
 export class MemoryFileRepository implements FileRepository {
   protected files = new LRUCache<string, RepositoryFile>({ max: 1000 })

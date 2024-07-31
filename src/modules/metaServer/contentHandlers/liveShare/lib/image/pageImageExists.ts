@@ -1,5 +1,5 @@
-import { FileRepository } from '../../../../lib'
-import { getImageUrlFromPageUrl } from '../url'
+import { FileRepository } from '../../../../lib/index.js'
+import { getImageUrlFromPageUrl } from '../url/index.js'
 
 /**
  * Checks if the page image exists in the cache

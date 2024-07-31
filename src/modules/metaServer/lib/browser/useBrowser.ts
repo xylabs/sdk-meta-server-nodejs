@@ -1,8 +1,8 @@
 import { Browser, launch, Viewport } from 'puppeteer'
 
-import { getBrowserArgs } from './getBrowserArgs'
-import { getUserDataDir } from './getUserDataDir'
-import { defaultViewportSize } from './ViewPortSize'
+import { getBrowserArgs } from './getBrowserArgs.js'
+import { getUserDataDir } from './getUserDataDir.js'
+import { defaultViewportSize } from './ViewPortSize.js'
 
 export const viewPortDefaults: Viewport = {
   ...defaultViewportSize,

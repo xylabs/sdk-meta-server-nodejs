@@ -1,1 +1,1 @@
-export * from './MemoryFileRepository'
+export * from './MemoryFileRepository.js'

@@ -1,2 +1,2 @@
-export * from './getRenderedPageHtml'
-export * from './getRenderedSpaPageHtml'
+export * from './getRenderedPageHtml.js'
+export * from './getRenderedSpaPageHtml.js'

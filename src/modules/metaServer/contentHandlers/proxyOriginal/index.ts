@@ -1,1 +1,1 @@
-export * from './proxyOriginal'
+export * from './proxyOriginal.js'

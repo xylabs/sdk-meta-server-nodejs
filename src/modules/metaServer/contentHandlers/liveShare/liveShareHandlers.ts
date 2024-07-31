@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs'
-import { extname, join } from 'node:path'
+import Path from 'node:path'
 
 import { assertEx } from '@xylabs/assert'
 import { delay } from '@xylabs/delay'
@@ -18,9 +18,9 @@ import {
   RepositoryFile,
   RouteMatcher,
   stringToArrayBuffer,
-} from '../../lib'
-import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { ensureImageExists, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib'
+} from '../../lib/index.js'
+import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.js'
+import { ensureImageExists, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib/index.js'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -58,7 +58,7 @@ const disableCaching = false
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
-  const filePath = join(baseDir, 'index.html')
+  const filePath = Path.join(baseDir, 'index.html')
   assertEx(existsSync(filePath), 'Missing index.html')
   const indexHtml = readFileSync(filePath, { encoding: 'utf8' })
   const pageRepository = new MemoryFileRepository()
@@ -66,7 +66,7 @@ const getPageHandler = (baseDir: string) => {
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const pageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
-    if (extname(adjustedPath) === '.html') {
+    if (Path.extname(adjustedPath) === '.html') {
       try {
         const uri = getUriBehindProxy(req)
         console.log(`[liveShare][pageHandler][${uri}]: called`)
@@ -134,7 +134,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
 
 const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
-  const filePath = join(baseDir, 'xy.config.json')
+  const filePath = Path.join(baseDir, 'xy.config.json')
   console.log(`[liveShare][init] Locating xy.config.json at ${filePath}`)
   if (existsSync(filePath)) {
     console.log('[liveShare][init] Located xy.config.json')

@@ -1,6 +1,6 @@
 import { execSync } from 'child_process'
-import { safeExit } from './safeExit'
-import { getFlagsString } from './getFlags'
+import { safeExit } from './safeExit.js'
+import { getFlagsString } from './getFlags.js'
 
 safeExit(async () => {
   console.log(`Docker build [${process.cwd()}]`)

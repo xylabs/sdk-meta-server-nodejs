@@ -1,3 +1,3 @@
-export * from './getAdjustedPath'
-export * from './isHtmlLike'
-export * from './routeMatcher'
+export * from './getAdjustedPath.js'
+export * from './isHtmlLike.js'
+export * from './routeMatcher/index.js'

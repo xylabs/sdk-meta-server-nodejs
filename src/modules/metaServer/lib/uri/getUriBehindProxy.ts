@@ -1,6 +1,6 @@
 import { Request } from 'express'
 
-import { isLocalhost } from '../domain'
+import { isLocalhost } from '../domain/index.js'
 
 /**
  * Since we're often operating behind both CloudFront & an ALB, within

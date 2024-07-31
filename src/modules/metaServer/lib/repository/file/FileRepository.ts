@@ -1,4 +1,4 @@
-import { RepositoryFile } from './RepositoryFile'
+import { RepositoryFile } from './RepositoryFile.js'
 
 /**
  * A repository for storing files.

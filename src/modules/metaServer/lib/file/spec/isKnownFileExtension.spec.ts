@@ -1,4 +1,4 @@
-import { isKnownFileExtension } from '../isKnownFileExtension'
+import { isKnownFileExtension } from '../isKnownFileExtension.js'
 
 const pathsWithRealExtensions = [
   'index.html',

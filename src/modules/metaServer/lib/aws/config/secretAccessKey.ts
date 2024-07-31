@@ -1,4 +1,4 @@
-import { generateEnvVarHelpers } from '../../env'
+import { generateEnvVarHelpers } from '../../env/index.js'
 
 export const {
   hasEnvVar: hasSecretAccessKey,

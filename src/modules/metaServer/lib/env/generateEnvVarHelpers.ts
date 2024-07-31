@@ -1,6 +1,6 @@
-import { getEnvVar } from './getEnvVar'
-import { hasEnvVar } from './hasEnvVar'
-import { tryGetEnvVar } from './tryGetEnvVar'
+import { getEnvVar } from './getEnvVar.js'
+import { hasEnvVar } from './hasEnvVar.js'
+import { tryGetEnvVar } from './tryGetEnvVar.js'
 
 /**
  * Helper methods for interacting with an ENV VAR

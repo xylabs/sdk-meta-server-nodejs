@@ -1,6 +1,6 @@
 import { Page, ScreenshotOptions, Viewport } from 'puppeteer'
 
-import { generateImageBufferFromPage } from '../generateImageFromPage'
+import { generateImageBufferFromPage } from '../generateImageFromPage.js'
 
 const opts: ScreenshotOptions = {
   encoding: 'binary',

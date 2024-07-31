@@ -1,4 +1,4 @@
-import { getImageUrlFromPageUrl } from '../getImageUrlFromPageUrl'
+import { getImageUrlFromPageUrl } from '../getImageUrlFromPageUrl.js'
 
 describe('getImageUrl', () => {
   const cases: [width: number, height: number][] = [

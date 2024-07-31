@@ -1,2 +1,2 @@
-export * from './useBrowser'
-export * from './ViewPortSize'
+export * from './useBrowser.js'
+export * from './ViewPortSize.js'

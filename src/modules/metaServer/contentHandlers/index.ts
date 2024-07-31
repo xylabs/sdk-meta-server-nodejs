@@ -1,3 +1,3 @@
-export * from './debug'
-export * from './liveShare'
-export * from './proxyOriginal'
+export * from './debug/index.js'
+export * from './liveShare/index.js'
+export * from './proxyOriginal/index.js'

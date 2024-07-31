@@ -1,2 +1,2 @@
-export * from './ensureImageExists'
-export * from './getImageMeta'
+export * from './ensureImageExists.js'
+export * from './getImageMeta.js'

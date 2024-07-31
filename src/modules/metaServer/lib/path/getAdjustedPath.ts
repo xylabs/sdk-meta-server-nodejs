@@ -1,10 +1,10 @@
-import { join } from 'node:path'
+import Path from 'node:path'
 
 import { Request } from 'express'
 
-import { isKnownFileExtension } from '../file'
+import { isKnownFileExtension } from '../file/index.js'
 
 export const getAdjustedPath = (req: Request): string => {
   if (isKnownFileExtension(req.path)) return req.path
-  return join(req.path, 'index.html')
+  return Path.join(req.path, 'index.html')
 }

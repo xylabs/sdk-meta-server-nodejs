@@ -1,1 +1,1 @@
-export * from './S3Store'
+export * from './S3Store.js'

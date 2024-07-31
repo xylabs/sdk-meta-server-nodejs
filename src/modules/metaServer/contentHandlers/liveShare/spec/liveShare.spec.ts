@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 import { MatchImageSnapshotOptions, toMatchImageSnapshot } from 'jest-image-snapshot'
 import { SuperTest, Test } from 'supertest'
 
-import { getServerOnPort } from '../../../spec'
+import { getServerOnPort } from '../../../spec/index.js'
 
 describe('liveShare', () => {
   const port = 12_345

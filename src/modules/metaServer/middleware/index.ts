@@ -1,1 +1,1 @@
-export * from './metaCache'
+export * from './metaCache/index.js'

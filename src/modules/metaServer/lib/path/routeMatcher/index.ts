@@ -1,3 +1,3 @@
-export * from './createGlobMatcher'
-export * from './createRegexMatcher'
-export * from './RouteMatcher'
+export * from './createGlobMatcher.js'
+export * from './createRegexMatcher.js'
+export * from './RouteMatcher.js'

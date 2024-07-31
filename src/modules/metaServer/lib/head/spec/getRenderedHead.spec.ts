@@ -1,5 +1,5 @@
-import { usePage } from '../../page'
-import { getRenderedHead, getRenderedMeta, getRenderedMetaElements, getSelectiveHeadElements } from '../getRenderedHead'
+import { usePage } from '../../page/index.js'
+import { getRenderedHead, getRenderedMeta, getRenderedMetaElements, getSelectiveHeadElements } from '../getRenderedHead.js'
 
 const uris = ['https://www.youtube.com/watch?v=Kauv7MVPcsA']
 

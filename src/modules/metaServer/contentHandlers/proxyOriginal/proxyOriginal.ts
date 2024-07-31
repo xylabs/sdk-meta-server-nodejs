@@ -1,5 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import Path from 'node:path'
 
 import { assertEx } from '@xylabs/assert'
 import { asyncHandler, Empty, NoReqParams, NoReqQuery } from '@xylabs/sdk-api-express-ecs'
@@ -9,10 +9,10 @@ import { StatusCodes } from 'http-status-codes'
 import { LRUCache } from 'lru-cache'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
-import { getAdjustedPath, isHtmlLike } from '../../lib'
-import { MetaCacheLocals } from '../../middleware'
-import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types'
-import { exists } from './lib'
+import { getAdjustedPath, isHtmlLike } from '../../lib/index.js'
+import { MetaCacheLocals } from '../../middleware/index.js'
+import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.js'
+import { exists } from './lib/index.js'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -39,7 +39,7 @@ const existingPaths = new LRUCache<string, boolean>({ max: 1000 })
 
 const getHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
-  const filePath = join(baseDir, 'index.html')
+  const filePath = Path.join(baseDir, 'index.html')
   assertEx(existsSync(filePath), 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf8' })
   const proxy = serveStatic(baseDir, options)
@@ -61,7 +61,7 @@ const getHandler = (baseDir: string) => {
       let pathExists = existingPaths.get(file)
       if (pathExists === undefined) {
         console.log(`[proxyOriginal][pageHandler][${file}]: path not cached`)
-        const result = await exists(join(baseDir, file))
+        const result = await exists(Path.join(baseDir, file))
         console.log(`[proxyOriginal][pageHandler][${file}]: cache path`)
         existingPaths.set(file, result)
         pathExists = result

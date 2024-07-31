@@ -1,8 +1,8 @@
-import { extname } from 'node:path'
+import Path from 'node:path'
 
 import { Request } from 'express'
 
-import { isKnownFileExtension } from '../file'
+import { isKnownFileExtension } from '../file/index.js'
 
 /**
  * Returns true request path could be referring
@@ -12,7 +12,7 @@ import { isKnownFileExtension } from '../file'
  * to an HTML document, false otherwise
  */
 export const isHtmlLike = (req: Request): boolean => {
-  const ext = extname(req.path)
+  const ext = Path.extname(req.path)
   if (ext.length === 0) return true
   if (ext.toLowerCase() === '.html') return true
   if (!isKnownFileExtension(req.path)) return true

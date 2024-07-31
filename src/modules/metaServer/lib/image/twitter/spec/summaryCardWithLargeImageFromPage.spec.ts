@@ -1,8 +1,8 @@
 import { MatchImageSnapshotOptions, toMatchImageSnapshot } from 'jest-image-snapshot'
 
-import { usePage } from '../../../page'
-import { join } from '../../../uri'
-import { summaryCardWithLargeImageFromPage } from '../summaryCardWithLargeImageFromPage'
+import { usePage } from '../../../page/index.js'
+import { join } from '../../../uri/index.js'
+import { summaryCardWithLargeImageFromPage } from '../summaryCardWithLargeImageFromPage.js'
 
 const opts: MatchImageSnapshotOptions = {
   customDiffConfig: {

@@ -3,9 +3,9 @@ config()
 
 import express, { Express } from 'express'
 
-import { ApplicationMiddlewareOptions } from '../types'
-import { addContentHandlers } from './addContentHandlers'
-import { addMiddleware } from './addMiddleware'
+import { ApplicationMiddlewareOptions } from '../types/index.ts'
+import { addContentHandlers } from './addContentHandlers.ts'
+import { addMiddleware } from './addMiddleware.ts'
 
 const defaultDirectory = process.env.SERVE_DIRECTORY || './build'
 

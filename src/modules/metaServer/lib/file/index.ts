@@ -1,2 +1,2 @@
-export * from './getContentType'
-export * from './isKnownFileExtension'
+export * from './getContentType.js'
+export * from './isKnownFileExtension.js'

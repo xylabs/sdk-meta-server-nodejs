@@ -1,2 +1,2 @@
-export * from './PageRenderingOptions'
-export * from './usePage'
+export * from './PageRenderingOptions.js'
+export * from './usePage/index.js'

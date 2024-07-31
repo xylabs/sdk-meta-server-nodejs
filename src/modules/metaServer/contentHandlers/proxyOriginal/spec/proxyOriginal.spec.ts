@@ -1,12 +1,12 @@
 import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
+import Path from 'node:path'
 
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { SuperTest, Test } from 'supertest'
 
 import { getServer } from '../../../spec'
 
-const expectToEqualFileContents = async (actual: string, filePath: string = join(__dirname, 'index.html')) => {
+const expectToEqualFileContents = async (actual: string, filePath: string = Path.join(__dirname, 'index.html')) => {
   // Get index.html file by reading it directly from the filesystem
   const expected = await readFile(filePath, { encoding: 'utf8' })
   expect(expected).toBeTruthy()
@@ -87,7 +87,7 @@ describe('proxyOriginal', () => {
       expect(response.body).toBeTruthy()
       const actual = response.text.toString()
       expect(actual).toBeTruthy()
-      await expectToEqualFileContents(actual, join(__dirname, 'test', 'index.html'))
+      await expectToEqualFileContents(actual, Path.join(__dirname, 'test', 'index.html'))
     })
     it('without slash permanently redirects to directory with slash', async () => {
       const serverRelativePath = '/test'
@@ -118,7 +118,7 @@ describe('proxyOriginal', () => {
         expect(response.body).toBeTruthy()
         const actual = response.text.toString()
         expect(actual).toBeTruthy()
-        await expectToEqualFileContents(actual, join(__dirname, '/test/with.dot.in.folder.test/', 'index.html'))
+        await expectToEqualFileContents(actual, Path.join(__dirname, '/test/with.dot.in.folder.test/', 'index.html'))
       })
       it('without slash permanently redirects to directory with slash', async () => {
         const serverRelativePath = '/test/with.dot.in.folder.test'

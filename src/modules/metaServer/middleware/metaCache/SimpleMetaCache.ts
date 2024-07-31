@@ -1,7 +1,7 @@
 import { mergeDocumentHead, Meta, metaBuilder } from '@xyo-network/sdk-meta'
 import { LRUCache } from 'lru-cache'
 
-import { MetaCache } from './MetaCache'
+import { MetaCache } from './MetaCache.js'
 
 const defaultHtml = `
 <!DOCTYPE html>

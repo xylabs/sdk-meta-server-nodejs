@@ -1,7 +1,7 @@
 import { metaBuilder } from '@xyo-network/sdk-meta'
 
-import { FileRepository } from '../../../../../lib'
-import { ensureImageExists, getImageMeta } from '../../image'
+import { FileRepository } from '../../../../../lib/index.js'
+import { ensureImageExists, getImageMeta } from '../../image/index.js'
 
 export const useIndexAndDeferredPreviewImage = (url: string, imageRepository: FileRepository, indexHtml: string): string => {
   try {

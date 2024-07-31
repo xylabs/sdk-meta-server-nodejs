@@ -1,4 +1,4 @@
-import { hasAccessKeyId, hasSecretAccessKey } from '../config'
+import { hasAccessKeyId, hasSecretAccessKey } from '../config/index.js'
 
 /**
  * Checks if the enough information exists in the environment to create an AWS S3 client

@@ -1,4 +1,5 @@
-import yargs  from 'yargs'
+import yargsUntyped, {Argv}  from 'yargs'
+const yargs = yargsUntyped as Argv
 
 /**
  * Determines the flags for the supplied command (without

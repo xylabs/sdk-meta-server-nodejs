@@ -1,1 +1,1 @@
-export * from './getRenderedHead'
+export * from './getRenderedHead.js'

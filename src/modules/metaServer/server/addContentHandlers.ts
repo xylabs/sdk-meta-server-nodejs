@@ -1,7 +1,7 @@
 import { Express } from 'express'
 
-import { configureProxyOriginal, debugRoutes, liveShareHandlers } from '../contentHandlers'
-import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../types'
+import { configureProxyOriginal, debugRoutes, liveShareHandlers } from '../contentHandlers/index.ts'
+import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../types/index.ts'
 
 const debugHandlers = process.env.NODE_ENV === 'development' ? debugRoutes : []
 

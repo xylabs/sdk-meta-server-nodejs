@@ -1,2 +1,2 @@
-export * from './getRenderedPageHtml'
-export * from './useIndexAndDeferredPreviewImage'
+export * from './getRenderedPageHtml/index.js'
+export * from './useIndexAndDeferredPreviewImage/index.js'

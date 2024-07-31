@@ -1,1 +1,1 @@
-export * from './preCacheFacebookShare'
+export * from './preCacheFacebookShare.js'

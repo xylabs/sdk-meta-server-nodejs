@@ -1,1 +1,1 @@
-export * from './facebook'
+export * from './facebook/index.js'

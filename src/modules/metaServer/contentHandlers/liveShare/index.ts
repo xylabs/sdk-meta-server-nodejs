@@ -1,1 +1,1 @@
-export * from './liveShareHandlers'
+export * from './liveShareHandlers.js'

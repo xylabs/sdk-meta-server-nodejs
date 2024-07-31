@@ -1,4 +1,4 @@
-import { getServer } from '../../spec'
+import { getServer } from '../../spec/index.js'
 
 describe('Server', () => {
   it('starts up', async () => {

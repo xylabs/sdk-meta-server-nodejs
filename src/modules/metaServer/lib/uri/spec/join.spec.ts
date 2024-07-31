@@ -1,4 +1,4 @@
-import { join } from '../join'
+import { join } from '../join.js'
 
 describe('join', () => {
   const cases: [string[], string][] = [

@@ -1,4 +1,4 @@
-import { tryGetFacebookAppId, tryGetFacebookAppSecret } from '../config'
+import { tryGetFacebookAppId, tryGetFacebookAppSecret } from '../config/index.js'
 
 export const tryGetAuthInfo = () => {
   const client_id = tryGetFacebookAppId()

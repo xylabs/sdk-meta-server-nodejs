@@ -52,16 +52,6 @@ const finalConfig = {
           "../../../../../../.."
         ]
       }
-    ],
-    "import/no-internal-modules": [
-      "warn", {
-        "allow": [
-          "source-map-support/*",
-          "lodash/*",
-          "aws-sdk/**/*",
-          "types/*"
-        ]
-      }
     ]
   }
 }

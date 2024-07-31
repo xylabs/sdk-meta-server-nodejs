@@ -2,10 +2,10 @@
 import { Mutex } from 'async-mutex'
 import { Browser, Page, Viewport, WaitForOptions } from 'puppeteer'
 
-import { defaultViewportSize, useBrowser } from '../../browser'
-import { PageRenderingOptions } from '../PageRenderingOptions'
-import { timeout, waitUntil } from './defaults'
-import { getBrowserPage } from './getBrowserPage'
+import { defaultViewportSize, useBrowser } from '../../browser/index.js'
+import { PageRenderingOptions } from '../PageRenderingOptions.js'
+import { timeout, waitUntil } from './defaults.js'
+import { getBrowserPage } from './getBrowserPage.js'
 
 const viewPortDefaults: Viewport = {
   ...defaultViewportSize,

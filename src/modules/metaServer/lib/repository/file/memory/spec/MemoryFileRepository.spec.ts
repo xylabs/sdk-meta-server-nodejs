@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
-import { basename, join } from 'node:path'
+import Path from 'node:path'
 
-import { MemoryFileRepository } from '../MemoryFileRepository'
+import { MemoryFileRepository } from '../MemoryFileRepository.js'
 
 describe('MemoryFileRepository', () => {
   let sut: MemoryFileRepository
@@ -11,15 +11,15 @@ describe('MemoryFileRepository', () => {
   // Helper function to generate unique keys for testing
   const generateUniqueKey = (file: string): string => `test/${Date.now()}/${file}`
   const cases: [contentType: string, file: string][] = [
-    ['text/html', join(__dirname, 'index.html')],
-    ['image/png', join(__dirname, 'coin-dark-phone.png')],
-    ['image/svg+xml', join(__dirname, 'logo.svg')],
+    ['text/html', Path.join(__dirname, 'index.html')],
+    ['image/png', Path.join(__dirname, 'coin-dark-phone.png')],
+    ['image/svg+xml', Path.join(__dirname, 'logo.svg')],
   ]
 
   describe.each(cases)('with content type %s', (type, file) => {
     beforeAll(async () => {
       data = (await readFile(file, null)).buffer
-      testKey = `${generateUniqueKey(basename(file))}`
+      testKey = `${generateUniqueKey(Path.basename(file))}`
     })
     beforeEach(() => {
       sut = new MemoryFileRepository()

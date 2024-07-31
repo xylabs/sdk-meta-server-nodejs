@@ -1,4 +1,4 @@
-import { getRenderedSpaPageHtml } from '../getRenderedSpaPageHtml'
+import { getRenderedSpaPageHtml } from '../getRenderedSpaPageHtml.js'
 
 describe.skip('getRenderedSpaPageHtml', () => {
   const uri = 'https://xyo.network/brand'

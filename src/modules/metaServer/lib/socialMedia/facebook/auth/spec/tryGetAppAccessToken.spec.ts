@@ -1,7 +1,7 @@
 import { describeIf } from '@xylabs/jest-helpers'
 
-import { canGetAppAccessToken } from '../canGetAppAccessToken'
-import { tryGetAppAccessToken } from '../tryGetAppAccessToken'
+import { canGetAppAccessToken } from '../canGetAppAccessToken.js'
+import { tryGetAppAccessToken } from '../tryGetAppAccessToken.js'
 
 describeIf(canGetAppAccessToken())('tryGetAppAccessToken', () => {
   it('Returns access_token', async () => {

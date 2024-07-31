@@ -1,1 +1,1 @@
-export * from './configureDebug'
+export * from './configureDebug.js'

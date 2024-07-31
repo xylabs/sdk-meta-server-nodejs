@@ -1,4 +1,4 @@
-import { usePage } from '../usePage'
+import { usePage } from '../usePage.js'
 
 describe('usePage', () => {
   const uri = 'https://xyo.network/brand'

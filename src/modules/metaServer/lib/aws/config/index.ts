@@ -1,3 +1,3 @@
-export * from './accessKeyId'
-export * from './region'
-export * from './secretAccessKey'
+export * from './accessKeyId.js'
+export * from './region.js'
+export * from './secretAccessKey.js'

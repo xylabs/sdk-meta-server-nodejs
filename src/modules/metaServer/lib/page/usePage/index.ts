@@ -1,3 +1,3 @@
-export * from './defaults'
-export * from './usePage'
-export * from './useSpaPage'
+export * from './defaults.js'
+export * from './usePage.js'
+export * from './useSpaPage.js'

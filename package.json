@@ -127,7 +127,7 @@
   },
   "volta": {
     "node": "22.5.1",
-    "yarn": "1.22.19"
+    "yarn": "3.6.1"
   },
   "packageManager": "yarn@3.6.1",
   "type": "module"

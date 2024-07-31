@@ -28,6 +28,6 @@ const generateJestConfig = ({ esModules }: { esModules: string[] }) => {
   }
 }
 
-const config = generateJestConfig({ esModules: ['is-ip', 'ip-regex', 'lodash-es', 'uuid', 'lodash-es', 'quick-lru'] })
+const config = generateJestConfig({ esModules: ['is-ip', 'ip-regex', 'lodash-es', 'uuid', 'lodash-es', 'quick-lru', 'mime'] })
 
 export default config

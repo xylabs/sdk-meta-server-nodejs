@@ -5224,7 +5224,7 @@ __metadata:
     jest-image-snapshot: ^6.4.0
     jest-serializer-html: ^7.1.0
     lru-cache: ^11.0.0
-    mime: ^3.0.0
+    mime: ^4.0.4
     minimatch: ^10.0.1
     nodemon: ^3.1.4
     puppeteer: ^21.11.0
@@ -12801,12 +12801,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mime@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "mime@npm:3.0.0"
+"mime@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "mime@npm:4.0.4"
   bin:
-    mime: cli.js
-  checksum: f43f9b7bfa64534e6b05bd6062961681aeb406a5b53673b53b683f27fcc4e739989941836a355eef831f4478923651ecc739f4a5f6e20a76487b432bfd4db928
+    mime: bin/cli.js
+  checksum: 729904cd8b3913062017970ffa25c4303356f80dad33d472b47244e3baa35ab748ce005fb9a66ae854266fa73396ef219287bf6db311c8376ea3d9cfc5dda107
   languageName: node
   linkType: hard
 

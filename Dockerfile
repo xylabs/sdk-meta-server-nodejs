@@ -1,7 +1,10 @@
 # syntax=docker/dockerfile:1
 
+# Define build-time arguments
+ARG NODE_VERSION=22.4.1
+
 # Build here and pull down all the devDependencies
-FROM node:22 AS builder
+FROM node:${NODE_VERSION} AS builder
 ARG NODE_OPTIONS="--max_old_space_size=8192"
 WORKDIR /app
 COPY . .
@@ -10,14 +13,14 @@ RUN yarn install
 RUN if yarn run | yarn run | awk '{print $3}'| grep -q "^build$"; then yarn build; else yarn xy build; fi
 
 # Just install the production dependencies here
-FROM node:22 AS dependencies
+FROM node:${NODE_VERSION} AS dependencies
 WORKDIR /app
 COPY . .
 RUN yarn workspaces focus --production
 
 # Copy over the compiled output & production dependencies
 # into puppeteer container
-FROM node:22-alpine as server
+FROM node:${NODE_VERSION}-alpine as server
 ENV PORT="80"
 WORKDIR /app
 ENV SDK_META_SERVER_DIR="./node_modules/@xylabs/meta-server"

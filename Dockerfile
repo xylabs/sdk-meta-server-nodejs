@@ -25,12 +25,11 @@ RUN yarn workspaces focus --production
 # Copy over the compiled output & production dependencies
 # into puppeteer container
 FROM node:${NODE_VERSION}-alpine as server
+WORKDIR /app
 ENV PORT="80"
 ENV SDK_META_SERVER_DIR="./node_modules/@xylabs/meta-server"
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
-WORKDIR /app
 
 RUN corepack enable
 RUN corepack prepare

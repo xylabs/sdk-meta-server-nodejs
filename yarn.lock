@@ -5225,7 +5225,7 @@ __metadata:
     jest-serializer-html: ^7.1.0
     lru-cache: ^11.0.0
     mime: ^4.0.4
-    minimatch: ^9.0.5
+    minimatch: ^10.0.1
     nodemon: ^3.1.4
     puppeteer: ^21.11.0
     serve-static: ^1.15.0
@@ -12835,6 +12835,15 @@ __metadata:
   version: 1.0.1
   resolution: "min-indent@npm:1.0.1"
   checksum: bfc6dd03c5eaf623a4963ebd94d087f6f4bbbfd8c41329a7f09706b0cb66969c4ddd336abeb587bc44bc6f08e13bf90f0b374f9d71f9f01e04adc2cd6f083ef1
+  languageName: node
+  linkType: hard
+
+"minimatch@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "minimatch@npm:10.0.1"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: f5b63c2f30606091a057c5f679b067f84a2cd0ffbd2dbc9143bda850afd353c7be81949ff11ae0c86988f07390eeca64efd7143ee05a0dab37f6c6b38a2ebb6c
   languageName: node
   linkType: hard
 

@@ -24,7 +24,7 @@
     "@xyo-network/axios": "^2.91.3",
     "@xyo-network/sdk-meta": "^2.11.4",
     "async-mutex": "^0.5.0",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "he": "^1.2.0",

@@ -55,7 +55,7 @@
     "@xylabs/tsconfig-dom": "^3.14.1",
     "@xylabs/tsconfig-dom-jest": "^3.14.1",
     "@xylabs/tsconfig-jest": "^3.14.1",
-    "axios": "^1.7.2",
+    "axios": "^1.7.3",
     "babel-jest": "^29.7.0",
     "dotenv": "^16.4.5",
     "eslint": "^9.8.0",
@@ -65,7 +65,7 @@
     "jest-serializer-html": "^7.1.0",
     "nodemon": "^3.1.4",
     "supertest": "^7.0.0",
-    "ts-jest": "^29.2.3",
+    "ts-jest": "^29.2.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },

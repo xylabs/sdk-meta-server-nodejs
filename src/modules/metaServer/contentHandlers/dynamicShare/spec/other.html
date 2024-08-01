@@ -30,17 +30,20 @@
   <script>
     // Function to update the og:image meta tag
     function updateOgImageMeta() {
+      console.log('Updating og:image meta tag');
       // Check if the meta tag already exists
-      let metaTag = document.querySelector('meta[property="og:image"]');
-
+      let metaTag = document.querySelector('meta[property="xyo:og:image"]');
       // If the meta tag exists, update its content attribute
       if (metaTag) {
+        console.log('Updating existing og:image meta tag');
         metaTag.setAttribute('content', 'https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg');
       } else {
+        console.log('Creating og:image meta tag');
         // If the meta tag does not exist, create a new one
         metaTag = document.createElement('meta');
-        metaTag.setAttribute('property', 'og:image');
+        metaTag.setAttribute('property', 'xyo:og:image');
         metaTag.setAttribute('content', 'https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg');
+        console.log('Appending og:image meta tag');
         document.head.appendChild(metaTag);
       }
     }

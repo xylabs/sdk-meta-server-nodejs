@@ -1,14 +1,11 @@
 import { metaBuilder } from '@xyo-network/sdk-meta'
 
-import { FileRepository } from '../../../../../lib/index.js'
-import { ensureImageExists, getImageMeta } from '../../image/index.js'
+import { getImageMeta } from '../../image/index.js'
 
-export const useIndexAndDeferredPreviewImage = (url: string, imageRepository: FileRepository, indexHtml: string): string => {
+export const useIndexAndDeferredPreviewImage = (url: string, indexHtml: string): string => {
   try {
     console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: generating preview image meta`)
     const meta = getImageMeta(url)
-    // Initiate the image generation but don't await it
-    ensureImageExists(url, imageRepository)
     const updatedHtml = metaBuilder(indexHtml, meta)
     console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: returning index.html & preview image meta`)
     return updatedHtml

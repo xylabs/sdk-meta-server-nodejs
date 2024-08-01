@@ -70,8 +70,13 @@ RUN SDK_META_SERVER_DIST_DIR_RELATIVE=$(node -p "path.dirname(require('${SDK_MET
   # Copy over the node build files
   && cp -r ${SDK_META_SERVER_DIST_DIR}/. ${SDK_META_SERVER_DIST_DIR_RELATIVE}/
 
+COPY --from=dependencies /app/package.json ./package.json
 RUN corepack enable
 RUN corepack prepare
+COPY --from=dependencies /app/.yarn ./.yarn
+COPY --from=dependencies /app/node_modules ./node_modules
+COPY --from=dependencies /app/yarn.lock ./yarn.lock
+COPY --from=dependencies /root/.yarn /root/.yarn
 
 # Copy over the compiled static app
 ARG BUILD_OUTPUT_DIR=build

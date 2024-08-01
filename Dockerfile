@@ -49,9 +49,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \
   chromium \
   fonts-freefont-ttf \
+  fonts-ipafont-gothic \
+  fonts-kacst \
+  fonts-thai-tlwg \
+  fonts-wqy-zenhei \
   libfreetype6 \
   libharfbuzz0b \
   libnss3 \
+  libxss1 \
   && rm -rf /var/lib/apt/lists/*
 
 # Copy over the meta-server to run the app

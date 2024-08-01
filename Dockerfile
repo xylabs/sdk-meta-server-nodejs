@@ -32,7 +32,7 @@ ENV SDK_META_SERVER_DIR="./node_modules/@xylabs/meta-server"
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 # Start the meta-server pointed to the static app
-CMD ["node", "/app/node_modules/@xylabs/meta-server/dist/node/bin/start-meta.js"]
+CMD ["node", "/app/node_modules/@xylabs/meta-server/dist/node/bin/start-meta.cjs"]
 
 # Install puppeteer
 # https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#running-on-alpine

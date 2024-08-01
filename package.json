@@ -115,8 +115,8 @@
   "scripts": {
     "coverage": "yarn jest --coverage",
     "start": "nodemon",
-    "start-cjs": "node ./dist/node/bin/start-meta.js",
-    "start-esm": "node ./dist/node/bin/start-meta.mjs",
+    "start-cjs": "node ./dist/node/bin/start-meta.cjs",
+    "start-esm": "node ./dist/node/bin/start-meta.js",
     "test": "yarn jest --forceExit"
   },
   "sideEffects": false,

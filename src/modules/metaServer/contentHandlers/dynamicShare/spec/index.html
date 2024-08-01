@@ -2,11 +2,101 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Index</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Router Example</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- React Router DOM from CDN -->
+  <script src="https://unpkg.com/react-router-dom@5.3.3/umd/react-router-dom.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    #root {
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+      margin-right: 10px;
+    }
+  </style>
 </head>
 
 <body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { BrowserRouter, Routes, Route, Link } = window.ReactRouterDOM;
+
+    // Home component
+    function Home() {
+      return (
+        <div>
+          <h1>Home Page</h1>
+          <p>Welcome to the home page!</p>
+        </div>
+      );
+    }
+
+    // Other component
+    function Other() {
+      React.useEffect(() => {
+        console.log('Updated meta tag');
+        const metaTag = document.querySelector('meta[property="xyo:og:image"]');
+        if (metaTag) {
+          metaTag.setAttribute('content', 'https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg');
+        } else {
+          const newMetaTag = document.createElement('meta');
+          newMetaTag.setAttribute('property', 'xyo:og:image');
+          newMetaTag.setAttribute('content', 'https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg');
+          document.head.appendChild(newMetaTag);
+        }
+      }, []);
+      return (
+        <div>
+          <h1>Other Page</h1>
+          <p>This is the other page!</p>
+        </div>
+      );
+    }
+
+    // App component with routing
+    function App() {
+      return (
+        <BrowserRouter>
+          <div>
+            <nav>
+              <Link to="/">Home</Link>
+              <Link to="/other">Other</Link>
+            </nav>
+            <hr />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/other" element={<Other />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      );
+    }
+
+    // Render the React component to the DOM
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 {
   "dynamicShare": {
     "exclude": ["/index.html"],
-    "include": ["/other.html"]
+    "include": ["/other"]
   }
 }

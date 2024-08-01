@@ -1,8 +1,9 @@
 import { metaBuilder } from '@xyo-network/sdk-meta'
 
-import { getImageMeta } from '../../image/index.js'
+import { getImageMeta } from '../../image/index.ts'
 
-export const useIndexAndDeferredPreviewImage = (url: string, indexHtml: string): string => {
+export const useIndexAndDynamicPreviewImage = async (url: string, indexHtml: string): Promise<string> => {
+  await Promise.resolve()
   try {
     console.log(`[dynamicShare][useIndexAndDeferredPreviewImage][${url}]: generating preview image meta`)
     const meta = getImageMeta(url)

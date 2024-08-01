@@ -1,1 +1,1 @@
-export * from './useIndexAndDeferredPreviewImage.js'
+export * from './useIndexAndDeferredPreviewImage.ts'

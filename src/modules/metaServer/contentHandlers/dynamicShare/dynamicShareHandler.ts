@@ -51,7 +51,7 @@ const getPageHandler = (baseDir: string) => {
         } else {
           console.log(`[dynamicShare][pageHandler][${uri}]: rendering`)
           // TODO: Use Index And Dynamic Preview Image
-          const updatedHtml = useIndexAndDeferredPreviewImage(uri, indexHtml)
+          const updatedHtml = await useIndexAndDeferredPreviewImage(uri, indexHtml)
           console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
           const data = stringToArrayBuffer(updatedHtml)
           const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }

@@ -7,7 +7,7 @@ import { getServerOnPort } from '../../../spec/index.js'
 
 describe('dynamicShare', () => {
   const port = 12_346
-  const serverUrl = `http://127.0.0.1:${port}`
+  // const serverUrl = `http://127.0.0.1:${port}`
   const requestedPage = 'other'
   const height = 630
   const width = 1200

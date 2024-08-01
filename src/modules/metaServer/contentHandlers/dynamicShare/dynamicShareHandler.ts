@@ -81,8 +81,8 @@ const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPa
     // TODO: Validate xyConfig
     if (xyConfig.dynamicShare) {
       console.log('[dynamicShare][init] Creating page handler')
-      // TODO: Pull in loading completed flag from xyConfig or use default
-      const { include, exclude, flag = 'xyo:loaded' } = xyConfig.dynamicShare
+      // TODO: Support custom done loading flag from xyConfig (or use default)
+      const { include, exclude } = xyConfig.dynamicShare
       const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
       const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
       const pageHandler = getPageHandler(baseDir)

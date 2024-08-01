@@ -21,7 +21,6 @@ const xyoOgImageElementRegex = /<meta[^>]*property="xyo:og:image"[^>]*content="(
 export const getImageUrlFromPage = async (url: string): Promise<string> => {
   // TODO: Optimize this with something like React SSR
   const content = await useSpaPage(url, async (page) => {
-    const foo = await page.content()
     console.log(`[dynamicShare][getPreviewUrlFromPage][${url}]: navigated to ${url}`)
     await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 15_000 })
     console.log(`[dynamicShare][getPreviewUrlFromPage][${url}]: found meta property ${xyoOgImageProperty}`)

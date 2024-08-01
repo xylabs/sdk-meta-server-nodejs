@@ -8,12 +8,12 @@ import { useSpaPage } from '../../../../../lib/index.js'
  */
 export const getRenderedSpaPageHtml = async (url: string): Promise<string | undefined> => {
   try {
-    console.log(`[liveShare][getRenderedPageHtml][${url}]: rendering`)
+    console.log(`[dynamicShare][getRenderedPageHtml][${url}]: rendering`)
     const html = await useSpaPage(url, async (page) => {
-      console.log(`[liveShare][getRenderedPageHtml][${url}]: navigated to ${url}`)
+      console.log(`[dynamicShare][getRenderedPageHtml][${url}]: navigated to ${url}`)
       return await page.content()
     })
-    console.log(`[liveShare][getRenderedPageHtml][${url}]: rendered`)
+    console.log(`[dynamicShare][getRenderedPageHtml][${url}]: rendered`)
     return html
   } catch (error) {
     console.log(error)

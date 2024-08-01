@@ -11,11 +11,11 @@ import { getImageUrlFromPageUrl } from '../url/index.js'
  * @returns The expected metadata for the preview image of a Live Share page
  */
 export const getImageMeta = (url: string, width = defaultViewportSize.width, height = defaultViewportSize.height): Meta => {
-  console.log(`[liveShare][getImageMeta][${url}]: generating`)
+  console.log(`[dynamicShare][getImageMeta][${url}]: generating`)
   const imageUrl = getImageUrlFromPageUrl(url, width, height)
   const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
   const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
   const meta = { og, twitter }
-  console.log(`[liveShare][getImageMeta][${url}]: generated`)
+  console.log(`[dynamicShare][getImageMeta][${url}]: generated`)
   return meta
 }

@@ -2,8 +2,8 @@
   "env": {
     "NODE_ENV": "development"
   },
-  "exec": "ts-node-script ./src/bin/start-meta.ts",
-  "ext": ".ts",
-  "ignore": ["**/*.spec.ts"],
-  "watch": ["./src"]
+  "exec": "node --max-old-space-size=8192 ./dist/node/index.js",
+  "ext": "ts,js,json",
+  "ignore": ["dist", "node_modules", "**/*.spec.ts"],
+  "watch": ["src"]
 }

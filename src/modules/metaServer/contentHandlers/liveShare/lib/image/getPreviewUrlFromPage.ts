@@ -1,5 +1,6 @@
 import { assertEx } from '@xylabs/assert'
-import { decode } from 'he'
+import he from 'he'
+const { decode } = he
 
 import { useSpaPage } from '../../../../lib/index.js'
 

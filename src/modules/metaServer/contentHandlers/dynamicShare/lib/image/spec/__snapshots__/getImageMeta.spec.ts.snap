@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getImageMeta generates page preview image Meta 1`] = `Promise {}`;
+
+exports[`getImageMeta generates page preview image Meta 2`] = `Promise {}`;

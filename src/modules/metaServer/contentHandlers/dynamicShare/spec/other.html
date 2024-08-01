@@ -10,8 +10,6 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <!-- Babel for JSX transformation -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- React Helmet from CDN -->
-  <script src="https://unpkg.com/react-helmet-async@2.0.5/lib/index.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -37,21 +35,24 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    // Ensure ReactHelmetAsync is loaded correctly
-    const { Helmet, HelmetProvider } = window.ReactHelmetAsync;
-
     // Simple React component
     function App() {
+      React.useEffect(() => {
+        const metaTag = document.querySelector('meta[property="xyo:og:image"]');
+        if (metaTag) {
+          metaTag.setAttribute('content', 'https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg');
+        } else {
+          const newMetaTag = document.createElement('meta');
+          newMetaTag.setAttribute('property', 'xyo:og:image');
+          newMetaTag.setAttribute('content', 'https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg');
+          document.head.appendChild(newMetaTag);
+        }
+      }, []);
       return (
-        <HelmetProvider>
-          <div>
-            <Helmet>
-              <meta property="xyo:og:image" content="https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg" />
-            </Helmet>
-            <h1>Hello, World!</h1>
-            <p>Welcome to my simple React app with Helmet!</p>
-          </div>
-        </HelmetProvider>
+        <div>
+          <h1>Hello, World!</h1>
+          <p>Simple React App</p>
+        </div>
       );
     }
 

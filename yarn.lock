@@ -4512,7 +4512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^22.0.0":
+"@types/node@npm:*, @types/node@npm:^22.0.2":
   version: 22.0.2
   resolution: "@types/node@npm:22.0.2"
   dependencies:
@@ -5131,7 +5131,7 @@ __metadata:
     "@types/he": ^1.2.3
     "@types/jest": ^29.5.12
     "@types/jest-image-snapshot": ^6.4.0
-    "@types/node": ^22.0.0
+    "@types/node": ^22.0.2
     "@types/serve-static": ^1.15.7
     "@types/supertest": ^6.0.2
     "@xylabs/assert": ^3.6.6

@@ -1,0 +1,6 @@
+{
+  "dynamicShare": {
+    "exclude": ["/excluded"],
+    "include": ["/other"]
+  }
+}

@@ -44,7 +44,7 @@
     "@types/he": "^1.2.3",
     "@types/jest": "^29.5.12",
     "@types/jest-image-snapshot": "^6.4.0",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.0.2",
     "@types/serve-static": "^1.15.7",
     "@types/supertest": "^6.0.2",
     "@xylabs/eslint-config": "^3.14.1",
@@ -123,11 +123,11 @@
   "types": "dist/node/index.d.ts",
   "version": "3.2.1",
   "engines": {
-    "node": ">=18.13.0"
+    "node": ">=22"
   },
   "volta": {
-    "node": "18.17.1",
-    "yarn": "1.22.19"
+    "node": "22.5.1",
+    "yarn": "3.6.1"
   },
   "packageManager": "yarn@3.6.1",
   "type": "module"

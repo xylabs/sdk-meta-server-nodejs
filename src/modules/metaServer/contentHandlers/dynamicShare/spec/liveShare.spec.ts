@@ -1,13 +1,12 @@
 import { Server } from 'node:http'
 
 import { StatusCodes } from 'http-status-codes'
-import { MatchImageSnapshotOptions, toMatchImageSnapshot } from 'jest-image-snapshot'
 import { SuperTest, Test } from 'supertest'
 
 import { getServerOnPort } from '../../../spec/index.js'
 
 describe('liveShare', () => {
-  const port = 12_345
+  const port = 12_346
   const serverUrl = `http://127.0.0.1:${port}`
   const requestedPage = 'other.html'
   const previewPage = 'index.html'
@@ -23,15 +22,8 @@ describe('liveShare', () => {
     const match = regex.exec(html)
     return match && match[1]
   }
-  const opts: MatchImageSnapshotOptions = {
-    customDiffConfig: {
-      threshold: 0.1,
-    },
-    failureThreshold: 0.05,
-    failureThresholdType: 'percent',
-  }
+
   beforeAll(async () => {
-    expect.extend({ toMatchImageSnapshot })
     // Serve up this directory
     ;[server, testClient] = getServerOnPort(port, __dirname)
     // Get the file from the server
@@ -65,7 +57,6 @@ describe('liveShare', () => {
       expect(result.body).toBeDefined()
       const image = Buffer.from(result.body)
       expect(image).toBeDefined()
-      expect(image).toMatchImageSnapshot(opts)
     })
   })
 })

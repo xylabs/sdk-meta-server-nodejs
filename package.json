@@ -121,7 +121,7 @@
   },
   "sideEffects": false,
   "types": "dist/node/index.d.ts",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "engines": {
     "node": ">=22"
   },

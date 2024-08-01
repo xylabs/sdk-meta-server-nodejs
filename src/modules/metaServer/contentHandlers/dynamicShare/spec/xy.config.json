@@ -1,5 +1,5 @@
 {
-  "liveShare": {
+  "dynamicShare": {
     "exclude": ["/index.html"],
     "include": ["/other.html"]
   }

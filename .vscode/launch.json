@@ -43,7 +43,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/contentHandlers/liveShare/spec/liveShare.spec.ts",
+        "src/modules/metaServer/contentHandlers/dynamicShare/spec/dynamicShare.spec.ts",
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

@@ -2,17 +2,51 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <title>Other</title>
-  <meta property="xyo:og:image" content="http://127.0.0.1:12345/index.html">
+  <meta charset="utf-8">
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="XYO Network">
+  <meta property="og:url" content="https://beta.xyo.network">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="XYO Network">
+  <meta property="og:description" content="XYO Network">
+  <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/b/b1/The_Bug_Peek.jpg">
+  <meta property="fb:app_id" content="505073083355934">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/b/b1/The_Bug_Peek.jpg">
+  <meta property="twitter:site" content="@OfficialXYO">
+  <meta property="twitter:creator" content="@OfficialXYO">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="stylesheet" href="https://use.typekit.net/zxb7orj.css">
+  <style data-emotion="css-global" data-s=""></style>
+  <style data-emotion="css-global" data-s=""></style>
+  <style data-emotion="css" data-s=""></style>
 </head>
 
 <body>
+  <script>
+    // Function to update the og:image meta tag
+    function updateOgImageMeta() {
+      // Check if the meta tag already exists
+      let metaTag = document.querySelector('meta[property="og:image"]');
 
+      // If the meta tag exists, update its content attribute
+      if (metaTag) {
+        metaTag.setAttribute('content', 'https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg');
+      } else {
+        // If the meta tag does not exist, create a new one
+        metaTag = document.createElement('meta');
+        metaTag.setAttribute('property', 'og:image');
+        metaTag.setAttribute('content', 'https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg');
+        document.head.appendChild(metaTag);
+      }
+    }
+    // Set a timeout to update the og:image meta tag after 2000 milliseconds (2 seconds)
+    setTimeout(updateOgImageMeta, 2000);
+  </script>
 </body>
 
 </html>

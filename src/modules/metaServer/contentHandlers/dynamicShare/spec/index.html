@@ -8,8 +8,8 @@
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- React Router DOM from CDN -->
-  <script src="https://unpkg.com/react-router-dom@5.3.3/umd/react-router-dom.js"></script>
+  <!-- React Router DOM v5 from CDN -->
+  <script src="https://unpkg.com/react-router-dom@5.3.4/umd/react-router-dom.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -41,7 +41,7 @@
   <div id="root"></div>
 
   <script type="text/babel">
-    const { BrowserRouter, Routes, Route, Link } = window.ReactRouterDOM;
+    const { BrowserRouter, Switch, Route, Link } = ReactRouterDOM;
 
     // Home component
     function Home() {
@@ -85,17 +85,17 @@
               <Link to="/other">Other</Link>
             </nav>
             <hr />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/other" element={<Other />} />
-            </Routes>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/other" component={Other} />
+            </Switch>
           </div>
         </BrowserRouter>
       );
     }
 
     // Render the React component to the DOM
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    ReactDOM.render(<App />, document.getElementById('root'));
   </script>
 </body>
 

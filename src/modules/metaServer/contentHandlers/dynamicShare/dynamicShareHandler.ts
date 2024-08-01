@@ -17,7 +17,7 @@ import {
   stringToArrayBuffer,
 } from '../../lib/index.js'
 import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.js'
-import { useIndexAndDeferredPreviewImage } from './lib/index.js'
+import { useIndexAndDynamicPreviewImage } from './lib/index.js'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -50,8 +50,7 @@ const getPageHandler = (baseDir: string) => {
           return
         } else {
           console.log(`[dynamicShare][pageHandler][${uri}]: rendering`)
-          // TODO: Use Index And Dynamic Preview Image
-          const updatedHtml = await useIndexAndDeferredPreviewImage(uri, indexHtml)
+          const updatedHtml = await useIndexAndDynamicPreviewImage(uri, indexHtml)
           console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
           const data = stringToArrayBuffer(updatedHtml)
           const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }

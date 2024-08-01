@@ -5,10 +5,10 @@ import { SuperTest, Test } from 'supertest'
 
 import { getServerOnPort } from '../../../spec/index.js'
 
-describe.skip('dynamicShare', () => {
+describe('dynamicShare', () => {
   const port = 12_346
   // const serverUrl = `http://127.0.0.1:${port}`
-  const requestedPage = 'other.html'
+  const requestedPage = 'other'
   // const previewPage = 'index.html'
   // const height = 630
   // const width = 1200

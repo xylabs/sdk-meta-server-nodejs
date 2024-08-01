@@ -24,15 +24,12 @@ RUN yarn workspaces focus --production
 
 # Copy over the compiled output & production dependencies
 # into puppeteer container
-FROM node:${NODE_VERSION}-alpine as server
+FROM node:${NODE_VERSION} AS server
 WORKDIR /app
 ENV PORT="80"
 ENV SDK_META_SERVER_DIR="./node_modules/@xylabs/meta-server"
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
-RUN corepack enable
-RUN corepack prepare
 
 # Start the meta-server pointed to the static app
 CMD ["node", "/app/node_modules/@xylabs/meta-server/dist/node/bin/start-meta.js"]
@@ -40,13 +37,22 @@ CMD ["node", "/app/node_modules/@xylabs/meta-server/dist/node/bin/start-meta.js"
 # Install puppeteer
 # https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#running-on-alpine
 # Install Chromium package.
-RUN apk add --no-cache \
-  chromium \
-  nss \
-  freetype \
-  harfbuzz \
+# Alpine version
+# RUN apk add --no-cache \
+#   ca-certificates \
+#   chromium \
+#   freetype \
+#   harfbuzz \
+#   nss \
+#   ttf-freefont
+RUN apt-get update && apt-get install -y --no-install-recommends \
   ca-certificates \
-  ttf-freefont
+  chromium \
+  fonts-freefont-ttf \
+  libfreetype6 \
+  libharfbuzz0b \
+  libnss3 \
+  && rm -rf /var/lib/apt/lists/*
 
 # Copy over the meta-server to run the app
 COPY --from=dependencies /app/node_modules ./node_modules
@@ -58,6 +64,9 @@ RUN SDK_META_SERVER_DIST_DIR_RELATIVE=$(node -p "path.dirname(require('${SDK_MET
   && mkdir -p ${SDK_META_SERVER_DIST_DIR_RELATIVE} \
   # Copy over the node build files
   && cp -r ${SDK_META_SERVER_DIST_DIR}/. ${SDK_META_SERVER_DIST_DIR_RELATIVE}/
+
+RUN corepack enable
+RUN corepack prepare
 
 # Copy over the compiled static app
 ARG BUILD_OUTPUT_DIR=build

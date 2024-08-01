@@ -1,5 +1,6 @@
 import yargsUntyped, {Argv}  from 'yargs'
 const yargs = yargsUntyped as Argv
+// const yargs = require('yargs')
 
 /**
  * Determines the flags for the supplied command (without

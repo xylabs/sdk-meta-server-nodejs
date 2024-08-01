@@ -7,11 +7,10 @@ import { getServerOnPort } from '../../../spec/index.js'
 
 describe('dynamicShare', () => {
   const port = 12_346
-  // const serverUrl = `http://127.0.0.1:${port}`
+  const serverUrl = `http://127.0.0.1:${port}`
   const requestedPage = 'other'
-  // const previewPage = 'index.html'
-  // const height = 630
-  // const width = 1200
+  const height = 630
+  const width = 1200
   // const previewImagePath = `/${requestedPage}/preview/${width}/${height}/img.png`
   // const shareImageUrl = `${serverUrl}${previewImagePath}`
   const shareImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/8/84/Holy_SURP_Hovhannes_Church.jpg'
@@ -37,15 +36,15 @@ describe('dynamicShare', () => {
   })
   describe('page meta', () => {
     const tests = [
-      // ['xyo:og:image', `${serverUrl}/${previewPage}`],
+      // ['xyo:og:image', shareImageUrl],
       ['og:image', shareImageUrl],
-      // ['og:image:height', `${height}`],
-      // ['og:image:secure_url', shareImageUrl],
-      // ['og:image:type', 'image/png'],
-      // ['og:image:url', shareImageUrl],
-      // ['og:image:width', `${width}`],
-      // ['twitter:card', 'summary_large_image'],
-      // ['twitter:image', shareImageUrl],
+      ['og:image:height', `${height}`],
+      ['og:image:secure_url', shareImageUrl],
+      ['og:image:type', 'image/png'],
+      ['og:image:url', shareImageUrl],
+      ['og:image:width', `${width}`],
+      ['twitter:card', 'summary_large_image'],
+      ['twitter:image', shareImageUrl],
     ]
     it.each(tests)('should match the meta property %s set to %s', (prop, expected) => {
       const actual = extractContentFromMeta(prop)

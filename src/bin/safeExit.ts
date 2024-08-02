@@ -1,8 +1,9 @@
-export const safeExit = (func: any) => {
+type Function = () => void
+export const safeExit = (func: Function) => {
   try {
     func()
-  } catch (ex) {
-    const error = ex as any
-    process.exit(error.code)
+  } catch {
+    // eslint-disable-next-line unicorn/no-process-exit
+    process.exit(1)
   }
 }

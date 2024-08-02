@@ -2,7 +2,7 @@ import { getEnvFromAws, tryParseInt } from '@xylabs/sdk-api-express-ecs'
 
 import { metaServer } from '../modules/index.js'
 
-(async () => {
+void (async () => {
   const port = tryParseInt(process.env.PORT) || 8083
   // If an AWS ARN was supplied for Secrets Manager
   const awsEnvSecret = process.env.AWS_ENV_SECRET_ARN

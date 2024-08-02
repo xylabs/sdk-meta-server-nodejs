@@ -5,6 +5,6 @@
     "allowImportingTsExtensions": true,
     "typeRoots": []
   },
-  "exclude": ["./node_modules", "./**/node_modules", "./dist", "./**/dist", "./**/docs", ".*"],
+  "exclude": ["./node_modules", "./**/node_modules", "./dist", "./**/dist", "./**/docs", "coverage", ".*"],
   "extends": "@xylabs/tsconfig-dom"
 }

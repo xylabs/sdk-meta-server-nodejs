@@ -2,9 +2,11 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowImportingTsExtensions": true,
     "typeRoots": []
   },
-  "exclude": ["./node_modules", "./**/node_modules", "./dist", "./**/dist", "./**/docs", "coverage", ".*"],
-  "extends": "@xylabs/tsconfig-dom"
+  "exclude": ["./node_modules", "./**/node_modules", "./dist", "./**/dist", "coverage", "./**/docs", ".*"],
+  "extends": "@xylabs/tsconfig",
+  "include": [
+    "./src", "./**/src"
+  ]
 }

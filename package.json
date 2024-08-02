@@ -80,7 +80,7 @@
           "default": "./dist/node/index.cjs"
         },
         "import": {
-          "types": "./dist/node/index.d.ts",
+          "types": "./dist/node/index.d.mts",
           "default": "./dist/node/index.mjs"
         }
       }
@@ -88,7 +88,8 @@
     "./package.json": "./package.json"
   },
   "main": "dist/node/index.cjs",
-  "module": "dist/node/index.mjs",
+  "module": "dist/node/index.js",
+  "types": "dist/node/index.d.ts",
   "homepage": "https://xylabs.com",
   "keywords": [
     "xylabs",
@@ -122,15 +123,14 @@
     "test": "yarn jest --forceExit"
   },
   "sideEffects": false,
-  "types": "dist/node/index.d.ts",
   "version": "4.0.3",
   "engines": {
     "node": ">=22"
   },
   "volta": {
     "node": "22.5.1",
-    "yarn": "3.6.1"
+    "yarn": "4.4.0"
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@4.4.0",
   "type": "module"
 }

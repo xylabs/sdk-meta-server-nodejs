@@ -24,7 +24,7 @@ const getFlags = async () => {
  * @param {string|string[]} value Flag value(s)
  * @returns
  */
-export const getFlagFromProperty = (name: string, value: any): any => {
+export const getFlagFromProperty = (name: string, value: unknown): any => {
   const dash = name.length === 1 ? '-' : '--'
   return Array.isArray(value)
     ? value.map((v) => { return getFlagFromProperty(name, v) }).join(' ')

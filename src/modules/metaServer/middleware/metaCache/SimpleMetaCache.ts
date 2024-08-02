@@ -18,15 +18,19 @@ export class SimpleMetaCache implements MetaCache {
     const sorted = [...values].filter((value): value is [string, string] => typeof value[0] === 'string').sort(([a], [b]) => a.localeCompare(b))
     return sorted
   }
+
   get(key: string): string | undefined {
     return this.metaCache.get(key)
   }
+
   has(key: string): boolean {
     return this.metaCache.has(key)
   }
+
   keys(): string[] {
     return this.entries().map(([key]) => key)
   }
+
   patch(key: string, value: Meta | string) {
     const incoming = typeof value === 'string' ? value : metaBuilder(defaultHtml, value)
     const existing = this.metaCache.get(key)
@@ -37,10 +41,12 @@ export class SimpleMetaCache implements MetaCache {
       this.metaCache.set(key, incoming)
     }
   }
+
   set(key: string, value: Meta | string) {
     const incoming = typeof value === 'string' ? value : metaBuilder(defaultHtml, value)
     this.metaCache.set(key, incoming)
   }
+
   values(): string[] {
     return this.entries().map(([_, value]) => value)
   }

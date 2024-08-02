@@ -9,6 +9,6 @@ import { RouteMatcher } from './RouteMatcher.js'
  * @returns
  */
 export const createGlobMatcher = (patterns: string[]): RouteMatcher => {
-  const matchers = patterns.map((pattern) => (str: string) => minimatch(str, pattern))
-  return (route: string) => matchers.some((matcher) => matcher(route))
+  const matchers = patterns.map(pattern => (str: string) => minimatch(str, pattern))
+  return (route: string) => matchers.some(matcher => matcher(route))
 }

@@ -1,4 +1,5 @@
-import { tryParseInt, getEnvFromAws } from '@xylabs/sdk-api-express-ecs'
+import { getEnvFromAws, tryParseInt } from '@xylabs/sdk-api-express-ecs'
+
 import { metaServer } from '../modules/index.js'
 
 (async () => {

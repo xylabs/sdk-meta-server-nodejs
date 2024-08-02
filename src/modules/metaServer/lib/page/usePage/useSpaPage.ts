@@ -72,7 +72,7 @@ export const useSpaPage = async <T>(
     _browser = _browser ?? (await useBrowser(browserOptions))
     _page = _page ?? (await getBrowserPage(_browser, origin))
     // First navigate to the root
-    //await page.goto(origin)
+    // await page.goto(origin)
 
     // Wait for the div with id "root" to have at least one child.
     // This assumes the child is a direct descendant (using '>').
@@ -85,8 +85,8 @@ export const useSpaPage = async <T>(
 
     console.log(`Trying relative path: ${relativePath}`)
 
-    await _page.evaluate((relativePath) => window.history.pushState(null, '', relativePath), relativePath)
-    await _page.evaluate((relativePath) => window.history.pushState(null, '', relativePath), relativePath)
+    await _page.evaluate(relativePath => window.history.pushState(null, '', relativePath), relativePath)
+    await _page.evaluate(relativePath => window.history.pushState(null, '', relativePath), relativePath)
     await _page.evaluate(() => window.history.back())
 
     const duration = Date.now() - start
@@ -95,14 +95,14 @@ export const useSpaPage = async <T>(
 
     return await pageCallback(_page)
   } catch (err) {
-    //if it crashed, we restart the browser
+    // if it crashed, we restart the browser
     await _page?.close()
     await _browser?.close()
     _page = undefined
     _browser = undefined
     pageMutex.release()
     console.log(err)
-    //we retry with a fresh browser and page
+    // we retry with a fresh browser and page
     const result = await useSpaPage(url, pageCallback, browserOptions, _waitForOptions, tryCount - 1)
     await pageMutex.acquire()
     return result

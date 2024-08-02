@@ -5,7 +5,7 @@ import { SuperTest, Test } from 'supertest'
 
 // Augment global scope with shared variables (must be var)
 declare global {
-  // eslint-disable-next-line no-var
+
   var req: SuperTest<Test>
 }
 

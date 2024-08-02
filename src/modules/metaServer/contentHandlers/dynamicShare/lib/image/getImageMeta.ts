@@ -13,7 +13,7 @@ import { getImageUrlFromPage } from './getImageUrlFromPage.ts'
 export const getImageMeta = async (url: string, width = defaultViewportSize.width, height = defaultViewportSize.height): Promise<Meta> => {
   console.log(`[dynamicShare][getImageMeta][${url}]: generating`)
   const imageUrl = await getImageUrlFromPage(url)
-  const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
+  const og: OpenGraphMeta = { image: { '': imageUrl, height, 'secure_url': imageUrl, 'type': 'image/png', 'url': imageUrl, width } }
   const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
   const meta = { og, twitter }
   console.log(`[dynamicShare][getImageMeta][${url}]: generated`)

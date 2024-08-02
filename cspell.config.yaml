@@ -17,6 +17,7 @@ words:
   - huri
   - keychain
   - networkidle
+  - nodenext
   - pako
   - printenv
   - Promisable

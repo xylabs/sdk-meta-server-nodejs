@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "moduleResolution": "nodenext",
-    "module": "nodenext",
   },
-  "exclude": [".yarn", "dist", "**/dist", "./**/docs"],
-  "extends": "@xylabs/tsconfig-jest",
+  "exclude": ["./node_modules", "./**/node_modules", "./dist", "./**/dist", "coverage", "./**/docs", ".*", "puppeteer"],
+  "extends": "@xylabs/tsconfig",
 }

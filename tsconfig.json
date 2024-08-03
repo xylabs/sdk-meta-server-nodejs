@@ -2,9 +2,9 @@
   "compilerOptions": {
     "lib": ["esnext", "dom"],
   },
-  "exclude": ["./node_modules", "./**/node_modules", "./dist", "./**/dist", "coverage", "./**/docs", ".*"],
+  "exclude": ["./node_modules", "./**/node_modules", "./dist", "./**/dist", "coverage", "./**/docs", ".*", "puppeteer"],
   "extends": "@xylabs/tsconfig",
   "include": [
-    "./src", "./**/src"
+    "./src"
   ]
 }

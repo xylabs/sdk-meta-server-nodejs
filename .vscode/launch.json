@@ -8,16 +8,14 @@
       "type": "node",
       "request": "launch",
       "name": "Debug",
-      "program": "${workspaceFolder}/src/bin/start-meta.ts",
+      "program": "${workspaceFolder}/dist/node/bin/start-meta.mjs",
       "args": [
-        "ts-node-script",
-        "${workspaceFolder}/src/bin/start-meta.ts"
       ],
       "outFiles": [
         "${workspaceFolder}/dist/**/*.*",
       ],
       "env": {
-        "NODE_OPTIONS": "-r ts-node/register --loader ts-node/esm --max-old-space-size=8192"
+        "NODE_OPTIONS": "--max-old-space-size=8192"
       },
       "envFile": "${workspaceFolder}/.env",
       "sourceMaps": true,

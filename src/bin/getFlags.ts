@@ -6,7 +6,7 @@ import yargs from 'yargs'
  * @returns The flags supplied with the command invocation
  */
 const getFlags = async () => {
-  const args = yargs()
+  const args = yargs(process.argv.slice(2))
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { _, $0, ...flags } = await args.parserConfiguration({
     'camel-case-expansion': false,

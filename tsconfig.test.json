@@ -2,6 +2,6 @@
   "compilerOptions": {
 
   },
-  "extends": "@xylabs/tsconfig-jest",
+  "extends": "@xylabs/tsconfig-dom-jest",
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

@@ -3,7 +3,7 @@ import { execSync } from 'node:child_process'
 import { getFlagsString } from './getFlags.js'
 import { safeExit } from './safeExit.js'
 
-await safeExit(async () => {
+safeExit(async () => {
   console.log(`Docker build [${process.cwd()}]`)
   const flagString = await getFlagsString()
   // This is the path to the Dockerfile for any project which depends on this

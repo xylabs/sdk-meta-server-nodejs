@@ -105,8 +105,7 @@
     "axios": "^1"
   },
   "resolutions": {
-    "mime": "^2",
-    "webpack": "^5"
+    "mime": "^2"
   },
   "publishConfig": {
     "access": "public"

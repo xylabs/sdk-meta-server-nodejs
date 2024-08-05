@@ -1,6 +1,4 @@
-import yargsUntyped, { Argv } from 'yargs'
-const yargs = yargsUntyped as Argv
-// const yargs = require('yargs')
+import yargs from 'yargs'
 
 /**
  * Determines the flags for the supplied command (without
@@ -8,7 +6,9 @@ const yargs = yargsUntyped as Argv
  * @returns The flags supplied with the command invocation
  */
 const getFlags = async () => {
-  const { _, $0, ...flags } = await yargs.parserConfiguration({
+  const args = yargs()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _, $0, ...flags } = await args.parserConfiguration({
     'camel-case-expansion': false,
   }).argv
   return flags

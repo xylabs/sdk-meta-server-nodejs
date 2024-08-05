@@ -22,9 +22,10 @@ const getFlags = async () => {
  * supplied flag.
  * @param {string} name Flag name
  * @param {string|string[]} value Flag value(s)
- * @returns
+ * @returns the string corresponding to the CLI flag
+ * name/value tuple
  */
-export const getFlagFromProperty = (name: string, value: unknown): any => {
+export const getFlagFromProperty = (name: string, value: unknown): string => {
   const dash = name.length === 1 ? '-' : '--'
   return Array.isArray(value)
     ? value.map((v) => { return getFlagFromProperty(name, v) }).join(' ')

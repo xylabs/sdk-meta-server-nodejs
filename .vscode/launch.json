@@ -25,6 +25,28 @@
       "pauseForSourceMap": true,
     },
     {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug docker-build",
+      "program": "${workspaceFolder}/dist/node/bin/docker-build.mjs",
+      "args": [
+        "-t",
+        "foo:bar",
+      ],
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.*",
+      ],
+      "env": {
+        "NODE_OPTIONS": "--max-old-space-size=8192"
+      },
+      "envFile": "${workspaceFolder}/.env",
+      "sourceMaps": true,
+      "resolveSourceMapLocations": [
+        "!**/node_modules/**"
+      ],
+      "pauseForSourceMap": true,
+    },
+    {
       "name": "Debug Jest Tests",
       "request": "launch",
       "type": "node",

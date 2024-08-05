@@ -5025,7 +5025,6 @@ __metadata:
     "@aws-sdk/client-s3": "npm:^3.623.0"
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
-    "@stylistic/eslint-plugin": "npm:^2.6.1"
     "@types/express": "npm:^4.17.21"
     "@types/he": "npm:^1.2.3"
     "@types/jest": "npm:^29.5.12"

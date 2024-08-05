@@ -17,6 +17,7 @@ export class MemoryFileRepository implements FileRepository {
       return await Promise.resolve(this.files.get(uri))
     }
   }
+
   removeFile(uri: string): Promise<void> {
     this.files.delete(uri)
     return Promise.resolve()

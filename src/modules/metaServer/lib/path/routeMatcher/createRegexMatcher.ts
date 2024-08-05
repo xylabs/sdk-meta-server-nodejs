@@ -10,13 +10,13 @@ import { RouteMatcher } from './RouteMatcher.js'
  * @returns
  */
 export const createRegexMatcher = (patterns: string[]): RouteMatcher => {
-  const regexesOrFalse = patterns.map((pattern) => makeRe(pattern))
+  const regexesOrFalse = patterns.map(pattern => makeRe(pattern))
   // eslint-disable-next-line unicorn/no-array-reduce
   const invalidGlobPatternIndexes = regexesOrFalse.reduce<number[]>((acc, curr, idx) => {
     if (curr === false) acc.push(idx)
     return acc
   }, [])
-  assertEx(invalidGlobPatternIndexes.length === 0, `Invalid glob pattern(s): ${invalidGlobPatternIndexes.map((i) => patterns[i]).join(', ')}`)
+  assertEx(invalidGlobPatternIndexes.length === 0, `Invalid glob pattern(s): ${invalidGlobPatternIndexes.map(i => patterns[i]).join(', ')}`)
   const regexes = regexesOrFalse.filter((regex): regex is MMRegExp => assertEx(regex !== false))
-  return (route: string) => regexes.some((regex) => regex.test(route))
+  return (route: string) => regexes.some(regex => regex.test(route))
 }

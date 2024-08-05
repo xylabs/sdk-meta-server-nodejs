@@ -2,17 +2,12 @@
   "files.eol": "\n",
   "files.exclude": {
     "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
     "**/.DS_Store": true,
-    "**/node_modules": true,
-    "**/build": true,
+    "**/node_modules": false,
+    "**/build": false,
     "**/dist": false,
-    "**/.webpack": true,
-    "**/.serverless": true,
-    "**/.rollup.cache": true,
-    "**/.yarn": true,
-    "**/storybook-static": true
+    "**/.rollup.cache": false,
+    "**/.yarn": false
   },
   "editor.formatOnSave": true,
   "editor.quickSuggestions": {

@@ -13,7 +13,7 @@ import { getImageUrlFromPageUrl } from '../url/index.js'
 export const getImageMeta = (url: string, width = defaultViewportSize.width, height = defaultViewportSize.height): Meta => {
   console.log(`[liveShare][getImageMeta][${url}]: generating`)
   const imageUrl = getImageUrlFromPageUrl(url, width, height)
-  const og: OpenGraphMeta = { image: { '': imageUrl, height, secure_url: imageUrl, type: 'image/png', url: imageUrl, width } }
+  const og: OpenGraphMeta = { image: { '': imageUrl, height, 'secure_url': imageUrl, 'type': 'image/png', 'url': imageUrl, width } }
   const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
   const meta = { og, twitter }
   console.log(`[liveShare][getImageMeta][${url}]: generated`)

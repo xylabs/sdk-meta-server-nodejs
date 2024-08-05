@@ -1,10 +1,7 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowImportingTsExtensions": true,
-    "moduleResolution": "node",
+
   },
   "extends": "@xylabs/tsconfig-jest",
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
 }

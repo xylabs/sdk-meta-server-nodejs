@@ -32,7 +32,7 @@
     "lru-cache": "^11.0.0",
     "mime": "^4.0.4",
     "minimatch": "^10.0.1",
-    "puppeteer": "^21.11.0",
+    "puppeteer": "^22.15.0",
     "serve-static": "^1.15.0",
     "yargs": "^17.7.2"
   },

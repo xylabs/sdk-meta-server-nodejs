@@ -6,7 +6,10 @@ describe('useSpaPage', () => {
   describe('with navigateToRootFirst=false', () => {
     it('gets the page', async () => {
       const content = await useSpaPage(uri, async (page) => {
-        await page.waitForSelector('title', { timeout: 10_000 })
+        await page.waitForFunction(() => {
+          const element = document.querySelector('title')
+          return element && element.textContent?.includes('XYO: Brand Assets')
+        })
         return page.content()
       })
       expect(content).toContain(expected)
@@ -15,7 +18,10 @@ describe('useSpaPage', () => {
   describe('with navigateToRootFirst=true', () => {
     it('gets the page', async () => {
       const content = await useSpaPage(uri, async (page) => {
-        await page.waitForSelector('title', { timeout: 10_000 })
+        await page.waitForFunction(() => {
+          const element = document.querySelector('title')
+          return element && element.textContent?.includes('XYO: Brand Assets')
+        })
         return page.content()
       })
       expect(content).toContain(expected)

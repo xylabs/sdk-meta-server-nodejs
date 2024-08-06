@@ -1,7 +1,6 @@
 import { Browser, launch, Viewport } from 'puppeteer'
 
 import { getBrowserArgs } from './getBrowserArgs.js'
-import { getUserDataDir } from './getUserDataDir.js'
 import { defaultViewportSize } from './ViewPortSize.js'
 
 export const viewPortDefaults: Viewport = {
@@ -39,8 +38,6 @@ export const useBrowser = async (viewport: Viewport = viewPortDefaults): Promise
     devtools: false,
     headless: true,
     ignoreHTTPSErrors: true,
-    // slowMo: 0,
-    userDataDir: getUserDataDir(),
     waitForInitialPage,
   })
   return browser

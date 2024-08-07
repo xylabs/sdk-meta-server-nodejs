@@ -63,7 +63,7 @@
       "args": [
         "--forceExit",
         "--runInBand",
-        "src/modules/metaServer/lib/page/usePage/spec/useSpaPage.spec.ts",
+        "src/modules/metaServer/lib/page/usePage/spec/useSpaPage.perf.spec.ts",
       ],
       "pauseForSourceMap": true,
       "console": "integratedTerminal",

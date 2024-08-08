@@ -176,7 +176,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
 /**
  * Middleware for augmenting HTML metadata for Live Shares
  */
-
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
 const liveShareImageHandler = (): MountPathAndMiddleware => ['get', ['*/preview/:width/:height/img.png', asyncHandler(imageHandler)]]
 
 export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts), liveShareImageHandler()].filter(exists)

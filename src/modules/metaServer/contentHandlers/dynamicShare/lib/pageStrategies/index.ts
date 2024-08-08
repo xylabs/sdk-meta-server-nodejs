@@ -1,2 +1,1 @@
-export * from './getRenderedPageHtml/index.js'
-export * from './useIndexAndDeferredPreviewImage/index.ts'
+export * from './useIndexAndDynamicPreviewImage/index.ts'

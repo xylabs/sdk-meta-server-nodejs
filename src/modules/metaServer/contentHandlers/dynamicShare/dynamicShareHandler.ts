@@ -4,6 +4,7 @@ import Path from 'node:path'
 import { assertEx } from '@xylabs/assert'
 import { exists } from '@xylabs/exists'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
+import { HttpStatusCode } from 'axios'
 import { RequestHandler } from 'express'
 
 import {
@@ -26,7 +27,7 @@ import { useIndexAndDynamicPreviewImage } from './lib/index.js'
 const indexHtmlMaxAge = 60 * 10
 const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 
-const disableCaching = false
+const enableCaching = false
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
@@ -39,28 +40,36 @@ const getPageHandler = (baseDir: string) => {
   const pageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
     if (Path.extname(adjustedPath) === '.html') {
+      const uri = getUriBehindProxy(req)
       try {
-        const uri = getUriBehindProxy(req)
         console.log(`[dynamicShare][pageHandler][${uri}]: called`)
-        const cachedHtml = await pageRepository.findFile(adjustedPath)
-        if (cachedHtml && !disableCaching) {
-          console.log(`[dynamicShare][pageHandler][${uri}]: return cached`)
-          const html = arrayBufferToString(await cachedHtml.data)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
-          return
-        } else {
-          console.log(`[dynamicShare][pageHandler][${uri}]: rendering`)
-          const updatedHtml = await useIndexAndDynamicPreviewImage(uri, indexHtml)
-          console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
-          const data = stringToArrayBuffer(updatedHtml)
-          const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
-          await pageRepository.addFile(file)
-          console.log(`[dynamicShare][pageHandler][${uri}]: return html`)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
-          return
+        if (enableCaching) {
+          console.log(`[dynamicShare][pageHandler][${uri}]: checking for cached`)
+          const cachedHtml = await pageRepository.findFile(adjustedPath)
+          if (cachedHtml) {
+            console.log(`[dynamicShare][pageHandler][${uri}]: return cached`)
+            const html = arrayBufferToString(await cachedHtml.data)
+            res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
+            return
+          }
         }
+        console.log(`[dynamicShare][pageHandler][${uri}]: rendering`)
+        const updatedHtml = await useIndexAndDynamicPreviewImage(uri, indexHtml)
+        console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
+        const data = stringToArrayBuffer(updatedHtml)
+        const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
+        await pageRepository.addFile(file)
+        console.log(`[dynamicShare][pageHandler][${uri}]: return html`)
+        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+        return
       } catch (error) {
+        const status = HttpStatusCode.ServiceUnavailable
+        console.log(`[dynamicShare][useIndexAndDynamicPreviewImage][${uri}]: error, returning status code ${status}`)
         console.log(error)
+        res.status(status)
+          .set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
+          .set('Retry-After', '60') // Retry after 60 seconds
+          .send()
       }
     }
     next()

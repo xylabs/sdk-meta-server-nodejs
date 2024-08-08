@@ -54,7 +54,7 @@ const maxImageGenerationWait = 8000
  * the environment is fully initialized.
  */
 const imageRepository = () => getFileRepository()
-const disableCaching = false
+const enableCaching = true
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
@@ -70,23 +70,25 @@ const getPageHandler = (baseDir: string) => {
       try {
         const uri = getUriBehindProxy(req)
         console.log(`[liveShare][pageHandler][${uri}]: called`)
-        const cachedHtml = await pageRepository.findFile(adjustedPath)
-        if (cachedHtml && !disableCaching) {
-          console.log(`[liveShare][pageHandler][${uri}]: return cached`)
-          const html = arrayBufferToString(await cachedHtml.data)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
-          return
-        } else {
-          console.log(`[liveShare][pageHandler][${uri}]: rendering`)
-          const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageRepository(), indexHtml)
-          console.log(`[liveShare][pageHandler][${uri}]: caching`)
-          const data = stringToArrayBuffer(updatedHtml)
-          const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
-          await pageRepository.addFile(file)
-          console.log(`[liveShare][pageHandler][${uri}]: return html`)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
-          return
+        if (enableCaching) {
+          console.log(`[liveShare][pageHandler][${uri}]: checking for cached`)
+          const cachedHtml = await pageRepository.findFile(adjustedPath)
+          if (cachedHtml) {
+            console.log(`[liveShare][pageHandler][${uri}]: return cached`)
+            const html = arrayBufferToString(await cachedHtml.data)
+            res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
+            return
+          }
         }
+        console.log(`[liveShare][pageHandler][${uri}]: rendering`)
+        const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageRepository(), indexHtml)
+        console.log(`[liveShare][pageHandler][${uri}]: caching`)
+        const data = stringToArrayBuffer(updatedHtml)
+        const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
+        await pageRepository.addFile(file)
+        console.log(`[liveShare][pageHandler][${uri}]: return html`)
+        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+        return
       } catch (error) {
         console.log(error)
       }

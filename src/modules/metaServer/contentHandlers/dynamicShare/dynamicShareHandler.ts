@@ -26,7 +26,7 @@ import { useIndexAndDynamicPreviewImage } from './lib/index.js'
 const indexHtmlMaxAge = 60 * 10
 const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 
-const disableCaching = true
+const enableCaching = false
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
@@ -42,12 +42,15 @@ const getPageHandler = (baseDir: string) => {
       try {
         const uri = getUriBehindProxy(req)
         console.log(`[dynamicShare][pageHandler][${uri}]: called`)
-        const cachedHtml = await pageRepository.findFile(adjustedPath)
-        if (cachedHtml && !disableCaching) {
-          console.log(`[dynamicShare][pageHandler][${uri}]: return cached`)
-          const html = arrayBufferToString(await cachedHtml.data)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
-          return
+        if (enableCaching) {
+          console.log(`[dynamicShare][pageHandler][${uri}]: checking for cached`)
+          const cachedHtml = await pageRepository.findFile(adjustedPath)
+          if (cachedHtml) {
+            console.log(`[dynamicShare][pageHandler][${uri}]: return cached`)
+            const html = arrayBufferToString(await cachedHtml.data)
+            res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
+            return
+          }
         } else {
           console.log(`[dynamicShare][pageHandler][${uri}]: rendering`)
           const updatedHtml = await useIndexAndDynamicPreviewImage(uri, indexHtml)

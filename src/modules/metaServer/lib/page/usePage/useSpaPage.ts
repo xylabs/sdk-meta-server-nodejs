@@ -77,14 +77,19 @@ export const useSpaPage = async <T>(
     // Wait for the div with id "root" to have at least one child.
     // This assumes the child is a direct descendant (using '>').
     // This assumes React will mount in a div with id="root" .
-    // await page.waitForSelector('#root > *', { timeout })
+    // await _page.waitForSelector('#root > *', { timeout })
+    // await _page.waitForFunction(() => {
+    //   const root = document.querySelector('#root')
+    //   // Check if the #root element has any child nodes, indicating React has rendered
+    //   return root && root.childNodes.length > 0
+    // }, {
+    //   timeout: 30_000, // Adjust the timeout as needed
+    // })
 
     // React Router DOM seems to not listen to pushState but does
     // listen to back.  So we push state to the desired path twice,
     // then go back once to trigger the navigation.
-
     console.log(`Trying relative path: ${relativePath}`)
-
     await _page.evaluate(relativePath => window.history.pushState(null, '', relativePath), relativePath)
     await _page.evaluate(relativePath => window.history.pushState(null, '', relativePath), relativePath)
     await _page.evaluate(() => window.history.back())

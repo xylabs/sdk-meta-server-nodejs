@@ -5,7 +5,7 @@ import { assertEx } from '@xylabs/assert'
 import { delay } from '@xylabs/delay'
 import { exists } from '@xylabs/exists'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
-import { RequestHandler } from 'express'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import {
@@ -63,8 +63,7 @@ const getPageHandler = (baseDir: string) => {
   const indexHtml = readFileSync(filePath, { encoding: 'utf8' })
   const pageRepository = new MemoryFileRepository()
 
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  const pageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
+  const pageHandler = async (req: Request, res: Response, next: NextFunction) => {
     const adjustedPath = getAdjustedPath(req)
     if (Path.extname(adjustedPath) === '.html') {
       try {
@@ -94,12 +93,11 @@ const getPageHandler = (baseDir: string) => {
       }
     }
     next()
-  })
+  }
   return pageHandler
 }
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
-const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
+const imageHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const uri = getUriBehindProxy(req)
     console.log(`[liveShare][imageHandler][${uri}]: called`)
@@ -132,7 +130,7 @@ const imageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     console.log(error)
   }
   next()
-})
+}
 
 const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
@@ -154,7 +152,8 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
       const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
       const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
       const pageHandler = getPageHandler(baseDir)
-      const liveSharePageHandler: RequestHandler = (req, res, next) => {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      const liveSharePageHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
         // Exclude query string from glob via req.path
         const uri = req.path
         const render = req.params?.render
@@ -162,17 +161,13 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
         // const uri = req.originalUrl
         if (render !== 'preview' && matchesIncluded(uri) && !matchesExcluded(uri)) {
           // TODO: Better way to determine page vs image handler
-          if (uri.endsWith('img.png')) {
-            imageHandler(req, res, next)
-          } else {
-            pageHandler(req, res, next)
-          }
+          await (uri.endsWith('img.png') ? imageHandler(req, res, next) : pageHandler(req, res, next))
         } else {
           next()
         }
       }
       console.log('[liveShare][init] Created page handler')
-      return ['get', ['/*', liveSharePageHandler]]
+      return ['get', ['/*', asyncHandler(liveSharePageHandler)]]
     }
     return undefined
   }
@@ -181,7 +176,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
 /**
  * Middleware for augmenting HTML metadata for Live Shares
  */
-
-const liveShareImageHandler = (): MountPathAndMiddleware => ['get', ['*/preview/:width/:height/img.png', imageHandler]]
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
+const liveShareImageHandler = (): MountPathAndMiddleware => ['get', ['*/preview/:width/:height/img.png', asyncHandler(imageHandler)]]
 
 export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts), liveShareImageHandler()].filter(exists)

@@ -1,6 +1,6 @@
 import { Meta, OpenGraphMeta, TwitterMeta } from '@xyo-network/sdk-meta'
 
-import { defaultViewportSize } from '../../../../lib/index.js'
+import { defaultViewportSize } from '../../../../lib/index.ts'
 import { getImageUrlFromPage } from './getImageUrlFromPage.ts'
 
 /**

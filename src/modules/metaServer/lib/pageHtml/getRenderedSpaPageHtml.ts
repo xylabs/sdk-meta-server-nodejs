@@ -1,4 +1,4 @@
-import { useSpaPage } from '../../../../../lib/index.js'
+import { useSpaPage } from '../page/index.ts'
 
 /**
  * Gets the rendered page html

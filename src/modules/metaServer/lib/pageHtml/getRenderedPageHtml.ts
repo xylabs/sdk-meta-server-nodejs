@@ -1,4 +1,4 @@
-import { usePage } from '../../../../../lib/index.js'
+import { usePage } from '../page/index.ts'
 
 /**
  * Gets the rendered page html

@@ -1,1 +1,1 @@
-export * from './getImageMeta.js'
+export * from './getImageMeta.ts'

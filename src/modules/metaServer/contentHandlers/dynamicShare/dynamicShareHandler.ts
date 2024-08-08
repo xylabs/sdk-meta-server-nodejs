@@ -5,7 +5,7 @@ import { assertEx } from '@xylabs/assert'
 import { exists } from '@xylabs/exists'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { HttpStatusCode } from 'axios'
-import { RequestHandler } from 'express'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
 
 import {
   arrayBufferToString,
@@ -36,8 +36,7 @@ const getPageHandler = (baseDir: string) => {
   const indexHtml = readFileSync(filePath, { encoding: 'utf8' })
   const pageRepository = new MemoryFileRepository()
 
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  const pageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
+  const pageHandler = async (req: Request, res: Response, next: NextFunction) => {
     const adjustedPath = getAdjustedPath(req)
     if (Path.extname(adjustedPath) === '.html') {
       const uri = getUriBehindProxy(req)
@@ -76,7 +75,7 @@ const getPageHandler = (baseDir: string) => {
       }
     }
     next()
-  })
+  }
   return pageHandler
 }
 
@@ -98,19 +97,20 @@ const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPa
       const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
       const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
       const pageHandler = getPageHandler(baseDir)
-      const dynamicSharePageHandler: RequestHandler = (req, res, next) => {
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      const dynamicSharePageHandler: RequestHandler = async (req, res, next) => {
         // Exclude query string from glob via req.path
         const uri = req.path
         // // NOTE: Uncomment if we want to also include query string
         // const uri = req.originalUrl
         if (matchesIncluded(uri) && !matchesExcluded(uri)) {
-          pageHandler(req, res, next)
+          await pageHandler(req, res, next)
         } else {
           next()
         }
       }
       console.log('[dynamicShare][init] Created page handler')
-      return ['get', ['/*', dynamicSharePageHandler]]
+      return ['get', ['/*', asyncHandler(dynamicSharePageHandler)]]
     }
     return undefined
   }

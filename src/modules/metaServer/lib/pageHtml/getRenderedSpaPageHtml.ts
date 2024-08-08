@@ -1,5 +1,4 @@
-import { log } from 'node:console'
-
+import { log } from '../logging/index.ts'
 import { useSpaPage } from '../page/index.ts'
 
 /**

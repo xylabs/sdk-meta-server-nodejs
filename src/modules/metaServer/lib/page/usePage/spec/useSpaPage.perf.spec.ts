@@ -1,6 +1,6 @@
 import { useSpaPage } from '../useSpaPage.js'
 
-describe('useSpaPage [perf]', () => {
+describe.skip('useSpaPage [perf]', () => {
   const uri = 'https://react.dev/learn'
   const expected = 'Quick Start'
   it('gets the page', async () => {

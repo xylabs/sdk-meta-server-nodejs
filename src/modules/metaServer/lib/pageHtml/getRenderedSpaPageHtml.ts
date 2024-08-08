@@ -1,19 +1,22 @@
+import { log } from 'node:console'
+
 import { useSpaPage } from '../page/index.ts'
 
 /**
- * Gets the rendered page html
+ * Gets the rendered page html by navigating to the root of the url first, then to the relative path, just like a user would
+ * when navigating a SPA
  * @param url The url to navigate to
- * @param navigateToRootFirst Should navigate to the root of the url first, then navigate to the relative path
+ * @param logScopePrefix The prefix to use for logging
  * @returns The rendered page html
  */
-export const getRenderedSpaPageHtml = async (url: string): Promise<string | undefined> => {
+export const getRenderedSpaPageHtml = async (url: string, logScopePrefix: string): Promise<string | undefined> => {
   try {
-    console.log(`[dynamicShare][getRenderedPageHtml][${url}]: rendering`)
+    log('rendering', [logScopePrefix, 'getRenderedSpaPageHtml', url])
     const html = await useSpaPage(url, async (page) => {
-      console.log(`[dynamicShare][getRenderedPageHtml][${url}]: navigated to ${url}`)
+      log('navigated to url', [logScopePrefix, 'getRenderedSpaPageHtml', url])
       return await page.content()
     })
-    console.log(`[dynamicShare][getRenderedPageHtml][${url}]: rendered`)
+    log('rendered', [logScopePrefix, 'getRenderedSpaPageHtml', url])
     return html
   } catch (error) {
     console.log(error)

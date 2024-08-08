@@ -1,19 +1,20 @@
+import { log } from '../logging/index.ts'
 import { usePage } from '../page/index.ts'
 
 /**
  * Gets the rendered page html
  * @param url The url to navigate to
- * @param navigateToRootFirst Should navigate to the root of the url first, then navigate to the relative path
+ * @param logScopePrefix The prefix to use for logging
  * @returns The rendered page html
  */
-export const getRenderedPageHtml = async (url: string): Promise<string | undefined> => {
+export const getRenderedPageHtml = async (url: string, logScopePrefix: string): Promise<string | undefined> => {
   try {
-    console.log(`[dynamicShare][getRenderedPageHtml][${url}]: rendering`)
+    log('rendering', [logScopePrefix, 'getRenderedPageHtml', url])
     const html = await usePage(url, undefined, async (page) => {
-      console.log(`[dynamicShare][getRenderedPageHtml][${url}]: navigated to ${url}`)
+      log('navigated to url', [logScopePrefix, 'getRenderedPageHtml', url])
       return await page.content()
     })
-    console.log(`[dynamicShare][getRenderedPageHtml][${url}]: rendered`)
+    log('rendered', [logScopePrefix, 'getRenderedPageHtml', url])
     return html
   } catch (error) {
     console.log(error)

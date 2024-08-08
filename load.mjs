@@ -21,7 +21,7 @@ async function fetchUrl(url) {
 }
 
 // Function to get random URLs and fetch them in parallel
-async function fetchRandomUrls(concurrentRequests = 100) {
+async function fetchRandomUrls(concurrentRequests = 300) {
   const tasks = []
 
   for (let i = 0; i < concurrentRequests; i++) {

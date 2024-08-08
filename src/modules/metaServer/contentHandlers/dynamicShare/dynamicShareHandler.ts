@@ -55,10 +55,12 @@ const getPageHandler = (baseDir: string) => {
         }
         console.log(`[dynamicShare][pageHandler][${uri}]: rendering`)
         const updatedHtml = await useIndexAndDynamicPreviewImage(uri, indexHtml)
-        console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
-        const data = stringToArrayBuffer(updatedHtml)
-        const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
-        await pageRepository.addFile(file)
+        if (enableCaching) {
+          console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
+          const data = stringToArrayBuffer(updatedHtml)
+          const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
+          await pageRepository.addFile(file)
+        }
         console.log(`[dynamicShare][pageHandler][${uri}]: return html`)
         res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
         return
@@ -70,6 +72,7 @@ const getPageHandler = (baseDir: string) => {
           .set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
           .set('Retry-After', '60') // Retry after 60 seconds
           .send()
+        return
       }
     }
     next()

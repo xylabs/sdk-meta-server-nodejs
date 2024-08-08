@@ -79,17 +79,16 @@ const getPageHandler = (baseDir: string) => {
             res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
             return
           }
-        } else {
-          console.log(`[liveShare][pageHandler][${uri}]: rendering`)
-          const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageRepository(), indexHtml)
-          console.log(`[liveShare][pageHandler][${uri}]: caching`)
-          const data = stringToArrayBuffer(updatedHtml)
-          const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
-          await pageRepository.addFile(file)
-          console.log(`[liveShare][pageHandler][${uri}]: return html`)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
-          return
         }
+        console.log(`[liveShare][pageHandler][${uri}]: rendering`)
+        const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageRepository(), indexHtml)
+        console.log(`[liveShare][pageHandler][${uri}]: caching`)
+        const data = stringToArrayBuffer(updatedHtml)
+        const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
+        await pageRepository.addFile(file)
+        console.log(`[liveShare][pageHandler][${uri}]: return html`)
+        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+        return
       } catch (error) {
         console.log(error)
       }

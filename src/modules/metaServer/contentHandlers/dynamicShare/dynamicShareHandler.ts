@@ -51,17 +51,16 @@ const getPageHandler = (baseDir: string) => {
             res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
             return
           }
-        } else {
-          console.log(`[dynamicShare][pageHandler][${uri}]: rendering`)
-          const updatedHtml = await useIndexAndDynamicPreviewImage(uri, indexHtml)
-          console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
-          const data = stringToArrayBuffer(updatedHtml)
-          const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
-          await pageRepository.addFile(file)
-          console.log(`[dynamicShare][pageHandler][${uri}]: return html`)
-          res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
-          return
         }
+        console.log(`[dynamicShare][pageHandler][${uri}]: rendering`)
+        const updatedHtml = await useIndexAndDynamicPreviewImage(uri, indexHtml)
+        console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
+        const data = stringToArrayBuffer(updatedHtml)
+        const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
+        await pageRepository.addFile(file)
+        console.log(`[dynamicShare][pageHandler][${uri}]: return html`)
+        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+        return
       } catch (error) {
         console.log(error)
       }

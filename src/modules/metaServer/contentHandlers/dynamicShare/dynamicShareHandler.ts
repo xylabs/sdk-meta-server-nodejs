@@ -4,6 +4,7 @@ import Path from 'node:path'
 import { assertEx } from '@xylabs/assert'
 import { exists } from '@xylabs/exists'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
+import { HttpStatusCode } from 'axios'
 import { RequestHandler } from 'express'
 
 import {
@@ -39,8 +40,8 @@ const getPageHandler = (baseDir: string) => {
   const pageHandler: RequestHandler = asyncHandler(async (req, res, next) => {
     const adjustedPath = getAdjustedPath(req)
     if (Path.extname(adjustedPath) === '.html') {
+      const uri = getUriBehindProxy(req)
       try {
-        const uri = getUriBehindProxy(req)
         console.log(`[dynamicShare][pageHandler][${uri}]: called`)
         if (enableCaching) {
           console.log(`[dynamicShare][pageHandler][${uri}]: checking for cached`)
@@ -62,7 +63,13 @@ const getPageHandler = (baseDir: string) => {
         res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
         return
       } catch (error) {
+        const status = HttpStatusCode.ServiceUnavailable
+        console.log(`[dynamicShare][useIndexAndDynamicPreviewImage][${uri}]: error, returning status code ${status}`)
         console.log(error)
+        res.status(status)
+          .set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
+          .set('Retry-After', '60') // Retry after 60 seconds
+          .send()
       }
     }
     next()

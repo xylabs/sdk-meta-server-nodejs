@@ -1,6 +1,6 @@
 import { minimatch } from 'minimatch'
 
-import { RouteMatcher } from './RouteMatcher.js'
+import { RouteMatcher } from './RouteMatcher.ts'
 
 /**
  * Higher order function which creates route matchers

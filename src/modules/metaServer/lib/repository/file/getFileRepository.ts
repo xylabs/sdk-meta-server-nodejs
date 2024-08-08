@@ -1,7 +1,7 @@
-import { getAwsS3ClientConfig, getBucket, hasBucket, tryGetBucket } from '../../aws/index.js'
-import { FileRepository } from './FileRepository.js'
-import { MemoryFileRepository } from './memory/index.js'
-import { S3FileRepository } from './s3/index.js'
+import { getAwsS3ClientConfig, getBucket, hasBucket, tryGetBucket } from '../../aws/index.ts'
+import { FileRepository } from './FileRepository.ts'
+import { MemoryFileRepository } from './memory/index.ts'
+import { S3FileRepository } from './s3/index.ts'
 
 let repository: FileRepository | undefined
 

@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import Path from 'node:path'
 
-import { MemoryFileRepository } from '../MemoryFileRepository.js'
+import { MemoryFileRepository } from '../MemoryFileRepository.ts'
 
 describe('MemoryFileRepository', () => {
   let sut: MemoryFileRepository

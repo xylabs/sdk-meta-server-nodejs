@@ -1,6 +1,6 @@
 import { axios } from '@xyo-network/axios'
 
-import { tryGetAppAccessToken } from '../auth/index.js'
+import { tryGetAppAccessToken } from '../auth/index.ts'
 
 const openApiUrl = 'https://graph.facebook.com/'
 

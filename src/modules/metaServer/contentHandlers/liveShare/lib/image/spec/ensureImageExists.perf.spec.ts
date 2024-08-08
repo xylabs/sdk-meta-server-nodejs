@@ -1,5 +1,5 @@
-import { MemoryFileRepository } from '../../../../../lib/index.js'
-import { ensureImageExists } from '../ensureImageExists.js'
+import { MemoryFileRepository } from '../../../../../lib/index.ts'
+import { ensureImageExists } from '../ensureImageExists.ts'
 
 describe.skip('ensureImageExists', () => {
   let average = 0

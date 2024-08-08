@@ -1,4 +1,4 @@
-import { getContentType } from '../getContentType.js'
+import { getContentType } from '../getContentType.ts'
 
 const pathsWithRealExtensions = [
   'index.html',

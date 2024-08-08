@@ -4,9 +4,9 @@ import Path from 'node:path'
 import { S3ClientConfig } from '@aws-sdk/client-s3'
 import { describeIf } from '@xylabs/jest-helpers'
 
-import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig.js'
-import { getDefaultTestBucket, hasBucket } from '../../getDefaultBucket.js'
-import { S3Store } from '../S3Store.js'
+import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig.ts'
+import { getDefaultTestBucket, hasBucket } from '../../getDefaultBucket.ts'
+import { S3Store } from '../S3Store.ts'
 
 describeIf(hasBucket())('S3Store', () => {
   let config: S3ClientConfig

@@ -1,4 +1,4 @@
-import { join, removeQueryParam } from '../../../../lib/index.js'
+import { join, removeQueryParam } from '../../../../lib/index.ts'
 
 /**
  * Generates the url of the preview image for a Live Share page

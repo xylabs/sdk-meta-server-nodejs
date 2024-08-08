@@ -1,10 +1,10 @@
 import { forget } from '@xylabs/forget'
 import { Browser, Page, Viewport, WaitForOptions } from 'puppeteer'
 
-import { defaultViewportSize, useBrowser } from '../../browser/index.js'
-import { PageRenderingOptions } from '../PageRenderingOptions.js'
-import { waitUntil } from './defaults.js'
-import { getBrowserPage } from './getBrowserPage.js'
+import { defaultViewportSize, useBrowser } from '../../browser/index.ts'
+import { PageRenderingOptions } from '../PageRenderingOptions.ts'
+import { waitUntil } from './defaults.ts'
+import { getBrowserPage } from './getBrowserPage.ts'
 
 export const pageViewPortDefaults: Viewport = {
   ...defaultViewportSize,

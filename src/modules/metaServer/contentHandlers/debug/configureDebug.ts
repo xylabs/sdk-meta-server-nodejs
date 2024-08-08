@@ -3,7 +3,7 @@ import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { RequestHandler } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
-import { MountPathAndMiddleware } from '../../types/index.js'
+import { MountPathAndMiddleware } from '../../types/index.ts'
 
 const handleStatusCode: RequestHandler = (req, res, _next) => {
   const { code } = req.params

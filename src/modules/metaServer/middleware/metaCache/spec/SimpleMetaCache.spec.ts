@@ -1,4 +1,4 @@
-import { SimpleMetaCache } from '../SimpleMetaCache.js'
+import { SimpleMetaCache } from '../SimpleMetaCache.ts'
 
 const path1 = '/providers/netflix'
 const path2 = '/providers/hulu'

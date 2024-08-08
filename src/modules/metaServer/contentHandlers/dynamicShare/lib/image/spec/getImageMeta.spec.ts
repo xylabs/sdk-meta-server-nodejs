@@ -1,4 +1,4 @@
-import { getImageMeta } from '../getImageMeta.js'
+import { getImageMeta } from '../getImageMeta.ts'
 
 describe('getImageMeta', () => {
   const cases = [

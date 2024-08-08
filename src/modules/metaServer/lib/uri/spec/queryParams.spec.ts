@@ -1,4 +1,4 @@
-import { addQueryParam, addQueryParams, removeQueryParam, removeQueryParams } from '../queryParams.js'
+import { addQueryParam, addQueryParams, removeQueryParam, removeQueryParams } from '../queryParams.ts'
 
 describe('Query Parameters Utility', () => {
   describe('addQueryParam', () => {

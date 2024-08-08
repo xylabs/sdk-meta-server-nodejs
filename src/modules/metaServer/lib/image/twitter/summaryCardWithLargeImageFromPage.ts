@@ -1,7 +1,7 @@
 import { Page, ScreenshotOptions, Viewport } from 'puppeteer'
 
-import { defaultViewportSize } from '../../browser/index.js'
-import { generateImageBufferFromPage } from '../generateImageFromPage.js'
+import { defaultViewportSize } from '../../browser/index.ts'
+import { generateImageBufferFromPage } from '../generateImageFromPage.ts'
 
 const opts: ScreenshotOptions = {
   encoding: 'binary',

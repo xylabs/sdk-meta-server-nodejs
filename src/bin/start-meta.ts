@@ -1,6 +1,6 @@
 import { getEnvFromAws, tryParseInt } from '@xylabs/sdk-api-express-ecs'
 
-import { metaServer } from '../modules/index.js'
+import { metaServer } from '../modules/index.ts'
 
 void (async () => {
   const port = tryParseInt(process.env.PORT) || 8083

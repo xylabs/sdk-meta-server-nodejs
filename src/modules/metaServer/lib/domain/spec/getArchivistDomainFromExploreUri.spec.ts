@@ -1,4 +1,4 @@
-import { getArchivistDomainFromUri, networkToArchivistUri } from '../getArchivistDomainFromUri.js'
+import { getArchivistDomainFromUri, networkToArchivistUri } from '../getArchivistDomainFromUri.ts'
 
 const prodUrls = [
   'https://node.xyo.network',

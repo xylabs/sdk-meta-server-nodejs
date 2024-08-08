@@ -1,9 +1,9 @@
 import { S3ClientConfig } from '@aws-sdk/client-s3'
 
-import { S3Store } from '../../../aws/index.js'
-import { getContentType } from '../../../file/index.js'
-import { FileRepository } from '../FileRepository.js'
-import { RepositoryFile } from '../RepositoryFile.js'
+import { S3Store } from '../../../aws/index.ts'
+import { getContentType } from '../../../file/index.ts'
+import { FileRepository } from '../FileRepository.ts'
+import { RepositoryFile } from '../RepositoryFile.ts'
 
 export class S3FileRepository implements FileRepository {
   private store: S3Store

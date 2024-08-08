@@ -1,4 +1,4 @@
-import { tryGetAuthInfo } from './tryGetAuthInfo.js'
+import { tryGetAuthInfo } from './tryGetAuthInfo.ts'
 
 /**
  * Obtains an access token for the app.

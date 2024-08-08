@@ -1,6 +1,6 @@
-import { FileRepository, RepositoryFile, useSpaPage } from '../../../../lib/index.js'
-import { getImageUrlFromPageUrl } from '../url/index.js'
-import { imageGenerator, type } from './imageGenerator.js'
+import { FileRepository, RepositoryFile, useSpaPage } from '../../../../lib/index.ts'
+import { getImageUrlFromPageUrl } from '../url/index.ts'
+import { imageGenerator, type } from './imageGenerator.ts'
 
 export const generateImage = (url: string, previewUrl: string, imageRepository: FileRepository, width: number, height: number) => {
   return useSpaPage(previewUrl, async (page) => {

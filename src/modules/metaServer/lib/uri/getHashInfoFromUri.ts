@@ -1,4 +1,4 @@
-import { HashInfo } from '../../types/index.js'
+import { HashInfo } from '../../types/index.ts'
 
 // TODO: Something more intelligent than just same length/characters
 const pattern = /(?<hash>[\da-f]{64})/

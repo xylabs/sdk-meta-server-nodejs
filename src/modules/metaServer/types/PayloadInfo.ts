@@ -1,4 +1,4 @@
-import { HashInfo } from './HashInfo.js'
+import { HashInfo } from './HashInfo.ts'
 
 export interface PayloadInfo extends HashInfo {
   apiDomain: string

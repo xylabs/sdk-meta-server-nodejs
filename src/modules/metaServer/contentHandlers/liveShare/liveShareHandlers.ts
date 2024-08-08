@@ -19,8 +19,8 @@ import {
   RouteMatcher,
   stringToArrayBuffer,
 } from '../../lib/index.js'
-import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.js'
-import { ensureImageExists, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib/index.js'
+import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
+import { ensureImageExists, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib/index.ts'
 
 /**
  * The max-age cache control header time (in seconds)

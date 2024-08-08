@@ -1,6 +1,6 @@
 import { axios } from '@xyo-network/axios'
 
-import { tryGetAuthInfo } from './tryGetAuthInfo.js'
+import { tryGetAuthInfo } from './tryGetAuthInfo.ts'
 
 const tokenUrl = 'https://graph.facebook.com/oauth/access_token'
 const grant_type = 'client_credentials'

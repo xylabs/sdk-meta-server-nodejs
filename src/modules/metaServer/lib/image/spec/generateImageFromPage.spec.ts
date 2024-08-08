@@ -1,4 +1,4 @@
-import { renderAndGenerateImageFromPage } from '../generateImageFromPage.js'
+import { renderAndGenerateImageFromPage } from '../generateImageFromPage.ts'
 
 describe('generateImageFromPage', () => {
   it('generates image from page', async () => {

@@ -1,4 +1,4 @@
-import { generateEnvVarHelpers } from '../../env/index.js'
+import { generateEnvVarHelpers } from '../../env/index.ts'
 
 /**
  * Checks if the AWS_DEFAULT_REGION environment variable is defined

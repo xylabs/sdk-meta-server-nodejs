@@ -1,4 +1,4 @@
-import { isLocalhost } from '../isLocalhost.js'
+import { isLocalhost } from '../isLocalhost.ts'
 
 const localhostStrings = [
   'localhost',

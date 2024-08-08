@@ -1,5 +1,5 @@
-import { getImageUrlFromPageUrl } from '../getImageUrlFromPageUrl.js'
-import { getPageUrlFromImageUrl } from '../getPageUrlFromImageUrl.js'
+import { getImageUrlFromPageUrl } from '../getImageUrlFromPageUrl.ts'
+import { getPageUrlFromImageUrl } from '../getPageUrlFromImageUrl.ts'
 
 describe('url helpers', () => {
   const cases: [pageUrl: string][] = [

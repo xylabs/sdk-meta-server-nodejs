@@ -1,4 +1,4 @@
-import { useSpaPage } from '../useSpaPage.js'
+import { useSpaPage } from '../useSpaPage.ts'
 
 describe('useSpaPage', () => {
   const uri = 'https://react.dev/learn'

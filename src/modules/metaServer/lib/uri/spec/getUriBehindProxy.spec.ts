@@ -1,6 +1,6 @@
 import { Request } from 'express'
 
-import { getUriBehindProxy } from '../getUriBehindProxy.js'
+import { getUriBehindProxy } from '../getUriBehindProxy.ts'
 
 const getMockRequestForHost = (host: string): Request => {
   return {

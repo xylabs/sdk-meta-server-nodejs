@@ -1,6 +1,6 @@
 import { NoLocals } from '@xylabs/sdk-api-express-ecs'
 
-import { MetaCache } from './MetaCache.js'
+import { MetaCache } from './MetaCache.ts'
 
 export type MetaCacheProperties = {
   /**

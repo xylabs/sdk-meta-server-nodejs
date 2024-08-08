@@ -1,4 +1,4 @@
-import { isExploreDomain } from '../isExploreDomain.js'
+import { isExploreDomain } from '../isExploreDomain.ts'
 
 const exploreDomains = ['https://beta.explore.xyo.network', 'https://explore.xyo.network', 'http://localhost:3000']
 

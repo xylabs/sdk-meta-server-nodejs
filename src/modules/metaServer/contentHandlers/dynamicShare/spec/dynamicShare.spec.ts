@@ -3,7 +3,7 @@ import { Server } from 'node:http'
 import { StatusCodes } from 'http-status-codes'
 import { SuperTest, Test } from 'supertest'
 
-import { getServerOnPort } from '../../../spec/index.js'
+import { getServerOnPort } from '../../../spec/index.ts'
 
 describe('dynamicShare', () => {
   const port = 12_346

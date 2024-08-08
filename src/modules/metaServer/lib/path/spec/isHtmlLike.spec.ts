@@ -1,6 +1,6 @@
 import { Request } from 'express'
 
-import { isHtmlLike } from '../isHtmlLike.js'
+import { isHtmlLike } from '../isHtmlLike.ts'
 
 const getRequestForUri = (uri: string) => {
   return {

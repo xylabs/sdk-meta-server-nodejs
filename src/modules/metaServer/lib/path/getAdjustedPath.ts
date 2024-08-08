@@ -2,7 +2,7 @@ import Path from 'node:path'
 
 import { Request } from 'express'
 
-import { isKnownFileExtension } from '../file/index.js'
+import { isKnownFileExtension } from '../file/index.ts'
 
 export const getAdjustedPath = (req: Request): string => {
   if (isKnownFileExtension(req.path)) return req.path

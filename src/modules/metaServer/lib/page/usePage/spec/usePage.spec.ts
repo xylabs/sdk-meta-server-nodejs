@@ -1,4 +1,4 @@
-import { usePage } from '../usePage.js'
+import { usePage } from '../usePage.ts'
 
 const waitForElementToInclude = (selector: string, expectedValue: string) => {
   const element = document.querySelector(selector)

@@ -1,7 +1,7 @@
 import { assertEx } from '@xylabs/assert'
 import { makeRe, MMRegExp } from 'minimatch'
 
-import { RouteMatcher } from './RouteMatcher.js'
+import { RouteMatcher } from './RouteMatcher.ts'
 
 /**
  * Higher order function which creates precompiled RegEx route matchers

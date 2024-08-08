@@ -9,10 +9,10 @@ import { StatusCodes } from 'http-status-codes'
 import { LRUCache } from 'lru-cache'
 import serveStatic, { ServeStaticOptions } from 'serve-static'
 
-import { getAdjustedPath, isHtmlLike } from '../../lib/index.js'
-import { MetaCacheLocals } from '../../middleware/index.js'
-import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.js'
-import { exists } from './lib/index.js'
+import { getAdjustedPath, isHtmlLike } from '../../lib/index.ts'
+import { MetaCacheLocals } from '../../middleware/index.ts'
+import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
+import { exists } from './lib/index.ts'
 
 /**
  * The max-age cache control header time (in seconds)

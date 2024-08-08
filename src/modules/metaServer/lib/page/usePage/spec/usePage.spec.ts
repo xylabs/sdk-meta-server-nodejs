@@ -1,24 +1,24 @@
 import { usePage } from '../usePage.js'
 
+const waitForElementToInclude = (selector: string, expectedValue: string) => {
+  const element = document.querySelector(selector)
+  return element && element.textContent?.includes(expectedValue)
+}
+
 describe('usePage', () => {
-  const uri = 'https://xyo.network/brand'
-  const expected = '<title>XYO: Brand Assets &amp; Logos</title>'
-  describe('with navigateToRootFirst=false', () => {
-    it('gets the page', async () => {
-      const result = await usePage(uri, undefined, async (page) => {
-        await page.waitForSelector('title', { timeout: 10_000 })
-        return page.content()
-      })
-      expect(result).toContain(expected)
-    }, 60_000)
-  })
-  describe('with navigateToRootFirst=true', () => {
-    it('gets the page', async () => {
-      const result = await usePage(uri, undefined, async (page) => {
-        await page.waitForSelector('title', { timeout: 10_000 })
-        return page.content()
-      })
-      expect(result).toContain(expected)
-    }, 60_000)
-  })
+  const uri = 'https://react.dev/learn'
+  const expected = 'Quick Start'
+  it('gets the page', async () => {
+    const result = await usePage(uri, undefined, async (page) => {
+      await page.waitForFunction(waitForElementToInclude,
+        {
+          polling: 100,
+          timeout: 30_000,
+        },
+        'title',
+        expected)
+      return page.content()
+    })
+    expect(result).toContain(expected)
+  }, 60_000)
 })

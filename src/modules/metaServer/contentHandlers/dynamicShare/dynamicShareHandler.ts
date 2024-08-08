@@ -26,7 +26,7 @@ import { useIndexAndDynamicPreviewImage } from './lib/index.js'
 const indexHtmlMaxAge = 60 * 10
 const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 
-const disableCaching = false
+const disableCaching = true
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists

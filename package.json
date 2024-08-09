@@ -9,9 +9,9 @@
     "url": "https://github.com/xylabs/sdk-meta-server-nodejs/issues"
   },
   "bin": {
-    "docker-build": "dist/node/bin/docker-build.cjs",
-    "generate-dotenv": "dist/node/bin/generate-dotenv.cjs",
-    "start-meta": "dist/node/bin/start-meta.cjs"
+    "docker-build": "dist/node/bin/docker-build.mjs",
+    "generate-dotenv": "dist/node/bin/generate-dotenv.mjs",
+    "start-meta": "dist/node/bin/start-meta.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.624.0",

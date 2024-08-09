@@ -2,7 +2,7 @@
   "env": {
     "NODE_ENV": "development"
   },
-  "exec": "node --max-old-space-size=8192 ./dist/node/bin/start-meta.mjs",
+  "exec": "node --max-old-space-size=4096 ./dist/node/bin/start-meta.mjs",
   "ext": "ts,js,json",
   "ignore": ["dist", "node_modules", "**/*.spec.ts"],
   "watch": ["src"]

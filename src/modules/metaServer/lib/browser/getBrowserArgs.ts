@@ -69,7 +69,8 @@ const limitedArgs = [
   '--disable-accelerated-2d-canvas',
   '--no-first-run',
   '--no-zygote',
-  '--single-process', // <- this one doesn't works in Windows
+  // https://stackoverflow.com/a/66994528
+  // '--single-process', // <- this one doesn't works in Windows
   '--disable-gpu',
 ]
 

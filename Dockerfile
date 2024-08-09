@@ -5,6 +5,7 @@ ARG NODE_VERSION=22.4.1
 
 # Build here and pull down all the devDependencies
 FROM node:${NODE_VERSION} AS builder
+ARG NODE_OPTIONS="--max_old_space_size=8192"
 WORKDIR /app
 COPY . .
 RUN corepack enable

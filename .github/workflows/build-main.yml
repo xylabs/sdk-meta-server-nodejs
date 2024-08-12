@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: "16"
+          node-version: "20"
       - name: install
         run: yarn install
       - name: cycle
@@ -31,7 +31,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: "16"
+          node-version: "20"
       - name: windows-defender
         run: powershell -Command Add-MpPreference -ExclusionPath "."
       - name: install
@@ -47,7 +47,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v2
         with:
-          node-version: "16"
+          node-version: "20"
       - name: install
         run: yarn install
       - name: build

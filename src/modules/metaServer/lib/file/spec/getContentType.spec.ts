@@ -10,6 +10,8 @@ const pathsWithRealExtensions = [
   'https://beta.explore.xyo.network/favicon.ico',
   '/K2FifZFYk-dHSE0UPPuwQ7CrD94i-NCKm-U48M1wqxnDirBPlw.woff2',
   'https://cdn.xy.company/img/brand/XYO/XYO_icon_white.svg',
+  'https://xyo-network.ghost.io/content/images/2024/07/Header--1-.jpg',
+  'https://xyo-network.ghost.io/content/images/2024/07/1-g53vd4ro7yuoxyh-a0zygw.png',
 ]
 
 const pathsWithFakeExtensions = [

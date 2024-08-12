@@ -40,7 +40,7 @@ describe('dynamicShare', () => {
       ['og:image', shareImageUrl],
       ['og:image:height', `${height}`],
       ['og:image:secure_url', shareImageUrl],
-      ['og:image:type', 'image/png'],
+      ['og:image:type', 'image/jpeg'],
       ['og:image:url', shareImageUrl],
       ['og:image:width', `${width}`],
       ['twitter:card', 'summary_large_image'],

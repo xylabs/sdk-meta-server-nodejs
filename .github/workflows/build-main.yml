@@ -15,8 +15,9 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4.0.3
         with:
+          cache: "yarn"
           node-version: "20"
       - name: install
         run: yarn install

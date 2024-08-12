@@ -19,7 +19,7 @@ export const generateImageStringFromPage = (page: Page, screenshotOptions: Scree
   return page.screenshot(options)
 }
 
-export const generateImageBufferFromPage = (page: Page, screenshotOptions: ScreenshotOptions = defaultScreenshotOptions): Promise<Buffer> => {
+export const generateImageBufferFromPage = (page: Page, screenshotOptions: ScreenshotOptions = defaultScreenshotOptions): Promise<Uint8Array> => {
   const options = { ...screenshotOptions, encoding: 'binary' } as const
   return page.screenshot(options)
 }
@@ -27,7 +27,7 @@ export const generateImageBufferFromPage = (page: Page, screenshotOptions: Scree
 export const generateImageFromPage = (
   page: Page,
   screenshotOptions: ScreenshotOptions = defaultScreenshotOptions,
-): Promise<Buffer | string | undefined> => {
+): Promise<Uint8Array> => {
   return page.screenshot(screenshotOptions)
 }
 
@@ -35,8 +35,8 @@ export const renderAndGenerateImageFromPage = async (
   url: string,
   pageRenderingOptions: PageRenderingOptions = defaultPageRenderingOptions,
   screenshotOptions: ScreenshotOptions = defaultScreenshotOptions,
-): Promise<Buffer | string | undefined> => {
-  let image: Buffer | string | undefined = undefined
+): Promise<Uint8Array> => {
+  let image: Uint8Array = new Uint8Array(0)
   await usePage(url, pageRenderingOptions, async (page: Page) => {
     image = await generateImageFromPage(page, screenshotOptions)
   })

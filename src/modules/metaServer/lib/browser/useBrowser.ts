@@ -33,11 +33,11 @@ process.env.PUPPETEER_DISABLE_HEADLESS_WARNING = 'true'
 export const useBrowser = async (viewport: Viewport = viewPortDefaults): Promise<Browser> => {
   const defaultViewport: Viewport = { ...viewPortDefaults, ...viewport }
   const browser = await launch({
+    acceptInsecureCerts: true,
     args: getBrowserArgs(),
     defaultViewport,
     devtools: false,
     headless: true,
-    ignoreHTTPSErrors: true,
     waitForInitialPage,
   })
   return browser

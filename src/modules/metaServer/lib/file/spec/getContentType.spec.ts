@@ -32,6 +32,6 @@ describe('getContentType', () => {
     expect(actual).toEqual(expected)
   })
   it.each(pathsWithFakeExtensions)('Returns false for unrecognized file extensions', (uri) => {
-    expect(getContentType(uri)).toBe(false)
+    expect(getContentType(uri)).toBeFalse()
   })
 })

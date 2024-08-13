@@ -56,25 +56,25 @@ const fullArgs = [
   '--no-sandbox', // This flag disables the sandbox security feature. It's necessary in some environments but use it with caution, as it can create security risks.
   '--no-zygote', // Seems to help avoid zombies https://github.com/puppeteer/puppeteer/issues/1825
   '--password-store=basic',
-  '--single-process', // <- this one doesn't works in Windows
+  '--single-process', // <- this one doesn't work in Windows
   '--ui-disable-partial-swap', // This flag disables using partial swap for compositor frame.
   '--use-gl=swiftshader', // This flag uses SwiftShader for GPU rasterization.
   '--use-mock-keychain',
 ]
 
 const limitedArgs = [
-  '--no-sandbox',
-  '--disable-setuid-sandbox',
-  '--disable-dev-shm-usage',
   '--disable-accelerated-2d-canvas',
+  '--disable-dev-shm-usage',
+  '--disable-gpu',
+  '--disable-setuid-sandbox',
   '--no-first-run',
+  '--no-sandbox',
   '--no-zygote',
   // https://stackoverflow.com/a/66994528
-  // '--single-process', // <- this one doesn't works in Windows
-  '--disable-gpu',
+  // '--single-process', // <- this one doesn't work in Windows
 ]
 
-const useLimitedArgs = true
+const useLimitedArgs = !process.env.USE_FULL_BROWSER_ARGS ?? true
 
 const args = useLimitedArgs ? limitedArgs : fullArgs
 

@@ -49,7 +49,7 @@
     "coverage": "yarn jest --coverage",
     "start": "nodemon",
     "start-esm": "node ./dist/node/bin/start-meta.mjs",
-    "test": "yarn jest --forceExit"
+    "test": "vitest run"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.637.0",

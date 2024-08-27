@@ -22,7 +22,7 @@ export const getImageMeta = (
   logger: Logger = new IdLogger(console, () => `dynamicShare|getImageMeta|${url}`),
 ): Meta => {
   logger.log('generating')
-  const [imageUrl, title] = getImageUrlFromPage(url, renderedHtml)
+  const imageUrl = getImageUrlFromPage(url, renderedHtml)
   const type = getContentType(imageUrl) || 'image/png'
   const og: OpenGraphMeta = {
     image: {
@@ -30,9 +30,7 @@ export const getImageMeta = (
     },
   }
   const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
-  const meta = {
-    og, twitter, title,
-  }
-  logger.log(`generated [${title}]`)
+  const meta = { og, twitter }
+  logger.log(`generated [${imageUrl}]`)
   return meta
 }

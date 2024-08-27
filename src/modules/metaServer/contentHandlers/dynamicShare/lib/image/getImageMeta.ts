@@ -1,6 +1,8 @@
+import type { Logger } from '@xylabs/logger'
+import { IdLogger } from '@xylabs/logger'
 import type {
   Meta, OpenGraphMeta, TwitterMeta,
-} from '@xyo-network/sdk-meta'
+} from '@xylabs/sdk-meta'
 
 import { defaultViewportSize, getContentType } from '../../../../lib/index.ts'
 import { getImageUrlFromPage } from './getImageUrlFromPage.ts'
@@ -12,9 +14,15 @@ import { getImageUrlFromPage } from './getImageUrlFromPage.ts'
  * @param height The width of the preview image
  * @returns The expected metadata for the preview image of a Live Share page
  */
-export const getImageMeta = async (url: string, width = defaultViewportSize.width, height = defaultViewportSize.height): Promise<Meta> => {
-  console.log(`[dynamicShare][getImageMeta][${url}]: generating`)
-  const imageUrl = await getImageUrlFromPage(url)
+export const getImageMeta = (
+  url: string,
+  renderedHtml: string,
+  width = defaultViewportSize.width,
+  height = defaultViewportSize.height,
+  logger: Logger = new IdLogger(console, () => `dynamicShare|getImageMeta|${url}`),
+): Meta => {
+  logger.log('generating')
+  const [imageUrl, title] = getImageUrlFromPage(url, renderedHtml)
   const type = getContentType(imageUrl) || 'image/png'
   const og: OpenGraphMeta = {
     image: {
@@ -22,7 +30,9 @@ export const getImageMeta = async (url: string, width = defaultViewportSize.widt
     },
   }
   const twitter: TwitterMeta = { card: 'summary_large_image', image: { '': imageUrl } }
-  const meta = { og, twitter }
-  console.log(`[dynamicShare][getImageMeta][${url}]: generated`)
+  const meta = {
+    og, twitter, title,
+  }
+  logger.log(`generated [${title}]`)
   return meta
 }

@@ -1,5 +1,5 @@
-import type { Meta } from '@xyo-network/sdk-meta'
-import { mergeDocumentHead, metaBuilder } from '@xyo-network/sdk-meta'
+import type { Meta } from '@xylabs/sdk-meta'
+import { mergeDocumentHead, metaBuilder } from '@xylabs/sdk-meta'
 import { LRUCache } from 'lru-cache'
 
 import type { MetaCache } from './MetaCache.ts'

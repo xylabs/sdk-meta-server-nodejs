@@ -6,7 +6,7 @@ import type {
   Empty, NoReqParams, NoReqQuery,
 } from '@xylabs/sdk-api-express-ecs'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
-import { mergeDocumentHead } from '@xyo-network/sdk-meta'
+import { mergeDocumentHead } from '@xylabs/sdk-meta'
 import type { RequestHandler } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { LRUCache } from 'lru-cache'

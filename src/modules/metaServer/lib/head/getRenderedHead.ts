@@ -1,4 +1,4 @@
-import type { Meta } from '@xyo-network/sdk-meta'
+import type { Meta } from '@xylabs/sdk-meta'
 import type { Page } from 'puppeteer'
 
 export const getRenderedHead = async (page: Page) => {

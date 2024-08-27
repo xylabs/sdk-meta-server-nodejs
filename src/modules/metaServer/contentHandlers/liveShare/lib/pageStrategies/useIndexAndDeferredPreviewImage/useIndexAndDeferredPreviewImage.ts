@@ -1,4 +1,4 @@
-import { metaBuilder } from '@xyo-network/sdk-meta'
+import { metaBuilder } from '@xylabs/sdk-meta'
 
 import type { FileRepository } from '../../../../../lib/index.ts'
 import { ensureImageExists, getImageMeta } from '../../image/index.ts'

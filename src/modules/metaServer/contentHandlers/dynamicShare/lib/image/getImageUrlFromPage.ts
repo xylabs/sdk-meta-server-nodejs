@@ -2,7 +2,8 @@ import { assertEx } from '@xylabs/assert'
 import he from 'he'
 const { decode } = he
 
-import { useSpaPage } from '../../../../lib/index.ts'
+import type { Logger } from '@xylabs/logger'
+import { IdLogger } from '@xylabs/logger'
 
 /**
  * The property name of the meta element
@@ -18,20 +19,20 @@ const xyoOgImageElementRegex = /<meta[^>]*property="xyo:og:image"[^>]*content="(
  * @param url The URL of the Dynamic Share page
  * @returns The URL of the preview image from within the Dynamic Share page's meta tags
  */
-export const getImageUrlFromPage = async (url: string): Promise<string> => {
-  // TODO: Optimize this with something like React SSR
-  const content = await useSpaPage(url, async (page) => {
-    console.log(`[dynamicShare][getPreviewUrlFromPage][${url}]: navigated to ${url}`)
-    await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 15_000 })
-    console.log(`[dynamicShare][getPreviewUrlFromPage][${url}]: found meta property ${xyoOgImageProperty}`)
-    return await page.content()
-  })
-  const html = assertEx(content, `[dynamicShare][getPreviewUrlFromPage][${url}]: error retrieving html`)
+export const getImageUrlFromPage = (
+  url: string,
+  renderedHtml: string,
+  logger: Logger = new IdLogger(console, () => `dynamicShare|getPreviewUrlFromPage|${url}`),
+): string => {
   // Use the regex to extract the expected meta element
-  const match = html.match(xyoOgImageElementRegex)
+  const match = renderedHtml.match(xyoOgImageElementRegex)
   // Extract the preview image URL from the meta element & decode it
   const imageUrl = decode(
-    assertEx(match?.[1], `[dynamicShare][getPreviewUrlFromPage][${url}]: error, missing meta element with ${xyoOgImageProperty} property`),
+    assertEx(match?.[1], () => {
+      logger.error(`error, missing meta element with ${xyoOgImageProperty} property`)
+      return 'Error'
+    }),
   )
+
   return imageUrl
 }

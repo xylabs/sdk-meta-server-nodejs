@@ -3,6 +3,7 @@ import Path from 'node:path'
 
 import { assertEx } from '@xylabs/assert'
 import { exists } from '@xylabs/exists'
+import { IdLogger } from '@xylabs/logger'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { HttpStatusCode } from 'axios'
 import type {
@@ -44,35 +45,37 @@ const getPageHandler = (baseDir: string) => {
     const adjustedPath = getAdjustedPath(req)
     if (Path.extname(adjustedPath) === '.html') {
       const uri = getUriBehindProxy(req)
+      const logger = new IdLogger(console, () => `dynamicShare|pageHandler|${uri}`)
       try {
-        console.log(`[dynamicShare][pageHandler][${uri}]: called`)
+        logger.log('called')
         if (enableCaching) {
-          console.log(`[dynamicShare][pageHandler][${uri}]: checking for cached`)
+          logger.log('checking for cached')
           const cachedHtml = await pageRepository.findFile(adjustedPath)
           if (cachedHtml) {
-            console.log(`[dynamicShare][pageHandler][${uri}]: return cached`)
+            logger.log('return cached')
             const html = arrayBufferToString(await cachedHtml.data)
             res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
             return
           }
         }
-        console.log(`[dynamicShare][pageHandler][${uri}]: rendering`)
+        logger.log('rendering')
         const updatedHtml = await useIndexAndDynamicPreviewImage(uri, indexHtml)
+        logger.log('setting')
         if (enableCaching) {
-          console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
+          logger.log('caching')
           const data = stringToArrayBuffer(updatedHtml)
           const file: RepositoryFile = {
             data, type: 'text/html', uri: adjustedPath,
           }
           await pageRepository.addFile(file)
         }
-        console.log(`[dynamicShare][pageHandler][${uri}]: return html`)
+        logger.log('return html')
         res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
         return
       } catch (error) {
         const status = HttpStatusCode.ServiceUnavailable
-        console.log(`[dynamicShare][useIndexAndDynamicPreviewImage][${uri}]: error, returning status code ${status}`)
-        console.log(error)
+        logger.log(`error, returning status code ${status}`)
+        logger.log(error)
         res.status(status)
           .set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
           .set('Retry-After', '60') // Retry after 60 seconds
@@ -88,16 +91,17 @@ const getPageHandler = (baseDir: string) => {
 const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
   const filePath = Path.join(baseDir, 'xy.config.json')
-  console.log(`[dynamicShare][init] Locating xy.config.json at ${filePath}`)
+  const logger = new IdLogger(console, () => 'dynamicShare|init')
+  logger.log(`Locating xy.config.json at ${filePath}`)
   if (existsSync(filePath)) {
-    console.log('[dynamicShare][init] Located xy.config.json')
+    logger.log('Located xy.config.json')
     // Read in config file
-    console.log('[dynamicShare][init] Parsing xy.config.json')
+    logger.log('Parsing xy.config.json')
     const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf8' }))
-    console.log('[dynamicShare][init] Parsed xy.config.json')
+    logger.log('Parsed xy.config.json')
     // TODO: Validate xyConfig
     if (xyConfig.dynamicShare) {
-      console.log('[dynamicShare][init] Creating page handler')
+      logger.log('Creating page handler')
       // TODO: Support custom done loading flag from xyConfig (or use default)
       const { include, exclude } = xyConfig.dynamicShare
       const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
@@ -115,7 +119,7 @@ const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPa
           next()
         }
       }
-      console.log('[dynamicShare][init] Created page handler')
+      logger.log('Created page handler')
       return ['get', ['/*', asyncHandler(dynamicSharePageHandler)]]
     }
     return undefined

@@ -1,4 +1,4 @@
-import type { Meta } from '@xyo-network/sdk-meta'
+import type { Meta } from '@xylabs/sdk-meta'
 
 export interface MetaCache {
   entries(): [string, string][]

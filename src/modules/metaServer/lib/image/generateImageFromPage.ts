@@ -1,8 +1,9 @@
-import { Page, ScreenshotOptions } from 'puppeteer'
+import type { Page, ScreenshotOptions } from 'puppeteer'
 
-import { defaultPageRenderingOptions, PageRenderingOptions, usePage } from '../page/index.ts'
-import { ImageEncoding } from './ImageEncoding.ts'
-import { ImageType } from './ImageType.ts'
+import type { PageRenderingOptions } from '../page/index.ts'
+import { defaultPageRenderingOptions, usePage } from '../page/index.ts'
+import type { ImageEncoding } from './ImageEncoding.ts'
+import type { ImageType } from './ImageType.ts'
 
 export type PageImageOptions = PageRenderingOptions & {
   encoding?: ImageEncoding

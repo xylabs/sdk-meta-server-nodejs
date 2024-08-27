@@ -1,6 +1,7 @@
 import { forget } from '@xylabs/forget'
 
-import { FileRepository, preCacheFacebookShare } from '../../../../lib/index.ts'
+import type { FileRepository } from '../../../../lib/index.ts'
+import { preCacheFacebookShare } from '../../../../lib/index.ts'
 import { generateImage } from './generateImage.ts'
 import { tryGetPreviewUrlFromPage } from './getPreviewUrlFromPage.ts'
 import { height, width } from './imageGenerator.ts'

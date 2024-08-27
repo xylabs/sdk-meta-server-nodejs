@@ -1,13 +1,11 @@
 import Path from 'node:path'
 
-import { Request } from 'express'
+import type { Request } from 'express'
 
 import { getAdjustedPath } from '../getAdjustedPath.ts'
 
 const getRequestForUri = (uri: string) => {
-  return {
-    path: uri,
-  } as unknown as Request
+  return { path: uri } as unknown as Request
 }
 
 describe('getAdjustedPath', () => {

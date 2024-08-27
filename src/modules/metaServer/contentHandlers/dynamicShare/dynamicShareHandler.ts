@@ -5,19 +5,23 @@ import { assertEx } from '@xylabs/assert'
 import { exists } from '@xylabs/exists'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { HttpStatusCode } from 'axios'
-import { NextFunction, Request, RequestHandler, Response } from 'express'
+import type {
+  NextFunction, Request, RequestHandler, Response,
+} from 'express'
 
+import type {
+  RepositoryFile,
+  RouteMatcher,
+} from '../../lib/index.js'
 import {
   arrayBufferToString,
   createGlobMatcher,
   getAdjustedPath,
   getUriBehindProxy,
   MemoryFileRepository,
-  RepositoryFile,
-  RouteMatcher,
   stringToArrayBuffer,
 } from '../../lib/index.js'
-import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
+import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
 import { useIndexAndDynamicPreviewImage } from './lib/index.ts'
 
 /**
@@ -57,7 +61,9 @@ const getPageHandler = (baseDir: string) => {
         if (enableCaching) {
           console.log(`[dynamicShare][pageHandler][${uri}]: caching`)
           const data = stringToArrayBuffer(updatedHtml)
-          const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
+          const file: RepositoryFile = {
+            data, type: 'text/html', uri: adjustedPath,
+          }
           await pageRepository.addFile(file)
         }
         console.log(`[dynamicShare][pageHandler][${uri}]: return html`)

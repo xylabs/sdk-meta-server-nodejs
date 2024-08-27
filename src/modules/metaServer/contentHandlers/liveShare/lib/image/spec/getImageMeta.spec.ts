@@ -1,3 +1,4 @@
+/* eslint-disable @stylistic/max-len */
 import { getImageMeta } from '../getImageMeta.ts'
 
 describe('getImageMeta', () => {

@@ -1,4 +1,4 @@
-import { FileRepository } from '../../../../lib/index.ts'
+import type { FileRepository } from '../../../../lib/index.ts'
 import { getImageUrlFromPageUrl } from '../url/index.ts'
 
 /**

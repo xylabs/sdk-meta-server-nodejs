@@ -1,10 +1,12 @@
 import { readFile } from 'node:fs/promises'
 import Path from 'node:path'
 
-import { S3ClientConfig } from '@aws-sdk/client-s3'
+import type { S3ClientConfig } from '@aws-sdk/client-s3'
 import { describeIf } from '@xylabs/jest-helpers'
 
-import { getAwsS3ClientConfig, getDefaultTestBucket, hasBucket } from '../../../../aws/index.ts'
+import {
+  getAwsS3ClientConfig, getDefaultTestBucket, hasBucket,
+} from '../../../../aws/index.ts'
 import { S3FileRepository } from '../S3FileRepository.ts'
 
 describeIf(hasBucket())('S3FileRepository', () => {
@@ -36,7 +38,9 @@ describeIf(hasBucket())('S3FileRepository', () => {
     describe('delete', () => {
       it('should delete an object', async () => {
         // First, set a value
-        const file = { data, type, uri: testKey }
+        const file = {
+          data, type, uri: testKey,
+        }
         await sut.addFile(file)
 
         // Now, delete it
@@ -49,7 +53,9 @@ describeIf(hasBucket())('S3FileRepository', () => {
     })
     describe('get', () => {
       it('should get an object', async () => {
-        const file = { data, type, uri: testKey }
+        const file = {
+          data, type, uri: testKey,
+        }
         await sut.addFile(file)
 
         const result = await sut.findFile(testKey)
@@ -64,7 +70,9 @@ describeIf(hasBucket())('S3FileRepository', () => {
     })
     describe('set', () => {
       it('should set an object', async () => {
-        const file = { data, type, uri: testKey }
+        const file = {
+          data, type, uri: testKey,
+        }
         await sut.addFile(file)
 
         const result = await sut.findFile(testKey)

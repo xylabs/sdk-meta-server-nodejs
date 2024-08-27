@@ -5,9 +5,15 @@ import { assertEx } from '@xylabs/assert'
 import { delay } from '@xylabs/delay'
 import { exists } from '@xylabs/exists'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
-import { NextFunction, Request, RequestHandler, Response } from 'express'
+import type {
+  NextFunction, Request, RequestHandler, Response,
+} from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
+import type {
+  RepositoryFile,
+  RouteMatcher,
+} from '../../lib/index.js'
 import {
   arrayBufferToString,
   createGlobMatcher,
@@ -15,12 +21,12 @@ import {
   getFileRepository,
   getUriBehindProxy,
   MemoryFileRepository,
-  RepositoryFile,
-  RouteMatcher,
   stringToArrayBuffer,
 } from '../../lib/index.js'
-import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
-import { ensureImageExists, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage } from './lib/index.ts'
+import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
+import {
+  ensureImageExists, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage,
+} from './lib/index.ts'
 
 /**
  * The max-age cache control header time (in seconds)
@@ -83,7 +89,9 @@ const getPageHandler = (baseDir: string) => {
         const updatedHtml = useIndexAndDeferredPreviewImage(uri, imageRepository(), indexHtml)
         console.log(`[liveShare][pageHandler][${uri}]: caching`)
         const data = stringToArrayBuffer(updatedHtml)
-        const file: RepositoryFile = { data, type: 'text/html', uri: adjustedPath }
+        const file: RepositoryFile = {
+          data, type: 'text/html', uri: adjustedPath,
+        }
         await pageRepository.addFile(file)
         console.log(`[liveShare][pageHandler][${uri}]: return html`)
         res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)

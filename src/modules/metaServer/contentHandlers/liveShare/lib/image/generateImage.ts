@@ -1,4 +1,5 @@
-import { FileRepository, RepositoryFile, useSpaPage } from '../../../../lib/index.ts'
+import type { FileRepository, RepositoryFile } from '../../../../lib/index.ts'
+import { useSpaPage } from '../../../../lib/index.ts'
 import { getImageUrlFromPageUrl } from '../url/index.ts'
 import { imageGenerator, type } from './imageGenerator.ts'
 
@@ -12,7 +13,9 @@ export const generateImage = (url: string, previewUrl: string, imageRepository: 
       console.log(`[liveShare][generateImage][${url}]: image generation: rendering`)
       const data = imageGenerator(page)
       console.log(`[liveShare][generateImage][${url}]: image generation: caching`)
-      const file: RepositoryFile = { data, type, uri: imageUrl }
+      const file: RepositoryFile = {
+        data, type, uri: imageUrl,
+      }
       await imageRepository.addFile(file)
       console.log(`[liveShare][generateImage][${url}]: image generation: awaiting generation`)
       await data

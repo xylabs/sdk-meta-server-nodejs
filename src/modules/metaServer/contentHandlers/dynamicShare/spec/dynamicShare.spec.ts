@@ -1,7 +1,7 @@
-import { Server } from 'node:http'
+import type { Server } from 'node:http'
 
 import { StatusCodes } from 'http-status-codes'
-import { SuperTest, Test } from 'supertest'
+import type { SuperTest, Test } from 'supertest'
 
 import { getServerOnPort } from '../../../spec/index.ts'
 
@@ -31,8 +31,8 @@ describe('dynamicShare', () => {
     html = response.text
     expect(html).toBeString()
   })
-  afterAll((done) => {
-    server.close(() => done())
+  afterAll(() => {
+    server.close(() => null)
   })
   describe('page meta', () => {
     const tests = [

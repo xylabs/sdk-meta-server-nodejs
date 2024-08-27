@@ -1,11 +1,9 @@
-import { Request } from 'express'
+import type { Request } from 'express'
 
 import { isHtmlLike } from '../isHtmlLike.ts'
 
 const getRequestForUri = (uri: string) => {
-  return {
-    path: uri,
-  } as unknown as Request
+  return { path: uri } as unknown as Request
 }
 
 describe('isHtmlLike', () => {

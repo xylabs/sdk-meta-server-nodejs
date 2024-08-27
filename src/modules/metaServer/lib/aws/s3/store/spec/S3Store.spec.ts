@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import Path from 'node:path'
 
-import { S3ClientConfig } from '@aws-sdk/client-s3'
+import type { S3ClientConfig } from '@aws-sdk/client-s3'
 import { describeIf } from '@xylabs/jest-helpers'
 
 import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig.ts'

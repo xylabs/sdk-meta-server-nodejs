@@ -1,9 +1,10 @@
 import { config } from 'dotenv'
 config()
 
-import express, { Express } from 'express'
+import type { Express } from 'express'
+import express from 'express'
 
-import { ApplicationMiddlewareOptions } from '../types/index.ts'
+import type { ApplicationMiddlewareOptions } from '../types/index.ts'
 import { addContentHandlers } from './addContentHandlers.ts'
 import { addMiddleware } from './addMiddleware.ts'
 

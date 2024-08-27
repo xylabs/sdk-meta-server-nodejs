@@ -1,7 +1,8 @@
-import { Server } from 'node:http'
+import type { Server } from 'node:http'
 import Path from 'node:path'
 
-import { agent, SuperTest, Test } from 'supertest'
+import type { SuperTest, Test } from 'supertest'
+import { agent } from 'supertest'
 
 import { getApp, server } from '../server/index.ts'
 

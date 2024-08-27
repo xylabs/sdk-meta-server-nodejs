@@ -1,4 +1,7 @@
-import { DeleteObjectCommand, GetObjectCommand, GetObjectCommandOutput, PutObjectCommand, S3Client, S3ClientConfig } from '@aws-sdk/client-s3'
+import type { GetObjectCommandOutput, S3ClientConfig } from '@aws-sdk/client-s3'
+import {
+  DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client,
+} from '@aws-sdk/client-s3'
 
 export class S3Store {
   private bucketName: string

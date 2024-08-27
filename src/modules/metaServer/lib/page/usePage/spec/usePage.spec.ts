@@ -10,13 +10,15 @@ describe('usePage', () => {
   const expected = 'Quick Start'
   it('gets the page', async () => {
     const result = await usePage(uri, undefined, async (page) => {
-      await page.waitForFunction(waitForElementToInclude,
+      await page.waitForFunction(
+        waitForElementToInclude,
         {
           polling: 100,
           timeout: 30_000,
         },
         'title',
-        expected)
+        expected,
+      )
       return page.content()
     })
     expect(result).toContain(expected)

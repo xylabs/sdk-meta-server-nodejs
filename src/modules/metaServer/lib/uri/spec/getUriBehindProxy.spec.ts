@@ -1,12 +1,10 @@
-import { Request } from 'express'
+import type { Request } from 'express'
 
 import { getUriBehindProxy } from '../getUriBehindProxy.ts'
 
 const getMockRequestForHost = (host: string): Request => {
   return {
-    headers: {
-      host,
-    },
+    headers: { host },
     protocol: 'http',
     url: '/index.html',
   } as Request

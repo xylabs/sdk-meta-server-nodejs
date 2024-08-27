@@ -36,4 +36,4 @@ async function fetchRandomUrls(concurrentRequests = 300) {
 }
 
 // Run the load test
-fetchRandomUrls()
+fetchRandomUrls().catch(console.error)

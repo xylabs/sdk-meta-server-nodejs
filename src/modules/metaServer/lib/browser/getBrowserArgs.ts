@@ -1,3 +1,4 @@
+/* eslint-disable @stylistic/max-len */
 // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#tips
 // https://peter.sh/experiments/chromium-command-line-switches/
 // https://www.bannerbear.com/blog/ways-to-speed-up-puppeteer-screenshots/

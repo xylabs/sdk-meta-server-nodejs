@@ -1,4 +1,4 @@
-import { Promisable } from '@xylabs/promise'
+import type { Promisable } from '@xylabs/promise'
 
 /**
  * A file to be stored in the repository. Striving for similarity to the Browser

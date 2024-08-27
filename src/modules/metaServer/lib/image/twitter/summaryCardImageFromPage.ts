@@ -1,4 +1,6 @@
-import { Page, ScreenshotOptions, Viewport } from 'puppeteer'
+import type {
+  Page, ScreenshotOptions, Viewport,
+} from 'puppeteer'
 
 import { generateImageBufferFromPage } from '../generateImageFromPage.ts'
 

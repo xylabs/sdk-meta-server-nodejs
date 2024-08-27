@@ -1,4 +1,5 @@
-import { PageRenderingOptions, usePage } from '../page/index.ts'
+import type { PageRenderingOptions } from '../page/index.ts'
+import { usePage } from '../page/index.ts'
 
 export interface CanvasImageOptions extends PageRenderingOptions {
   canvasSelector: string

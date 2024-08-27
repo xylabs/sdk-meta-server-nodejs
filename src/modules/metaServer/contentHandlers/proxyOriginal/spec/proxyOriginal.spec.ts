@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises'
 import Path from 'node:path'
 
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { SuperTest, Test } from 'supertest'
+import type { SuperTest, Test } from 'supertest'
 
 import { getServer } from '../../../spec'
 

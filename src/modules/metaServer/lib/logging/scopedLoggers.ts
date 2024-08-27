@@ -1,4 +1,4 @@
-import { ScopedLogFunction } from './ScopedLogFunction.ts'
+import type { ScopedLogFunction } from './ScopedLogFunction.ts'
 
 type ConsoleLoggerMethod = keyof Pick<Console, 'log' | 'error' | 'warn' | 'info' | 'debug'>
 

@@ -118,5 +118,5 @@ file for license details
 [codeclimate-link]: https://codeclimate.com/github/xylabs/sdk-meta-server-nodejs/maintainability
 [snyk-badge]: https://snyk.io/test/github/xylabs/sdk-meta-server-nodejs/badge.svg?targetFile=package.json
 [snyk-link]: https://snyk.io/test/github/xylabs/sdk-meta-server-nodejs?targetFile=package.json
-[license-badge]: https://img.shields.io/github/license/XYOracleNetwork/sdk-meta-server-nodejs
+[license-badge]: https://img.shields.io/github/license/xylabs/sdk-meta-server-nodejs
 [license-link]: https://github.com/xylabs/sdk-meta-server-nodejs/blob/main/LICENSE

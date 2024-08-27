@@ -1,3 +1,4 @@
+import { doesNotReject } from 'node:assert'
 import { Server } from 'node:http'
 
 import { StatusCodes } from 'http-status-codes'
@@ -39,8 +40,8 @@ describe('liveShare', () => {
     html = response.text
     expect(html).toBeString()
   })
-  afterAll((done) => {
-    server.close(() => done())
+  afterAll(() => {
+    server.close(() => null)
   })
   describe('page meta', () => {
     const tests = [

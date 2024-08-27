@@ -31,8 +31,8 @@ describe('dynamicShare', () => {
     html = response.text
     expect(html).toBeString()
   })
-  afterAll((done) => {
-    server.close(() => done())
+  afterAll(() => {
+    server.close(() => null)
   })
   describe('page meta', () => {
     const tests = [

@@ -1,8 +1,9 @@
-import { asyncHandler, Empty, NoReqParams } from '@xylabs/sdk-api-express-ecs'
-import { RequestHandler } from 'express'
+import type { Empty, NoReqParams } from '@xylabs/sdk-api-express-ecs'
+import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
+import type { RequestHandler } from 'express'
 
-import { MetaCacheLocals } from './MetaCacheLocals.ts'
-import { MetaCacheQueryParams } from './MetaCacheQueryParams.ts'
+import type { MetaCacheLocals } from './MetaCacheLocals.ts'
+import type { MetaCacheQueryParams } from './MetaCacheQueryParams.ts'
 import { SimpleMetaCache } from './SimpleMetaCache.ts'
 
 export const metaCache = (): RequestHandler<NoReqParams, Empty, Empty, MetaCacheQueryParams, MetaCacheLocals> => {

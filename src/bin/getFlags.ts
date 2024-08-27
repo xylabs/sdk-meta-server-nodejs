@@ -7,10 +7,11 @@ import yargs from 'yargs'
  */
 const getFlags = async () => {
   const args = yargs(process.argv.slice(2))
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { _, $0, ...flags } = await args.parserConfiguration({
-    'camel-case-expansion': false,
-  }).argv
+
+  const {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _, $0, ...flags
+  } = await args.parserConfiguration({ 'camel-case-expansion': false }).argv
   return flags
 }
 

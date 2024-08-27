@@ -3,7 +3,9 @@ import { generateEnvVarHelpers } from '../../env/index.ts'
 /**
  * Determines the default AWS S3 bucket to use.
  */
-export const { hasEnvVar: hasBucket, tryGetEnvVar: tryGetBucket, getEnvVar: getBucket } = generateEnvVarHelpers('AWS_S3_BUCKET')
+export const {
+  hasEnvVar: hasBucket, tryGetEnvVar: tryGetBucket, getEnvVar: getBucket,
+} = generateEnvVarHelpers('AWS_S3_BUCKET')
 
 /**
  * Determines the default AWS S3 bucket to use for testing.

@@ -1,9 +1,9 @@
-import { doesNotReject } from 'node:assert'
-import { Server } from 'node:http'
+import type { Server } from 'node:http'
 
 import { StatusCodes } from 'http-status-codes'
-import { MatchImageSnapshotOptions, toMatchImageSnapshot } from 'jest-image-snapshot'
-import { SuperTest, Test } from 'supertest'
+import type { MatchImageSnapshotOptions } from 'jest-image-snapshot'
+import { toMatchImageSnapshot } from 'jest-image-snapshot'
+import type { SuperTest, Test } from 'supertest'
 
 import { getServerOnPort } from '../../../spec/index.ts'
 
@@ -25,9 +25,7 @@ describe('liveShare', () => {
     return match && match[1]
   }
   const opts: MatchImageSnapshotOptions = {
-    customDiffConfig: {
-      threshold: 0.1,
-    },
+    customDiffConfig: { threshold: 0.1 },
     failureThreshold: 0.05,
     failureThresholdType: 'percent',
   }

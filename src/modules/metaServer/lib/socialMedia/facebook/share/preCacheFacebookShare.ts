@@ -33,7 +33,9 @@ export interface PreCacheFacebookShareResponse {
 export const preCacheFacebookShare = async (url: string): Promise<Partial<PreCacheFacebookShareResponse> | undefined> => {
   const access_token = await tryGetAppAccessToken()
   if (!access_token) return
-  const params = { access_token, id: url, scrape }
+  const params = {
+    access_token, id: url, scrape,
+  }
   try {
     const response = await axios.post<Partial<PreCacheFacebookShareResponse>>(openApiUrl, null, { params })
     return response.data

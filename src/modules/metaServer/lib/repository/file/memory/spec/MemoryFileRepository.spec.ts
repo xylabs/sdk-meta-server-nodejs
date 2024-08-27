@@ -30,7 +30,9 @@ describe('MemoryFileRepository', () => {
     describe('delete', () => {
       it('should delete an object', async () => {
         // First, set a value
-        const file = { data, type, uri: testKey }
+        const file = {
+          data, type, uri: testKey,
+        }
         await sut.addFile(file)
 
         // Now, delete it
@@ -43,7 +45,9 @@ describe('MemoryFileRepository', () => {
     })
     describe('get', () => {
       it('should get an object', async () => {
-        const file = { data, type, uri: testKey }
+        const file = {
+          data, type, uri: testKey,
+        }
         await sut.addFile(file)
 
         const result = await sut.findFile(testKey)
@@ -58,7 +62,9 @@ describe('MemoryFileRepository', () => {
     })
     describe('set', () => {
       it('should set an object', async () => {
-        const file = { data, type, uri: testKey }
+        const file = {
+          data, type, uri: testKey,
+        }
         await sut.addFile(file)
 
         const result = await sut.findFile(testKey)

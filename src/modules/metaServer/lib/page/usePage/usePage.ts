@@ -1,8 +1,10 @@
 import { forget } from '@xylabs/forget'
-import { Browser, Page, Viewport, WaitForOptions } from 'puppeteer'
+import type {
+  Browser, Page, Viewport, WaitForOptions,
+} from 'puppeteer'
 
 import { defaultViewportSize, useBrowser } from '../../browser/index.ts'
-import { PageRenderingOptions } from '../PageRenderingOptions.ts'
+import type { PageRenderingOptions } from '../PageRenderingOptions.ts'
 import { waitUntil } from './defaults.ts'
 import { getBrowserPage } from './getBrowserPage.ts'
 
@@ -14,9 +16,7 @@ export const pageViewPortDefaults: Viewport = {
   isMobile: true, // So we can render as lean as possible
 }
 
-export const defaultPageRenderingOptions: PageRenderingOptions = {
-  viewportSize: pageViewPortDefaults,
-}
+export const defaultPageRenderingOptions: PageRenderingOptions = { viewportSize: pageViewPortDefaults }
 
 const waitForInitialPage = false
 const waitForOptions: WaitForOptions = {

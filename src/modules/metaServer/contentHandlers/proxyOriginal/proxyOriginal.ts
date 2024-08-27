@@ -2,16 +2,20 @@ import { existsSync, readFileSync } from 'node:fs'
 import Path from 'node:path'
 
 import { assertEx } from '@xylabs/assert'
-import { asyncHandler, Empty, NoReqParams, NoReqQuery } from '@xylabs/sdk-api-express-ecs'
+import type {
+  Empty, NoReqParams, NoReqQuery,
+} from '@xylabs/sdk-api-express-ecs'
+import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { mergeDocumentHead } from '@xyo-network/sdk-meta'
-import { RequestHandler } from 'express'
+import type { RequestHandler } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { LRUCache } from 'lru-cache'
-import serveStatic, { ServeStaticOptions } from 'serve-static'
+import type { ServeStaticOptions } from 'serve-static'
+import serveStatic from 'serve-static'
 
 import { getAdjustedPath, isHtmlLike } from '../../lib/index.ts'
-import { MetaCacheLocals } from '../../middleware/index.ts'
-import { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
+import type { MetaCacheLocals } from '../../middleware/index.ts'
+import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
 import { exists } from './lib/index.ts'
 
 /**

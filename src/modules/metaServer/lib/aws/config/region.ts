@@ -6,4 +6,6 @@ import { generateEnvVarHelpers } from '../../env/index.ts'
  */
 export const getRegionOrDefault = (): string | undefined => tryGetRegion() || 'us-east-1'
 
-export const { hasEnvVar: hasRegion, tryGetEnvVar: tryGetRegion, getEnvVar: getRegion } = generateEnvVarHelpers('AWS_DEFAULT_REGION')
+export const {
+  hasEnvVar: hasRegion, tryGetEnvVar: tryGetRegion, getEnvVar: getRegion,
+} = generateEnvVarHelpers('AWS_DEFAULT_REGION')

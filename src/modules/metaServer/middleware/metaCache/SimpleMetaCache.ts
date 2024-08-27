@@ -1,7 +1,8 @@
-import { mergeDocumentHead, Meta, metaBuilder } from '@xyo-network/sdk-meta'
+import type { Meta } from '@xyo-network/sdk-meta'
+import { mergeDocumentHead, metaBuilder } from '@xyo-network/sdk-meta'
 import { LRUCache } from 'lru-cache'
 
-import { MetaCache } from './MetaCache.ts'
+import type { MetaCache } from './MetaCache.ts'
 
 const defaultHtml = `
 <!DOCTYPE html>

@@ -1,5 +1,5 @@
-import { Meta } from '@xyo-network/sdk-meta'
-import { Page } from 'puppeteer'
+import type { Meta } from '@xyo-network/sdk-meta'
+import type { Page } from 'puppeteer'
 
 export const getRenderedHead = async (page: Page) => {
   const renderedHeadElement = await page.$('head')

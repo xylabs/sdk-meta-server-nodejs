@@ -1,7 +1,7 @@
-import { Server } from 'node:http'
+import type { Server } from 'node:http'
 
 import { StatusCodes } from 'http-status-codes'
-import { SuperTest, Test } from 'supertest'
+import type { SuperTest, Test } from 'supertest'
 
 import { getServerOnPort } from '../../../spec/index.ts'
 

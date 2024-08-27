@@ -1,9 +1,9 @@
-import { S3ClientConfig } from '@aws-sdk/client-s3'
+import type { S3ClientConfig } from '@aws-sdk/client-s3'
 
 import { S3Store } from '../../../aws/index.ts'
 import { getContentType } from '../../../file/index.ts'
-import { FileRepository } from '../FileRepository.ts'
-import { RepositoryFile } from '../RepositoryFile.ts'
+import type { FileRepository } from '../FileRepository.ts'
+import type { RepositoryFile } from '../RepositoryFile.ts'
 
 export class S3FileRepository implements FileRepository {
   private store: S3Store
@@ -36,7 +36,9 @@ export class S3FileRepository implements FileRepository {
     }
     const type = getContentType(uri) || 'application/octet-stream'
     const data: ArrayBuffer = result.buffer
-    const file: RepositoryFile = { data, type, uri }
+    const file: RepositoryFile = {
+      data, type, uri,
+    }
     return file
   }
 

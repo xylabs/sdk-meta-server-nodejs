@@ -1,6 +1,6 @@
 import Path from 'node:path'
 
-import { Request } from 'express'
+import type { Request } from 'express'
 
 import { isKnownFileExtension } from '../file/index.ts'
 

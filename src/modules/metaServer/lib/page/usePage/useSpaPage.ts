@@ -1,9 +1,11 @@
 /* eslint-disable max-statements */
 import { Mutex } from 'async-mutex'
-import { Browser, Page, Viewport, WaitForOptions } from 'puppeteer'
+import type {
+  Browser, Page, Viewport, WaitForOptions,
+} from 'puppeteer'
 
 import { defaultViewportSize, useBrowser } from '../../browser/index.ts'
-import { PageRenderingOptions } from '../PageRenderingOptions.ts'
+import type { PageRenderingOptions } from '../PageRenderingOptions.ts'
 import { timeout, waitUntil } from './defaults.ts'
 import { getBrowserPage } from './getBrowserPage.ts'
 
@@ -15,9 +17,7 @@ const viewPortDefaults: Viewport = {
   isMobile: true, // So we can render as lean as possible
 }
 
-export const useSpaPageRenderingOptions: PageRenderingOptions = {
-  viewportSize: viewPortDefaults,
-}
+export const useSpaPageRenderingOptions: PageRenderingOptions = { viewportSize: viewPortDefaults }
 
 /**
  * Options for waiting for navigation for typical SPA pages
@@ -66,7 +66,9 @@ export const useSpaPage = async <T>(
       return undefined
     }
     const parsed = new URL(url)
-    const { origin, pathname, search } = parsed
+    const {
+      origin, pathname, search,
+    } = parsed
     const relativePath = search ? `${pathname}${search}` : pathname
     const start = Date.now()
     _browser = _browser ?? (await useBrowser(browserOptions))

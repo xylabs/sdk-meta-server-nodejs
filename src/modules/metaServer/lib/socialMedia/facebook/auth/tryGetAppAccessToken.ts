@@ -21,7 +21,9 @@ export const tryGetAppAccessToken = async (): Promise<string | undefined> => {
   try {
     const { client_id, client_secret } = tryGetAuthInfo()
     if (!client_id || !client_secret) return undefined
-    const params = { client_id, client_secret, grant_type }
+    const params = {
+      client_id, client_secret, grant_type,
+    }
     const response = await axios.get<AppAccessTokenResponse>(tokenUrl, { params })
     return response.data.access_token
   } catch (error) {

@@ -5538,7 +5538,6 @@ __metadata:
     express: "npm:^4.19.2"
     he: "npm:^1.2.0"
     http-status-codes: "npm:^2.3.0"
-    jest: "npm:^29.7.0"
     jest-extended: "npm:^4.0.2"
     jest-image-snapshot: "npm:^6.4.0"
     jest-serializer-html: "npm:^7.1.0"
@@ -5549,8 +5548,6 @@ __metadata:
     puppeteer: "npm:^23.2.0"
     serve-static: "npm:^1.15.0"
     supertest: "npm:^7.0.0"
-    ts-jest: "npm:^29.2.5"
-    ts-node: "npm:^10.9.2"
     typescript: "npm:^5.5.4"
     vitest: "npm:^2.0.5"
     yargs: "npm:^17.7.2"
@@ -17122,7 +17119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:^29.2.4, ts-jest@npm:^29.2.5":
+"ts-jest@npm:^29.2.4":
   version: 29.2.5
   resolution: "ts-jest@npm:29.2.5"
   dependencies:

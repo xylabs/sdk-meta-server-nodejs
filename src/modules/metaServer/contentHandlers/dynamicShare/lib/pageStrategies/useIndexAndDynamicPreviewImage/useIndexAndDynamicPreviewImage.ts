@@ -11,7 +11,7 @@ export const useIndexAndDynamicPreviewImage = async (
 ): Promise<string> => {
   const renderedPage = await getRenderedPage(url, 'xyo:og:image')
   logger.log('generating preview image meta')
-  const meta = getImageMeta(url, await renderedPage.content())
+  const meta = await getImageMeta(url, renderedPage)
   meta.title = await renderedPage.title()
   logger.log(`setting title: ${meta.title}`)
   const updatedHtml = metaBuilder(indexHtml, meta)

@@ -17,6 +17,5 @@ export const useIndexAndDynamicPreviewImage = async (
   logger.log(`setting title: ${meta.title}`)
   const updatedHtml = metaBuilder(indexHtml, meta)
   logger.log('returning index.html & preview image meta')
-  logger.warn('Render Time:', meta.xy.timings.render)
   return updatedHtml
 }

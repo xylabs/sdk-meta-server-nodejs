@@ -1,8 +1,11 @@
+import '@xylabs/vitest-extended'
+
 import type { Server } from 'node:http'
 import Path from 'node:path'
 
 import type { SuperTest, Test } from 'supertest'
 import { agent } from 'supertest'
+import { expect, test } from 'vitest'
 
 import { getApp, server } from '../server/index.ts'
 

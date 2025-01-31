@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { isArchivistDomain } from '../isArchivistDomain.ts'
 
 const archivistDomains = ['https://beta.api.archivist.xyo.network', 'https://api.archivist.xyo.network', 'http://localhost:8080']

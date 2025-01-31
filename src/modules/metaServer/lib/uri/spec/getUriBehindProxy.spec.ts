@@ -1,4 +1,9 @@
+import '@xylabs/vitest-extended'
+
 import type { Request } from 'express'
+import {
+  describe, expect, it,
+} from 'vitest'
 
 import { getUriBehindProxy } from '../getUriBehindProxy.ts'
 

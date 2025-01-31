@@ -1,5 +1,14 @@
+import '@xylabs/vitest-extended'
+
 import { readFile } from 'node:fs/promises'
 import Path from 'node:path'
+
+import {
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe, expect, it,
+} from 'vitest'
 
 import { MemoryFileRepository } from '../MemoryFileRepository.ts'
 
@@ -18,7 +27,7 @@ describe('MemoryFileRepository', () => {
 
   describe.each(cases)('with content type %s', (type, file) => {
     beforeAll(async () => {
-      data = (await readFile(file, null)).buffer
+      data = (await readFile(file, null)).buffer as ArrayBuffer
       testKey = `${generateUniqueKey(Path.basename(file))}`
     })
     beforeEach(() => {

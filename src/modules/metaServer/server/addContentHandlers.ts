@@ -1,7 +1,7 @@
 import type { Express } from 'express'
 
 import {
-  configureProxyOriginal, debugRoutes, dynamicShareHandlers, liveShareHandlers,
+  configureProxyOriginal, debugRoutes, dynamicShareHandlers, liveShareHandlers, proxyExternalHandlers,
 } from '../contentHandlers/index.ts'
 import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../types/index.ts'
 
@@ -11,6 +11,7 @@ export const addContentHandlers = (app: Express, opts: ApplicationMiddlewareOpti
   const knownRequestTypeHandlers: MountPathAndMiddleware[] = [
     // Debug routes
     ...debugHandlers,
+    ...proxyExternalHandlers(opts),
     // Dynamic Share handlers
     ...dynamicShareHandlers(opts),
     // Live Share handlers

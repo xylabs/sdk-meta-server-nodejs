@@ -1,9 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`getImageMeta > generates page preview image Meta 1`] = `Promise {}`;
+exports[`getImageMeta > generates page preview image Meta 1`] = `{}`;
 
-exports[`getImageMeta > generates page preview image Meta 2`] = `Promise {}`;
-
-exports[`getImageMeta generates page preview image Meta 1`] = `Promise {}`;
-
-exports[`getImageMeta generates page preview image Meta 2`] = `Promise {}`;
+exports[`getImageMeta > generates page preview image Meta 2`] = `{}`;

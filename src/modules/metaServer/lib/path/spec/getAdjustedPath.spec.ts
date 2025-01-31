@@ -1,6 +1,11 @@
+import '@xylabs/vitest-extended'
+
 import Path from 'node:path'
 
 import type { Request } from 'express'
+import {
+  describe, expect, it,
+} from 'vitest'
 
 import { getAdjustedPath } from '../getAdjustedPath.ts'
 

@@ -1,4 +1,10 @@
 /* eslint-disable @stylistic/max-len */
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { getArchivistDomainFromUri, networkToArchivistUri } from '../getArchivistDomainFromUri.ts'
 
 const prodUrls = [

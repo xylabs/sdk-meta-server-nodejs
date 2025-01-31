@@ -1,3 +1,10 @@
+import '@xylabs/vitest-extended'
+
+import {
+  beforeEach,
+  describe, expect, it, test,
+} from 'vitest'
+
 import { SimpleMetaCache } from '../SimpleMetaCache.ts'
 
 const path1 = '/providers/netflix'

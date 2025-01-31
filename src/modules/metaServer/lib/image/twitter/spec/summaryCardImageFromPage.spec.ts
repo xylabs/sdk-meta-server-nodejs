@@ -1,5 +1,11 @@
+import '@xylabs/vitest-extended'
+
 import type { MatchImageSnapshotOptions } from 'jest-image-snapshot'
 import { toMatchImageSnapshot } from 'jest-image-snapshot'
+import {
+  beforeAll,
+  describe, expect, it,
+} from 'vitest'
 
 import { usePage } from '../../../page/index.ts'
 import { join } from '../../../uri/index.ts'

@@ -1,4 +1,10 @@
 /* eslint-disable @stylistic/max-len */
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { getImageMeta } from '../getImageMeta.ts'
 
 describe('getImageMeta', () => {

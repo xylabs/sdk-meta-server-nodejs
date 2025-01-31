@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { useSpaPage } from '../useSpaPage.js'
 
 describe.skip('useSpaPage [perf]', () => {

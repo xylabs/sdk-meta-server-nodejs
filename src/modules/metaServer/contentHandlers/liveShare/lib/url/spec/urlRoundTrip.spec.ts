@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { getImageUrlFromPageUrl } from '../getImageUrlFromPageUrl.ts'
 import { getPageUrlFromImageUrl } from '../getPageUrlFromImageUrl.ts'
 

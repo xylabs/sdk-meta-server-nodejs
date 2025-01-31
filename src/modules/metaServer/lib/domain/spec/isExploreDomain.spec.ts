@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { isExploreDomain } from '../isExploreDomain.ts'
 
 const exploreDomains = ['https://beta.explore.xyo.network', 'https://explore.xyo.network', 'http://localhost:3000']

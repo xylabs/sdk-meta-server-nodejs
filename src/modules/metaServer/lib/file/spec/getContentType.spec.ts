@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { getContentType } from '../getContentType.ts'
 
 const pathsWithRealExtensions = [

@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { getHashInfoFromUri } from '../getHashInfoFromUri.ts'
 
 describe('getHashInfoFromUri', () => {

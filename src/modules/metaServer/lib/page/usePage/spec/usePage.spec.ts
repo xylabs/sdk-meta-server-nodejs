@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { usePage } from '../usePage.ts'
 
 const waitForElementToInclude = (selector: string, expectedValue: string) => {

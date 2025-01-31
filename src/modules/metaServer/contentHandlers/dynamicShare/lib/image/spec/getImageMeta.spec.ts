@@ -1,4 +1,10 @@
 /* eslint-disable @stylistic/max-len */
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { getRenderedPage } from '../../../../../lib/index.ts'
 import { getImageMeta } from '../getImageMeta.ts'
 

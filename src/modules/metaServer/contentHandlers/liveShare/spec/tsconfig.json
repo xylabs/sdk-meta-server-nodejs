@@ -1,6 +1,0 @@
-{
-  "compilerOptions": {
-    "allowImportingTsExtensions": true
-  },
-  "extends": "@xylabs/tsconfig-jest"
-}

@@ -75,7 +75,7 @@ const limitedArgs = [
   // '--single-process', // <- this one doesn't work in Windows
 ]
 
-const useLimitedArgs = !process.env.USE_FULL_BROWSER_ARGS ?? true
+const useLimitedArgs = !process.env.USE_FULL_BROWSER_ARGS
 
 const args = useLimitedArgs ? limitedArgs : fullArgs
 

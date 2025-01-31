@@ -1,3 +1,10 @@
+import '@xylabs/vitest-extended'
+
+import {
+  afterAll,
+  beforeAll, describe, expect, it, vi,
+} from 'vitest'
+
 import { MemoryFileRepository } from '../../../../../lib/index.ts'
 import { ensureImageExists } from '../ensureImageExists.ts'
 
@@ -5,12 +12,12 @@ describe.skip('ensureImageExists', () => {
   let average = 0
   let duration = 0
   beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => {
+    vi.spyOn(console, 'log').mockImplementation(() => {
       // Stop expected logs from being generated during tests
     })
   })
   afterAll(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
     console.error(`Duration: ${duration}ms`)
     console.error(`Average: ${average}ms`)
   })

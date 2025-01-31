@@ -1,10 +1,16 @@
+import '@xylabs/vitest-extended'
+
 import { readFile } from 'node:fs/promises'
 import Path from 'node:path'
 
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import type { SuperTest, Test } from 'supertest'
+import {
+  beforeEach,
+  describe, expect, it,
+} from 'vitest'
 
-import { getServer } from '../../../spec'
+import { getServer } from '../../../spec/index.ts'
 
 const expectToEqualFileContents = async (actual: string, filePath: string = Path.join(__dirname, 'index.html')) => {
   // Get index.html file by reading it directly from the filesystem

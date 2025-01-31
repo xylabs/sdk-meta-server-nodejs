@@ -65,7 +65,7 @@ const enableCaching = true
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
   const filePath = Path.join(baseDir, 'index.html')
-  assertEx(existsSync(filePath), 'Missing index.html')
+  assertEx(existsSync(filePath), () => 'Missing index.html')
   const indexHtml = readFileSync(filePath, { encoding: 'utf8' })
   const pageRepository = new MemoryFileRepository()
 

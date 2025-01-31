@@ -17,7 +17,7 @@ export const createRegexMatcher = (patterns: string[]): RouteMatcher => {
     if (curr === false) acc.push(idx)
     return acc
   }, [])
-  assertEx(invalidGlobPatternIndexes.length === 0, `Invalid glob pattern(s): ${invalidGlobPatternIndexes.map(i => patterns[i]).join(', ')}`)
+  assertEx(invalidGlobPatternIndexes.length === 0, () => `Invalid glob pattern(s): ${invalidGlobPatternIndexes.map(i => patterns[i]).join(', ')}`)
   const regexes = regexesOrFalse.filter((regex): regex is MMRegExp => assertEx(regex !== false))
   return (route: string) => regexes.some(regex => regex.test(route))
 }

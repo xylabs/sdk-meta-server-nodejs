@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { getRenderedPageHtml } from '../getRenderedPageHtml.ts'
 
 describe('getRenderedSpaPageHtml', () => {

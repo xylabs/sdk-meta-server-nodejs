@@ -11,7 +11,7 @@ export const generateImage = (url: string, previewUrl: string, imageRepository: 
       const selector = '#preview-container'
       await page.waitForSelector(selector, { timeout: 30_000 })
       console.log(`[liveShare][generateImage][${url}]: image generation: rendering`)
-      const data = imageGenerator(page)
+      const data = (await imageGenerator(page)).buffer as ArrayBuffer
       console.log(`[liveShare][generateImage][${url}]: image generation: caching`)
       const file: RepositoryFile = {
         data, type, uri: imageUrl,

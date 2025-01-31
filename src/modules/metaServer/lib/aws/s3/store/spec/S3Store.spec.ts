@@ -1,14 +1,20 @@
+import '@xylabs/vitest-extended'
+
 import { readFile } from 'node:fs/promises'
 import Path from 'node:path'
 
 import type { S3ClientConfig } from '@aws-sdk/client-s3'
-import { describeIf } from '@xylabs/jest-helpers'
+import {
+  afterEach,
+  beforeAll, beforeEach,
+  describe, expect, it,
+} from 'vitest'
 
 import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig.ts'
 import { getDefaultTestBucket, hasBucket } from '../../getDefaultBucket.ts'
 import { S3Store } from '../S3Store.ts'
 
-describeIf(hasBucket())('S3Store', () => {
+describe.skipIf(hasBucket())('S3Store', () => {
   let config: S3ClientConfig
   let sut: S3Store
   let testData: Uint8Array

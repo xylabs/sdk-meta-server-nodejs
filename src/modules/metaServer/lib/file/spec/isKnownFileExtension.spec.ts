@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { isKnownFileExtension } from '../isKnownFileExtension.ts'
 
 const pathsWithRealExtensions = [

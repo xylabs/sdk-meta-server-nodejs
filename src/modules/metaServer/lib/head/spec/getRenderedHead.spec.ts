@@ -1,3 +1,9 @@
+import '@xylabs/vitest-extended'
+
+import {
+  describe, expect, it,
+} from 'vitest'
+
 import { usePage } from '../../page/index.ts'
 import {
   getRenderedHead, getRenderedMeta, getRenderedMetaElements, getSelectiveHeadElements,

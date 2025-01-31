@@ -1,0 +1,15 @@
+{
+  "proxyExternal": {
+    "https://cnn.com": {
+      "include": [
+        "/politics",
+        "/world/*"
+      ],
+      "exclude": [
+        "/world/asia",
+        "/index.html",
+        "/other.html"
+      ]
+    }
+  }
+}

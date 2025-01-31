@@ -1,7 +1,13 @@
+import '@xylabs/vitest-extended'
+
 import type { Server } from 'node:http'
 
 import { StatusCodes } from 'http-status-codes'
 import type { SuperTest, Test } from 'supertest'
+import {
+  afterAll,
+  beforeAll, describe, expect, it,
+} from 'vitest'
 
 import { getServerOnPort } from '../../../spec/index.ts'
 

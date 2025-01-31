@@ -35,7 +35,7 @@ export class S3FileRepository implements FileRepository {
       return undefined
     }
     const type = getContentType(uri) || 'application/octet-stream'
-    const data: ArrayBuffer = result.buffer
+    const data = result.buffer as ArrayBuffer
     const file: RepositoryFile = {
       data, type, uri,
     }

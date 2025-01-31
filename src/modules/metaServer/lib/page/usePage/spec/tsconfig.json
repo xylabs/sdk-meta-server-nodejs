@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "allowImportingTsExtensions": true,
-    "lib": ["esnext", "dom"],
-  },
-  "extends": "@xylabs/tsconfig-jest"
-}

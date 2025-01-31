@@ -98,6 +98,7 @@
     "babel-jest": "^29.7.0",
     "dotenv": "^16.4.7",
     "eslint": "^9.19.0",
+    "eslint-plugin-sonarjs": "^3.0.1",
     "jest-extended": "^4.0.2",
     "jest-image-snapshot": "^6.4.0",
     "jest-serializer-html": "^7.1.0",

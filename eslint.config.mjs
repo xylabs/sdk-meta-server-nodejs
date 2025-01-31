@@ -8,6 +8,8 @@ import {
   importConfig,
 } from '@xylabs/eslint-config-flat'
 
+import sonarjs from 'eslint-plugin-sonarjs'
+
 export default [
   { ignores: ['.yarn/**', 'jest.config.cjs', '**/dist/**', 'dist', 'build/**', 'coverage', 'scripts', 'node_modules/**', 'puppeteer', '.*', 'eslint.config.mjs', 'load.mjs'] },
   unicornConfig,
@@ -27,4 +29,11 @@ export default [
       'import-x/no-cycle': ['warn', { maxDepth: 5 }],
     },
   },
+  {
+    plugins: { sonarjs },
+    rules: {
+      'sonarjs/deprecation': ['warn'],
+    },
+  },
+
 ]

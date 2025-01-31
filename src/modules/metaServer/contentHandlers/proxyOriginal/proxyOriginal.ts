@@ -44,7 +44,7 @@ const existingPaths = new LRUCache<string, boolean>({ max: 1000 })
 const getHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
   const filePath = Path.join(baseDir, 'index.html')
-  assertEx(existsSync(filePath), 'Missing index.html')
+  assertEx(existsSync(filePath), () => 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf8' })
   const proxy = serveStatic(baseDir, options)
   const serveIndex: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaCacheLocals> = (req, res, _next) => {

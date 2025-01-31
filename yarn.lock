@@ -5252,6 +5252,7 @@ __metadata:
     date-fns: "npm:^3.6.0"
     dotenv: "npm:^16.4.7"
     eslint: "npm:^9.19.0"
+    eslint-plugin-sonarjs: "npm:^3.0.1"
     express: "npm:^4.21.2"
     he: "npm:^1.2.0"
     http-status-codes: "npm:^2.3.0"

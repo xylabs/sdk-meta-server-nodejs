@@ -29,19 +29,20 @@ const proxyHandler = async (req: Request, res: Response, next: NextFunction, ori
     console.log(`[proxyExternal][proxyHandler][${uri}]: called`)
     const uriObj = new URL(uri)
     const originObj = new URL(origin)
-    uriObj.host = originObj.host ?? uriObj.host
-    uriObj.port = originObj.port ?? uriObj.port
+    uriObj.host = originObj.host
+    uriObj.port = originObj.port
     uriObj.protocol = originObj.protocol ?? uriObj.protocol
     const proxyUri = uriObj.toString()
     try {
       console.log(`[proxyExternal][proxyHandler][${proxyUri}]: fetching`)
       const result = await Axios.get(proxyUri)
-      console.log(`[proxyExternal][proxyHandler][${proxyUri}]: fetched`)
+      console.log(`[proxyExternal][proxyHandler][${proxyUri}]: fetched [${result.data}]`)
       if (result) {
         console.log(`[proxyExternal][proxyHandler][${proxyUri}]: returning result`)
         res.type((result.headers['Content-Type'] ?? 'html') as string).setHeaders(
           new Map(Object.entries(result.headers)),
-        ).send(Buffer.from(result.data))
+        ).status(200).send(result.data)
+        console.log(`[proxyExternal][proxyHandler][${proxyUri}]: success: ${result.data}`)
       } else {
         console.log(`[proxyExternal][proxyHandler][${uri}]: returning ${ReasonPhrases.GATEWAY_TIMEOUT}}`)
         res.sendStatus(StatusCodes.GATEWAY_TIMEOUT)

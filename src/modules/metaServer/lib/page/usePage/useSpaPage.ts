@@ -92,9 +92,9 @@ export const useSpaPage = async <T>(
     // listen to back.  So we push state to the desired path twice,
     // then go back once to trigger the navigation.
     console.log(`Trying relative path: ${relativePath}`)
-    await _page.evaluate(relativePath => window.history.pushState(null, '', relativePath), relativePath)
-    await _page.evaluate(relativePath => window.history.pushState(null, '', relativePath), relativePath)
-    await _page.evaluate(() => window.history.back())
+    await _page.evaluate(relativePath => globalThis.history.pushState(null, '', relativePath), relativePath)
+    await _page.evaluate(relativePath => globalThis.history.pushState(null, '', relativePath), relativePath)
+    await _page.evaluate(() => globalThis.history.back())
 
     const duration = Date.now() - start
 

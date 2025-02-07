@@ -22,7 +22,7 @@ import { exists } from './lib/index.ts'
  * The max-age cache control header time (in seconds)
  * to set for the index.html file
  */
-const indexHtmlMaxAge = 60 * 10
+const indexHtmlMaxAge = 60 * 1
 const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
 
 /**

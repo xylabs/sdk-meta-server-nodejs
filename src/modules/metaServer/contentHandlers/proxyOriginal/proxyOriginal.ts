@@ -73,7 +73,7 @@ const getProxyOriginalHandler = (baseDir: string) => {
       updated = mergeDocumentHead(html, updatedHead)
     }
     const language = getLanguage(path, languageMap)
-    updated.replace(/<html lang="en">/, `<html lang="${language}">`)
+    updated = updated.replace('<html lang="en">', `<html lang="${language}">`)
     res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updated)
   }
   // eslint-disable-next-line @typescript-eslint/no-misused-promises

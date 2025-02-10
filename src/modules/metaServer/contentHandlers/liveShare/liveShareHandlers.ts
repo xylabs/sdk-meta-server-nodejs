@@ -145,7 +145,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
   const { baseDir } = opts
   const xyConfig = loadXyConfig(baseDir, 'liveShare')
   // TODO: Validate xyConfig
-  if (xyConfig.liveShare) {
+  if (xyConfig?.liveShare) {
     console.log('[liveShare][init] Initialize repository')
     imageRepository()
     console.log('[liveShare][init] Initialized repository')

@@ -95,7 +95,7 @@ const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPa
   const xyConfig = loadXyConfig(baseDir, 'dynamicShare')
   logger.log('Parsed xy.config.json')
   // TODO: Validate xyConfig
-  if (xyConfig.dynamicShare) {
+  if (xyConfig?.dynamicShare) {
     logger.log('Creating page handler')
     // TODO: Support custom done loading flag from xyConfig (or use default)
     const { include, exclude } = xyConfig.dynamicShare

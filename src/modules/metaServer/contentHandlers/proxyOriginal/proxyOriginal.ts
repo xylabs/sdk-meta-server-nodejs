@@ -13,7 +13,12 @@ import { LRUCache } from 'lru-cache'
 import type { ServeStaticOptions } from 'serve-static'
 import serveStatic from 'serve-static'
 
-import { getAdjustedPath, isHtmlLike } from '../../lib/index.ts'
+import type { PathFilter } from '../../../../model/index.ts'
+import type { RouteMatcher } from '../../lib/index.ts'
+import {
+  createGlobMatcher,
+  getAdjustedPath, isHtmlLike, loadXyConfig,
+} from '../../lib/index.ts'
 import type { MetaCacheLocals } from '../../middleware/index.ts'
 import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
 import { exists } from './lib/index.ts'
@@ -41,7 +46,20 @@ const options: ServeStaticOptions = {
 
 const existingPaths = new LRUCache<string, boolean>({ max: 1000 })
 
+const getLanguage = (uri: string, languageMap: Record<string, PathFilter>) => {
+  for (let [language, { include, exclude }] of Object.entries(languageMap)) {
+    const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => false
+    const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
+    if (matchesIncluded(uri) && !matchesExcluded(uri)) {
+      return language
+    }
+  }
+  return 'en'
+}
+
 const getProxyOriginalHandler = (baseDir: string) => {
+  const xyConfig = loadXyConfig(baseDir, 'proxyExternal')
+  const { languageMap = {} } = xyConfig ?? {}
   // Ensure file containing base HTML exists
   const filePath = Path.join(baseDir, 'index.html')
   assertEx(existsSync(filePath), () => 'Missing index.html')
@@ -54,6 +72,8 @@ const getProxyOriginalHandler = (baseDir: string) => {
     if (updatedHead) {
       updated = mergeDocumentHead(html, updatedHead)
     }
+    const language = getLanguage(path, languageMap)
+    updated.replace(/<html lang="en">/, `<html lang="${language}">`)
     res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updated)
   }
   // eslint-disable-next-line @typescript-eslint/no-misused-promises

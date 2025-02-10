@@ -62,7 +62,7 @@ const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountP
   const { baseDir } = opts
   const xyConfig = loadXyConfig(baseDir, 'proxyExternal')
   // TODO: Validate xyConfig
-  if (xyConfig.proxyExternal) {
+  if (xyConfig?.proxyExternal) {
     const proxyExternalConfig = xyConfig.proxyExternal as ProxyExternalConfig
     for (let [domain, domainConfig] of Object.entries(proxyExternalConfig)) {
       const { include, exclude } = domainConfig

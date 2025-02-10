@@ -5026,6 +5026,7 @@ __metadata:
     "@xylabs/exists": "npm:^4.5.1"
     "@xylabs/forget": "npm:^4.5.1"
     "@xylabs/logger": "npm:^4.5.1"
+    "@xylabs/object": "npm:^4.5.1"
     "@xylabs/promise": "npm:^4.5.1"
     "@xylabs/sdk-api-express-ecs": "npm:^2.1.0"
     "@xylabs/sdk-meta": "npm:^4.5.1"
@@ -5064,6 +5065,18 @@ __metadata:
     start-meta: dist/node/bin/start-meta.mjs
   languageName: unknown
   linkType: soft
+
+"@xylabs/object@npm:^4.5.1":
+  version: 4.5.1
+  resolution: "@xylabs/object@npm:4.5.1"
+  dependencies:
+    "@xylabs/assert": "npm:^4.5.1"
+    "@xylabs/logger": "npm:^4.5.1"
+    "@xylabs/promise": "npm:^4.5.1"
+    "@xylabs/typeof": "npm:^4.5.1"
+  checksum: 10/6f91b0e558c9b6a552599e3c33706d5b1be173b7b55636294fe46700a96255e0fd1547fe44f0ff634b84b181103317e67b6180bc7d69a7d40b5b7ef57c473869
+  languageName: node
+  linkType: hard
 
 "@xylabs/promise@npm:^4.5.1":
   version: 4.5.1

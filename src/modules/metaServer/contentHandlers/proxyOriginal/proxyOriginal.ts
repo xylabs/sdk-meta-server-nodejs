@@ -41,7 +41,7 @@ const options: ServeStaticOptions = {
 
 const existingPaths = new LRUCache<string, boolean>({ max: 1000 })
 
-const getHandler = (baseDir: string) => {
+const getProxyOriginalHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
   const filePath = Path.join(baseDir, 'index.html')
   assertEx(existsSync(filePath), () => 'Missing index.html')
@@ -93,5 +93,5 @@ const getHandler = (baseDir: string) => {
  */
 export const configureProxyOriginal = <T extends ApplicationMiddlewareOptions>(opts: T): MountPathAndMiddleware => [
   'get',
-  ['*', getHandler(opts.baseDir)],
+  ['*', getProxyOriginalHandler(opts.baseDir)],
 ]

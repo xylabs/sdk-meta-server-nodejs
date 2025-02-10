@@ -19,6 +19,7 @@ import {
   createGlobMatcher,
   getAdjustedPath,
   getUriBehindProxy,
+  loadXyConfig,
   MemoryFileRepository,
   stringToArrayBuffer,
 } from '../../lib/index.js'
@@ -90,40 +91,33 @@ const getPageHandler = (baseDir: string) => {
 
 const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
-  const filePath = Path.join(baseDir, 'xy.config.json')
   const logger = new IdLogger(console, () => 'dynamicShare|init')
-  logger.log(`Locating xy.config.json at ${filePath}`)
-  if (existsSync(filePath)) {
-    logger.log('Located xy.config.json')
-    // Read in config file
-    logger.log('Parsing xy.config.json')
-    const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf8' }))
-    logger.log('Parsed xy.config.json')
-    // TODO: Validate xyConfig
-    if (xyConfig.dynamicShare) {
-      logger.log('Creating page handler')
-      // TODO: Support custom done loading flag from xyConfig (or use default)
-      const { include, exclude } = xyConfig.dynamicShare
-      const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
-      const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
-      const pageHandler = getPageHandler(baseDir)
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      const dynamicSharePageHandler: RequestHandler = async (req, res, next) => {
-        // Exclude query string from glob via req.path
-        const uri = req.path
-        // // NOTE: Uncomment if we want to also include query string
-        // const uri = req.originalUrl
-        if (matchesIncluded(uri) && !matchesExcluded(uri)) {
-          await pageHandler(req, res, next)
-        } else {
-          next()
-        }
+  const xyConfig = loadXyConfig(baseDir, 'dynamicShare')
+  logger.log('Parsed xy.config.json')
+  // TODO: Validate xyConfig
+  if (xyConfig.dynamicShare) {
+    logger.log('Creating page handler')
+    // TODO: Support custom done loading flag from xyConfig (or use default)
+    const { include, exclude } = xyConfig.dynamicShare
+    const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
+    const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
+    const pageHandler = getPageHandler(baseDir)
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    const dynamicSharePageHandler: RequestHandler = async (req, res, next) => {
+      // Exclude query string from glob via req.path
+      const uri = req.path
+      // // NOTE: Uncomment if we want to also include query string
+      // const uri = req.originalUrl
+      if (matchesIncluded(uri) && !matchesExcluded(uri)) {
+        await pageHandler(req, res, next)
+      } else {
+        next()
       }
-      logger.log('Created page handler')
-      return ['get', ['/*', asyncHandler(dynamicSharePageHandler)]]
     }
-    return undefined
+    logger.log('Created page handler')
+    return ['get', ['/*', asyncHandler(dynamicSharePageHandler)]]
   }
+  return undefined
 }
 
 /**

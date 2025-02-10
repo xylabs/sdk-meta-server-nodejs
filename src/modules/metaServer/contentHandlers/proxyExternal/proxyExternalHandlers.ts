@@ -1,6 +1,3 @@
-import { existsSync, readFileSync } from 'node:fs'
-import Path from 'node:path'
-
 import { exists } from '@xylabs/exists'
 import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import Axios, { isAxiosError } from 'axios'
@@ -13,6 +10,7 @@ import type { RouteMatcher } from '../../lib/index.js'
 import {
   createGlobMatcher,
   getUriBehindProxy,
+  loadXyConfig,
 } from '../../lib/index.js'
 import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
 
@@ -62,34 +60,29 @@ const proxyHandler = async (req: Request, res: Response, next: NextFunction, ori
 
 const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
-  const filePath = Path.join(baseDir, 'xy.config.json')
-  console.log(`[proxyExternal][init] Locating xy.config.json at ${filePath}`)
-  if (existsSync(filePath)) {
-    // Read in config file
-    const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf8' }))
-    // TODO: Validate xyConfig
-    if (xyConfig.proxyExternal) {
-      const proxyExternalConfig = xyConfig.proxyExternal as ProxyExternalConfig
-      for (let [domain, domainConfig] of Object.entries(proxyExternalConfig)) {
-        const { include, exclude } = domainConfig
-        const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
-        const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
+  const xyConfig = loadXyConfig(baseDir, 'proxyExternal')
+  // TODO: Validate xyConfig
+  if (xyConfig.proxyExternal) {
+    const proxyExternalConfig = xyConfig.proxyExternal as ProxyExternalConfig
+    for (let [domain, domainConfig] of Object.entries(proxyExternalConfig)) {
+      const { include, exclude } = domainConfig
+      const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
+      const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
 
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        const proxyExternalPageHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-          const uri = req.originalUrl
-          if (matchesIncluded(uri) && !matchesExcluded(uri)) {
-            await proxyHandler(req, res, next, domain)
-          } else {
-            next()
-          }
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      const proxyExternalPageHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+        const uri = req.originalUrl
+        if (matchesIncluded(uri) && !matchesExcluded(uri)) {
+          await proxyHandler(req, res, next, domain)
+        } else {
+          next()
         }
-        console.log('[proxyExternal][init] Created page handler')
-        return ['get', ['/*', asyncHandler(proxyExternalPageHandler)]]
       }
+      console.log('[proxyExternal][init] Created page handler')
+      return ['get', ['/*', asyncHandler(proxyExternalPageHandler)]]
     }
-    return undefined
   }
+  return undefined
 }
 
 /**

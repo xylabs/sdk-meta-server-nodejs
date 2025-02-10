@@ -20,6 +20,7 @@ import {
   getAdjustedPath,
   getFileRepository,
   getUriBehindProxy,
+  loadXyConfig,
   MemoryFileRepository,
   stringToArrayBuffer,
 } from '../../lib/index.js'
@@ -142,43 +143,35 @@ const imageHandler = async (req: Request, res: Response, next: NextFunction) => 
 
 const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
-  const filePath = Path.join(baseDir, 'xy.config.json')
-  console.log(`[liveShare][init] Locating xy.config.json at ${filePath}`)
-  if (existsSync(filePath)) {
-    console.log('[liveShare][init] Located xy.config.json')
-    // Read in config file
-    console.log('[liveShare][init] Parsing xy.config.json')
-    const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf8' }))
-    console.log('[liveShare][init] Parsed xy.config.json')
-    // TODO: Validate xyConfig
-    if (xyConfig.liveShare) {
-      console.log('[liveShare][init] Initialize repository')
-      imageRepository()
-      console.log('[liveShare][init] Initialized repository')
-      console.log('[liveShare][init] Creating page handler')
-      const { include, exclude } = xyConfig.liveShare
-      const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
-      const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
-      const pageHandler = getPageHandler(baseDir)
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      const liveSharePageHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-        // Exclude query string from glob via req.path
-        const uri = req.path
-        const render = req.params?.render
-        // // NOTE: Uncomment if we want to also include query string
-        // const uri = req.originalUrl
-        if (render !== 'preview' && matchesIncluded(uri) && !matchesExcluded(uri)) {
-          // TODO: Better way to determine page vs image handler
-          await (uri.endsWith('img.png') ? imageHandler(req, res, next) : pageHandler(req, res, next))
-        } else {
-          next()
-        }
+  const xyConfig = loadXyConfig(baseDir, 'liveShare')
+  // TODO: Validate xyConfig
+  if (xyConfig.liveShare) {
+    console.log('[liveShare][init] Initialize repository')
+    imageRepository()
+    console.log('[liveShare][init] Initialized repository')
+    console.log('[liveShare][init] Creating page handler')
+    const { include, exclude } = xyConfig.liveShare
+    const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
+    const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
+    const pageHandler = getPageHandler(baseDir)
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    const liveSharePageHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
+      // Exclude query string from glob via req.path
+      const uri = req.path
+      const render = req.params?.render
+      // // NOTE: Uncomment if we want to also include query string
+      // const uri = req.originalUrl
+      if (render !== 'preview' && matchesIncluded(uri) && !matchesExcluded(uri)) {
+        // TODO: Better way to determine page vs image handler
+        await (uri.endsWith('img.png') ? imageHandler(req, res, next) : pageHandler(req, res, next))
+      } else {
+        next()
       }
-      console.log('[liveShare][init] Created page handler')
-      return ['get', ['/*', asyncHandler(liveSharePageHandler)]]
     }
-    return undefined
+    console.log('[liveShare][init] Created page handler')
+    return ['get', ['/*', asyncHandler(liveSharePageHandler)]]
   }
+  return undefined
 }
 
 /**

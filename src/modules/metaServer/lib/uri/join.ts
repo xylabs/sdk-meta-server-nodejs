@@ -14,5 +14,5 @@ export const join = (...parts: string[]): string => {
     // Append part
     url.pathname += part
     return url.toString()
-  })
+  }, '')
 }

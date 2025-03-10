@@ -80,7 +80,8 @@ describe('SimpleMetaCache', () => {
       })
       it('returns keys in alphabetical order', () => {
         const keys = cache.keys()
-        expect(keys).toEqual([path2, path1].sort())
+        // eslint-disable-next-line sonarjs/no-alphabetical-sort
+        expect(keys).toEqual([path2, path1].toSorted())
       })
     })
     test('values', () => {

@@ -17,8 +17,6 @@ export const generateImage = (url: string, previewUrl: string, imageRepository: 
         data, type, uri: imageUrl,
       }
       await imageRepository.addFile(file)
-      console.log(`[liveShare][generateImage][${url}]: image generation: awaiting generation`)
-      await data
       console.log(`[liveShare][generateImage][${url}]: image generation: complete`)
     } catch (error) {
       console.log(`[liveShare][generateImage][${url}]: image generation: error`)

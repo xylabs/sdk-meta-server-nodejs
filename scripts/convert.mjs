@@ -22,6 +22,7 @@ function getAllFiles(dir, fileList = []) {
 // Function to process imports and exports in a file
 function processImportsExports(filePath) {
   let content = fs.readFileSync(filePath, 'utf8')
+  // eslint-disable-next-line sonarjs/slow-regex
   const regex = /(import|export)\s+(.*?from\s+["'])(\.{1,2}\/.*?)(["'])/g
 
   content = content.replaceAll(regex, (match, p1, p2, p3, p4) => {

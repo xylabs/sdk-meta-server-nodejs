@@ -28,7 +28,7 @@ export const getPreviewUrlFromPage = async (url: string): Promise<string> => {
   })
   const html = assertEx(content, () => `[liveShare][getPreviewUrlFromPage][${url}]: error retrieving html`)
   // Use the regex to extract the expected meta element
-  const match = html.match(xyoOgImageElementRegex)
+  const match = xyoOgImageElementRegex.exec(html)
   // Extract the preview image URL from the meta element & decode it
   const previewUrl = decode(
     assertEx(match?.[1], () => `[liveShare][getPreviewUrlFromPage][${url}]: error, missing meta element with ${xyoOgImageProperty} property`),

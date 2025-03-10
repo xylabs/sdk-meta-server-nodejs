@@ -30,5 +30,4 @@ export const ensureImageExists = (url: string, imageRepository: FileRepository) 
   }
   forget(task())
   console.log(`[liveShare][ensureImageExists][${url}]: backgrounded image task`)
-  return
 }

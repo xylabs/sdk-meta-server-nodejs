@@ -1,39 +1,26 @@
-// eslint.config.mjs
-
 import {
   typescriptConfig,
   unicornConfig,
   workspacesConfig,
   rulesConfig,
+  sonarConfig,
   importConfig,
 } from '@xylabs/eslint-config-flat'
 
-import sonarjs from 'eslint-plugin-sonarjs'
-
 export default [
-  { ignores: ['.yarn/**', 'jest.config.cjs', '**/dist/**', 'dist', 'build/**', 'coverage', 'scripts', 'node_modules/**', 'puppeteer', '.*', 'eslint.config.mjs', 'load.mjs'] },
+  { ignores: ['.yarn', 'dist', '**/dist/**', 'build', '**/build/**', 'node_modules/**', 'public', 'storybook-static', 'eslint.config.mjs'] },
   unicornConfig,
   workspacesConfig,
   rulesConfig,
+  typescriptConfig,
+  importConfig,
+  sonarConfig,
   {
-    ...typescriptConfig,
     rules: {
-      ...typescriptConfig.rules,
-      '@typescript-eslint/consistent-type-imports': ['warn'],
+      'sonarjs/prefer-single-boolean-return': ['off'],
+      "sonarjs/no-hardcoded-ip": ['off'],
+      "sonarjs/no-clear-text-protocols": ['off'],
+      'import-x/no-unresolved': ['off'],
     },
   },
-  {
-    ...importConfig,
-    rules: {
-      ...importConfig.rules,
-      'import-x/no-cycle': ['warn', { maxDepth: 5 }],
-    },
-  },
-  {
-    plugins: { sonarjs },
-    rules: {
-      'sonarjs/deprecation': ['warn'],
-    },
-  },
-
 ]

@@ -8,7 +8,6 @@ import type { MountPathAndMiddleware } from '../../types/index.ts'
 const handleStatusCode: RequestHandler = (req, res, _next) => {
   const { code } = req.params
   res.sendStatus(Number.parseInt(code))
-  return
 }
 
 const handleSyncThrow: RequestHandler = (_req, _res, _next) => {
@@ -26,7 +25,6 @@ const handleTimeout: RequestHandler = asyncHandler(async (req, res, _next) => {
   const time = Number.parseInt(timeout)
   await delay(time)
   res.sendStatus(StatusCodes.OK)
-  return
 })
 
 /**

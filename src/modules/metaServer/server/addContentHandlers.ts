@@ -5,7 +5,7 @@ import {
 } from '../contentHandlers/index.ts'
 import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../types/index.ts'
 
-const debugHandlers = process.env.NODE_ENV === 'development' ? debugRoutes : []
+const debugHandlers = debugRoutes // process.env.NODE_ENV === 'development' ? debugRoutes : []
 
 export const addContentHandlers = (app: Express, opts: ApplicationMiddlewareOptions) => {
   const knownRequestTypeHandlers: MountPathAndMiddleware[] = [

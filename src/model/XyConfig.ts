@@ -3,11 +3,51 @@ export interface PathFilter {
   include: string[]
 }
 
+export interface CacheConfig {
+  immutable?: boolean
+  maxAge?: number
+  maxStale?: number
+  minFresh?: number
+  mustRevalidate?: boolean
+  mustUnderstand?: boolean
+  noCache?: boolean
+  noStore?: boolean
+  noTransform?: boolean
+  onlyIfCached?: boolean
+  privateOnly?: boolean
+  proxyRevalidate?: boolean
+  sMaxAge?: number
+  staleIfError?: number
+  staleWhileRevalidate?: number
+}
+
 export interface MetaServerConfig {
-  dynamicShare?: PathFilter
-  languageMap?: Record<string, PathFilter>
-  liveShare?: PathFilter
-  proxyExternal?: Record<string, PathFilter>
+  caching?: CacheConfig
+  dynamicShare?: {
+    caching?: CacheConfig
+    pathFilter?: PathFilter
+  }
+  globalDefaults?: {
+    caching?: CacheConfig
+    headers?: Record<string, string>
+  }
+  languageMap?: {
+    caching?: CacheConfig
+    pathFilters: Record<string, PathFilter>
+  }
+  liveShare?: {
+    caching?: CacheConfig
+    imageCaching?: CacheConfig
+    pathFilter: PathFilter
+  }
+  proxyExternal?: {
+    caching?: CacheConfig
+    pathFilters: Record<string, PathFilter>
+  }
+  proxyOriginal?: {
+    caching?: CacheConfig
+    indexCaching?: CacheConfig
+  }
 }
 
 export interface XyConfig {

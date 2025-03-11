@@ -10,7 +10,7 @@ import type {
   NextFunction, Request, RequestHandler, Response,
 } from 'express'
 
-import type { XyConfig } from '../../../../model/index.ts'
+import { dynamicShareCacheConfigLoader, type XyConfig } from '../../../../model/index.ts'
 import type {
   RepositoryFile,
   RouteMatcher,
@@ -27,14 +27,16 @@ import {
 import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
 import { useIndexAndDynamicPreviewImage } from './lib/index.ts'
 
-/**
- * The max-age cache control header time (in seconds)
- * to set for html files
- */
-const indexHtmlMaxAge = 60 * 10
-const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
-
 const enableCaching = false
+
+const dynamicShareConfig = (config: XyConfig = {}) => {
+  // eslint-disable-next-line sonarjs/deprecation
+  if (config?.dynamicShare) {
+    console.warn('Using deprecated dynamicShare config. Please use metaServer.dynamicShare instead.')
+  }
+  // eslint-disable-next-line sonarjs/deprecation
+  return config?.metaServer?.dynamicShare?.pathFilter ?? config?.dynamicShare
+}
 
 const getPageHandler = (baseDir: string) => {
   // Ensure file containing base HTML exists
@@ -42,6 +44,7 @@ const getPageHandler = (baseDir: string) => {
   assertEx(existsSync(filePath), () => 'Missing index.html')
   const indexHtml = readFileSync(filePath, { encoding: 'utf8' })
   const pageRepository = new MemoryFileRepository()
+  const xyConfig = loadXyConfig(baseDir, 'dynamicShare')
 
   const pageHandler = async (req: Request, res: Response, next: NextFunction) => {
     const adjustedPath = getAdjustedPath(req)
@@ -56,7 +59,7 @@ const getPageHandler = (baseDir: string) => {
           if (cachedHtml) {
             logger.log('return cached')
             const html = arrayBufferToString(await cachedHtml.data)
-            res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
+            res.type('html').set(dynamicShareCacheConfigLoader(xyConfig)).send(html)
             return
           }
         }
@@ -72,7 +75,7 @@ const getPageHandler = (baseDir: string) => {
           await pageRepository.addFile(file)
         }
         logger.log('return html')
-        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+        res.type('html').set(dynamicShareCacheConfigLoader(xyConfig)).send(updatedHtml)
         return
       } catch (error) {
         const status = HttpStatusCode.ServiceUnavailable
@@ -88,15 +91,6 @@ const getPageHandler = (baseDir: string) => {
     next()
   }
   return pageHandler
-}
-
-const dynamicShareConfig = (config: XyConfig = {}) => {
-  // eslint-disable-next-line sonarjs/deprecation
-  if (config?.dynamicShare) {
-    console.warn('Using deprecated dynamicShare config. Please use metaServer.dynamicShare instead.')
-  }
-  // eslint-disable-next-line sonarjs/deprecation
-  return config?.metaServer?.dynamicShare ?? config?.dynamicShare
 }
 
 const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {

@@ -3,10 +3,10 @@ import {
 } from '@xylabs/sdk-api-express-ecs'
 import type { Express } from 'express'
 
-import { globalDefaultCaching, metaCache } from '../middleware/index.ts'
+import { getGlobalDefaultCaching, metaCache } from '../middleware/index.ts'
 
-export const addMiddleware = (app: Express) => {
-  app.use(globalDefaultCaching)
+export const addMiddleware = (app: Express, baseDir: string) => {
+  app.use(getGlobalDefaultCaching(baseDir))
   app.set('etag', false)
   disableExpressDefaultPoweredByHeader(app)
   app.use(customPoweredByHeader)

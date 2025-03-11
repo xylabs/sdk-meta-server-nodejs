@@ -10,7 +10,9 @@ import type {
 } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
-import type { XyConfig } from '../../../../model/index.ts'
+import {
+  liveShareCacheConfigLoader, liveShareImageCacheConfigLoader, type XyConfig,
+} from '../../../../model/index.ts'
 import type {
   RepositoryFile,
   RouteMatcher,
@@ -29,19 +31,6 @@ import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../..
 import {
   ensureImageExists, getPageUrlFromImageUrl, useIndexAndDeferredPreviewImage,
 } from './lib/index.ts'
-
-/**
- * The max-age cache control header time (in seconds)
- * to set for html files
- */
-const indexHtmlMaxAge = 60 * 10
-const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
-/**
- * The max-age cache control header time (in seconds)
- * to set for image files
- */
-const imageMaxAge = 60 * 10
-const imageCacheControlHeader = `public, max-age=${imageMaxAge}`
 
 /**
  * How often to poll for the completion of image generation
@@ -65,6 +54,7 @@ const imageRepository = () => getFileRepository()
 const enableCaching = true
 
 const getPageHandler = (baseDir: string) => {
+  const xyConfig = loadXyConfig(baseDir, 'liveShare')
   // Ensure file containing base HTML exists
   const filePath = Path.join(baseDir, 'index.html')
   assertEx(existsSync(filePath), () => 'Missing index.html')
@@ -83,7 +73,7 @@ const getPageHandler = (baseDir: string) => {
           if (cachedHtml) {
             console.log(`[liveShare][pageHandler][${uri}]: return cached`)
             const html = arrayBufferToString(await cachedHtml.data)
-            res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(html)
+            res.type('html').set(liveShareCacheConfigLoader(xyConfig)).send(html)
             return
           }
         }
@@ -96,7 +86,7 @@ const getPageHandler = (baseDir: string) => {
         }
         await pageRepository.addFile(file)
         console.log(`[liveShare][pageHandler][${uri}]: return html`)
-        res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updatedHtml)
+        res.type('html').set(liveShareCacheConfigLoader(xyConfig)).send(updatedHtml)
         return
       } catch (error) {
         console.log(error)
@@ -107,39 +97,45 @@ const getPageHandler = (baseDir: string) => {
   return pageHandler
 }
 
-const imageHandler = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const uri = getUriBehindProxy(req)
-    console.log(`[liveShare][imageHandler][${uri}]: called`)
-    let imageTask = await imageRepository().findFile(uri)
-    // TODO: We can just return a 404 if the image doesn't exist
-    // once we're happy with the persistence-backed caching
-    if (!imageTask) {
-      console.log(`[liveShare][imageHandler][${uri}]: generating image`)
-      // Render the page and generate the image
-      const pageUrl = getPageUrlFromImageUrl(uri)
-      ensureImageExists(pageUrl, imageRepository())
-      let imageGenerationWait = 0
-      do {
-        await delay(imageGenerationCompletionPollingInterval)
-        imageGenerationWait += imageGenerationCompletionPollingInterval
-        imageTask = await imageRepository().findFile(uri)
-      } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
+const getImageHandler = (opts: ApplicationMiddlewareOptions) => {
+  const { baseDir } = opts
+  const xyConfig = loadXyConfig(baseDir, 'liveShare')
+
+  const imageHandler = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const uri = getUriBehindProxy(req)
+      console.log(`[liveShare][imageHandler][${uri}]: called`)
+      let imageTask = await imageRepository().findFile(uri)
+      // TODO: We can just return a 404 if the image doesn't exist
+      // once we're happy with the persistence-backed caching
+      if (!imageTask) {
+        console.log(`[liveShare][imageHandler][${uri}]: generating image`)
+        // Render the page and generate the image
+        const pageUrl = getPageUrlFromImageUrl(uri)
+        ensureImageExists(pageUrl, imageRepository())
+        let imageGenerationWait = 0
+        do {
+          await delay(imageGenerationCompletionPollingInterval)
+          imageGenerationWait += imageGenerationCompletionPollingInterval
+          imageTask = await imageRepository().findFile(uri)
+        } while (imageTask === undefined && imageGenerationWait < maxImageGenerationWait)
+      }
+      console.log(`[liveShare][imageHandler][${uri}]: awaiting image`)
+      const image = await imageTask?.data
+      if (image) {
+        console.log(`[liveShare][imageHandler][${uri}]: returning image`)
+        res.type('png').set(liveShareImageCacheConfigLoader(xyConfig)).send(Buffer.from(image))
+      } else {
+        console.log(`[liveShare][imageHandler][${uri}]: returning ${ReasonPhrases.GATEWAY_TIMEOUT}}`)
+        res.sendStatus(StatusCodes.GATEWAY_TIMEOUT)
+      }
+      return
+    } catch (error) {
+      console.log(error)
     }
-    console.log(`[liveShare][imageHandler][${uri}]: awaiting image`)
-    const image = await imageTask?.data
-    if (image) {
-      console.log(`[liveShare][imageHandler][${uri}]: returning image`)
-      res.type('png').set('Cache-Control', imageCacheControlHeader).send(Buffer.from(image))
-    } else {
-      console.log(`[liveShare][imageHandler][${uri}]: returning ${ReasonPhrases.GATEWAY_TIMEOUT}}`)
-      res.sendStatus(StatusCodes.GATEWAY_TIMEOUT)
-    }
-    return
-  } catch (error) {
-    console.log(error)
+    next()
   }
-  next()
+  return imageHandler
 }
 
 const liveShareConfig = (config: XyConfig = {}) => {
@@ -149,7 +145,7 @@ const liveShareConfig = (config: XyConfig = {}) => {
   }
 
   // eslint-disable-next-line sonarjs/deprecation
-  return config?.metaServer?.liveShare ?? config?.liveShare
+  return config?.metaServer?.liveShare?.pathFilter ?? config?.liveShare
 }
 
 const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
@@ -166,6 +162,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
     const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
     const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)
+    const imageHandler = getImageHandler(opts)
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     const liveSharePageHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
       // Exclude query string from glob via req.path
@@ -189,7 +186,8 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
 /**
  * Middleware for augmenting HTML metadata for Live Shares
  */
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
-const liveShareImageHandler = (): MountPathAndMiddleware => ['get', ['*/preview/:width/:height/img.png', asyncHandler(imageHandler)]]
 
-export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts), liveShareImageHandler()].filter(exists)
+const liveShareImageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => ['get',
+  ['*/preview/:width/:height/img.png', getImageHandler(opts)]]
+
+export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts), liveShareImageHandler(opts)].filter(exists)

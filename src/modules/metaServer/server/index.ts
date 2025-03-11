@@ -13,7 +13,7 @@ const defaultDirectory = process.env.SERVE_DIRECTORY || './build'
 export const getApp = (baseDir = defaultDirectory): Express => {
   const opts: ApplicationMiddlewareOptions = { baseDir }
   const app = express()
-  addMiddleware(app)
+  addMiddleware(app, baseDir)
   addContentHandlers(app, opts)
   return app
 }

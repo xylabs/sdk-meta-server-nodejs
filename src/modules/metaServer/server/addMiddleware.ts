@@ -3,9 +3,10 @@ import {
 } from '@xylabs/sdk-api-express-ecs'
 import type { Express } from 'express'
 
-import { metaCache } from '../middleware/index.ts'
+import { globalDefaultCaching, metaCache } from '../middleware/index.ts'
 
 export const addMiddleware = (app: Express) => {
+  app.use(globalDefaultCaching)
   app.set('etag', false)
   disableExpressDefaultPoweredByHeader(app)
   app.use(customPoweredByHeader)

@@ -23,6 +23,7 @@ import {
   getAdjustedPath,
   getFileRepository,
   getUriBehindProxy,
+  headersFromCacheConfig,
   loadXyConfig,
   MemoryFileRepository,
   stringToArrayBuffer,
@@ -73,7 +74,7 @@ const getPageHandler = (baseDir: string) => {
           if (cachedHtml) {
             console.log(`[liveShare][pageHandler][${uri}]: return cached`)
             const html = arrayBufferToString(await cachedHtml.data)
-            res.type('html').set(liveShareCacheConfigLoader(xyConfig)).send(html)
+            res.type('html').set(headersFromCacheConfig(liveShareCacheConfigLoader(xyConfig))).send(html)
             return
           }
         }
@@ -86,7 +87,7 @@ const getPageHandler = (baseDir: string) => {
         }
         await pageRepository.addFile(file)
         console.log(`[liveShare][pageHandler][${uri}]: return html`)
-        res.type('html').set(liveShareCacheConfigLoader(xyConfig)).send(updatedHtml)
+        res.type('html').set(headersFromCacheConfig(liveShareCacheConfigLoader(xyConfig))).send(updatedHtml)
         return
       } catch (error) {
         console.log(error)
@@ -124,7 +125,7 @@ const getImageHandler = (opts: ApplicationMiddlewareOptions) => {
       const image = await imageTask?.data
       if (image) {
         console.log(`[liveShare][imageHandler][${uri}]: returning image`)
-        res.type('png').set(liveShareImageCacheConfigLoader(xyConfig)).send(Buffer.from(image))
+        res.type('png').set(headersFromCacheConfig(liveShareImageCacheConfigLoader(xyConfig))).send(Buffer.from(image))
       } else {
         console.log(`[liveShare][imageHandler][${uri}]: returning ${ReasonPhrases.GATEWAY_TIMEOUT}}`)
         res.sendStatus(StatusCodes.GATEWAY_TIMEOUT)

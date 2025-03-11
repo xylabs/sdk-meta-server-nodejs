@@ -13,36 +13,17 @@ import { LRUCache } from 'lru-cache'
 import type { ServeStaticOptions } from 'serve-static'
 import serveStatic from 'serve-static'
 
-import type { PathFilter, XyConfig } from '../../../../model/index.ts'
+import {
+  type PathFilter, proxyOriginalCacheConfigLoader, proxyOriginalIndexCacheConfigLoader, type XyConfig,
+} from '../../../../model/index.ts'
 import type { RouteMatcher } from '../../lib/index.ts'
 import {
   createGlobMatcher,
-  getAdjustedPath, isHtmlLike, loadXyConfig,
+  getAdjustedPath, headersFromCacheConfig, isHtmlLike, loadXyConfig,
 } from '../../lib/index.ts'
 import type { MetaCacheLocals } from '../../middleware/index.ts'
 import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
 import { exists } from './lib/index.ts'
-
-/**
- * The max-age cache control header time (in seconds)
- * to set for the index.html file
- */
-const indexHtmlMaxAge = 60 * 1
-const indexHtmlCacheControlHeader = `public, max-age=${indexHtmlMaxAge}`
-
-/**
- * The max-age cache control header time (in mS)
- * to set for static files other than index.html
- */
-const maxAge = 60 * 60 * 1000
-
-const options: ServeStaticOptions = {
-  cacheControl: true,
-  // etag: true,
-  fallthrough: false,
-  index: 'index.html',
-  maxAge,
-}
 
 const existingPaths = new LRUCache<string, boolean>({ max: 1000 })
 
@@ -68,12 +49,23 @@ const languageMapConfig = (config: XyConfig = {}) => {
 }
 
 const getProxyOriginalHandler = (baseDir: string) => {
-  const xyConfig = loadXyConfig(baseDir, 'proxyExternal')
+  const xyConfig = loadXyConfig(baseDir, 'proxyOriginal')
   const languageMap = languageMapConfig(xyConfig)
   // Ensure file containing base HTML exists
   const filePath = Path.join(baseDir, 'index.html')
   assertEx(existsSync(filePath), () => 'Missing index.html')
   const html = readFileSync(filePath, { encoding: 'utf8' })
+
+  const cacheConfig = proxyOriginalCacheConfigLoader(xyConfig)
+
+  const options: ServeStaticOptions = {
+    cacheControl: true,
+    // etag: true,
+    fallthrough: false,
+    index: 'index.html',
+    maxAge: cacheConfig.maxAge,
+  }
+
   const proxy = serveStatic(baseDir, options)
   const serveIndex: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaCacheLocals> = (req, res, _next) => {
     let updated = html
@@ -84,7 +76,7 @@ const getProxyOriginalHandler = (baseDir: string) => {
     }
     const language = getLanguage(path, languageMap)
     updated = updated.replace('<html lang="en">', `<html lang="${language}">`)
-    res.type('html').set('Cache-Control', indexHtmlCacheControlHeader).send(updated)
+    res.type('html').set(headersFromCacheConfig(proxyOriginalIndexCacheConfigLoader(xyConfig))).send(updated)
   }
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const handler: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaCacheLocals> = async (req, res, next) => {

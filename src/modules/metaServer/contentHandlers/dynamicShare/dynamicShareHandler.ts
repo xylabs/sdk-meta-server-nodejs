@@ -20,6 +20,7 @@ import {
   createGlobMatcher,
   getAdjustedPath,
   getUriBehindProxy,
+  headersFromCacheConfig,
   loadXyConfig,
   MemoryFileRepository,
   stringToArrayBuffer,
@@ -59,7 +60,7 @@ const getPageHandler = (baseDir: string) => {
           if (cachedHtml) {
             logger.log('return cached')
             const html = arrayBufferToString(await cachedHtml.data)
-            res.type('html').set(dynamicShareCacheConfigLoader(xyConfig)).send(html)
+            res.type('html').set(headersFromCacheConfig(dynamicShareCacheConfigLoader(xyConfig))).send(html)
             return
           }
         }
@@ -75,14 +76,13 @@ const getPageHandler = (baseDir: string) => {
           await pageRepository.addFile(file)
         }
         logger.log('return html')
-        res.type('html').set(dynamicShareCacheConfigLoader(xyConfig)).send(updatedHtml)
+        res.type('html').set(headersFromCacheConfig(dynamicShareCacheConfigLoader(xyConfig))).send(updatedHtml)
         return
       } catch (error) {
         const status = HttpStatusCode.ServiceUnavailable
         logger.log(`error, returning status code ${status}`)
         logger.log(error)
         res.status(status)
-          .set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate')
           .set('Retry-After', '60') // Retry after 60 seconds
           .send()
         return

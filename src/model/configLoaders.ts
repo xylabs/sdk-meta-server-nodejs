@@ -7,7 +7,7 @@ const defaultGlobalCacheConfig: CacheConfig = {
 const defaultProxyOriginalIndexCacheConfig: CacheConfig = { maxAge: 60 }
 
 export const globalCacheConfigLoader = (config: XyConfig = {}) => {
-  return { defaultGlobalCacheConfig, ...config?.metaServer?.caching }
+  return { ...defaultGlobalCacheConfig, ...config?.metaServer?.caching }
 }
 
 export const proxyOriginalCacheConfigLoader = (config: XyConfig = {}) => {

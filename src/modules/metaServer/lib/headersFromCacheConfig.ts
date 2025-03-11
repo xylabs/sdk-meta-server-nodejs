@@ -1,11 +1,27 @@
 import type { CacheConfig } from '../../../model/index.ts'
 
+// eslint-disable-next-line max-statements
 export const headersFromCacheConfig = ({
   maxAge, noCache, privateOnly, sMaxAge,
   mustRevalidate, mustUnderstand,
   noStore, noTransform, onlyIfCached, proxyRevalidate,
   immutable, staleIfError, staleWhileRevalidate,
 }: CacheConfig): Record<string, unknown> => {
+  console.log('headersFromCacheConfigIn', {
+    maxAge,
+    noCache,
+    privateOnly,
+    sMaxAge,
+    mustRevalidate,
+    mustUnderstand,
+    noStore,
+    noTransform,
+    onlyIfCached,
+    proxyRevalidate,
+    immutable,
+    staleIfError,
+    staleWhileRevalidate,
+  })
   const result: Record<string, unknown> = {}
   const cacheControlParts: string[] = []
   if (maxAge !== undefined) {
@@ -50,5 +66,6 @@ export const headersFromCacheConfig = ({
   if (cacheControlParts.length > 0) {
     result['Cache-Control'] = cacheControlParts.join(', ')
   }
+  console.log('headersFromCacheConfigOut', result)
   return result
 }

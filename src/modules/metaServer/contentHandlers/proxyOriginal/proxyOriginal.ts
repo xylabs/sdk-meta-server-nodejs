@@ -93,8 +93,13 @@ const getProxyOriginalHandler = (baseDir: string) => {
         pathExists = result
       }
       if (pathExists) {
-        console.log(`[proxyOriginal][pageHandler][${file}]: proxy path`)
-        proxy(req, res, next)
+        if (file.endsWith('/index.html')) {
+          console.log(`[proxyOriginal][pageHandler][${file}]: serve [actual] index`)
+          serveIndex(req, res, next)
+        } else {
+          console.log(`[proxyOriginal][pageHandler][${file}]: serve proxy`)
+          proxy(req, res, next)
+        }
       } else {
         if (isHtmlLike(req)) {
           console.log(`[proxyOriginal][pageHandler][${file}]: serve index`)

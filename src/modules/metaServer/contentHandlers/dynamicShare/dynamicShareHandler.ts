@@ -10,6 +10,7 @@ import type {
   NextFunction, Request, RequestHandler, Response,
 } from 'express'
 
+import type { XyConfig } from '../../../../model/index.ts'
 import type {
   RepositoryFile,
   RouteMatcher,
@@ -89,16 +90,26 @@ const getPageHandler = (baseDir: string) => {
   return pageHandler
 }
 
+const dynamicShareConfig = (config: XyConfig = {}) => {
+  // eslint-disable-next-line sonarjs/deprecation
+  if (config?.dynamicShare) {
+    console.warn('Using deprecated dynamicShare config. Please use metaServer.dynamicShare instead.')
+  }
+  // eslint-disable-next-line sonarjs/deprecation
+  return config?.metaServer?.dynamicShare ?? config?.dynamicShare
+}
+
 const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
   const logger = new IdLogger(console, () => 'dynamicShare|init')
   const xyConfig = loadXyConfig(baseDir, 'dynamicShare')
   logger.log('Parsed xy.config.json')
+  const dsConfig = dynamicShareConfig(xyConfig)
   // TODO: Validate xyConfig
-  if (xyConfig?.dynamicShare) {
+  if (dsConfig) {
     logger.log('Creating page handler')
     // TODO: Support custom done loading flag from xyConfig (or use default)
-    const { include, exclude } = xyConfig.dynamicShare
+    const { include, exclude } = dsConfig
     const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
     const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)

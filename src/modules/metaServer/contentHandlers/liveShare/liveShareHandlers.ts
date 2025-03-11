@@ -10,6 +10,7 @@ import type {
 } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
+import type { XyConfig } from '../../../../model/index.ts'
 import type {
   RepositoryFile,
   RouteMatcher,
@@ -141,16 +142,27 @@ const imageHandler = async (req: Request, res: Response, next: NextFunction) => 
   next()
 }
 
+const liveShareConfig = (config: XyConfig = {}) => {
+  // eslint-disable-next-line sonarjs/deprecation
+  if (config?.liveShare) {
+    console.warn('Using deprecated liveShare config. Please use metaServer.liveShare instead.')
+  }
+
+  // eslint-disable-next-line sonarjs/deprecation
+  return config?.metaServer?.liveShare ?? config?.liveShare
+}
+
 const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
   const xyConfig = loadXyConfig(baseDir, 'liveShare')
+  const lsConfig = liveShareConfig(xyConfig)
   // TODO: Validate xyConfig
-  if (xyConfig?.liveShare) {
+  if (lsConfig) {
     console.log('[liveShare][init] Initialize repository')
     imageRepository()
     console.log('[liveShare][init] Initialized repository')
     console.log('[liveShare][init] Creating page handler')
-    const { include, exclude } = xyConfig.liveShare
+    const { include, exclude } = lsConfig
     const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
     const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)

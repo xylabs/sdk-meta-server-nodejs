@@ -6,6 +6,7 @@ import type {
 } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
+import type { XyConfig } from '../../../../model/index.ts'
 import type { RouteMatcher } from '../../lib/index.js'
 import {
   createGlobMatcher,
@@ -58,12 +59,23 @@ const proxyHandler = async (req: Request, res: Response, next: NextFunction, ori
   next()
 }
 
+const proxyExternalConfig = (config: XyConfig = {}) => {
+  // eslint-disable-next-line sonarjs/deprecation
+  if (config?.proxyExternal) {
+    console.warn('Using deprecated proxyExternal config. Please use metaServer.proxyExternal instead.')
+  }
+
+  // eslint-disable-next-line sonarjs/deprecation
+  return config?.metaServer?.proxyExternal ?? config?.proxyExternal
+}
+
 const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
   const { baseDir } = opts
   const xyConfig = loadXyConfig(baseDir, 'proxyExternal')
+  const peConfig = proxyExternalConfig(xyConfig)
   // TODO: Validate xyConfig
-  if (xyConfig?.proxyExternal) {
-    const proxyExternalConfig = xyConfig.proxyExternal as ProxyExternalConfig
+  if (peConfig) {
+    const proxyExternalConfig = peConfig as ProxyExternalConfig
     for (let [domain, domainConfig] of Object.entries(proxyExternalConfig)) {
       const { include, exclude } = domainConfig
       const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true

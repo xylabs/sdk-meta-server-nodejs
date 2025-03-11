@@ -13,7 +13,7 @@ import { LRUCache } from 'lru-cache'
 import type { ServeStaticOptions } from 'serve-static'
 import serveStatic from 'serve-static'
 
-import type { PathFilter } from '../../../../model/index.ts'
+import type { PathFilter, XyConfig } from '../../../../model/index.ts'
 import type { RouteMatcher } from '../../lib/index.ts'
 import {
   createGlobMatcher,
@@ -57,9 +57,19 @@ const getLanguage = (uri: string, languageMap: Record<string, PathFilter>) => {
   return 'en'
 }
 
+const languageMapConfig = (config: XyConfig = {}) => {
+  // eslint-disable-next-line sonarjs/deprecation
+  if (config?.languageMap) {
+    console.warn('Using deprecated languageMap config. Please use metaServer.languageMap instead.')
+  }
+
+  // eslint-disable-next-line sonarjs/deprecation
+  return config?.metaServer?.languageMap ?? config?.languageMap ?? {}
+}
+
 const getProxyOriginalHandler = (baseDir: string) => {
   const xyConfig = loadXyConfig(baseDir, 'proxyExternal')
-  const { languageMap = {} } = xyConfig ?? {}
+  const languageMap = languageMapConfig(xyConfig)
   // Ensure file containing base HTML exists
   const filePath = Path.join(baseDir, 'index.html')
   assertEx(existsSync(filePath), () => 'Missing index.html')

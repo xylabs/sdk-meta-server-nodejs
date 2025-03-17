@@ -21,10 +21,8 @@ jobs:
           node-version: "20"
       - name: install
         run: yarn install
-      - name: cycle
-        run: yarn cycle
       - name: build
-        run: yarn build
+        run: yarn xy build
   # build-windows:
   #   runs-on: windows-latest
   #   steps:

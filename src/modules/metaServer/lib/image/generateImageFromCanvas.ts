@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import type { PageRenderingOptions } from '../page/index.ts'
 import { usePage } from '../page/index.ts'
 

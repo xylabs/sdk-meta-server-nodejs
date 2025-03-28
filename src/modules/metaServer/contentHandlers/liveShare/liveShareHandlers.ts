@@ -4,7 +4,7 @@ import Path from 'node:path'
 import { assertEx } from '@xylabs/assert'
 import { delay } from '@xylabs/delay'
 import { exists } from '@xylabs/exists'
-import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
+import { asyncHandler } from '@xylabs/express'
 import type {
   NextFunction, Request, RequestHandler, Response,
 } from 'express'

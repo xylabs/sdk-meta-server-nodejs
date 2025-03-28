@@ -1,5 +1,5 @@
 import { exists } from '@xylabs/exists'
-import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
+import { asyncHandler } from '@xylabs/express'
 import Axios, { isAxiosError } from 'axios'
 import type {
   NextFunction, Request, RequestHandler, Response,

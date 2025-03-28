@@ -1,5 +1,5 @@
 import { delay } from '@xylabs/delay'
-import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
+import { asyncHandler } from '@xylabs/express'
 import type { RequestHandler } from 'express'
 import { StatusCodes } from 'http-status-codes'
 

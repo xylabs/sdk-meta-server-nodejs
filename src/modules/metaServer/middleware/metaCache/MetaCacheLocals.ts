@@ -1,4 +1,4 @@
-import type { NoLocals } from '@xylabs/sdk-api-express-ecs'
+import type { NoLocals } from '@xylabs/express'
 
 import type { MetaCache } from './MetaCache.ts'
 

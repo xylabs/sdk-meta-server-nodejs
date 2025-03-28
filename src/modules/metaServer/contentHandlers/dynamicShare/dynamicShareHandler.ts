@@ -3,8 +3,8 @@ import Path from 'node:path'
 
 import { assertEx } from '@xylabs/assert'
 import { exists } from '@xylabs/exists'
+import { asyncHandler } from '@xylabs/express'
 import { IdLogger } from '@xylabs/logger'
-import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
 import { HttpStatusCode } from 'axios'
 import type {
   NextFunction, Request, RequestHandler, Response,

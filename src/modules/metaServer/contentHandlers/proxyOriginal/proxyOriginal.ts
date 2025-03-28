@@ -4,8 +4,8 @@ import Path from 'node:path'
 import { assertEx } from '@xylabs/assert'
 import type {
   Empty, NoReqParams, NoReqQuery,
-} from '@xylabs/sdk-api-express-ecs'
-import { asyncHandler } from '@xylabs/sdk-api-express-ecs'
+} from '@xylabs/express'
+import { asyncHandler } from '@xylabs/express'
 import { mergeDocumentHead } from '@xylabs/sdk-meta'
 import type { RequestHandler } from 'express'
 import { StatusCodes } from 'http-status-codes'

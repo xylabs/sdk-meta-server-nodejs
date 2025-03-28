@@ -1,6 +1,6 @@
 import {
   customPoweredByHeader, disableCaseSensitiveRouting, disableExpressDefaultPoweredByHeader,
-} from '@xylabs/sdk-api-express-ecs'
+} from '@xylabs/express'
 import type { Express } from 'express'
 
 import { getGlobalDefaultCaching, metaCache } from '../middleware/index.ts'

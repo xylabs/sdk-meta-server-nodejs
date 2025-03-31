@@ -26,7 +26,7 @@ export const getPageRenderedHtml = async (
     logger.log(`navigated to ${url}`)
     await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout })
     logger.log(`found meta property ${waitMetaTag}`)
-    return page.content()
+    return await page.content()
   })
   return assertEx(content, () => {
     logger.error('error retrieving html')

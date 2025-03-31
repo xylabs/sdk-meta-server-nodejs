@@ -12,8 +12,9 @@ export const useIndexAndDynamicPreviewImage = async (
   logger: Logger = new IdLogger(console, () => `dynamicShare|useIndexAndDynamicPreviewImage|${url}`),
 ): Promise<string> => {
   const startTime = Date.now()
+  logger.log('generating preview image meta')
   const meta = assertEx(await useSpaPage(url, async (renderedPage) => {
-    logger.log('generating preview image meta')
+    await renderedPage.waitForSelector('head > meta[property="xyo:og:image"]')
     const meta = { ...await getImageMeta(url, renderedPage), xy: { timings: { render: `${Date.now() - startTime}ms` } } }
     meta.title = await renderedPage.title()
     logger.log('setting title', meta.title)

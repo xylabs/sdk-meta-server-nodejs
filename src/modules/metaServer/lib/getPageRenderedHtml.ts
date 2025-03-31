@@ -1,4 +1,3 @@
-import { assertEx } from '@xylabs/assert'
 import type { Logger } from '@xylabs/logger'
 import { IdLogger } from '@xylabs/logger'
 import type { Page } from 'puppeteer'
@@ -16,22 +15,19 @@ const xyoOgImageProperty = 'xyo:og:image'
  * @param url The URL of the Dynamic Share page
  * @returns The HTML string of the page
  */
-export const getRenderedPage = async (
+export const getRenderedPage = async <T>(
   url: string,
+  closure: (page: Page) => Promise<T>,
   waitMetaTag = xyoOgImageProperty,
   timeout = 15_000,
   logger: Logger = new IdLogger(console, () => `dynamicShare|getPreviewUrlFromPage|${url}`),
-): Promise<Page> => {
+): Promise<T | undefined> => {
   // TODO: Optimize this with something like React SSR
-  const content = await useSpaPage(url, async (page) => {
+  return await useSpaPage<T>(url, async (page) => {
     logger.log(`navigated to ${url}`)
     await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout })
     logger.log(`found meta property ${waitMetaTag}`)
-    return page
-  })
-  return assertEx(content, () => {
-    logger.error('error retrieving html')
-    return 'Error'
+    return await closure(page)
   })
 }
 
@@ -45,6 +41,8 @@ export const getPageRenderedHtml = async (
   waitMetaTag = xyoOgImageProperty,
   timeout?: number,
   logger: Logger = new IdLogger(console, () => `dynamicShare|getPreviewUrlFromPage|${url}`),
-): Promise<string> => {
-  return (await getRenderedPage(url, waitMetaTag, timeout, logger)).content()
+): Promise<string | undefined> => {
+  return (await getRenderedPage(url, async (page) => {
+    return await page.content()
+  }, waitMetaTag, timeout, logger))
 }

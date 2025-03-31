@@ -8,15 +8,16 @@ export const useIndexAndDynamicPreviewImage = async (
   url: string,
   indexHtml: string,
   logger: Logger = new IdLogger(console, () => `dynamicShare|useIndexAndDynamicPreviewImage|${url}`),
-): Promise<string> => {
+): Promise<string | undefined> => {
   const startTime = Date.now()
-  const renderedPage = await getRenderedPage(url, 'xyo:og:image')
-  logger.log('generating preview image meta')
-  const meta = { ...await getImageMeta(url, renderedPage), xy: { timings: { render: `${Date.now() - startTime}ms` } } }
-  meta.title = await renderedPage.title()
-  logger.log('setting title', meta.title)
-  logger.log('setting og:image', meta.og?.image)
-  const updatedHtml = metaBuilder(indexHtml, meta)
-  logger.log('returning index.html & preview image meta')
-  return updatedHtml
+  return await getRenderedPage(url, async (renderedPage) => {
+    logger.log('generating preview image meta')
+    const meta = { ...await getImageMeta(url, renderedPage), xy: { timings: { render: `${Date.now() - startTime}ms` } } }
+    meta.title = await renderedPage.title()
+    logger.log('setting title', meta.title)
+    logger.log('setting og:image', meta.og?.image)
+    const updatedHtml = metaBuilder(indexHtml, meta)
+    logger.log('returning index.html & preview image meta')
+    return updatedHtml
+  }, 'xyo:og:image')
 }

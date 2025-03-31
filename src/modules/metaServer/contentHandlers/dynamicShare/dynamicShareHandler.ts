@@ -69,7 +69,7 @@ const getPageHandler = (baseDir: string) => {
         logger.log('setting', adjustedPath)
         if (enableCaching) {
           logger.log('caching', adjustedPath)
-          const data = stringToArrayBuffer(updatedHtml)
+          const data = stringToArrayBuffer(assertEx(updatedHtml, () => 'Failed to render HTML'))
           const file: RepositoryFile = {
             data, type: 'text/html', uri: adjustedPath,
           }

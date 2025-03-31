@@ -14,7 +14,7 @@ export const useIndexAndDynamicPreviewImage = async (
   const startTime = Date.now()
   logger.log('generating preview image meta')
   const meta = assertEx(await useSpaPage(url, async (renderedPage) => {
-    await renderedPage.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 15_000 })
+    await renderedPage.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 10_000 })
     const meta = { ...await getImageMeta(url, renderedPage), xy: { timings: { render: `${Date.now() - startTime}ms` } } }
     meta.title = await renderedPage.title()
     logger.log('setting title', meta.title)

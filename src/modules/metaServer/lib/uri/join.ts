@@ -4,15 +4,13 @@
  * @returns The joined URL
  */
 export const join = (...parts: string[]): string => {
-  // eslint-disable-next-line unicorn/no-array-reduce, sonarjs/reduce-initial-value
-  return parts.reduce((acc, part) => {
-    const url = new URL(acc)
-    // Ensure trailing slash
-    if (!url.pathname.endsWith('/')) url.pathname += '/'
-    // Remove leading slash
+  if (parts.length === 0) throw new Error('Must pass at least one URL part')
+  const base = new URL(parts[0])
+  for (let i = 1; i < parts.length; i++) {
+    let part = parts[i]
     if (part.startsWith('/')) part = part.slice(1)
-    // Append part
-    url.pathname += part
-    return url.toString()
-  })
+    if (!base.pathname.endsWith('/')) base.pathname += '/'
+    base.pathname += part
+  }
+  return base.toString()
 }

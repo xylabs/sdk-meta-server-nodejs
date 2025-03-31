@@ -24,7 +24,7 @@ export const getPageRenderedHtml = async (
   // TODO: Optimize this with something like React SSR
   const content = await useSpaPage(url, async (page) => {
     logger.log(`navigated to ${url}`)
-    await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout })
+    await page.waitForSelector(`head > meta[property="${waitMetaTag}"]`, { timeout })
     logger.log(`found meta property ${waitMetaTag}`)
     return await page.content()
   })

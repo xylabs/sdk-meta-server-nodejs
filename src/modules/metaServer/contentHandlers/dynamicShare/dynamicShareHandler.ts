@@ -53,34 +53,34 @@ const getPageHandler = (baseDir: string) => {
       const uri = getUriBehindProxy(req)
       const logger = new IdLogger(console, () => `dynamicShare|pageHandler|${uri}`)
       try {
-        logger.log('called')
+        logger.log('called', adjustedPath)
         if (enableCaching) {
-          logger.log('checking for cached')
+          logger.log('checking for cached', adjustedPath)
           const cachedHtml = await pageRepository.findFile(adjustedPath)
           if (cachedHtml) {
-            logger.log('return cached')
+            logger.log('return cached', adjustedPath)
             const html = arrayBufferToString(await cachedHtml.data)
             res.type('html').set(headersFromCacheConfig(dynamicShareCacheConfigLoader(xyConfig))).send(html)
             return
           }
         }
-        logger.log('rendering')
+        logger.log('rendering', adjustedPath)
         const updatedHtml = await useIndexAndDynamicPreviewImage(uri, indexHtml)
-        logger.log('setting')
+        logger.log('setting', adjustedPath)
         if (enableCaching) {
-          logger.log('caching')
+          logger.log('caching', adjustedPath)
           const data = stringToArrayBuffer(updatedHtml)
           const file: RepositoryFile = {
             data, type: 'text/html', uri: adjustedPath,
           }
           await pageRepository.addFile(file)
         }
-        logger.log('return html')
+        logger.log('return html', adjustedPath)
         res.type('html').set(headersFromCacheConfig(dynamicShareCacheConfigLoader(xyConfig))).send(updatedHtml)
         return
       } catch (error) {
         const status = HttpStatusCode.ServiceUnavailable
-        logger.log(`error, returning status code ${status}`)
+        logger.log('error, returning status code', adjustedPath, status)
         logger.log(error)
         res.status(status)
           .set('Retry-After', '60') // Retry after 60 seconds

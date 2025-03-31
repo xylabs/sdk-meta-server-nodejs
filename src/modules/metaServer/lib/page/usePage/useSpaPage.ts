@@ -34,7 +34,7 @@ let _browser: Browser | undefined
 let _page: Page | undefined
 
 const pageMutex = new Mutex()
-const reusePage = true
+const reusePage = false
 const reuseBrowser = true
 
 /**
@@ -107,11 +107,11 @@ export const useSpaPage = async <T>(
     await _browser?.close()
     _page = undefined
     _browser = undefined
-    pageMutex.release()
-    console.log(err)
+    pageMutex.release() // release it for next try
+    console.error('useSpaPage:Error', err)
     // we retry with a fresh browser and page
     const result = await useSpaPage(url, pageCallback, browserOptions, _waitForOptions, tryCount - 1)
-    await pageMutex.acquire()
+    await pageMutex.acquire() // acquire it again since finally with release it
     return result
   } finally {
     if (!reusePage || !reuseBrowser) {

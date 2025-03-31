@@ -1,6 +1,6 @@
 {
   "name": "@xylabs/meta-server",
-  "version": "4.3.5",
+  "version": "4.3.6",
   "description": "Meta Server - adjusts meta data on index.html for served static site",
   "keywords": [
     "xylabs",
@@ -49,7 +49,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.777.0",
+    "@aws-sdk/client-s3": "^3.779.0",
     "@xylabs/assert": "^4.7.15",
     "@xylabs/delay": "^4.7.15",
     "@xylabs/exists": "^4.7.15",
@@ -104,7 +104,7 @@
   "peerDependencies": {
     "axios": "^1"
   },
-  "packageManager": "yarn@4.8.0",
+  "packageManager": "yarn@4.8.1",
   "engines": {
     "node": ">=22"
   },

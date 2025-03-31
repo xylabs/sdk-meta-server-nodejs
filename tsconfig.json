@@ -1,4 +1,5 @@
 {
   "exclude": ["./node_modules", "./**/node_modules", "./dist", "./**/dist", "coverage", "./**/docs", ".*", "puppeteer"],
+  "include": ["./**/*.ts*", "./**/*.mjs"],
   "extends": "@xylabs/tsconfig",
 }

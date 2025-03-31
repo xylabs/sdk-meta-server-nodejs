@@ -16,35 +16,21 @@ const xyoOgImageProperty = 'xyo:og:image'
  * @param url The URL of the Dynamic Share page
  * @returns The HTML string of the page
  */
-export const getRenderedPage = async (
+export const getPageRenderedHtml = async (
   url: string,
   waitMetaTag = xyoOgImageProperty,
   timeout = 15_000,
   logger: Logger = new IdLogger(console, () => `dynamicShare|getPreviewUrlFromPage|${url}`),
-): Promise<Page> => {
+): Promise<string> => {
   // TODO: Optimize this with something like React SSR
   const content = await useSpaPage(url, async (page) => {
     logger.log(`navigated to ${url}`)
     await page.waitForSelector('head > meta[property="xyo:og:image"]', { timeout })
     logger.log(`found meta property ${waitMetaTag}`)
-    return page
+    return page.content()
   })
   return assertEx(content, () => {
     logger.error('error retrieving html')
     return 'Error'
   })
-}
-
-/**
- * Returns the HTML of the page from the url
- * @param url The URL of the Dynamic Share page
- * @returns The HTML string of the page
- */
-export const getPageRenderedHtml = async (
-  url: string,
-  waitMetaTag = xyoOgImageProperty,
-  timeout?: number,
-  logger: Logger = new IdLogger(console, () => `dynamicShare|getPreviewUrlFromPage|${url}`),
-): Promise<string> => {
-  return (await getRenderedPage(url, waitMetaTag, timeout, logger)).content()
 }

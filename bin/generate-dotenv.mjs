@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-import './dist/node/bin/generate-dotenv.mjs'
+import '../dist/node/bin/generate-dotenv.mjs'

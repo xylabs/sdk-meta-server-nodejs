@@ -8,7 +8,7 @@ import {
 } from '@xylabs/eslint-config-flat'
 
 export default [
-  { ignores: ['.yarn', 'dist', '**/dist/**', 'build', '**/build/**', 'node_modules/**', 'public', 'storybook-static', 'eslint.config.mjs', 'bin', 'scripts', 'load.mjs'] },
+  { ignores: ['.yarn', 'dist', '**/dist/**', 'build', '**/build/**', 'node_modules/**', 'public', 'storybook-static', 'eslint.config.mjs', 'bin', 'scripts', 'load.mjs', 'puppeteer' ] },
   unicornConfig,
   workspacesConfig,
   rulesConfig,

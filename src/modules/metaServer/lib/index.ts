@@ -1,7 +1,6 @@
 export * from './browser/index.js'
 export * from './domain/index.js'
 export * from './file/index.js'
-export * from './getPageRenderedHtml.ts'
 export * from './head/index.js'
 export * from './headersFromCacheConfig.ts'
 export * from './image/index.js'

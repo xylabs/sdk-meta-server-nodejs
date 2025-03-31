@@ -1,7 +1,6 @@
 import { assertEx } from '@xylabs/assert'
 import type { Logger } from '@xylabs/logger'
 import { IdLogger } from '@xylabs/logger'
-import type { Page } from 'puppeteer'
 
 import { useSpaPage } from './page/index.ts'
 

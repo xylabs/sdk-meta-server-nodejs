@@ -4,7 +4,7 @@
  * @returns The joined URL
  */
 export const join = (...parts: string[]): string => {
-  // eslint-disable-next-line unicorn/no-array-reduce
+  // eslint-disable-next-line unicorn/no-array-reduce, sonarjs/reduce-initial-value
   return parts.reduce((acc, part) => {
     const url = new URL(acc)
     // Ensure trailing slash
@@ -14,5 +14,5 @@ export const join = (...parts: string[]): string => {
     // Append part
     url.pathname += part
     return url.toString()
-  }, '')
+  })
 }

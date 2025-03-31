@@ -14,7 +14,7 @@ import { getAwsS3ClientConfig } from '../../getAwsS3ClientConfig.ts'
 import { getDefaultTestBucket, hasBucket } from '../../getDefaultBucket.ts'
 import { S3Store } from '../S3Store.ts'
 
-describe.skipIf(hasBucket())('S3Store', () => {
+describe.skipIf(!hasBucket())('S3Store', () => {
   let config: S3ClientConfig
   let sut: S3Store
   let testData: Uint8Array

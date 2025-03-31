@@ -16,7 +16,7 @@ import {
 } from '../../../../aws/index.ts'
 import { S3FileRepository } from '../S3FileRepository.ts'
 
-describe.skipIf(hasBucket())('S3FileRepository', () => {
+describe.skipIf(!hasBucket())('S3FileRepository', () => {
   let config: S3ClientConfig
   let sut: S3FileRepository
   let data: ArrayBuffer

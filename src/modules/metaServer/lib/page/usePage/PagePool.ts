@@ -20,10 +20,10 @@ export class PagePool {
   private _browser: Browser | undefined
   private readonly _browserMutex = new Mutex()
   private readonly _browserOptions: Viewport
-  private _checkedOut: Set<number>
-  private _maxTabs: number
-  private _semaphore: Semaphore
-  private _tabMutexes: Map<number, Mutex> = new Map()
+  private readonly _checkedOut: Set<number>
+  private readonly _maxTabs: number
+  private readonly _semaphore: Semaphore
+  private readonly _tabMutexes: Map<number, Mutex>
 
   constructor(
     browserOptions: Viewport = viewPortDefaults,
@@ -33,6 +33,9 @@ export class PagePool {
     this._maxTabs = maxTabs
     this._checkedOut = new Set()
     this._semaphore = new Semaphore(maxTabs)
+    this._tabMutexes = this._tabMutexes = new Map(
+      Array.from({ length: this._maxTabs }, (_, i) => [i, new Mutex()]),
+    )
   }
 
   private get browser(): Promise<Browser> {

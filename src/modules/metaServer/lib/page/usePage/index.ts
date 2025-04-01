@@ -1,3 +1,4 @@
-export * from './defaults.js'
-export * from './usePage.js'
-export * from './useSpaPage.js'
+export * from './defaults.ts'
+export * from './usePage.ts'
+export * from './useSpaPage.ts'
+export * from './waitForImageMetaTag.ts'

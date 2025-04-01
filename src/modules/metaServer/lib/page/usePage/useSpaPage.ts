@@ -6,7 +6,7 @@ import type {
 import { defaultViewportSize, useBrowser } from '../../browser/index.ts'
 import type { PageRenderingOptions } from '../PageRenderingOptions.ts'
 import { timeout, waitUntil } from './defaults.ts'
-import { getBrowserPage } from './getBrowserPage.ts'
+import { getNewPage } from './getBrowserPage.ts'
 
 const viewPortDefaults: Viewport = {
   ...defaultViewportSize,
@@ -68,7 +68,7 @@ export const useSpaPage = async <T>(
     const start = Date.now()
 
     browser = browser ?? (await useBrowser(browserOptions))
-    if (!pages[pageIndex]) pages[pageIndex] = await getBrowserPage(browser, origin)
+    if (!pages[pageIndex]) pages[pageIndex] = await getNewPage(browser, origin)
 
     await navigateToRelativePath(pages[pageIndex], relativePath)
 

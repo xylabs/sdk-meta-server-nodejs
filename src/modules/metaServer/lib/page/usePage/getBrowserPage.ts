@@ -1,10 +1,10 @@
 import type { Browser, Page } from 'puppeteer'
 
-const useFirstTab = true
+const useFirstTab = false
 
 export type GetBrowserPage = (browser: Browser, origin: string) => Promise<Page>
 
-const getFirstTab: GetBrowserPage = async (browser: Browser, origin: string) => {
+export const getFirstTab: GetBrowserPage = async (browser: Browser, origin: string) => {
   let page = (await browser.pages())[0]
   console.log(`getFirstTab: [${page.url()}] [${origin}]`)
   if (page.url() !== origin) {
@@ -13,7 +13,8 @@ const getFirstTab: GetBrowserPage = async (browser: Browser, origin: string) => 
   }
   return page
 }
-const getNewPage: GetBrowserPage = async (browser: Browser, origin: string) => {
+
+export const getNewPage: GetBrowserPage = async (browser: Browser, origin: string) => {
   const page = await browser.newPage()
   await page.goto(origin)
   return page

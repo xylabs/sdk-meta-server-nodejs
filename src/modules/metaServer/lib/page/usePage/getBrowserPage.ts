@@ -14,6 +14,26 @@ export const getFirstTab: GetBrowserPage = async (browser: Browser, origin: stri
   return page
 }
 
+export const getNthTab = async (browser: Browser, origin: string, index: number): Promise<Page> => {
+  let pages = await browser.pages()
+
+  // If there are not enough tabs, create missing ones
+  while (pages.length <= index) {
+    await browser.newPage()
+    pages = await browser.pages()
+  }
+
+  const page = pages[index]
+
+  // Navigate to about:blank to clear any previous state
+  await page.goto('about:blank')
+
+  // Then navigate to the desired origin
+  await page.goto(origin)
+
+  return page
+}
+
 export const getNewPage: GetBrowserPage = async (browser: Browser, origin: string) => {
   const page = await browser.newPage()
   await page.goto(origin)

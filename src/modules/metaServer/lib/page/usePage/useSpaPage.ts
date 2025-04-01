@@ -34,8 +34,8 @@ const browserMutex = new Mutex()
 let browser: Browser | undefined
 
 // Limit how many Puppeteer pages can be used concurrently
-const MAX_PARALLEL_PAGES = 3
-const pageSemaphore = new Semaphore(MAX_PARALLEL_PAGES)
+const MAX_CONCURRENT_TABS = 3
+const pageSemaphore = new Semaphore(MAX_CONCURRENT_TABS)
 
 /**
  * Helper for navigating to a url within a SPA (like React). This
@@ -83,7 +83,9 @@ export const useSpaPage = async <T>(
     // Always close the page when done to prevent
     // false positives with wait for selector if the
     // desired selector exists on the previous page
-    await page?.close()
+    await page?.close().catch((err) => {
+      console.error('useSpaPage:Error closing page:', err)
+    })
     releasePage()
   }
 }

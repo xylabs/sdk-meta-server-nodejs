@@ -18,20 +18,20 @@ export class PagePool {
   private readonly _browserMutex = new Mutex()
   private readonly _browserOptions: Viewport
   private readonly _checkedOut = new Set<number>()
-  private readonly _maxTabs: number
+  private readonly _maxConcurrency: number
   private readonly _semaphore: Semaphore
   private _tabIndex = 0
   private readonly _tabMutexes: Map<number, Mutex>
 
   constructor(
-    maxTabs: number = 3,
+    maxConcurrency: number = 3,
     browserOptions: Viewport = viewPortDefaults,
   ) {
     this._browserOptions = browserOptions
-    this._maxTabs = maxTabs
-    this._semaphore = new Semaphore(this._maxTabs)
+    this._maxConcurrency = maxConcurrency
+    this._semaphore = new Semaphore(this._maxConcurrency)
     this._tabMutexes = new Map(
-      Array.from({ length: this._maxTabs }, (_, i) => [i, new Mutex()]),
+      Array.from({ length: this._maxConcurrency }, (_, i) => [i, new Mutex()]),
     )
   }
 
@@ -80,7 +80,7 @@ export class PagePool {
         this._browser = await useBrowser(this._browserOptions)
 
         let pages = await this._browser.pages()
-        while (pages.length < this._maxTabs) {
+        while (pages.length < this._maxConcurrency) {
           console.log('PagePool: Adding new tab')
           await this._browser.newPage()
           pages = await this._browser.pages()
@@ -92,10 +92,10 @@ export class PagePool {
   }
 
   private getNextAvailableTabIndex(): number {
-    for (let i = 0; i < this._maxTabs; i++) {
-      const candidate = (this._tabIndex + i) % this._maxTabs
+    for (let i = 0; i < this._maxConcurrency; i++) {
+      const candidate = (this._tabIndex + i) % this._maxConcurrency
       if (!this._checkedOut.has(candidate)) {
-        this._tabIndex = (candidate + 1) % this._maxTabs
+        this._tabIndex = (candidate + 1) % this._maxConcurrency
         return candidate
       }
     }

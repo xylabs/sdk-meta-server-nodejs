@@ -17,36 +17,19 @@ export class BrowserPool {
   private readonly _browserOptions: Viewport
   private readonly _browsers: Browser[] = []
   private readonly _checkedOut = new Set<number>()
-  private readonly _maxBrowsers: number
+  private readonly _maxConcurrency: number
   private readonly _mutexes: Mutex[] = []
   private _nextIndex = 0
   private readonly _primedPages: Page[] = []
   private readonly _semaphore: Semaphore
 
   constructor(
-    maxBrowsers: number = 3,
+    maxConcurrency: number = 3,
     browserOptions: Viewport = viewPortDefaults,
   ) {
     this._browserOptions = browserOptions
-    this._maxBrowsers = maxBrowsers
-    this._semaphore = new Semaphore(this._maxBrowsers)
-  }
-
-  async closeAll(): Promise<void> {
-    await Promise.all(this._browsers.map(async (browser, i) => {
-      if (browser?.isConnected()) {
-        try {
-          await this._primedPages[i]?.close()
-        } catch (err) {
-          console.error(`BrowserPool: Failed to close page ${i}`, err)
-        }
-        try {
-          await browser.close()
-        } catch (err) {
-          console.error(`BrowserPool: Failed to close browser ${i}`, err)
-        }
-      }
-    }))
+    this._maxConcurrency = maxConcurrency
+    this._semaphore = new Semaphore(this._maxConcurrency)
   }
 
   /**
@@ -89,10 +72,10 @@ export class BrowserPool {
   }
 
   private getNextAvailableBrowserIndex(): number {
-    for (let i = 0; i < this._maxBrowsers; i++) {
-      const candidate = (this._nextIndex + i) % this._maxBrowsers
+    for (let i = 0; i < this._maxConcurrency; i++) {
+      const candidate = (this._nextIndex + i) % this._maxConcurrency
       if (!this._checkedOut.has(candidate)) {
-        this._nextIndex = (candidate + 1) % this._maxBrowsers
+        this._nextIndex = (candidate + 1) % this._maxConcurrency
         return candidate
       }
     }

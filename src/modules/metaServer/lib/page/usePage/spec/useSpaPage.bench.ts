@@ -14,6 +14,7 @@ describe('Benchmark useSpaPage', () => {
           await page.waitForSelector(metaTag, { timeout: 20_000 })
           const imageUrl = await (await page.$(metaTag))?.evaluate(el => el.getAttribute('content'))
           console.log('Image URL:', imageUrl)
+          expect(imageUrl).toBeDefined()
         },
       )
     }))

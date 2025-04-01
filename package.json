@@ -42,6 +42,7 @@
     "start-meta": "bin/start-meta.mjs"
   },
   "scripts": {
+    "bench": "vitest bench --run",
     "build-tests": "tsc --noEmit --lib dom,esnext",
     "coverage": "yarn vitest --coverage",
     "start": "nodemon",

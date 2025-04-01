@@ -13,27 +13,24 @@ const viewPortDefaults: Viewport = {
   isMobile: true, // So we can render as lean as possible
 }
 
-// Limit how many Puppeteer pages can be used concurrently
-const PAGE_SEMAPHORE_WAIT_TIMEOUT = 10_000
-
 export class PagePool {
   private _browser: Browser | undefined
   private readonly _browserMutex = new Mutex()
   private readonly _browserOptions: Viewport
-  private readonly _checkedOut: Set<number>
+  private readonly _checkedOut = new Set<number>()
   private readonly _maxTabs: number
   private readonly _semaphore: Semaphore
+  private _tabIndex = 0
   private readonly _tabMutexes: Map<number, Mutex>
 
   constructor(
-    browserOptions: Viewport = viewPortDefaults,
     maxTabs: number = 3,
+    browserOptions: Viewport = viewPortDefaults,
   ) {
     this._browserOptions = browserOptions
     this._maxTabs = maxTabs
-    this._checkedOut = new Set()
-    this._semaphore = new Semaphore(maxTabs)
-    this._tabMutexes = this._tabMutexes = new Map(
+    this._semaphore = new Semaphore(this._maxTabs)
+    this._tabMutexes = new Map(
       Array.from({ length: this._maxTabs }, (_, i) => [i, new Mutex()]),
     )
   }
@@ -49,66 +46,76 @@ export class PagePool {
   async getPage(): Promise<{ page: Page; release: () => void }> {
     const [, releaseSemaphore] = await this._semaphore.acquire()
 
-    // Find a free index
-    const index = this.findAvailableIndex()
+    const index = this.getNextAvailableTabIndex()
     this._checkedOut.add(index)
 
-    const page = await this.getNthTab(index)
+    const mutex = this._tabMutexes.get(index)!
+    await mutex.acquire()
 
-    const release = () => {
-      this._checkedOut.delete(index)
+    try {
+      const page = await this.getNthTab(index)
+      const release = () => {
+        this._checkedOut.delete(index)
+        mutex.release()
+        releaseSemaphore()
+      }
+
+      return { page, release }
+    } catch (err) {
+      mutex.release()
       releaseSemaphore()
+      this._checkedOut.delete(index)
+      throw err
     }
-
-    return { page, release }
   }
 
   private ensureBrowser = async (): Promise<Browser> => {
     return await this._browserMutex.runExclusive(async () => {
-      if (!this._browser || !this._browser.connected) {
+      if (!this._browser || !this._browser.isConnected?.()) {
         try {
           await this._browser?.close()
         } catch (error) {
-          console.error('useSpaPage: Error closing browser:', error)
+          console.error('PagePool: Error closing browser:', error)
         }
         this._browser = await useBrowser(this._browserOptions)
+
         let pages = await this._browser.pages()
-        // Create the desired number of tabs
+        console.log('PagePool: Length', pages.length)
         while (pages.length < this._maxTabs) {
+          console.log('PagePool: Adding new tab')
           await this._browser.newPage()
           pages = await this._browser.pages()
+          console.log('PagePool: Length', pages.length)
         }
       }
       return this._browser
     })
   }
 
-  private findAvailableIndex(): number {
+  private getNextAvailableTabIndex(): number {
     for (let i = 0; i < this._maxTabs; i++) {
-      if (!this._checkedOut.has(i)) {
-        return i
+      const candidate = (this._tabIndex + i) % this._maxTabs
+      if (!this._checkedOut.has(candidate)) {
+        this._tabIndex = (candidate + 1) % this._maxTabs
+        return candidate
       }
     }
-    // NOTE: This should never happen if semaphore works correctly
-    console.error('No available tab index')
-    throw new Error('No available tab index ')
+    throw new Error('No available tab index (semaphore should have prevented this)')
   }
 
   private async getNthTab(index: number): Promise<Page> {
-    // Create or retrieve a mutex for this index
-    if (!this._tabMutexes.has(index)) {
-      this._tabMutexes.set(index, new Mutex())
-    }
-    const mutex = this._tabMutexes.get(index)!
-    return await mutex.runExclusive(async () => {
-      const browser = await this.browser
-      let pages = await browser.pages()
-      const page = pages[index]
+    console.log('PagePool: Checking out tab', index)
+    const browser = await this.browser
+    const pages = await browser.pages()
+    const page = pages[index]
 
-      // Navigate to about:blank to reset state
+    try {
       await page.goto('about:blank')
+    } catch (err) {
+      console.error(`PagePool: Error navigating tab ${index} to about:blank`, err)
+      throw err
+    }
 
-      return page
-    })
+    return page
   }
 }

@@ -30,7 +30,7 @@ export const useSpaPageWaitForOptions: WaitForOptions = {
 }
 
 // Limit how many Puppeteer pages can be used concurrently
-const pagePool: PagePool = new PagePool()
+const pagePool: PagePool = new PagePool(3)
 
 /**
  * Helper for navigating to a url within a SPA (like React). This

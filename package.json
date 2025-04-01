@@ -42,7 +42,8 @@
     "start-meta": "bin/start-meta.mjs"
   },
   "scripts": {
-    "bench": "NODE_OPTIONS=--max-old-space-size=2048 vitest bench --run",
+    "_bench": "NODE_OPTIONS=--max-old-space-size=2048 vitest bench --run",
+    "bench": "vitest bench --run",
     "build-tests": "tsc --noEmit --lib dom,esnext",
     "coverage": "yarn vitest --coverage",
     "start": "nodemon",

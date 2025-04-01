@@ -33,10 +33,12 @@ describe('Benchmark useSpaPage', () => {
 })
 
 const defaultWaitForOptions: FrameWaitForFunctionOptions = { timeout: 20_000 }
-const waitForImageMetaTag = async (page: Page, options: FrameWaitForFunctionOptions = defaultWaitForOptions): Promise<string> => {
+const waitForImageMetaTag = async (page: Page, options: FrameWaitForFunctionOptions = defaultWaitForOptions): Promise<string | null> => {
   const metaTag = 'meta[property="xyo:og:image"]'
-  await page.waitForFunction((selector) => {
+  const result = await page.waitForFunction((selector) => {
     const el = document.querySelector(selector)
-    return el && el.getAttribute('content') && el.getAttribute('content')!.trim() !== ''
+    const content = el?.getAttribute('content')
+    return content && content.trim() !== '' ? content : null
   }, options, metaTag)
+  return result.jsonValue()
 }

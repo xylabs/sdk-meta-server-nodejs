@@ -5,6 +5,7 @@ import type {
 import { defaultViewportSize } from '../../browser/index.ts'
 import { parseOriginAndRelativePath } from '../../uri/index.ts'
 import type { PageRenderingOptions } from '../PageRenderingOptions.ts'
+import { BrowserPool } from './BrowserPool.ts'
 import { timeout, waitUntil } from './defaults.ts'
 import { PagePool } from './PagePool.ts'
 
@@ -30,7 +31,7 @@ export const useSpaPageWaitForOptions: WaitForOptions = {
 }
 
 // Limit how many Puppeteer pages can be used concurrently
-const pagePool: PagePool = new PagePool(1)
+const pool = new BrowserPool(3)
 
 /**
  * Helper for navigating to a url within a SPA (like React). This
@@ -53,7 +54,7 @@ export const useSpaPage = async <T>(url: string, pageCallback: (page: Page) => P
   let release: (() => void) | undefined
   try {
     const { origin, relativePath } = parseOriginAndRelativePath(url)
-    const pooledPage = await pagePool.getPage()
+    const pooledPage = await pool.getPage()
     page = pooledPage.page
     release = pooledPage.release
     await page.goto(origin)

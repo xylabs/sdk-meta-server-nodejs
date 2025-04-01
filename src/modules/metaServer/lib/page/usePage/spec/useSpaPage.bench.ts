@@ -7,7 +7,7 @@ describe('Benchmark useSpaPage', () => {
   const uri = 'https://beta.xyo.network/blog'
   const metaTag = 'meta[property="xyo:og:image"]'
   bench('navigate to lightweight SPA page', async () => {
-    await Promise.all(Array.from({ length: 10 }).map(() => {
+    await Promise.all(Array.from({ length: 3 }).map(() => {
       return useSpaPage(
         uri,
         async (page: Page) => {

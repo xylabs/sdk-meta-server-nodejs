@@ -4,6 +4,7 @@ import type {
 } from 'puppeteer'
 
 import { defaultViewportSize, useBrowser } from '../../browser/index.ts'
+import { parseOriginAndRelativePath } from '../../uri/index.ts'
 import type { PageRenderingOptions } from '../PageRenderingOptions.ts'
 import { timeout, waitUntil } from './defaults.ts'
 import { getNewPage } from './getBrowserPage.ts'
@@ -100,15 +101,6 @@ export const ensureBrowser = async (
     }
     return browser
   })
-}
-
-const parseOriginAndRelativePath = (url: string) => {
-  const parsed = new URL(url)
-  const {
-    origin, pathname, search,
-  } = parsed
-  const relativePath = search ? `${pathname}${search}` : pathname
-  return { origin, relativePath }
 }
 
 const navigateToRelativePath = async (page: Page, relativePath: string) => {

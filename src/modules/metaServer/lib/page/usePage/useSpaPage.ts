@@ -1,4 +1,4 @@
-import { Semaphore } from 'async-mutex'
+import { Mutex, Semaphore } from 'async-mutex'
 import type {
   Browser, Page, Viewport, WaitForOptions,
 } from 'puppeteer'
@@ -29,12 +29,13 @@ export const useSpaPageWaitForOptions: WaitForOptions = {
   // waitUntil: 'domcontentloaded',
 }
 
+// Limit to a single browser
+const browserMutex = new Mutex()
+let browser: Browser | undefined
+
 // Limit how many Puppeteer pages can be used concurrently
 const MAX_PARALLEL_PAGES = 3
 const pageSemaphore = new Semaphore(MAX_PARALLEL_PAGES)
-
-const pages: Page[] = []
-let browser: Browser | undefined
 
 /**
  * Helper for navigating to a url within a SPA (like React). This
@@ -58,30 +59,44 @@ export const useSpaPage = async <T>(
   browserOptions: Viewport = viewPortDefaults,
   _waitForOptions: WaitForOptions = useSpaPageWaitForOptions,
 ): Promise<T | undefined> => {
-  const [pageIndex, releasePage] = await pageSemaphore.acquire()
+  browser = await ensureBrowser(browserOptions)
+  const [, releasePage] = await pageSemaphore.acquire()
+  let page: Page | undefined
   try {
     const parsed = new URL(url)
     const {
       origin, pathname, search,
     } = parsed
+    page = await getNewPage(browser, origin)
     const relativePath = search ? `${pathname}${search}` : pathname
     const start = Date.now()
 
-    browser = browser ?? (await useBrowser(browserOptions))
-    if (!pages[pageIndex]) pages[pageIndex] = await getNewPage(browser, origin)
-
-    await navigateToRelativePath(pages[pageIndex], relativePath)
+    await navigateToRelativePath(page, relativePath)
 
     const duration = Date.now() - start
     console.log(`useSpaPage:profile: ${duration}ms`)
 
-    return await pageCallback(pages[pageIndex])
+    return await pageCallback(page)
   } catch (err) {
     console.error('useSpaPage:Error', err)
-    await pages[pageIndex]?.close()
   } finally {
+    // Always close the page when done to prevent
+    // false positives with wait for selector if the
+    // desired selector exists on the previous page
+    await page?.close()
     releasePage()
   }
+}
+
+export const ensureBrowser = async (
+  browserOptions: Viewport = viewPortDefaults,
+): Promise<Browser> => {
+  return await browserMutex.runExclusive(async () => {
+    if (!browser || !browser.connected) {
+      browser = await useBrowser(browserOptions)
+    }
+    return browser
+  })
 }
 
 const navigateToRelativePath = async (page: Page, relativePath: string) => {

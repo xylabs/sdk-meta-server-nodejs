@@ -36,7 +36,7 @@ export class PagePool {
   }
 
   private get browser(): Promise<Browser> {
-    return this.ensureBrowser(this._browserOptions)
+    return this.ensureBrowser()
   }
 
   /**
@@ -60,7 +60,7 @@ export class PagePool {
     return { page, release }
   }
 
-  private ensureBrowser = async (browserOptions: Viewport): Promise<Browser> => {
+  private ensureBrowser = async (): Promise<Browser> => {
     return await this._browserMutex.runExclusive(async () => {
       if (!this._browser || !this._browser.connected) {
         try {
@@ -68,7 +68,13 @@ export class PagePool {
         } catch (error) {
           console.error('useSpaPage: Error closing browser:', error)
         }
-        this._browser = await useBrowser(browserOptions)
+        this._browser = await useBrowser(this._browserOptions)
+        let pages = await this._browser.pages()
+        // Create the desired number of tabs
+        while (pages.length < this._maxTabs) {
+          await this._browser.newPage()
+          pages = await this._browser.pages()
+        }
       }
       return this._browser
     })
@@ -94,13 +100,6 @@ export class PagePool {
     return await mutex.runExclusive(async () => {
       const browser = await this.browser
       let pages = await browser.pages()
-
-      // Create new tabs if needed
-      while (pages.length <= index) {
-        await browser.newPage()
-        pages = await browser.pages()
-      }
-
       const page = pages[index]
 
       // Navigate to about:blank to reset state

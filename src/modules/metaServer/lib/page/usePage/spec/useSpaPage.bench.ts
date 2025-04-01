@@ -16,10 +16,13 @@ describe('Benchmark useSpaPage', () => {
       return useSpaPage(
         uri,
         async (page: Page) => {
-          await page.waitForSelector(metaTag, { timeout: 20_000 })
+          await page.waitForFunction((selector) => {
+            const el = document.querySelector(selector)
+            return el && el.getAttribute('content') && el.getAttribute('content')!.trim() !== ''
+          }, { timeout: 20_000 }, metaTag)
           const imageUrl = await (await page.$(metaTag))?.evaluate(el => el.getAttribute('content'))
           console.log('Image URL:', imageUrl)
-          expect(imageUrl).toBeDefined()
+          expect(imageUrl).toBeTruthy()
         },
       )
     }))

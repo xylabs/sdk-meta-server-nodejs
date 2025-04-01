@@ -80,7 +80,6 @@ export class PagePool {
         this._browser = await useBrowser(this._browserOptions)
 
         let pages = await this._browser.pages()
-        console.log('PagePool: Length', pages.length)
         while (pages.length < this._maxTabs) {
           console.log('PagePool: Adding new tab')
           await this._browser.newPage()
@@ -104,7 +103,6 @@ export class PagePool {
   }
 
   private async getNthTab(index: number): Promise<Page> {
-    console.log('PagePool: Checking out tab', index)
     const browser = await this.browser
     const pages = await browser.pages()
     const page = pages[index]

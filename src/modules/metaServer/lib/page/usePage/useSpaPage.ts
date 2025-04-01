@@ -7,7 +7,6 @@ import { parseOriginAndRelativePath } from '../../uri/index.ts'
 import type { PageRenderingOptions } from '../PageRenderingOptions.ts'
 import { BrowserPool } from './BrowserPool.ts'
 import { timeout, waitUntil } from './defaults.ts'
-import { PagePool } from './PagePool.ts'
 
 const viewPortDefaults: Viewport = {
   ...defaultViewportSize,
@@ -30,7 +29,7 @@ export const useSpaPageWaitForOptions: WaitForOptions = {
   // waitUntil: 'domcontentloaded',
 }
 
-// Limit how many Puppeteer pages can be used concurrently
+// Set pool to fixed size
 const pool = new BrowserPool(3)
 
 /**

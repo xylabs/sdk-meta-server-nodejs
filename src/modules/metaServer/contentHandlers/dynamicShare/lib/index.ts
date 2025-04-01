@@ -1,2 +1,2 @@
-export * from './image/index.js'
-export * from './pageStrategies/index.js'
+export * from './image/index.ts'
+export * from './pageStrategies/index.ts'

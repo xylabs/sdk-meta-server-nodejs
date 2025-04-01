@@ -1,4 +1,4 @@
-import type { Page } from 'puppeteer'
+import type { FrameWaitForFunctionOptions, Page } from 'puppeteer'
 import { bench, describe } from 'vitest'
 
 import { useSpaPage } from '../useSpaPage.ts'
@@ -31,3 +31,12 @@ describe('Benchmark useSpaPage', () => {
     iterations: 4,
   })
 })
+
+const defaultWaitForOptions: FrameWaitForFunctionOptions = { timeout: 20_000 }
+const waitForImageMetaTag = async (page: Page, options: FrameWaitForFunctionOptions = defaultWaitForOptions): Promise<string> => {
+  const metaTag = 'meta[property="xyo:og:image"]'
+  await page.waitForFunction((selector) => {
+    const el = document.querySelector(selector)
+    return el && el.getAttribute('content') && el.getAttribute('content')!.trim() !== ''
+  }, options, metaTag)
+}

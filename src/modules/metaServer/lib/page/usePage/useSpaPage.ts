@@ -1,5 +1,4 @@
-/* eslint-disable max-statements */
-import { Mutex } from 'async-mutex'
+import { Semaphore } from 'async-mutex'
 import type {
   Browser, Page, Viewport, WaitForOptions,
 } from 'puppeteer'
@@ -30,12 +29,12 @@ export const useSpaPageWaitForOptions: WaitForOptions = {
   // waitUntil: 'domcontentloaded',
 }
 
-let _browser: Browser | undefined
-let _page: Page | undefined
+// Limit how many Puppeteer pages can be used concurrently
+const MAX_PARALLEL_PAGES = 3
+const pageSemaphore = new Semaphore(MAX_PARALLEL_PAGES)
 
-const pageMutex = new Mutex()
-const reusePage = false
-const reuseBrowser = true
+const pages: Page[] = []
+let browser: Browser | undefined
 
 /**
  * Helper for navigating to a url within a SPA (like React). This
@@ -58,70 +57,36 @@ export const useSpaPage = async <T>(
   pageCallback: (page: Page) => Promise<T> | T,
   browserOptions: Viewport = viewPortDefaults,
   _waitForOptions: WaitForOptions = useSpaPageWaitForOptions,
-  tryCount = 2,
 ): Promise<T | undefined> => {
-  await pageMutex.acquire()
+  const [pageIndex, releasePage] = await pageSemaphore.acquire()
   try {
-    if (tryCount < 1) {
-      return undefined
-    }
     const parsed = new URL(url)
     const {
       origin, pathname, search,
     } = parsed
     const relativePath = search ? `${pathname}${search}` : pathname
     const start = Date.now()
-    _browser = _browser ?? (await useBrowser(browserOptions))
-    _page = _page ?? (await getBrowserPage(_browser, origin))
-    // First navigate to the root
-    // await page.goto(origin)
 
-    // Wait for the div with id "root" to have at least one child.
-    // This assumes the child is a direct descendant (using '>').
-    // This assumes React will mount in a div with id="root" .
-    // await _page.waitForSelector('#root > *', { timeout })
-    // await _page.waitForFunction(() => {
-    //   const root = document.querySelector('#root')
-    //   // Check if the #root element has any child nodes, indicating React has rendered
-    //   return root && root.childNodes.length > 0
-    // }, {
-    //   timeout: 30_000, // Adjust the timeout as needed
-    // })
+    browser = browser ?? (await useBrowser(browserOptions))
+    if (!pages[pageIndex]) pages[pageIndex] = await getBrowserPage(browser, origin)
 
-    // React Router DOM seems to not listen to pushState but does
-    // listen to back.  So we push state to the desired path twice,
-    // then go back once to trigger the navigation.
-    console.log(`Trying relative path: ${relativePath}`)
-    await _page.evaluate(relativePath => globalThis.history.pushState(null, '', relativePath), relativePath)
-    await _page.evaluate(relativePath => globalThis.history.pushState(null, '', relativePath), relativePath)
-    await _page.evaluate(() => globalThis.history.back())
+    await navigateToRelativePath(pages[pageIndex], relativePath)
 
     const duration = Date.now() - start
-
     console.log(`useSpaPage:profile: ${duration}ms`)
 
-    return await pageCallback(_page)
+    return await pageCallback(pages[pageIndex])
   } catch (err) {
-    // if it crashed, we restart the browser
-    await _page?.close()
-    await _browser?.close()
-    _page = undefined
-    _browser = undefined
-    pageMutex.release() // release it for next try
     console.error('useSpaPage:Error', err)
-    // we retry with a fresh browser and page
-    const result = await useSpaPage(url, pageCallback, browserOptions, _waitForOptions, tryCount - 1)
-    await pageMutex.acquire() // acquire it again since finally with release it
-    return result
+    await pages[pageIndex]?.close()
   } finally {
-    if (!reusePage || !reuseBrowser) {
-      await _page?.close()
-      _page = undefined
-    }
-    if (!reuseBrowser) {
-      await _browser?.close()
-      _browser = undefined
-    }
-    pageMutex.release()
+    releasePage()
   }
+}
+
+const navigateToRelativePath = async (page: Page, relativePath: string) => {
+  console.log(`Trying relative path: ${relativePath}`)
+  await page.evaluate(p => history.pushState(null, '', p), relativePath)
+  await page.evaluate(p => history.pushState(null, '', p), relativePath)
+  await page.evaluate(() => history.back())
 }

@@ -1,3 +1,4 @@
+import { assertEx } from '@xylabs/assert'
 import { Mutex, Semaphore } from 'async-mutex'
 import type {
   Browser, Page, Viewport, WaitForOptions,
@@ -32,10 +33,11 @@ export const useSpaPageWaitForOptions: WaitForOptions = {
 
 // Limit to a single browser
 const browserMutex = new Mutex()
-let browser: Browser | undefined
+let _browser: Browser | undefined
 
 // Limit how many Puppeteer pages can be used concurrently
-const MAX_CONCURRENT_TABS = 3
+const MAX_CONCURRENT_TABS = 1
+const PAGE_SEMAPHORE_WAIT_TIMEOUT = 10_000
 const pageSemaphore = new Semaphore(MAX_CONCURRENT_TABS)
 
 /**
@@ -61,45 +63,47 @@ export const useSpaPage = async <T>(
   _waitForOptions: WaitForOptions = useSpaPageWaitForOptions,
 ): Promise<T | undefined> => {
   const start = Date.now()
-  browser = await ensureBrowser(browserOptions)
-  const [, releasePage] = await pageSemaphore.acquire()
+  _browser = await ensureBrowser(browserOptions)
   let page: Page | undefined
-  try {
-    const { origin, relativePath } = parseOriginAndRelativePath(url)
-    page = await getNewPage(browser, origin)
 
-    await navigateToRelativePath(page, relativePath)
-
-    const duration = Date.now() - start
-    console.log(`useSpaPage:profile: ${duration}ms`)
-
-    return await pageCallback(page)
-  } catch (err) {
-    console.error('useSpaPage:Error', err)
-  } finally {
-    // Always close the page when done to prevent
-    // false positives with wait for selector if the
-    // desired selector exists on the previous page
-    await page?.close().catch((err) => {
-      console.error('useSpaPage:Error closing page:', err)
-    })
-    releasePage()
-  }
+  return await runSemaphoreExclusive(
+    pageSemaphore,
+    async () => {
+      try {
+        const browser = assertEx(_browser, () => 'useSpaPage:Error obtaining browser')
+        const { origin, relativePath } = parseOriginAndRelativePath(url)
+        page = await getNewPage(browser, origin)
+        await navigateToRelativePath(page, relativePath)
+        console.log(`useSpaPage:profile: ${Date.now() - start}ms`)
+        return await pageCallback(page)
+      } catch (err) {
+        console.error('useSpaPage:Error', err)
+      } finally {
+        // Always close the page when done to prevent
+        // false positives with wait for selector if the
+        // desired selector exists on the previous page
+        await page?.close().catch((err) => {
+          console.error('useSpaPage:Error closing page:', err)
+        })
+      }
+    },
+    PAGE_SEMAPHORE_WAIT_TIMEOUT,
+  )
 }
 
 export const ensureBrowser = async (
   browserOptions: Viewport = viewPortDefaults,
 ): Promise<Browser> => {
   return await browserMutex.runExclusive(async () => {
-    if (!browser || !browser.connected) {
+    if (!_browser || !_browser.connected) {
       try {
-        await browser?.close()
+        await _browser?.close()
       } catch (error) {
         console.error('useSpaPage: Error closing browser:', error)
       }
-      browser = await useBrowser(browserOptions)
+      _browser = await useBrowser(browserOptions)
     }
-    return browser
+    return _browser
   })
 }
 
@@ -108,4 +112,32 @@ const navigateToRelativePath = async (page: Page, relativePath: string) => {
   await page.evaluate(p => history.pushState(null, '', p), relativePath)
   await page.evaluate(p => history.pushState(null, '', p), relativePath)
   await page.evaluate(() => history.back())
+}
+
+/**
+ * Wraps a Semaphore with a runExclusive-like interface and optional timeout.
+ * @param semaphore The async-mutex Semaphore
+ * @param callback The function to run once a slot is acquired
+ * @param timeoutMs How long to wait before timing out (optional)
+ */
+export async function runSemaphoreExclusive<T>(
+  semaphore: Semaphore,
+  callback: () => Promise<T> | T,
+  timeoutMs?: number,
+): Promise<T> {
+  const acquire = timeoutMs
+    ? Promise.race([
+        semaphore.acquire(),
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error('Semaphore acquire timeout')), timeoutMs)),
+      ])
+    : semaphore.acquire()
+
+  const [, release] = await acquire
+
+  try {
+    return await callback()
+  } finally {
+    release()
+  }
 }

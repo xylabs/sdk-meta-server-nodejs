@@ -86,19 +86,27 @@ export class PagePool {
   }
 
   private async getNthTab(index: number): Promise<Page> {
-    let pages = await (await this.browser).pages()
-
-    // If there are not enough tabs, create missing ones
-    while (pages.length <= index) {
-      await (await this.browser).newPage()
-      pages = await (await this.browser).pages()
+    // Create or retrieve a mutex for this index
+    if (!this._tabMutexes.has(index)) {
+      this._tabMutexes.set(index, new Mutex())
     }
+    const mutex = this._tabMutexes.get(index)!
+    return await mutex.runExclusive(async () => {
+      const browser = await this.browser
+      let pages = await browser.pages()
 
-    const page = pages[index]
+      // Create new tabs if needed
+      while (pages.length <= index) {
+        await browser.newPage()
+        pages = await browser.pages()
+      }
 
-    // Reset tab state
-    await page.goto('about:blank')
+      const page = pages[index]
 
-    return page
+      // Navigate to about:blank to reset state
+      await page.goto('about:blank')
+
+      return page
+    })
   }
 }

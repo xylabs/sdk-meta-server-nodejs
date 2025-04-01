@@ -98,7 +98,7 @@ export const ensureBrowser = async (
       try {
         await browser?.close()
       } catch (error) {
-        console.log('useSpaPage: Error closing browser:', error)
+        console.error('useSpaPage: Error closing browser:', error)
       }
       browser = await useBrowser(browserOptions)
     }

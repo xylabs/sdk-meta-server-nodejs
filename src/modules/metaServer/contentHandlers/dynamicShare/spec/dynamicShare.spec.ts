@@ -42,7 +42,6 @@ describe('dynamicShare', () => {
   })
   describe('page meta', () => {
     const tests = [
-      // ['xyo:og:image', shareImageUrl],
       ['og:image', shareImageUrl],
       ['og:image:height', `${height}`],
       ['og:image:secure_url', shareImageUrl],

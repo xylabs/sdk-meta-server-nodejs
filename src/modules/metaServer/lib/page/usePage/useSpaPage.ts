@@ -93,6 +93,11 @@ export const ensureBrowser = async (
 ): Promise<Browser> => {
   return await browserMutex.runExclusive(async () => {
     if (!browser || !browser.connected) {
+      try {
+        await browser?.close()
+      } catch (error) {
+        console.log('useSpaPage: Error closing browser:', error)
+      }
       browser = await useBrowser(browserOptions)
     }
     return browser

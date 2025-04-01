@@ -59,17 +59,13 @@ export const useSpaPage = async <T>(
   browserOptions: Viewport = viewPortDefaults,
   _waitForOptions: WaitForOptions = useSpaPageWaitForOptions,
 ): Promise<T | undefined> => {
+  const start = Date.now()
   browser = await ensureBrowser(browserOptions)
   const [, releasePage] = await pageSemaphore.acquire()
   let page: Page | undefined
   try {
-    const parsed = new URL(url)
-    const {
-      origin, pathname, search,
-    } = parsed
+    const { origin, relativePath } = parseOriginAndRelativePath(url)
     page = await getNewPage(browser, origin)
-    const relativePath = search ? `${pathname}${search}` : pathname
-    const start = Date.now()
 
     await navigateToRelativePath(page, relativePath)
 
@@ -104,6 +100,15 @@ export const ensureBrowser = async (
     }
     return browser
   })
+}
+
+const parseOriginAndRelativePath = (url: string) => {
+  const parsed = new URL(url)
+  const {
+    origin, pathname, search,
+  } = parsed
+  const relativePath = search ? `${pathname}${search}` : pathname
+  return { origin, relativePath }
 }
 
 const navigateToRelativePath = async (page: Page, relativePath: string) => {

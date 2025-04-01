@@ -3,7 +3,7 @@ import { IdLogger, type Logger } from '@xylabs/logger'
 import type { Meta } from '@xylabs/sdk-meta'
 import { metaBuilder } from '@xylabs/sdk-meta'
 
-import { useSpaPage } from '../../../../../lib/index.ts'
+import { useSpaPage, waitForImageMetaTag } from '../../../../../lib/index.ts'
 import { getImageMeta } from '../../image/index.ts'
 
 export const useIndexAndDynamicPreviewImage = async (
@@ -14,7 +14,7 @@ export const useIndexAndDynamicPreviewImage = async (
   const startTime = Date.now()
   logger.log('generating preview image meta')
   const meta = assertEx(await useSpaPage(url, async (renderedPage) => {
-    await renderedPage.waitForSelector('head > meta[property="xyo:og:image"]', { timeout: 10_000 })
+    await waitForImageMetaTag(renderedPage, { timeout: 10_000 })
     const meta = { ...await getImageMeta(url, renderedPage), xy: { timings: { render: `${Date.now() - startTime}ms` } } }
     meta.title = await renderedPage.title()
     logger.log('setting title', meta.title)

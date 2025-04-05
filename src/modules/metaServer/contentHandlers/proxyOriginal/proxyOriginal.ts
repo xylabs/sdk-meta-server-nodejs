@@ -28,7 +28,7 @@ import { exists } from './lib/index.ts'
 const existingPaths = new LRUCache<string, boolean>({ max: 1000 })
 
 const getLanguage = (uri: string, languageMap: Record<string, PathFilter>) => {
-  for (let [language, { include, exclude }] of Object.entries(languageMap)) {
+  for (let [language, { include = [], exclude = [] }] of Object.entries(languageMap)) {
     const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => false
     const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
     if (matchesIncluded(uri) && !matchesExcluded(uri)) {

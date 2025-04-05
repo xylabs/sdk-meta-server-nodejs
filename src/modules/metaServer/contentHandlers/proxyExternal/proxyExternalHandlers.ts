@@ -77,7 +77,7 @@ const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountP
   if (peConfig) {
     const proxyExternalConfig = peConfig as ProxyExternalConfig
     for (let [domain, domainConfig] of Object.entries(proxyExternalConfig)) {
-      const { include, exclude } = domainConfig
+      const { include = [], exclude = [] } = domainConfig
       const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
       const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
 

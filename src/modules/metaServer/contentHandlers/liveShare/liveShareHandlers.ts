@@ -159,7 +159,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
     imageRepository()
     console.log('[liveShare][init] Initialized repository')
     console.log('[liveShare][init] Creating page handler')
-    const { include, exclude } = lsConfig
+    const { include = [], exclude = [] } = lsConfig
     const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
     const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)

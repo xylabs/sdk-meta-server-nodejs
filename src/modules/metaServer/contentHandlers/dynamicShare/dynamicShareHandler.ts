@@ -106,8 +106,8 @@ const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPa
     logger.log('Creating page handler')
     // TODO: Support custom done loading flag from xyConfig (or use default)
     const { include = [], exclude = [] } = dsConfig.pathFilter ?? {}
-    const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
-    const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
+    const matchesIncluded: RouteMatcher = include.length > 0 ? createGlobMatcher(include) : () => true
+    const matchesExcluded: RouteMatcher = exclude.length > 0 ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     const dynamicSharePageHandler: RequestHandler = async (req, res, next) => {

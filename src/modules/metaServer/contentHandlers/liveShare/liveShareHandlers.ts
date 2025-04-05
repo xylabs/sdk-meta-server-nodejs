@@ -163,8 +163,8 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
     console.log('[liveShare][init] Initialized repository')
     console.log('[liveShare][init] Creating page handler')
     const { include = [], exclude = [] } = lsConfig['pathFilter'] ?? {}
-    const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
-    const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
+    const matchesIncluded: RouteMatcher = include.length > 0 ? createGlobMatcher(include) : () => true
+    const matchesExcluded: RouteMatcher = exclude.length > 0 ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)
     const imageHandler = getImageHandler(opts)
     // eslint-disable-next-line @typescript-eslint/no-misused-promises

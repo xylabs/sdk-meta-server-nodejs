@@ -70,8 +70,8 @@ const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountP
   if (peConfig) {
     for (let [domain, domainConfig] of Object.entries(peConfig.pathFilters ?? {})) {
       const { include = [], exclude = [] } = domainConfig
-      const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
-      const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
+      const matchesIncluded: RouteMatcher = include.length > 0 ? createGlobMatcher(include) : () => true
+      const matchesExcluded: RouteMatcher = exclude.length > 0 ? createGlobMatcher(exclude) : () => false
 
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
       const proxyExternalPageHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {

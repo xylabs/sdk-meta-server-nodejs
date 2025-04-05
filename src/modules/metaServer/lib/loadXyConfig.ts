@@ -14,6 +14,6 @@ export const loadXyConfig = (baseDir: string, moduleName: string): XyConfig | un
     console.log(`[${moduleName}] Parsing xy.config.json`)
     const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf8' }))
     console.log(`[${moduleName}] Parsed xy.config.json`)
-    return toJsonObject(xyConfig)
+    return toJsonObject(xyConfig, [], 16)
   }
 }

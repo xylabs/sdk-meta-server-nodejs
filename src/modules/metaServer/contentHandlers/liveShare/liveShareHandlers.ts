@@ -11,7 +11,10 @@ import type {
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import {
-  liveShareCacheConfigLoader, liveShareImageCacheConfigLoader, type XyConfig,
+  liveShareCacheConfigLoader,
+  liveShareImageCacheConfigLoader,
+  type MetaServerConfig,
+  type XyConfig,
 } from '../../../../model/index.ts'
 import type {
   RepositoryFile,
@@ -139,14 +142,14 @@ const getImageHandler = (opts: ApplicationMiddlewareOptions) => {
   return imageHandler
 }
 
-const liveShareConfig = (config: XyConfig = {}) => {
+const liveShareConfig = (config: XyConfig = {}): MetaServerConfig['liveShare'] => {
   // eslint-disable-next-line sonarjs/deprecation
   if (config?.liveShare) {
     console.warn('Using deprecated liveShare config. Please use metaServer.liveShare instead.')
   }
 
   // eslint-disable-next-line sonarjs/deprecation
-  return config?.metaServer?.liveShare?.pathFilter ?? config?.liveShare
+  return config?.metaServer?.liveShare ?? { pathFilter: config?.liveShare } ?? {}
 }
 
 const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
@@ -159,7 +162,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
     imageRepository()
     console.log('[liveShare][init] Initialized repository')
     console.log('[liveShare][init] Creating page handler')
-    const { include = [], exclude = [] } = lsConfig
+    const { include = [], exclude = [] } = lsConfig['pathFilter'] ?? {}
     const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
     const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)

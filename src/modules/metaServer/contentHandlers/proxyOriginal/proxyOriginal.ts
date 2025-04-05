@@ -14,7 +14,10 @@ import type { ServeStaticOptions } from 'serve-static'
 import serveStatic from 'serve-static'
 
 import {
-  type PathFilter, proxyOriginalCacheConfigLoader, proxyOriginalIndexCacheConfigLoader, type XyConfig,
+  type MetaServerConfig,
+  type PathFilter, proxyOriginalCacheConfigLoader,
+  proxyOriginalIndexCacheConfigLoader,
+  type XyConfig,
 } from '../../../../model/index.ts'
 import type { RouteMatcher } from '../../lib/index.ts'
 import {
@@ -38,14 +41,14 @@ const getLanguage = (uri: string, languageMap: Record<string, PathFilter>) => {
   return 'en'
 }
 
-const languageMapConfig = (config: XyConfig = {}) => {
+const languageMapConfig = (config: XyConfig = {}): MetaServerConfig['languageMap'] => {
   // eslint-disable-next-line sonarjs/deprecation
   if (config?.languageMap) {
     console.warn('Using deprecated languageMap config. Please use metaServer.languageMap instead.')
   }
 
   // eslint-disable-next-line sonarjs/deprecation
-  return config?.metaServer?.languageMap?.pathFilters ?? config?.languageMap ?? {}
+  return config?.metaServer?.languageMap ?? { pathFilters: config?.languageMap } ?? {}
 }
 
 const getProxyOriginalHandler = (baseDir: string) => {
@@ -74,7 +77,7 @@ const getProxyOriginalHandler = (baseDir: string) => {
     if (updatedHead) {
       updated = mergeDocumentHead(html, updatedHead)
     }
-    const language = getLanguage(path, languageMap)
+    const language = getLanguage(path, languageMap?.pathFilters ?? {})
     updated = updated.replace('<html lang="en">', `<html lang="${language}">`)
     res.type('html').set(headersFromCacheConfig(proxyOriginalIndexCacheConfigLoader(xyConfig))).send(updated)
   }

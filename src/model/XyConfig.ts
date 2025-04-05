@@ -33,16 +33,16 @@ export interface MetaServerConfig {
   }
   languageMap?: {
     caching?: CacheConfig
-    pathFilters: Record<string, PathFilter>
+    pathFilters?: Record<string, PathFilter>
   }
   liveShare?: {
     caching?: CacheConfig
     imageCaching?: CacheConfig
-    pathFilter: PathFilter
+    pathFilter?: PathFilter
   }
   proxyExternal?: {
     caching?: CacheConfig
-    pathFilters: Record<string, PathFilter>
+    pathFilters?: Record<string, PathFilter>
   }
   proxyOriginal?: {
     caching?: CacheConfig

@@ -10,7 +10,9 @@ import type {
   NextFunction, Request, RequestHandler, Response,
 } from 'express'
 
-import { dynamicShareCacheConfigLoader, type XyConfig } from '../../../../model/index.ts'
+import {
+  dynamicShareCacheConfigLoader, type MetaServerConfig, type XyConfig,
+} from '../../../../model/index.ts'
 import type {
   RepositoryFile,
   RouteMatcher,
@@ -30,13 +32,13 @@ import { useIndexAndDynamicPreviewImage } from './lib/index.ts'
 
 const enableCaching = false
 
-const dynamicShareConfig = (config: XyConfig = {}) => {
+const dynamicShareConfig = (config: XyConfig = {}): MetaServerConfig['dynamicShare'] => {
   // eslint-disable-next-line sonarjs/deprecation
   if (config?.dynamicShare) {
     console.warn('Using deprecated dynamicShare config. Please use metaServer.dynamicShare instead.')
   }
   // eslint-disable-next-line sonarjs/deprecation
-  return config?.metaServer?.dynamicShare?.pathFilter ?? config?.dynamicShare
+  return config?.metaServer?.dynamicShare ?? { pathFilter: config?.dynamicShare } ?? {}
 }
 
 const getPageHandler = (baseDir: string) => {
@@ -103,7 +105,7 @@ const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPa
   if (dsConfig) {
     logger.log('Creating page handler')
     // TODO: Support custom done loading flag from xyConfig (or use default)
-    const { include = [], exclude = [] } = dsConfig
+    const { include = [], exclude = [] } = dsConfig.pathFilter ?? {}
     const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
     const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)

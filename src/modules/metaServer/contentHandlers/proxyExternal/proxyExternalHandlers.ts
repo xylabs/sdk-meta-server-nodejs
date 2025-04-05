@@ -6,7 +6,7 @@ import type {
 } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
-import type { XyConfig } from '../../../../model/index.ts'
+import type { MetaServerConfig, XyConfig } from '../../../../model/index.ts'
 import type { RouteMatcher } from '../../lib/index.js'
 import {
   createGlobMatcher,
@@ -14,13 +14,6 @@ import {
   loadXyConfig,
 } from '../../lib/index.js'
 import type { ApplicationMiddlewareOptions, MountPathAndMiddleware } from '../../types/index.ts'
-
-interface ProxyExternalDomainConfig {
-  exclude?: string[]
-  include?: string[]
-}
-
-type ProxyExternalConfig = Record<string, ProxyExternalDomainConfig>
 
 const proxyHandler = async (req: Request, res: Response, next: NextFunction, origin: string) => {
   try {
@@ -59,14 +52,14 @@ const proxyHandler = async (req: Request, res: Response, next: NextFunction, ori
   next()
 }
 
-const proxyExternalConfig = (config: XyConfig = {}) => {
+const proxyExternalConfig = (config: XyConfig = {}): MetaServerConfig['proxyExternal'] => {
   // eslint-disable-next-line sonarjs/deprecation
   if (config?.proxyExternal) {
     console.warn('Using deprecated proxyExternal config. Please use metaServer.proxyExternal instead.')
   }
 
   // eslint-disable-next-line sonarjs/deprecation
-  return config?.metaServer?.proxyExternal ?? config?.proxyExternal
+  return config?.metaServer?.proxyExternal ?? { pathFilters: config?.proxyExternal } ?? {}
 }
 
 const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
@@ -75,8 +68,7 @@ const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountP
   const peConfig = proxyExternalConfig(xyConfig)
   // TODO: Validate xyConfig
   if (peConfig) {
-    const proxyExternalConfig = peConfig as ProxyExternalConfig
-    for (let [domain, domainConfig] of Object.entries(proxyExternalConfig)) {
+    for (let [domain, domainConfig] of Object.entries(peConfig.pathFilters ?? {})) {
       const { include = [], exclude = [] } = domainConfig
       const matchesIncluded: RouteMatcher = include ? createGlobMatcher(include) : () => true
       const matchesExcluded: RouteMatcher = exclude ? createGlobMatcher(exclude) : () => false

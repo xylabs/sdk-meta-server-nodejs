@@ -21,7 +21,7 @@ export const useIndexAndDynamicPreviewImage = async (
     logger.log('setting og:image', meta.og?.image)
     return meta as Meta
   }), () => 'error retrieving meta from page')
-  const updatedHtml = metaBuilder(indexHtml, meta)
+  const updatedHtml = metaBuilder(indexHtml, meta, 'dynamicShare')
   logger.log('returning index.html & preview image meta')
   return updatedHtml
 }

@@ -9,7 +9,7 @@ export const useIndexAndDeferredPreviewImage = (url: string, imageRepository: Fi
     const meta = getImageMeta(url)
     // Initiate the image generation but don't await it
     ensureImageExists(url, imageRepository)
-    const updatedHtml = metaBuilder(indexHtml, meta)
+    const updatedHtml = metaBuilder(indexHtml, meta, 'liveShare')
     console.log(`[liveShare][useIndexAndDeferredPreviewImage][${url}]: returning index.html & preview image meta`)
     return updatedHtml
   } catch (error) {

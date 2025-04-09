@@ -48,7 +48,7 @@ const languageMapConfig = (config: XyConfig = {}): MetaServerConfig['languageMap
   }
 
   // eslint-disable-next-line sonarjs/deprecation
-  return config?.metaServer?.languageMap ?? { pathFilters: config?.languageMap } ?? {}
+  return config?.metaServer?.languageMap ?? { pathFilters: config?.languageMap } ?? { pathFilters: {} }
 }
 
 const getProxyOriginalHandler = (baseDir: string) => {

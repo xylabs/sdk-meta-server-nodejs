@@ -149,7 +149,7 @@ const liveShareConfig = (config: XyConfig = {}): MetaServerConfig['liveShare'] =
   }
 
   // eslint-disable-next-line sonarjs/deprecation
-  return config?.metaServer?.liveShare ?? { pathFilter: config?.liveShare } ?? {}
+  return config?.metaServer?.liveShare ?? { pathFilter: config?.liveShare } ?? { pathFilter: { include: [] } }
 }
 
 const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
@@ -163,7 +163,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
     console.log('[liveShare][init] Initialized repository')
     console.log('[liveShare][init] Creating page handler')
     const { include = [], exclude = [] } = lsConfig['pathFilter'] ?? {}
-    const matchesIncluded: RouteMatcher = include.length > 0 ? createGlobMatcher(include) : () => true
+    const matchesIncluded: RouteMatcher = include.length > 0 ? createGlobMatcher(include) : () => false
     const matchesExcluded: RouteMatcher = exclude.length > 0 ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)
     const imageHandler = getImageHandler(opts)

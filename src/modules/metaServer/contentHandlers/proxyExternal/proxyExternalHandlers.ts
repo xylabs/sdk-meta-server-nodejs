@@ -59,7 +59,7 @@ const proxyExternalConfig = (config: XyConfig = {}): MetaServerConfig['proxyExte
   }
 
   // eslint-disable-next-line sonarjs/deprecation
-  return config?.metaServer?.proxyExternal ?? { pathFilters: config?.proxyExternal } ?? {}
+  return config?.metaServer?.proxyExternal ?? { pathFilters: config?.proxyExternal } ?? { pathFilters: {} }
 }
 
 const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware | undefined => {
@@ -70,7 +70,7 @@ const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountP
   if (peConfig) {
     for (let [domain, domainConfig] of Object.entries(peConfig.pathFilters ?? {})) {
       const { include = [], exclude = [] } = domainConfig
-      const matchesIncluded: RouteMatcher = include.length > 0 ? createGlobMatcher(include) : () => true
+      const matchesIncluded: RouteMatcher = include.length > 0 ? createGlobMatcher(include) : () => false
       const matchesExcluded: RouteMatcher = exclude.length > 0 ? createGlobMatcher(exclude) : () => false
 
       // eslint-disable-next-line @typescript-eslint/no-misused-promises

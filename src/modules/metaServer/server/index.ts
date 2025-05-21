@@ -8,7 +8,7 @@ import type { ApplicationMiddlewareOptions } from '../types/index.ts'
 import { addContentHandlers } from './addContentHandlers.ts'
 import { addMiddleware } from './addMiddleware.ts'
 
-const defaultDirectory = process.env.SERVE_DIRECTORY || './build'
+const defaultDirectory = process.env.SERVE_DIRECTORY ?? './build'
 
 export const getApp = (baseDir = defaultDirectory): Express => {
   const opts: ApplicationMiddlewareOptions = { baseDir }

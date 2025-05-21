@@ -15,7 +15,7 @@ export const addContentHandlers = (app: Express, opts: ApplicationMiddlewareOpti
     // Dynamic Share handlers
     ...dynamicShareHandlers(opts),
     // Live Share handlers
-    ...liveShareHandlers(opts),
+    // ...liveShareHandlers(opts),
   ]
   // Add catch-all pass-through handler last to ensure
   // all unknown/unsupported requests are simply proxied

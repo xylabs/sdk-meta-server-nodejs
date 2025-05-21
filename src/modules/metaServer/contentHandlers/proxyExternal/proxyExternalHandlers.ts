@@ -73,7 +73,6 @@ const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountP
       const matchesIncluded: RouteMatcher = include.length > 0 ? createGlobMatcher(include) : () => false
       const matchesExcluded: RouteMatcher = exclude.length > 0 ? createGlobMatcher(exclude) : () => false
 
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       const proxyExternalPageHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
         const uri = req.originalUrl
         if (matchesIncluded(uri) && !matchesExcluded(uri)) {
@@ -83,7 +82,7 @@ const getProxyExternalPageHandler = (opts: ApplicationMiddlewareOptions): MountP
         }
       }
       console.log('[proxyExternal][init] Created page handler')
-      return ['get', ['/*', asyncHandler(proxyExternalPageHandler)]]
+      return ['get', [/.*/, asyncHandler(proxyExternalPageHandler)]]
     }
   }
   return undefined

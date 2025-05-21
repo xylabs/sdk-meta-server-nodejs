@@ -109,7 +109,7 @@ const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPa
     const matchesIncluded: RouteMatcher = include.length > 0 ? createGlobMatcher(include) : () => false
     const matchesExcluded: RouteMatcher = exclude.length > 0 ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+
     const dynamicSharePageHandler: RequestHandler = async (req, res, next) => {
       // Exclude query string from glob via req.path
       const uri = req.path
@@ -122,7 +122,7 @@ const getDynamicSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPa
       }
     }
     logger.log('Created page handler')
-    return ['get', ['/*', asyncHandler(dynamicSharePageHandler)]]
+    return ['get', [/.*/, asyncHandler(dynamicSharePageHandler)]]
   }
   return undefined
 }

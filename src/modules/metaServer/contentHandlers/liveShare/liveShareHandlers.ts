@@ -167,7 +167,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
     const matchesExcluded: RouteMatcher = exclude.length > 0 ? createGlobMatcher(exclude) : () => false
     const pageHandler = getPageHandler(baseDir)
     const imageHandler = getImageHandler(opts)
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+
     const liveSharePageHandler: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
       // Exclude query string from glob via req.path
       const uri = req.path
@@ -192,6 +192,6 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
  */
 
 const liveShareImageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => ['get',
-  ['*/preview/:width/:height/img.png', getImageHandler(opts)]]
+  ['/:prefix*/preview/:width/:height/img.png', getImageHandler(opts)]]
 
 export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts), liveShareImageHandler(opts)].filter(exists)

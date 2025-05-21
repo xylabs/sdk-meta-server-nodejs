@@ -123,5 +123,5 @@ const getProxyOriginalHandler = (baseDir: string) => {
  */
 export const configureProxyOriginal = <T extends ApplicationMiddlewareOptions>(opts: T): MountPathAndMiddleware => [
   'get',
-  ['*', getProxyOriginalHandler(opts.baseDir)],
+  [/.*/, getProxyOriginalHandler(opts.baseDir)],
 ]

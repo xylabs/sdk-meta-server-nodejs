@@ -1,6 +1,6 @@
 {
   "name": "@xylabs/meta-server",
-  "version": "4.3.20",
+  "version": "4.4.0",
   "description": "Meta Server - adjusts meta data on index.html for served static site",
   "keywords": [
     "xylabs",

@@ -81,7 +81,7 @@ const getProxyOriginalHandler = (baseDir: string) => {
     updated = updated.replace('<html lang="en">', `<html lang="${language}">`)
     res.type('html').set(headersFromCacheConfig(proxyOriginalIndexCacheConfigLoader(xyConfig))).send(updated)
   }
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+
   const handler: RequestHandler<NoReqParams, Empty, Empty, NoReqQuery, MetaCacheLocals> = async (req, res, next) => {
     try {
       // Check if file exists on disk (cache check for performance)
@@ -98,7 +98,7 @@ const getProxyOriginalHandler = (baseDir: string) => {
       if (pathExists) {
         if (file.endsWith('/index.html')) {
           console.log(`[proxyOriginal][pageHandler][${file}]: serve [actual] index`)
-          serveIndex(req, res, next)
+          void serveIndex(req, res, next)
         } else {
           console.log(`[proxyOriginal][pageHandler][${file}]: serve proxy`)
           proxy(req, res, next)
@@ -106,7 +106,7 @@ const getProxyOriginalHandler = (baseDir: string) => {
       } else {
         if (isHtmlLike(req)) {
           console.log(`[proxyOriginal][pageHandler][${file}]: serve index`)
-          serveIndex(req, res, next)
+          void serveIndex(req, res, next)
         } else {
           res.sendStatus(StatusCodes.NOT_FOUND)
         }

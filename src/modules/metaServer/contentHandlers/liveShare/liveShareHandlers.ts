@@ -182,7 +182,7 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
       }
     }
     console.log('[liveShare][init] Created page handler')
-    return ['get', ['/*', asyncHandler(liveSharePageHandler)]]
+    return ['get', [/.*/, asyncHandler(liveSharePageHandler)]]
   }
   return undefined
 }
@@ -192,6 +192,6 @@ const getLiveSharePageHandler = (opts: ApplicationMiddlewareOptions): MountPathA
  */
 
 const liveShareImageHandler = (opts: ApplicationMiddlewareOptions): MountPathAndMiddleware => ['get',
-  ['/:prefix*/preview/:width/:height/img.png', getImageHandler(opts)]]
+  [/^.*\/preview\/(\d+)\/(\d+)\/img\.png$/, getImageHandler(opts)]]
 
 export const liveShareHandlers = (opts: ApplicationMiddlewareOptions) => [getLiveSharePageHandler(opts), liveShareImageHandler(opts)].filter(exists)

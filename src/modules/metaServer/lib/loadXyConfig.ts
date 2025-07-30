@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import Path from 'node:path'
 
-import { toJsonObject } from '@xylabs/object'
+import { toSafeJsonObject } from '@xylabs/object'
 
 import type { XyConfig } from '../../../model/index.ts'
 
@@ -14,6 +14,6 @@ export const loadXyConfig = (baseDir: string, moduleName: string): XyConfig | un
     console.log(`[${moduleName}] Parsing xy.config.json`)
     const xyConfig = JSON.parse(readFileSync(filePath, { encoding: 'utf8' }))
     console.log(`[${moduleName}] Parsed xy.config.json`)
-    return toJsonObject(xyConfig, [], 16)
+    return toSafeJsonObject(xyConfig, [], 16)
   }
 }
